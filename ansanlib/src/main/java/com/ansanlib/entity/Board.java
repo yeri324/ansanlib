@@ -19,7 +19,12 @@ public class Board extends BaseEntity{
     @GeneratedValue(strategy= GenerationType.SEQUENCE)
     private Long id;
     
+    @Column(name="board_title")
     private String title;
+    
+    @Column(name="board_content")
     private String content;
+    
+    @Column(name="board_file")
     private String file;
 }
