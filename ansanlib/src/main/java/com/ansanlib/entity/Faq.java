@@ -15,8 +15,8 @@ import lombok.Setter;
 public class Faq extends BaseEntity {
 
    @Id
-   @Column(name="board_num")
-   @GeneratedValue(strategy= GenerationType.SEQUENCE)
+   @Column(name="faq_num")
+   @GeneratedValue(strategy= GenerationType.AUTO)
    private Long id;
    
    private String title;

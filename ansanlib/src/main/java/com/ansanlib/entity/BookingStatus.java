@@ -18,10 +18,10 @@ public class BookingStatus extends BaseEntity {
 
    @Id
     @Column(name="booking_num")
-    @GeneratedValue(strategy= GenerationType.SEQUENCE)
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
    
-   @Column(nullable=false)
+ 
    private int booking_rank;
    
    private LocalDateTime regist_date;

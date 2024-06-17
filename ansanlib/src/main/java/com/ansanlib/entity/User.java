@@ -20,39 +20,30 @@ import lombok.ToString;
 public class User extends BaseEntity {
 	@Id
 	@Column(name="user_id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@Column(nullable=false)
+	
 	private String name;
 	
-	@Column(nullable=false)
 	private String email;
 	
-	@Column(nullable=false)
 	private String loginid;
 	
-	@Column(nullable=false)
 	private String password;
 	
-	@Column(nullable=false)
 	private String phone;
 	
 	private String address;
 	
-	@Column(nullable=false)
 	private LocalDateTime birth;
 	
-	@Column(nullable=false)
 	private LocalDateTime gender;
-	
-	@Column(nullable=false)
+
 	private String role;
 	
-	@Column(nullable=false)
 	private String sms;
 	
-	@Column(nullable=false)
 	private LocalDateTime joinDate;
 	
 	private LocalDateTime loginDate;

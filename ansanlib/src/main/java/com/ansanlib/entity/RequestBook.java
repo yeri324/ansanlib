@@ -18,7 +18,7 @@ public class RequestBook extends BaseEntity {
 
    @Id
     @Column(name="isbn")
-    @GeneratedValue(strategy= GenerationType.SEQUENCE)
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private String isbn;
    
    private String title;
