@@ -24,7 +24,7 @@ public class RequestBook extends BaseEntity {
    private String title;
    private String author;
    private String publisher;
-   private Date pub_date;
-   private Date regist_date;
+   private LocalDateTime pub_date;
+   private LocalDateTime regist_date;
 
 }

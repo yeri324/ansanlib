@@ -24,6 +24,6 @@ public class BookingStatus extends BaseEntity {
    @Column(nullable=false)
    private int booking_rank;
    
-   private Date regist_date;
-   private Date booking_end;
+   private LocalDateTime regist_date;
+   private LocalDateTime booking_end;
 }

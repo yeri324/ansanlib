@@ -22,10 +22,10 @@ public class LoanStatus extends BaseEntity {
       private Long id;
       
       @Column(nullable=false)
-      private Date loan_start;
+      private LocalDateTime loan_start;
       
       @Column(nullable=false)
-      private Date loan_end;
+      private LocalDateTime loan_end;
       
       
 }
