@@ -18,10 +18,10 @@ public class Book extends BaseEntity {
 
    @Id
    @Column(name="book_num")
-   @GeneratedValue(strategy= GenerationType.SEQUENCE)
+   @GeneratedValue(strategy= GenerationType.AUTO)
    private Long id;
    
-   @Column(nullable=false)
+ 
    private String isbn;
    
    private String title;
@@ -31,8 +31,7 @@ public class Book extends BaseEntity {
    private String genre;
    private String category_code;
    private String image;
-   
-   @Column(nullable=false)
+
    private String loan_sataus;
    
    private int count;

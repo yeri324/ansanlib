@@ -11,12 +11,12 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-@Table(name="board")
+@Table(name="lib_board")
 public class Board extends BaseEntity{
 
     @Id
     @Column(name="board_num")
-    @GeneratedValue(strategy= GenerationType.SEQUENCE)
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
     
     @Column(name="board_title")

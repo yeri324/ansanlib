@@ -19,8 +19,8 @@ import lombok.ToString;
 @ToString
 public class Holyday extends BaseEntity {
 	@Id
-	@Column(name="holyday_id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name="holyday_num")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
 	
