@@ -1,13 +1,10 @@
 package com.ansanlib.dto.admin.user;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import lombok.Getter;
+import lombok.Setter;
 
-import com.ansanlib.repository.admin.AdminUserRepository;
-
-import lombok.RequiredArgsConstructor;
-
-
+@Getter
+@Setter
 public class AdminUserDto {
 	
 	private String searchBy;

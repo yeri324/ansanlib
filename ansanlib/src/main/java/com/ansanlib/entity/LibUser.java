@@ -2,6 +2,8 @@ package com.ansanlib.entity;
 
 import java.time.LocalDateTime;
 
+import com.ansanlib.constant.UserStatus;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,7 +19,7 @@ import lombok.ToString;
 @Setter
 @Table(name="lib_user")
 @ToString
-public class User extends BaseEntity {
+public class LibUser extends BaseEntity {
 	@Id
 	@Column(name="user_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -48,7 +50,9 @@ public class User extends BaseEntity {
 	
 	private LocalDateTime loginDate;
 	
-	private String penalty;
+	private int penalty;
 	
-	private String status;
+	private UserStatus status;
+	
+	private int lateFee;
 }
