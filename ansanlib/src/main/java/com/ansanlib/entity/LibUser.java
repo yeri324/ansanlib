@@ -17,7 +17,7 @@ import lombok.ToString;
 @Setter
 @Table(name="lib_user")
 @ToString
-public class User extends BaseEntity {
+public class LibUser extends BaseEntity {
 	@Id
 	@Column(name="user_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
