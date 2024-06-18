@@ -52,7 +52,11 @@ public class LibUser extends BaseEntity {
 	
 	private int penalty;
 	
+<<<<<<< HEAD
 	private UserStatus status;
+=======
+	private String status;
+>>>>>>> origin/feature/board
 	
 	private int lateFee;
 }
