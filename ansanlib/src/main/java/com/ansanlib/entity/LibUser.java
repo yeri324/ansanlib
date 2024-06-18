@@ -2,6 +2,8 @@ package com.ansanlib.entity;
 
 import java.time.LocalDateTime;
 
+import com.ansanlib.constant.UserStatus;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -38,7 +40,7 @@ public class LibUser extends BaseEntity {
 	
 	private LocalDateTime birth;
 	
-	private LocalDateTime gender;
+	private String gender;
 
 	private String role;
 	
@@ -48,9 +50,9 @@ public class LibUser extends BaseEntity {
 	
 	private LocalDateTime loginDate;
 	
-	private String penalty;
+	private int penalty;
 	
-	private String status;
+	private UserStatus status;
 	
 	private int lateFee;
 }
