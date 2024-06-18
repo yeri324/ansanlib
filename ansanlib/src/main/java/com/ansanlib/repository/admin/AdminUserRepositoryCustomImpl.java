@@ -22,9 +22,10 @@ public class AdminUserRepositoryCustomImpl implements AdminUserRepositoryCustom 
 		var query = queryFactory
 				.selectFrom(QLibUser.libUser)
 				.where(searchByLike( adminUserDto.getSearchBy(), adminUserDto.getSearchQuery()));
-		if(adminUserDto.getSelectRadio().equals("penalty")) query.where(libUser.penalty.gt(0));
+		if(adminUserDto.getSelectRadio().equals("all")) query.where(libUser.lateFee.gt(0));
+		else if(adminUserDto.getSelectRadio().equals("penalty")) query.where(libUser.penalty.gt(0));
 		else if(adminUserDto.getSelectRadio().equals("lateFee")) query.where(libUser.lateFee.gt(0));
-		else if(adminUserDto.getSelectRadio().equals("all")) query.where(libUser.lateFee.gt(0));
+		
 				
 		 List<LibUser> userlist = query.fetch();
 		 long total = query.fetchCount();
@@ -34,9 +35,9 @@ public class AdminUserRepositoryCustomImpl implements AdminUserRepositoryCustom 
 	
 	private BooleanExpression searchByLike(String searchBy, String searchQuery) {
 		if (StringUtils.equals("ById", searchBy)) {
-			return QLibUser.libUser.loginid.like("%" + searchQuery + "%");
+			return QLibUser.libUser.loginid.containsIgnoreCase(searchQuery);
 		} else if (StringUtils.equals("ByName", searchBy)) {
-			return QLibUser.libUser.createdBy.like("%" + searchQuery + "%");
+			return QLibUser.libUser.createdBy.containsIgnoreCase(searchQuery);
 		}
 		return null;
 	}

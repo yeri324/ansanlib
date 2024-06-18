@@ -1,13 +1,12 @@
 package com.ansanlib.service.admin.user;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ansanlib.dto.admin.user.AdminUserDto;
+import com.ansanlib.entity.LibUser;
 import com.ansanlib.repository.admin.AdminUserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -16,12 +15,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Transactional
 public class AdminUserService {
-//	private final AdminUserRepository adminUserRepository;
-//	
-//	public Page<AdminUserDto> ListUser(AdminUserDto adminUserDto,Pageable pageable){
-//		
-//		
-		
-//	}
+	private final AdminUserRepository adminUserRepository;
+	
+	
+	public Page<LibUser> AdminUserList(AdminUserDto adminUserDto,Pageable pageable){
+	 return adminUserRepository.AdminUserList(adminUserDto, pageable);
+	}
 
 }
