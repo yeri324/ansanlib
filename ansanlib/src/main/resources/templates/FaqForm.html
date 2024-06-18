@@ -11,7 +11,7 @@
 </th:block>
 <div>
 <form role="form" method="post" enctype="multipart/form-data" th:object="${FaqFormDto}">
-	<p>질문 등록하기</p>
+	<p>글 등록하기</p>
 	<input type="text" th:field="*{title}" placeholder="제목을 입력해주세요">
 	<input type="text" th:field="*{content}" placeholder="내용을 입력해주세요">
 	<button th:formaction="@{/faq/new}" type="submit">저장</button>

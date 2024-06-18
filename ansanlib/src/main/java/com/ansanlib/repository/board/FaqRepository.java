@@ -13,8 +13,8 @@ public interface FaqRepository extends JpaRepository<Faq, Long>{
 
 	Faq findByContent(String content);
 	
-//	Page<Faq> findAll(Pageable pageable);
-//	
+	Page<Faq> findAll(Pageable pageable);
+
 //	Page<Faq> findAll(Specification<Faq> spec, Pageable pageable);
 	
 }

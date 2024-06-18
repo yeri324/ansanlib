@@ -1,12 +1,26 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		
-	</head>
-	<script>
-		
-	</script>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div layout:fragment="content">
 	<div>
-		faq리스트입니다.
-	</div>
+		<div>
+			<a th:href="@{/faq/new}" class="btn btn-primary">질문 등록하기</a>
+		</div>
+		<div>
+			<table>
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th style="width: 50%">제목</th>
+						<th>내용</th>
+					</tr>
+				</thead>
+			<tr th:each="faq : ${faqList}">
+					<td th:text="${faq.id}"></td>
+					 <td th:text="${faq.title}"></td>
+					 <td th:text="${faq.content}"></td>
+				</tr>
+			</table>
+		</div>
+
 </html>
