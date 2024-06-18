@@ -1,6 +1,6 @@
 package com.ansanlib.service.user;
 
-import org.springframework.security.core.userdetails.User;
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
