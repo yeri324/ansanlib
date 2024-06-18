@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+</head>
+<style>
+	* { 
+	    margin: 0; 
+	    padding: 0; 
+	    box-sizing: border-box;  
+	}
+	ul, li { 
+	    list-style: none; 
+	}
+	a { 
+	    text-decoration: none; 
+	}
+
+	.header { 
+	    width: 100%; 
+	    height: 100px; 
+	    position: fixed; 
+	    top: 0; 
+	    background-color: white; 
+	    z-index: 1000; 
+	    display: flex; 
+	    justify-content: center; 
+	    align-items: center; 
+	}
+	nav { 
+	    width: 600px; 
+		margin: 0 auto;
+	}
+	nav > ul { 
+	    display: flex; 
+	    justify-content: space-around; 
+	    width: 100%; 
+	}
+	nav > ul > li { 
+	    text-align: center; 
+	    flex: 1; 
+		margin: 0 10px;
+	}
+	nav > ul > li > a { 
+	    display: block; 
+	    padding: 12px 0; 
+	    color: black; 
+	    font-weight: bold; 
+	}
+	nav > ul > li:hover > a { 
+	    color: gray;  
+	    background: #f1f1f1; 
+	}
+
+	.submenu { 
+	    display: none; 
+	    position: absolute; 
+	    z-index: 99; 
+	    text-align: center; 
+	    background: #f1f1f1; 
+	}
+	.submenu > li > a { 
+	    display: inline-block; 
+	    padding: 14px 0; 
+	    color: black; 
+	    width: 150px; 
+	    font-size: 15px;  
+	}
+	.submenu > li > a:hover { 
+	    background: #ccc; 
+	}
+	
+	
+	.full_header {
+	    position: fixed;
+	    top: 0;
+	    right: 0;
+	    width: 100%;
+	    background-color: #ffffff;
+	    z-index: 1000;
+	    height: 50px; /* 예시에서 높이 지정 */
+	    display: flex;
+	    justify-content: flex-end; /* 오른쪽 정렬 */
+	    align-items: center;
+	}
+	.top_login {
+	    margin-right: 20px; /* 로그인, 회원가입 간격 설정 */
+	}
+	.enter {
+		color: black;
+	}
+	.join {
+		color: black;
+	}
+	
+	
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script type='text/javascript'>
+  $(document).ready(function () {
+    $('nav > ul > li').hover(
+      function () {
+        $(this).find('.submenu').stop(true, true).slideDown();
+      },
+      function () {
+        $(this).find('.submenu').stop(true, true).slideUp();
+      }
+    );
+  });
+</script>
+<body>
+<div class="full_header">
+<div th:fragment="header" class="header">
+	<nav>
+		<ul>
+			<li>
+				<a href="#">소개</a>
+				<ul class="submenu">
+					<li><a href="#">연혁</a></li>
+					<li><a href="#">조직도</a></li>
+					<li><a href="#">도서관</a></li>
+				</ul>
+			</li>
+			<li><a href="#">검색</a>
+				<ul class="submenu">
+					<li><a href="#">통합검색</a></li>
+					<li><a href="#">상세검색</a></li>
+					<li><a href="#">추천도서</a></li>
+					<li><a href="#">신간도서</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#">책읽는 안산</a>
+				<ul class="submenu">
+					<li><a href="#">이달의 도서</a></li>
+					<li><a href="#">인기도서</a></li>
+					<li><a href="#">추천게시판</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#">게시판</a>
+				<ul class="submenu">
+					<li><a href="#">공지사항</a></li>
+					<li><a href="#">FAQ</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#">나의 도서관</a>
+				<ul class="submenu">
+					<li><a href="#">나만의 책장</a></li>
+					<li><a href="#">예약/대출현황</a></li>
+					<li><a href="#">정보수정</a></li>
+					<li><a href="#">희망도서</a></li>
+				</ul>
+			</li>
+		</ul>
+		<div class="top_login">
+				<a class="enter" href="#">로그인</a>
+				<a class="join" href="#">회원가입</a>
+			</div>
+	</nav>
+</div>
+	
+</div>
+</body>
+</html>
