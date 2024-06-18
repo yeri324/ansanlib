@@ -51,4 +51,6 @@ public class User extends BaseEntity {
 	private String penalty;
 	
 	private String status;
+	
+	private int lateFee;
 }
