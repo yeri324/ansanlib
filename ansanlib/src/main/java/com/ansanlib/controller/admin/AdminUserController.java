@@ -18,18 +18,18 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-//@RequestMapping(value = "/")
+@RequestMapping(value = "/")
 public class AdminUserController {
 	final AdminUserService adminUserService;
 	
-	@GetMapping("/adminUserList")
+	@GetMapping("/adminuser")
 	public String adminUserList(AdminUserDto adminUserDto,Optional<Integer> page,Model model){
 		Pageable pageable =PageRequest.of(page.isPresent()?page.get():0, 6);
 		Page<LibUser> users = adminUserService.AdminUserList(adminUserDto, pageable);
 		
 		model.addAttribute("users", users);
 		model.addAttribute("maxPage", 5);
-		return "/admin/userForm";
+		return "/adminUserForm";
 	}
 	
 }
