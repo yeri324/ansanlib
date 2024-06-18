@@ -24,4 +24,11 @@ public class BookReservation {
 	@Column(name = "book_reservation_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(name = "user", nullable = false)
+	private String user;
+	
+	@Column(name = "isbn", nullable = false)
+	private String isbn;
+	
 }
