@@ -9,10 +9,9 @@ public class AdminUserDto {
 	
 	private String searchBy;
 	
-	private String sortBy;
-	
 	private String searchQuery="";
 	
-	private String ispenalty;
+	private String selectRadio;
+
 
 }

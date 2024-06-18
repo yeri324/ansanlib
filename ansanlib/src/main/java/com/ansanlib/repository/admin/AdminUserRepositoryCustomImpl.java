@@ -19,11 +19,17 @@ public class AdminUserRepositoryCustomImpl implements AdminUserRepositoryCustom 
 	@Override
 	public Page<LibUser>  AdminUserList(AdminUserDto adminUserDto, Pageable pageable) {
 		QLibUser libUser = QLibUser.libUser;
-		List<LibUser> userlist = queryFactory
+		var query = queryFactory
 				.selectFrom(QLibUser.libUser)
-				.where(searchByLike( adminUserDto.getSearchBy(), adminUserDto.getSearchQuery()))
-				.fetch();
-		return new PageImpl<>(userlist, pageable,10);
+				.where(searchByLike( adminUserDto.getSearchBy(), adminUserDto.getSearchQuery()));
+		if(adminUserDto.getSelectRadio().equals("penalty")) query.where(libUser.penalty.gt(0));
+		else if(adminUserDto.getSelectRadio().equals("lateFee")) query.where(libUser.lateFee.gt(0));
+		else if(adminUserDto.getSelectRadio().equals("all")) query.where(libUser.lateFee.gt(0));
+				
+		 List<LibUser> userlist = query.fetch();
+		 long total = query.fetchCount();
+		 return new PageImpl<>(userlist, pageable,total);
+		
 	}
 	
 	private BooleanExpression searchByLike(String searchBy, String searchQuery) {

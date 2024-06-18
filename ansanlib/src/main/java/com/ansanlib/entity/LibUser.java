@@ -40,7 +40,7 @@ public class LibUser extends BaseEntity {
 	
 	private LocalDateTime birth;
 	
-	private LocalDateTime gender;
+	private String gender;
 
 	private String role;
 	
