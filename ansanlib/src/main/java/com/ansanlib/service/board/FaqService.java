@@ -19,7 +19,11 @@ public class FaqService {
 	
 	private final FaqRepository faqRepository;
 	
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+>>>>>>> 7a278dc05c6f0c211e06906796e1ca0a80c2d62c
 	public Long saveFaq(FaqFormDto faqFormDto) throws Exception{
 		Faq faq = faqFormDto.createFaq();
 		faqRepository.save(faq);
