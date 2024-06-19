@@ -19,22 +19,22 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping(value="/admin/user")
 public class AdminUserController {
-   
-   private final AdminUserService adminUserService;
-   
-   @GetMapping("/search")
+	
+	private final AdminUserService adminUserService;
+	
+	@GetMapping("/search")
     public String searchUsers(@ModelAttribute AdminUserDto adminUserDto, Model model) {
         List<LibUser> users = adminUserService.ListUser(adminUserDto);
         model.addAttribute("users", users);
         return "admin/userForm";
     } 
-   
-    @GetMapping("/user/{id}")
-       public String getUserDetails(@PathVariable Long id, Model model) {
-           LibUser user = adminUserService.getUserById(id);
-           model.addAttribute("user", user);
-           return "admin/userDetail";
-       }
-    
-   
+	
+	 @GetMapping("/user/{id}")
+	    public String getUserDetails(@PathVariable Long id, Model model) {
+	        LibUser user = adminUserService.getUserById(id);
+	        model.addAttribute("user", user);
+	        return "admin/userDetail";
+	    }
+	 
+	
 }

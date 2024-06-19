@@ -13,6 +13,7 @@ import lombok.Setter;
 @Getter @Setter
 public class FaqDto {
 
+
     private Long id;
     private String title;
     private String content;
@@ -25,3 +26,4 @@ public class FaqDto {
         return modelMapper.map(faq, FaqDto.class);
     }
 }
+
