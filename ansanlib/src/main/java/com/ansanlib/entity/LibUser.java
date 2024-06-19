@@ -1,9 +1,8 @@
 package com.ansanlib.entity;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.ansanlib.constant.Gender;
 import com.ansanlib.constant.Role;
@@ -33,7 +32,7 @@ public class LibUser extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	
+	@Column(name="user_name")
 	private String name;
 	
 	@Column(unique = true)
@@ -41,13 +40,15 @@ public class LibUser extends BaseEntity {
 	
 	private String loginid;
 	
+	
 	private String password;
 	
 	private String phone;
 	
 	private String address;
 	
-	private LocalDate birth;
+	private LocalDateTime birth;
+	
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
 
@@ -70,14 +71,14 @@ public class LibUser extends BaseEntity {
 
 	
 	
-	public static LibUser createUser(UserFormDto userFormDto, PasswordEncoder passwordEncoder) {
-		LibUser user = new LibUser();
-		user.setName(userFormDto.getName());
-		user.setEmail(userFormDto.getEmail());
-		user.setAddress(userFormDto.getAddress());
-		String password = passwordEncoder.encode(userFormDto.getPassword());
-		user.setPassword(password);
-		user.setRole(Role.USER);
-		return user;
-	}
+//	public static LibUser createUser(UserFormDto userFormDto, PasswordEncoder passwordEncoder) {
+//		LibUser user = new LibUser();
+//		user.setName(userFormDto.getName());
+//		user.setEmail(userFormDto.getEmail());
+//		user.setAddress(userFormDto.getAddress());
+//		String password = passwordEncoder.encode(userFormDto.getPassword());
+//		user.setPassword(password);
+//		user.setRole(Role.USER);
+//		return user;
+//	}
 }
