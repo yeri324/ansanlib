@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.ansanlib.dto.board.FaqFormDto;
 import com.ansanlib.entity.Faq;
 import com.ansanlib.service.board.FaqService;
 
