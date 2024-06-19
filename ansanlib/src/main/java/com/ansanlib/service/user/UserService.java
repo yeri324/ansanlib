@@ -32,16 +32,17 @@ public class UserService implements UserDetailsService {
 	}
 
 	@Override
-	public UserDetails loadUserByUsername(String loginid) throws UsernameNotFoundException {
-		LibUser user = userRepository.findByEmail(loginid);
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		LibUser user = userRepository.findByEmail(email);
 		if (user == null) {
-			throw new UsernameNotFoundException(loginid);
+			throw new UsernameNotFoundException(email);
 		}
 		return User.builder()
 				.username(user.getEmail())
 				.password(user.getPassword())
 				.roles(user.getRole().toString())
 				.build();
+	
 	}
 
 }
