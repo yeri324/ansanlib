@@ -1,34 +1,14 @@
 package com.ansanlib.controller.board;
 
 import java.util.List;
-<<<<<<< HEAD
-=======
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-<<<<<<< HEAD
 import org.springframework.web.bind.annotation.PostMapping;
->>>>>>> d247e59 (목록조회 기능 커밋)
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-
-<<<<<<< HEAD
 import com.ansanlib.dto.board.FaqFormDto;
 import com.ansanlib.entity.Faq;
-<<<<<<< HEAD
-=======
->>>>>>> main
-=======
->>>>>>> d247e59 (목록조회 기능 커밋)
-=======
-
-<<<<<<< HEAD
-import com.ansanlib.dto.board.FaqFormDto;
-import com.ansanlib.entity.Faq;
-=======
->>>>>>> main
->>>>>>> 7a278dc05c6f0c211e06906796e1ca0a80c2d62c
 import com.ansanlib.service.board.FaqService;
 
 import lombok.RequiredArgsConstructor;
@@ -38,14 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class FaqController {
 
 	private final FaqService faqService;
-	
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> d247e59 (목록조회 기능 커밋)
-=======
->>>>>>> 7a278dc05c6f0c211e06906796e1ca0a80c2d62c
+
 	@GetMapping(value="/faqlist")
 	public String faqList(Model model) {
 		List<Faq> faqList = faqService.getFaqList();
@@ -80,6 +53,5 @@ public class FaqController {
 		return "FaqList";
 	}
 	
-=======
->>>>>>> main
+
 }
