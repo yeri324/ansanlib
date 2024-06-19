@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<style>
+	.full_footer {
+	    background-color: #f1f1f1;
+	    padding: 20px 0;
+	}
+	.footer_menu {
+	    list-style: none;
+	    padding: 0;
+	    text-align: center;
+	}
+	.footer_menu .menu_item {
+	    display: inline;
+	    margin: 0 15px;
+	}
+	.footer_menu .menu_item .footer_link {
+	    text-decoration: none;
+	    color: #000;
+	}
+	.footer_content {
+		text-align: center;
+		font-size: 13px;
+		color: gray;
+	}
+	
+</style>
+<script>
+	
+</script>
+<footer th:fragment="footer">
+	<div class="full_footer">
+		<div class="top">
+			<ul class="footer_menu">
+				<li class="menu_item">
+					<a class="footer_link" href="#">이메일추출방지정책</a>
+				</li>
+				<li class="menu_item">
+					<a class="footer_link" href="#">개인정보처리방침</a>
+				</li>
+				<li class="menu_item">
+					<a class="footer_link" href="#">도서관행정서비스헌장</a>
+				</li>
+				<li class="menu_item">
+					<a class="footer_link" href="#">도서관윤리선언</a>
+				</li>
+			</ul>
+		</div>
+		<div class="bottom">
+			<div class="footer_logo">
+				
+			</div>
+			<div class="footer_content">
+				<address>
+					중앙능력개발원 <br>
+					안산시 통합 도서관 프로젝트
+				</address>
+			</div>
+			<div class="footer_more">
+			</div>
+		</div>
+	</div>
+</footer>
+</html>
