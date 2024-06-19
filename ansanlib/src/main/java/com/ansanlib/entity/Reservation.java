@@ -20,15 +20,16 @@ public class Reservation {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long id; 
 	
 	@Column(nullable = false)
-	private String userName;
+	private String userName; // 회원 이름
 	
 	@Column(nullable = false)
-	private String bookIsbn;
+	private String bookIsbn; // 책 isbn
 	
 	@Column(nullable = false)
-	private LocalDateTime reservationDate;
+	private LocalDateTime reservationDate;//대여일
 	
+	private LocalDateTime returnDate; // 반납일 
 }

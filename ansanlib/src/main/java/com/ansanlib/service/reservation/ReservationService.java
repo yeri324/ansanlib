@@ -1,6 +1,7 @@
 
 package com.ansanlib.service.reservation;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,13 @@ public class ReservationService {
 	private ReservationRepository reservationRepository;
 	
 	public Reservation saveReservation(Reservation reservation) {
+		//예약 날짜 설정
+		reservation.setReservationDate(LocalDateTime.now());
+		
+		// 반납 날짜 설정 (7일 후)
+		LocalDateTime returnDate = LocalDateTime.now().plusDays(7);
+		reservation.setReturnDate(returnDate);
+		
 		return reservationRepository.save(reservation);
 	}
 	
