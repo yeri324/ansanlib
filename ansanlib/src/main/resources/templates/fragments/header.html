@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" th:href="@{/css/header.css}">
-</head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" th:href="@{/css/header.css}">
 <style>
 	* { 
 	    margin: 0; 
@@ -31,10 +29,10 @@
 	    color: black;
 	    text-decoration: none;
 	}
-	.header {
-	    width: 100%;
-	    background-color: #f1f1f1; /* 헤더 배경색 */
-	    padding: 20px 0; /* 내부 패딩 */
+	.header_menu {
+		width: 100%;
+		background-color: #f1f1f1; /* 헤더 배경색 */
+		padding: 20px 0; /* 내부 패딩 */
 	}
 	nav {
 	    width: 100%;
@@ -96,13 +94,13 @@
     );
   });
 </script>
-<body>
+<header th:fragment="header">
 <div class="full_header">
 	<div class="top_login">
 		<a class="enter" href="#">로그인</a>
 		<a class="join" href="#">회원가입</a>
 	</div>
-<div th:fragment="header" class="header">
+<div class="header_menu">
 	<nav>
 		<ul>
 			<li>
@@ -147,8 +145,8 @@
 			</li>
 		</ul>
 	</nav>
+	</div>
 </div>
-	
 </div>
-</body>
+</header>
 </html>
