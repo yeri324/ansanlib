@@ -11,20 +11,29 @@ import com.ansanlib.entity.QLibUser;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
+import jakarta.persistence.EntityManager;
+
 public class AdminUserRepositoryCustomImpl implements AdminUserRepositoryCustom {
 	private JPAQueryFactory queryFactory;
+	
+	public AdminUserRepositoryCustomImpl(EntityManager em) {
+		this.queryFactory = new JPAQueryFactory(em);
+	}
+
 
 	@Override
 	public List<LibUser>  AdminUserList(AdminUserDto adminUserDto) {
 		QLibUser libUser = QLibUser.libUser;
-		var query = queryFactory.selectFrom(libUser)
-				.where(searchByLike(adminUserDto.getSearchBy(),adminUserDto.getSearchQuery()));
+		var query = queryFactory.selectFrom(libUser);
+		
+		
 		if (adminUserDto.getSelectRadio().equals("penalty")) {
 			query.where(libUser.penalty.gt(0));
 			}
 		else if (adminUserDto.getSelectRadio().equals("lateFee")) {
 			query.where(libUser.lateFee.gt(0));
 		}
+		query.where(searchByLike(adminUserDto.getSearchBy(),adminUserDto.getSearchQuery()));
 		List<LibUser> users = new ArrayList<>();
 		users = query.fetch();
 		return users;
