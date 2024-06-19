@@ -3,13 +3,11 @@ package com.ansanlib.controller.board;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
-<<<<<<< HEAD
-import com.ansanlib.dto.board.FaqFormDto;
 import com.ansanlib.entity.Faq;
-=======
->>>>>>> main
 import com.ansanlib.service.board.FaqService;
 
 import lombok.RequiredArgsConstructor;
@@ -20,7 +18,7 @@ public class FaqController {
 
 	private final FaqService faqService;
 	
-<<<<<<< HEAD
+
 	@GetMapping(value="/faqlist")
 	public String faqList(Model model) {
 		List<Faq> faqList = faqService.getFaqList();
@@ -28,12 +26,6 @@ public class FaqController {
 		return "FaqList";
 	}
 	
-//	@PostMapping(value="/faqlist")
-//	public String faqList(Model model) {
-//		List<Faq> faqList = faqService.getFaqList();
-//		model.addAttribute("faqList", faqList);
-//		return "FaqList";
-//	}
 	
 	@GetMapping(value="/faq/new")
 	public String faqNew(Model model) throws Exception{
@@ -54,7 +46,5 @@ public class FaqController {
 		}
 		return "FaqList";
 	}
-	
-=======
->>>>>>> main
+
 }
