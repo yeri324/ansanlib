@@ -1,6 +1,99 @@
 <!DOCTYPE html>
-<form action="/users/findpwd" role="form" method="post" th:object="${userFormDto}">
 
-	<div layout:fragment="content">
-		비밀번호 찾아주세욧..
+<html>
+
+
+
+<div class="section" layout:fragment="content">
+	<script src="/javascript/findidForm.js"></script>
+	<div class="container">
+		<div class="row full-height justify-content-center">
+			<div class="col-12 text-center align-self-center py-5">
+				<div class="section pb-5 pt-5 pt-sm-2 text-center">
+				
+					
+					<label for="reg-log"></label>
+					<div class="card-3d-wrap mx-auto">
+						<div class="card-3d-wrapper">
+
+							<div class="card-back">
+								<form action="/users/findpwd" role="form" method="post" th:object="${userFormDto}"
+									id="signupForm">
+
+									<div class="center-wrap">
+										<div class="section text-center">
+
+											<h4 class="mb-4 pb-3 signup-font">비밀번호 찾기</h4>
+											<div class="form-group mt-2">
+												<input type="text" name="id2" class="form-style result-hide" width="80"
+													th:field="*{id}" placeholder="아이디" id="id2" autocomplete="off">
+												<i class="input-icon uil uil-user result-hide"></i>
+												<p th:if="${#fields.hasErrors('id')}" th:errors="*{id}"
+													class="fieldError">해당 란은 공백일 수 없습니다.</p>
+												<input type="hidden" id="id_hidden" value="F">
+											</div>
+											<div class="form-group mt-2">
+												<input type="email" name="email2" class="form-style result-hide"
+													th:field="*{email}" placeholder="이메일" id="email2"
+													autocomplete="off">
+												<i class="input-icon uil uil-at result-hide"></i>
+												<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+													class="fieldError">해당 란은 공백일 수 없습니다.</p>
+											</div>
+											<div class="form-group mt-2">
+												<button type="button"
+													class="btn-check btn-primary btn-email-start2 result-hide"
+													onclick="sendEmail2()">인증번호 전송</button>
+											</div>
+											<div class="form-group mt-2">
+												<input type="text" name="findCode2"
+													class="form-style input-email-code2 result-hide" placeholder="인증코드"
+													id="findCode2" autocomplete="off">
+												<i class="input-icon uil uil-lock input-icon-code2 result-hide"></i>
+											</div>
+											<div class="form-group mt-2">
+												<button type="button"
+													class="btn-check btn-primary btn-email-end2 result-hide"
+													onclick="sendEmail()">인증번호 재발행</button>
+												<button type="button"
+													class="btn-check btn-primary btn-email-end2 result-hide"
+													onclick="checkEmail2()">인증확인</button>
+											</div>
+
+											<div class="form-group mt-2">
+												<input type="password" name="password1" class="form-style"
+													placeholder="비밀번호" id="password1" autocomplete="off" minlength="8"
+													maxlength="16">
+												<i class="input-icon uil uil-lock-alt input-icon-pass"></i>
+												<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+													class="fieldError">해당 란은 공백일 수 없습니다.</p>
+											</div>
+
+											<div class="form-group mt-2">
+												<input type="password" name="password2" class="form-style"
+													th:field="*{password}" placeholder="비밀번호 확인" id="password2"
+													autocomplete="off" minlength="8" maxlength="16">
+												<i class="input-icon uil uil-lock-alt input-icon-pass"></i>
+												<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+													class="fieldError">해당 란은 공백일 수 없습니다.</p>
+											</div>
+
+											<div class="form-group mt-2 ">
+												<button type="submit" class="btn btn-primary btn-change"
+													id="btn-change">변경하기</button>
+												<input type="hidden" th:name="${_csrf.parameterName}"
+													th:value="${_csrf.token}">
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
+</div>
+
+</html>
