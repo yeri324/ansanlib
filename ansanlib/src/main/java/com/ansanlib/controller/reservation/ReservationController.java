@@ -1,5 +1,6 @@
 package com.ansanlib.controller.reservation;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,12 @@ public class ReservationController {
 	
 	@PostMapping 
 	public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation) {
-        Reservation savedReservation = reservationService.saveReservation(reservation);
+        
+		reservation.setReservationDate(LocalDateTime.now());
+		
+		reservation.setReturnDate(reservation.getReservationDate().plusDays(7));
+		
+		Reservation savedReservation = reservationService.saveReservation(reservation);
         return ResponseEntity.ok(savedReservation);
     }
 
