@@ -7,4 +7,7 @@ import com.ansanlib.entity.LibUser;
 public interface UserRepository extends JpaRepository<LibUser, Long>{
 
 	LibUser findByEmail(String email);
+
+
+
 }
