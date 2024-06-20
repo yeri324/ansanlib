@@ -4,21 +4,23 @@
 <div layout:fragment="content">
 	<div>
 		<div>
-			<a th:href="@{/faq/new}" class="btn btn-primary">질문 등록하기</a>
+			<a th:href="@{/faq/new}">질문 등록하기</a>
 		</div>
 		<div>
 			<table>
 				<thead>
 					<tr>
 						<th>번호</th>
-						<th style="width: 50%">제목</th>
-						<th>내용</th>
+						<th>제목</th>
+						<th>작성시간</th>
+						<th>수정시간</th>	
 					</tr>
 				</thead>
 			<tr th:each="faq : ${faqList}">
 					<td th:text="${faq.id}"></td>
-					 <td th:text="${faq.title}"></td>
-					 <td th:text="${faq.content}"></td>
+					<td><a th:href="@{|/faq/detail/${faq.id}|}" th:text="${faq.title}"></a></td>
+					<td th:text="${faq.regTime}"></td>
+					<td th:text="${faq.updateTime}"></td>
 				</tr>
 			</table>
 		</div>
