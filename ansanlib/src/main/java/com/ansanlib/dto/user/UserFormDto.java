@@ -4,6 +4,10 @@ import java.time.LocalDateTime;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.ansanlib.constant.Gender;
+import com.ansanlib.constant.Role;
+import com.ansanlib.entity.LibUser;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
@@ -30,6 +34,7 @@ public class UserFormDto {
 	
 	@NotEmpty(message = "주소는 필수 입력 값입니다.")
 	private String address;
+	private String address2;
 	
 	
 	@NotEmpty(message = "아이디는 필수 입력 값입니다.")
@@ -38,12 +43,10 @@ public class UserFormDto {
 	@NotEmpty(message = "전화번호는 필수 입력 값입니다.")
 	private String phone;
 	
+
 	
-	@NotEmpty(message = "생년월일은 필수 입력 값입니다.")
-	private LocalDateTime birth;
-	
-	@NotEmpty(message = "필수사항입니다.")
-	private String gender;
+
+	private Gender gender;
 
 	
 	@NotEmpty(message = "수신정보에 체크하여주세요")
@@ -58,4 +61,23 @@ public class UserFormDto {
 	
 	private String status;
 
+	private Role role;
+
+	public static UserFormDto createUserDto(LibUser user) {
+		UserFormDto userFormDto = new UserFormDto();
+		userFormDto.loginid = user.getLoginid();
+		userFormDto.name = user.getName();
+		userFormDto.email = user.getEmail();
+		userFormDto.password = user.getPassword();
+		userFormDto.address = user.getAddress();
+		userFormDto.address2 = user.getAddress2();
+		userFormDto.gender = user.getGender();
+		userFormDto.role = user.getRole();
+		userFormDto.phone=user.getPhone();
+		
+
+		return userFormDto;
+	}
+
 }
+

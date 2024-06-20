@@ -1,18 +1,17 @@
 package com.ansanlib.controller.user;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.ansanlib.constant.Role;
 import com.ansanlib.dto.user.UserFormDto;
 import com.ansanlib.entity.LibUser;
 import com.ansanlib.service.user.UserService;
@@ -37,6 +36,9 @@ public class UserController {
 	@PostMapping(value = "/new")
 	public String newUser(@Valid UserFormDto userFormDto, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
+			model.addAttribute("userFormDto", userFormDto);
+			
+			
 			return "user/userForm";
 		}
 		try {
@@ -74,25 +76,27 @@ public class UserController {
 		return "/user/findpwdForm";
 	}
 
-	// 임시 회원 만들기
-	@GetMapping("/create")
-	public ResponseEntity<String> test() {
-		LibUser user = new LibUser();
-
-
-		user.setLoginid("test");
-		user.setName("홍길동");
-		user.setPassword(passwordEncoder.encode("1234"));
-		// user.setBirth(LocalDateTime.of(2000, 01, 01));
-		user.setPhone("010-1234-1234");
-		user.setEmail("test@test.com");
-		user.setAddress("대전시 중구");
-		user.setSms("동의");
-
-		user.setRole(Role.USER);
-
-		userService.saveUser(user);
-		return ResponseEntity.ok("테스트 유저");
-	}
+////	// 임시 회원 만들기
+//	@GetMapping("/create")
+//	public ResponseEntity<String> test() {
+//		LibUser user = new LibUser();
+//
+//
+//		user.setLoginid("test");
+//		user.setName("홍길동");
+//		user.setPassword(passwordEncoder.encode("1234"));
+//		user.setPhone("01012341234");
+//		user.setEmail("test@test.com");
+//		user.setAddress("대전시 중구");
+//		user.setAddress2("도마동");
+//		user.setSms("동의");
+//		user.setGender(Gender.MALE);
+//		
+//
+//		user.setRole(Role.ADMIN);
+//
+//		userService.saveUser(user);
+//		return ResponseEntity.ok("테스트 유저");
+//	}
 
 }
