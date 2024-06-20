@@ -1,6 +1,5 @@
 package com.ansanlib.controller.reservation;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,18 +22,18 @@ public class ReservationController {
 	
 	@PostMapping 
 	public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation) {
-        //현재 시간을 예약 시간으로 설정
-		reservation.setReservationDate(LocalDateTime.now());
-		//예약 날짜로 부터 7일 후를 반납일로 설정
-		reservation.setReturnDate(reservation.getReservationDate().plusDays(7));
-		//예약 정보를 저장
-		Reservation savedReservation = reservationService.saveReservation(reservation);
-        return ResponseEntity.ok(savedReservation);
+       try {
+    	   Reservation savedReservation = reservationService.saveReservation(reservation);
+           return ResponseEntity.ok(savedReservation);   
+       }catch(Exception e) {
+    	   return ResponseEntity.badRequest().body(null);
+       }
+		
     }
 
-    @GetMapping("/{userName}")
-    public ResponseEntity<List<Reservation>> getReservationsByUser(@PathVariable String userName) {
-        List<Reservation> reservations = reservationService.getReservationByUser(userName);
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<Reservation>> getReservationsByUser(@PathVariable String userId) {
+        List<Reservation> reservations = reservationService.getReservationByUser(userId);
         return ResponseEntity.ok(reservations);
     }
 }

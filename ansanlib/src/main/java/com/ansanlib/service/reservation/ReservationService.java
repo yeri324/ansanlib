@@ -1,4 +1,3 @@
-
 package com.ansanlib.service.reservation;
 
 import java.time.LocalDateTime;
@@ -15,18 +14,19 @@ public class ReservationService {
 	@Autowired
 	private ReservationRepository reservationRepository;
 	
-	public Reservation saveReservation(Reservation reservation) {
-		//예약 날짜 설정
-		reservation.setReservationDate(LocalDateTime.now());
+	public Reservation saveReservation(Reservation reservation) throws Exception {
+		//예약 기간 중복 검사
+		List<Reservation> overlappingReservations = reservationRepository.findOverlappingReservations(
+				reservation.getBookIsbn(), reservation.getStartDate(), reservation.getEndDate());
 		
-		// 반납 날짜 설정 (7일 후)
-		LocalDateTime returnDate = LocalDateTime.now().plusDays(7);
-		reservation.setReturnDate(returnDate);
-		
+		if (!overlappingReservations.isEmpty()) {
+			throw new Exception("예약 날짜가 겹쳐 존재합니다.");
+		}
+		//예약 정보 저장
 		return reservationRepository.save(reservation);
 	}
 	
-	public List<Reservation> getReservationByUser(String userName){
-		return reservationRepository.findByUserName(userName);
+	public List<Reservation> getReservationByUser(String userId){
+		return reservationRepository.findByUserId(userId);
 	}
 }

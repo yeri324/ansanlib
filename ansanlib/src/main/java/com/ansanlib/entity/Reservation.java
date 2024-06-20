@@ -19,17 +19,18 @@ import lombok.Setter;
 public class Reservation {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id; 
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 	
-	@Column(nullable = false)
-	private String userName; // 회원 이름
-	
-	@Column(nullable = false)
-	private String bookIsbn; // 책 isbn
-	
-	@Column(nullable = false)
-	private LocalDateTime reservationDate;//대여일
-	
-	private LocalDateTime returnDate; // 반납일 
+	@Column(name = "book_isbn", nullable = false)
+    private String bookIsbn;
+    
+    @Column(name = "user_id", nullable = false)
+    private String userId;
+    
+    @Column(name = "start_date", nullable = false)
+    private LocalDateTime startDate;
+    
+    @Column(name = "end_date", nullable = false)
+    private LocalDateTime endDate;
 }
