@@ -1,0 +1,140 @@
+/* styles.css */
+
+/* 회원가입 폼 전체를 감싸는 div */
+.SignUp-compo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    /* 작은 화면에서도 잘 보일 수 있도록 반응형 스타일링 */
+    @media (max-width: 500px) {
+      label,
+      input,
+      button {
+        margin: 10px 20px; /* 좌우 여백을 더 줄임 */
+      }
+    }
+
+  .form-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+/* 각 입력 요소와 라벨의 간격을 조정 */
+.SignUp-compo label {
+  width: 450px;
+  display: flex;
+  flex-direction: column;
+
+  margin: 10px 0;
+}
+
+.SignUp-compo .input-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 5px; /* 각 input-box 사이의 간격 설정 */
+  min-width: none;
+  max-width: 500px;
+}
+
+.SignUp-compo input{
+  width: 91%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  height: 20px;
+}
+
+.SignUp-compo button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  margin: 0 10px;
+  
+}
+
+.SignUp-compo button:hover {
+  background-color: #0056b3;
+}
+
+/* 버튼과 입력 요소 사이의 간격을 조정 */
+.SignUp-compo button + label,
+.SignUp-compo button + input {
+  margin-left: 10px;
+}
+
+.SignUp-compo .input-form {
+    display: flex; /* Flexbox 레이아웃 사용 */
+    flex-direction: column; /* 열 방향으로 요소들을 배치 */
+    align-items: center; /* 수직 가운데 정렬 */
+    /* 다른 스타일 속성들 */
+}
+
+.SignUp-compo .input-box .center-button {
+    width: 100px;
+}
+
+
+.SignUp-compo .phone-number-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.SignUp-compo .phone-number-box input {
+    width: 30%;
+}
+
+.SignUp-compo .phone-number-box select {
+    width: 30%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+.SignUp-compo .phone-number-box h4 {
+    display: block;
+    margin: 0 5px;
+    margin-bottom: 13px;
+}
+
+.SignUp-compo .input-icon {
+    text-align: center;
+}
+
+.SignUp-compo .input-icon img {
+    width: 300px;
+    height: 300px;
+}
+
+.SignUp-compo .signup-button {
+    margin-top: 15px;
+    height: 100px;
+}
+
+.SignUp-compo .signup-button button{
+    width: 150px;
+    height: 50px;
+}
+
+.SignUp-compo .complete {
+    color: green;
+}
+
+.SignUp-compo .error {
+    color: red;
+}
