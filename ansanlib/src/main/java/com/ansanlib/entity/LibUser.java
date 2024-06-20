@@ -2,12 +2,9 @@ package com.ansanlib.entity;
 
 import java.time.LocalDateTime;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 import com.ansanlib.constant.Gender;
 import com.ansanlib.constant.Role;
 import com.ansanlib.constant.UserStatus;
-import com.ansanlib.dto.user.UserFormDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -76,24 +73,24 @@ public class LibUser extends BaseEntity {
 	
 	
 	
-	public static LibUser createUser(UserFormDto userFormDto, PasswordEncoder passwordEncoder) {
-		LibUser user = new LibUser();
-		user.setName(userFormDto.getName());
-		user.setEmail(userFormDto.getEmail());
-		user.setAddress(userFormDto.getAddress());
-		user.setAddress2(userFormDto.getAddress2());
-		
-		user.setLoginid(userFormDto.getLoginid());
-		user.setLoginDate(userFormDto.getLoginDate());
-	
-		user.setJoinDate(userFormDto.getJoinDate());
-	
-		user.setSms(userFormDto.getSms());
-		
-		String password = passwordEncoder.encode(userFormDto.getPassword());
-		user.setPassword(password);
-		user.setRole(Role.USER);
-	
-		return user;
-	}
+//	public static LibUser createUser(UserDto userFormDto, PasswordEncoder passwordEncoder) {
+//		LibUser user = new LibUser();
+//		user.setName(userFormDto.getName());
+//		user.setEmail(userFormDto.getEmail());
+//		user.setAddress(userFormDto.getAddress());
+//		user.setAddress2(userFormDto.getAddress2());
+//		
+//		user.setLoginid(userFormDto.getLoginid());
+//		user.setLoginDate(userFormDto.getLoginDate());
+//	
+//		user.setJoinDate(userFormDto.getJoinDate());
+//	
+//		user.setSms(userFormDto.getSms());
+//		
+//		String password = passwordEncoder.encode(userFormDto.getPassword());
+//		user.setPassword(password);
+//		user.setRole(Role.USER);
+//	
+//		return user;
+//	}
 }
