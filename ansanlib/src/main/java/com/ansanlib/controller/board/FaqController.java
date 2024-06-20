@@ -25,17 +25,19 @@ public class FaqController {
 
 	private final FaqService faqService;
 
+	//FAQ 리스트 가져오기
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ResponseEntity<List<Faq>> faqList() {
 		List<Faq> faqList = faqService.getFaqList();
 		return ResponseEntity.ok(faqList);
 	}
 
+	//FAQ 생성하기
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
 	public ResponseEntity<String> faqNew(@RequestBody FaqFormDto faqFormDto) throws Exception {
 		ResponseEntity<String> resEntity = null;
 		try {
-			faqService.saveFaq(faqFormDto);
+			faqService.createFaq(faqFormDto);
 			resEntity = new ResponseEntity("Save_OK", HttpStatus.OK);
 		} catch (Exception e) {
 			resEntity = new ResponseEntity("글 등록 중 에러가 발생하였습니다.",  HttpStatus.BAD_REQUEST);
@@ -43,55 +45,31 @@ public class FaqController {
 		return resEntity;
 	}
 
+	//FAQ 상세페이지 가져오기
 	@RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
-	public String faqDtl(@PathVariable("faqId") Long faqId, Model model) {
+	public ResponseEntity<String> faqDtl(@PathVariable("faqId") Long faqId) {
+		ResponseEntity<String> resEntity = null;
 		try {
-			Faq faq = faqService.getFaqDtl(faqId);
-			model.addAttribute("faq", faq);
+			faqService.getFaqDtl(faqId);
+			System.out.println("*****");
+			resEntity = new ResponseEntity("글 상세 가져오기", HttpStatus.OK);
 		} catch (EntityNotFoundException e) {
-			model.addAttribute("errorMessage", "존재하지 않는 상품 입니다.");
-			return "board/FaqList";
+			return resEntity = new ResponseEntity("없는 글입니다.",  HttpStatus.BAD_REQUEST);
 		}
-		return "board/FaqDetailForm";
+		return resEntity;
 	}
 	
-//	@GetMapping(value = "/api/faqlist")
-//	public String faqList(Model model) {
-//		List<Faq> faqList = faqService.getFaqList();
-//		model.addAttribute("faqList", faqList);
-//		return board/FaqList;
-//	}
-//
-//	@GetMapping(value = "/api/faq/new")
-//	public String faqNew(Model model) throws Exception {
-//		model.addAttribute("FaqFormDto", new FaqFormDto());
-//		return "board/FaqForm";
-//	}
-//
-//	@PostMapping(value = "/api/faq/new")
-//	public String faqNew(FaqFormDto faqFormDto, Model model) throws Exception {
-//		try {
-//			faqService.saveFaq(faqFormDto);
-//			List<Faq> faqList = faqService.getFaqList();
-//			model.addAttribute("faqList", faqList);
-//
-//		} catch (Exception e) {
-//			model.addAttribute("errorMessage", "글 등록 중 에러가 발생하였습니다.");
-//			return "board/FaqForm";
-//		}
-//		return "board/FaqList";
-//	}
-//
-//	@GetMapping(value = "/api/faq/detail/{faqId}")
-//	public String faqDtl(@PathVariable("faqId") Long faqId, Model model) {
-//		try {
-//			Faq faq = faqService.getFaqDtl(faqId);
-//			model.addAttribute("faq", faq);
-//		} catch (EntityNotFoundException e) {
-//			model.addAttribute("errorMessage", "존재하지 않는 상품 입니다.");
-//			return "board/FaqList";
-//		}
-//		return "board/FaqDetailForm";
-//	}
+	//FAQ 수정하기
+	@RequestMapping(value = "/detail/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<String> updateFaq(@PathVariable("faqId") Long faqId, @RequestBody FaqFormDto faqFormDto) {
+		ResponseEntity<String> resEntity = null;
+		try {
+//			faqService.updateFaq(faqFormDto);
+			resEntity = new ResponseEntity("Update_OK", HttpStatus.OK);
+		} catch (EntityNotFoundException e) {
+			return resEntity = new ResponseEntity("수정에 실패하였습니다.",  HttpStatus.BAD_REQUEST);
+		}
+		return resEntity;
+	}
 
 }

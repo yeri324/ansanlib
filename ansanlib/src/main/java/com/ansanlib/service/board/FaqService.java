@@ -20,7 +20,7 @@ public class FaqService {
 
 	private final FaqRepository faqRepository;
 
-	public Long saveFaq(FaqFormDto faqFormDto) {
+	public Long createFaq(FaqFormDto faqFormDto) {
 		Faq faq = faqFormDto.createFaq();
 		faqRepository.save(faq);
 		return faq.getId();
@@ -30,9 +30,9 @@ public class FaqService {
 		return faqRepository.findAll();
 	}
 
-	public void modify(FaqFormDto faqFormDto) {
-		return;
-	}
+//	public void updateFaq(FaqFormDto faqFormDto) {
+//		return faqRepository.save(faqFormDto);
+//	}
 
 	public void delete(Faq faq) {
 		this.faqRepository.delete(faq);

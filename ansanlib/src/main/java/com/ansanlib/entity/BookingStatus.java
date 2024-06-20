@@ -22,8 +22,8 @@ public class BookingStatus extends BaseEntity {
     private Long id;
    
  
-   private int booking_rank;
+   private int booking_rank; // 예약 순위
    
    private LocalDateTime regist_date;
-   private LocalDateTime booking_end;
+   private LocalDateTime booking_end; // 예약 마감 날짜
 }
