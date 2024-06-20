@@ -31,7 +31,7 @@ public class AdminUserController {
 //    } 
 	
 	@GetMapping("/search")
-    public ResponseEntity<List<LibUser>> searchUsers(@ModelAttribute AdminUserDto adminUserDto, Model model) {
+    public ResponseEntity<List<LibUser>> searchUsers(@ModelAttribute AdminUserDto adminUserDto) {
 		
         List<LibUser> users = adminUserService.ListUser(adminUserDto);
    
