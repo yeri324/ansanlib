@@ -12,13 +12,21 @@ const Admin = () => {
         searchQuery:"",
         selectRadio:"all",
     });
-    
+
+    const onClickSearch = (_searchBy,_searchQuery,_selectRadio)=>{
+        setSearchOption({
+            searchBy : _searchBy,
+            searchQuery:_searchQuery,
+            selectRadio:_selectRadio,
+        })
+    };
+
     return (
         <div>
            <AdminHeader />
            <AdminSide />
            <AdminSearch />
-           <AdminUserList />
+           <AdminUserList searchOption={searchOption}/>
 
         </div>
     );

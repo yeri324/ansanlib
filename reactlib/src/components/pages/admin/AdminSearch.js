@@ -1,4 +1,25 @@
+import { useState,useEffect } from "react";
+import axios from "axios";
 const AdminSearch = ()=>{
+
+    const [faqList, setFaqList] = useState()
+
+    useEffect(() => {
+        getDataset();
+    }, []);
+
+    const getDataset = () => {
+        axios.get('/faq/list')
+            .then((res) => {
+
+                setFaqList(res.data);
+            })
+            .catch((err) => {
+                setFaqList([]);
+            });
+    };
+
+    
     return (
         <div>
              <form action="/admin/user/search" method="get">
