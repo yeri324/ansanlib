@@ -1,42 +1,21 @@
-import './App.css';
-import { useState,useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Routes, Route } from 'react-router-dom';
+import FaqList from './components/pages/faq/FaqList';
+import FaqForm from './components/pages/faq/FaqForm';
+import FaqDetailForm from './components/pages/faq/FaqDetailForm';
 
 function App() {
-  const [selectedDataset, setSelectedDataset] = useState();
-
-useEffect(() => {
-        getDataset();
-  }, []);
-
-  const getDataset = () => {
-    axios.get('/admin/user/search')
-    .then((res) => {
-        let list = res.data.length === 1 ? res.data.concat(res.data) : res.data;
-        setSelectedDataset(list);
-    })
-    .catch((err) => {
-        setSelectedDataset([]);
-    });
-};
-
 
   return (
-    <div className="App">
-     
-     <div>
-     {selectedDataset && selectedDataset.map((item, index) => (
-                        <div key={index} className="slide">
-                            <div >
-                                <div >
-                                    
-                                    <h4>{item.name} </h4>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-     </div>
+    <div>
+      <Routes>
+        <Route path="/faq/list" element={<FaqList />} />
+        <Route path="/faq/new" element={<FaqForm />} />
+        <Route path="/faq/detail/:id" element={<FaqDetailForm />} />
+      </Routes>
     </div>
   );
 }
+
 export default App;
