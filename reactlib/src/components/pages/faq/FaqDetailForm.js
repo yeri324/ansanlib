@@ -7,6 +7,7 @@ function FaqDetailForm() {
     const {id} = useParams();
     const navigate = useNavigate();
     const [faqDetail, setFaqDetail] = useState();
+    const [faqId, setFaqId] = useState('');
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
 
@@ -34,6 +35,7 @@ function FaqDetailForm() {
               url: `/faq/detail/${id}`,
               method: 'put',
               data: {
+                faqId:setFaqId,
                 title:title,
                 content:content
               }, 

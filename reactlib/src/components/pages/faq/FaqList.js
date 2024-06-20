@@ -21,6 +21,11 @@ function FaqList() {
             });
     };
 
+
+    const getFaqDto = () => {
+        
+    };
+
     return (
         <div>
             <table>
@@ -38,7 +43,7 @@ function FaqList() {
                         <div >
                             <tr>
                                 <th>{item.id}</th>
-                                <th><Link to={`/faq/detail/${item.id}`}>{item.title}</Link></th>
+                                <th><Link to={`/faq/detail/${item.id}`} onClick={getFaqDto}>{item.title}</Link></th>
                                 <th>{item.regTime}</th>
                             </tr>
                         </div>
