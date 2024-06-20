@@ -20,7 +20,7 @@ public class FaqService {
 
 	private final FaqRepository faqRepository;
 
-	public Long saveFaq(FaqFormDto faqFormDto) throws Exception {
+	public Long saveFaq(FaqFormDto faqFormDto) {
 		Faq faq = faqFormDto.createFaq();
 		faqRepository.save(faq);
 		return faq.getId();

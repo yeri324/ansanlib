@@ -1,50 +1,21 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Routes, Route } from 'react-router-dom';
+import FaqList from './components/pages/faq/FaqList';
+import FaqForm from './components/pages/faq/FaqForm';
+import FaqDetailForm from './components/pages/faq/FaqDetailForm';
 
 function App() {
-   const [faq, setFaq] = useState()
 
-   useEffect(() => {
-    getDataset();
-}, []);
-
-const getDataset = () => {
-  axios.get('/faqlist')
-  .then((res) => {
-      
-      setFaq(res.data);
-  })
-  .catch((err) => {
-      setFaq([]);
-  });
-};
-
-    return (
-      <div>
-      {faq && faq.map((item, index) => (
-        <div key={index} className="slide">
-            <div >
-                <div >
-                    <h4>{item.title} </h4>
-                    <h4>{item.content} </h4>
-                </div>
-            </div>
-        </div>
-    ))}
+  return (
+    <div>
+      <Routes>
+        <Route path="/faq/list" element={<FaqList />} />
+        <Route path="/faq/new" element={<FaqForm />} />
+        <Route path="/faq/detail/:id" element={<FaqDetailForm />} />
+      </Routes>
     </div>
-    );
+  );
 }
 
 export default App;
-
-// import './App.css';
-// import { AppBar,Toolbar,Typography } from '@mui/material';
-
-// function App() {
-//   return (
-//     <div className="App">
-      
-//     </div>
-//   );
-// }
-// export default App;
