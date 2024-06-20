@@ -23,11 +23,11 @@ public class ReservationController {
 	
 	@PostMapping 
 	public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation) {
-        
+        //현재 시간을 예약 시간으로 설정
 		reservation.setReservationDate(LocalDateTime.now());
-		
+		//예약 날짜로 부터 7일 후를 반납일로 설정
 		reservation.setReturnDate(reservation.getReservationDate().plusDays(7));
-		
+		//예약 정보를 저장
 		Reservation savedReservation = reservationService.saveReservation(reservation);
         return ResponseEntity.ok(savedReservation);
     }
