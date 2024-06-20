@@ -2,7 +2,7 @@ import AdminHeader from "./AdminHeader";
 import AdminSearch from "./AdminSearch";
 import AdminSide from "./AdminSide";
 import AdminUserList from "./AdminUserList";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 const Admin = () => {
@@ -13,8 +13,14 @@ const Admin = () => {
         selectRadio:"all",
     });
 
+    useEffect(() => {
+        setSearchOption();
+        console.log(searchOption);
+    },[searchOption])
+
     const onClickSearch = (_searchBy,_searchQuery,_selectRadio)=>{
         setSearchOption({
+            ...searchOption,
             searchBy : _searchBy,
             searchQuery:_searchQuery,
             selectRadio:_selectRadio,
@@ -25,7 +31,7 @@ const Admin = () => {
         <div>
            <AdminHeader />
            <AdminSide />
-           <AdminSearch />
+           <AdminSearch onClickSearch={onClickSearch} />
            <AdminUserList searchOption={searchOption}/>
 
         </div>

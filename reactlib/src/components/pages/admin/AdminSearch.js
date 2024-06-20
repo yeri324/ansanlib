@@ -1,28 +1,15 @@
 import { useState,useEffect } from "react";
 import axios from "axios";
-const AdminSearch = ()=>{
-
-    const [faqList, setFaqList] = useState()
-
-    useEffect(() => {
-        getDataset();
-    }, []);
-
-    const getDataset = () => {
-        axios.get('/faq/list')
-            .then((res) => {
-
-                setFaqList(res.data);
-            })
-            .catch((err) => {
-                setFaqList([]);
-            });
-    };
-
+function sendOption(){
     
+}
+
+const AdminSearch = ({onClickSearch})=>{
+
+  
     return (
         <div>
-             <form action="/admin/user/search" method="get">
+             <form action={onClickSearch()} method="get">
 		        <label for="searchBy">searchBy</label>
 		        <select id="searchBy" name="searchBy">
 		            <option value="userId">ID</option>

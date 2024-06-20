@@ -3,21 +3,7 @@ import axios from "axios";
 
 const AdminUserList = ()=>{
     const [faqForm, setFaqForm] = useState()
-
-    useEffect(() => {
-        getDataset();
-    }, []);
-
-    const getDataset = () => {
-        axios.get('/faq/new')
-            .then((res) => {
-
-                setFaqForm(res.data);
-            })
-            .catch((err) => {
-                setFaqForm([]);
-            });
-    };
+  
     return (
         <div>
         <h2>결과</h2>
