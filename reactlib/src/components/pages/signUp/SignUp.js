@@ -252,6 +252,7 @@ const SignUp = ({ isLoggedIn, isComp }) => {
                         console.error(error); // 오류 발생 시 처리
                     });
             } else {
+                
                 if (!verified) {
                     alert("이메일 또는 휴대폰 인증이 필요합니다.");
                 } else if (!idAvailable) {
