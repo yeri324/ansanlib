@@ -1,55 +1,83 @@
-
 <!DOCTYPE html>
-<html>
-	
+
+<script>
+
+	$('.modal').on('hidden.bs.modal', function (e) {
+		console.log('modal close');
+		$(this).find('form')[0].reset()
+	});
+
+	$("#checkEmail").click(function () {
+		let userEmail = $("#userEmail").val();
+		let userName = $("#userName").val();
+
+		$.ajax({
+			type: "GET",
+			url: "/check/findPw",
+			data: {
+				"userEmail": userEmail,
+				"userName": userName
+			},
+			success: function (res) {
+				if (res['check']) {
+					swal("발송 완료!", "입력하신 이메일로 임시비밀번호가 발송되었습니다.", "success").then((OK) = > {
+						if(OK) {
+							$.ajax({
+								type: "POST",
+								url: "/check/findPw/sendEmail",
+								data: {
+									"userEmail": userEmail,
+									"userName": userName
+								}
+							})
+							window.location = "/login";
+						}
 
 
-<div class="section" layout:fragment="content">
-	<script src="/javascript/findidForm.js"></script>
-	<div class="container">
-		<div class="row full-height justify-content-center">
-			<div class="col-12 text-center align-self-center py-5">
-				<div class="section pb-5 pt-5 pt-sm-2 text-center">
-					
-					<label for="reg-log"></label>
-					<div class="card-3d-wrap mx-auto">
-						<div class="card-3d-wrapper">
-							<div class="card-front">
-								<form action="/users/findid" role="form" method="post"
-									th:object="${userFormDto}">
-									<div class="center-wrap">
-										<div class="section text-center">
-											<h4 class="mb-4 pb-3 signup-font">아이디 찾기</h4>
-											<div class="form-group">
-												<input type="text" name="findEmail" class="form-style-id" 
-												th:field="*{email}" placeholder="이메일" id="findEmail" autocomplete="off"> 
-												<i class="input-icon uil uil-at"></i>
-												<button type="button" class="btn-check btn-primary" onclick="sendEmail()">인증번호 전송</button>
-											</div>
-											<div class="form-group mt-2">
-												<input type="text" name="findCode" class="form-style input-email-code" placeholder="인증코드"
-													id="findCode" autocomplete="off"> 
-												<i class="input-icon uil uil-lock input-icon-code"></i>
-											</div>
-											<div class="form-group mt-2">
-												<button type="button" class="btn-check btn-primary btn-email-end" onclick="sendEmail()">인증번호 재발행</button>
-												<button type="button" class="btn-check btn-primary btn-email-end" onclick="checkEmail()">인증확인</button>
-											</div>
-											<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-											<p class="mb-0 mt-4 text-center explanation-font">
-												<a href="/users/findpwd" class="link">Forgot your password?</a>
-											</p>
-										</div>
-									</div>
-								</form>
-							</div>
-							
+					}
+					)
+					$('#checkMsg').html('<p style="color:darkblue"></p>');
+				} else {
+					$('#checkMsg').html('<p style="color:red">일치하는 정보가 없습니다.</p>');
+				}
+			}
+		})
+	})
+</script>
+
+<div class="container">
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header" style="padding:35px 50px;">
+					<h4><span class="glyphicon glyphicon-lock"></span>아이디찾기</h4>
+				</div>
+				<div class="modal-body" style="padding:40px 50px;">
+			
+					<hr>
+					<form role="form">
+						<div class="form-group">
+							<label for="userEmail"><span class="glyphicon glyphicon-user"></span>이메일</label>
+							<input type="text" class="form-control" id="userEmail" placeholder="이메일입력">
 						</div>
-					</div>
+						<div class="form-group">
+							<label for="userId"><span class="glyphicon glyphicon-eye-open"></span>이름</label>
+							<input type="text" class="form-control" id="Name" placeholder="이름입력">
+						</div>
+						<button type="button" class="btn btn-success btn-block" id="checkEmail">아이디 확인</button>
+					</form>
+					<hr>
+					<div class="text-center small mt-2" id="checkMsg" style="color: red"></div>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-primary" onClick="location.href='/users/login'">로그인</button>
+					<button type="button" class="btn btn-primary" onClick="location.href='/users/findpwd'">비밀번호찾기</button>
 				</div>
 			</div>
+
 		</div>
 	</div>
-
 </div>
-</html>
