@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ansanlib.dto.reservation.CreateReservationDto;
 import com.ansanlib.entity.Reservation;
 import com.ansanlib.service.reservation.ReservationService;
 
@@ -21,14 +22,19 @@ public class ReservationController {
 	private ReservationService reservationService;
 	
 	@PostMapping 
-	public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation) {
-        Reservation savedReservation = reservationService.saveReservation(reservation);
-        return ResponseEntity.ok(savedReservation);
+	public ResponseEntity<Reservation> createReservation(@RequestBody CreateReservationDto createReservationDto) {
+       try {
+    	   Reservation savedReservation = reservationService.createReservation(createReservationDto);
+           return ResponseEntity.ok(savedReservation);   
+       }catch(Exception e) {
+    	   return ResponseEntity.badRequest().body(null);
+       }
+		
     }
 
-    @GetMapping("/{userName}")
-    public ResponseEntity<List<Reservation>> getReservationsByUser(@PathVariable String userName) {
-        List<Reservation> reservations = reservationService.getReservationByUser(userName);
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<Reservation>> getReservationsByUser(@PathVariable String userId) {
+        List<Reservation> reservations = reservationService.getReservationByUser(userId);
         return ResponseEntity.ok(reservations);
     }
 }
