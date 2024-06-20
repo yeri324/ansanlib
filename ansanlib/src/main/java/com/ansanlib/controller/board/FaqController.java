@@ -24,14 +24,14 @@ public class FaqController {
 	public String faqList(Model model) {
 		List<Faq> faqList = faqService.getFaqList();
 		model.addAttribute("faqList", faqList);
-		return "FaqList";
+		return "board/FaqList";
 	}
 	
 	
 	@GetMapping(value="/faq/new")
 	public String faqNew(Model model) throws Exception{
 		model.addAttribute("FaqFormDto", new FaqFormDto());
-		return "FaqForm";
+		return "board/FaqForm";
 	}
 	
 	@PostMapping(value="/faq/new")
@@ -43,9 +43,9 @@ public class FaqController {
 			
 		} catch(Exception e) {
 			model.addAttribute("errorMessage", "글 등록 중 에러가 발생하였습니다.");
-			return "FaqForm";
+			return "board/FaqForm";
 		}
-		return "FaqList";
+		return "board/FaqList";
 	}
 
 }
