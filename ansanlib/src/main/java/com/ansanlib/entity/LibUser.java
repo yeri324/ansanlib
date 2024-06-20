@@ -1,6 +1,5 @@
 package com.ansanlib.entity;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -47,7 +46,7 @@ public class LibUser extends BaseEntity {
 	
 	private String address;
 	
-	private LocalDate birth;
+	private LocalDateTime birth;
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
 
