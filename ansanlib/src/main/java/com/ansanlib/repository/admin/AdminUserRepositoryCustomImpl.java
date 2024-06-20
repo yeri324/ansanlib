@@ -26,27 +26,26 @@ public class AdminUserRepositoryCustomImpl implements AdminUserRepositoryCustom 
 		QLibUser libUser = QLibUser.libUser;
 		var query = queryFactory.selectFrom(libUser);
 		
-		
-		if (adminUserDto.getSelectRadio().equals("penalty")) {
-			query.where(libUser.penalty.gt(0));
+
+        if ("userId".equals(adminUserDto.getSearchBy())) {
+            query.where(libUser.loginid.containsIgnoreCase(adminUserDto.getSearchQuery()));
+        } else if ("userName".equals(adminUserDto.getSearchBy())) {
+            query.where(libUser.name.containsIgnoreCase(adminUserDto.getSearchQuery()));
+        }
+
+  
+		if ("penalty".equals(adminUserDto.getSelectRadio())) {
+			query.where(libUser.penalty.gt(0)).orderBy(libUser.penalty.desc());
 			}
-		else if (adminUserDto.getSelectRadio().equals("lateFee")) {
+		else if ("latefee".equals(adminUserDto.getSelectRadio())) {
 			query.where(libUser.lateFee.gt(0));
 		}
-		query.where(searchByLike(adminUserDto.getSearchBy(),adminUserDto.getSearchQuery()));
+		
 		List<LibUser> users = new ArrayList<>();
 		users = query.fetch();
 		return users;
 		
 	}
 	
-	private BooleanExpression searchByLike(String searchBy, String searchQuery) {
-		if (StringUtils.equals("userId", searchBy)) {
-			return QLibUser.libUser.loginid.contains(searchQuery);
-		} else if (StringUtils.equals("userName", searchBy)) {
-			return QLibUser.libUser.name.contains(searchQuery);
-		}
-		return null;
-	}
 
 }
