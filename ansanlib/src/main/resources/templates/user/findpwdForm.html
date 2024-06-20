@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <script>
 
 	$('.modal').on('hidden.bs.modal', function (e) {
@@ -7,14 +9,14 @@
 
 	$("#checkEmail").click(function () {
 		let userEmail = $("#userEmail").val();
-		let userName = $("#userName").val();
+		let userLoginid = $("#userLoginid").val();
 
 		$.ajax({
 			type: "GET",
 			url: "/check/findPw",
 			data: {
 				"userEmail": userEmail,
-				"userName": userName
+				"userName": userLoginid
 			},
 			success: function (res) {
 				if (res['check']) {
@@ -22,10 +24,10 @@
 						if(OK) {
 							$.ajax({
 								type: "POST",
-								url: "/check/findPw/sendEmail",
+								url: "/check/findPwd/sendEmail",
 								data: {
 									"userEmail": userEmail,
-									"userName": userName
+									"userLoginid": userLoginid
 								}
 							})
 							window.location = "/login";
@@ -60,29 +62,25 @@
 					<hr>
 					<form role="form">
 						<div class="form-group">
-
-							<div class="form-group">
-								<label for="userId"><span class="glyphicon glyphicon-eye-open"></span>아이디</label>
-								<input type="text" class="form-control" id="userId" placeholder="아이디">
-							</div>
+							<label for="userId"><span class="glyphicon glyphicon-eye-open"></span> 아이디</label>
+							<input type="text" class="form-control" id="userId" placeholder="아이디입력">
+						</div>
+						<div class="form-group">
 							<label for="userEmail"><span class="glyphicon glyphicon-user"></span>이메일</label>
-							<input type="text" class="form-control" id="userEmail" placeholder="이메일">
+							<input type="text" class="form-control" id="userEmail" placeholder="이메일입력">
 						</div>
 
-						<button type="button" class="btn btn-success btn-block" id="checkEmail">전송</button>
-
+						<button type="button" class="btn btn-success btn-block" id="checkEmail">OK</button>
 					</form>
 					<hr>
 					<div class="text-center small mt-2" id="checkMsg" style="color: red"></div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-success btn-block" id="checkEmail"
-						onClick="location.href='/users/login'">로그인하기</button>
-
-					<button type="button" class="btn btn-success btn-block" id="checkEmail"
-						onClick="location.href='/users/findid'">아이디찾기</button>
+					<button class="btn btn-primary" onClick="location.href='/users/login'">로그인</button>
+					<button type="button" class="btn btn-primary" onClick="location.href='/users/findid'">아이디찾기</button>
 				</div>
 			</div>
+
 		</div>
 	</div>
 </div>

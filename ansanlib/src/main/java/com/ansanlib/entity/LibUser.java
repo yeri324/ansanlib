@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.ansanlib.constant.Gender;
 import com.ansanlib.constant.Role;
 import com.ansanlib.constant.UserStatus;
 import com.ansanlib.dto.user.UserFormDto;
@@ -38,6 +37,7 @@ public class LibUser extends BaseEntity {
 	@Column(unique = true)
 	private String email;
 	
+	@Column(unique = true)
 	private String loginid;
 	
 	private String password;
@@ -47,8 +47,8 @@ public class LibUser extends BaseEntity {
 	private String address;
 	
 	private LocalDateTime birth;
-	@Enumerated(EnumType.STRING)
-	private Gender gender;
+
+	private String gender;
 
 	@Enumerated(EnumType.STRING)
 	private Role role;

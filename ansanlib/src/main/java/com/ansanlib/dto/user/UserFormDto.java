@@ -4,9 +4,6 @@ import java.time.LocalDateTime;
 
 import org.hibernate.validator.constraints.Length;
 
-import com.ansanlib.constant.Role;
-
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
@@ -15,19 +12,23 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserFormDto {
+	
+	private Long id;
 
 	@NotBlank(message = "이름은 필수 입력 값입니다.")
 	private String name;
 	
 	@NotEmpty(message = "이메일은 필수 입력 값입니다.")
-	@Email(message = "이메일 형식으로 입력해주세요.")
 	private String email;
 	
 	@NotEmpty(message = "비밀번호는 필수 입력 값입니다.")
 	@Length(min=8, max=16, message = "비밀번호는 8자 이상, 16자 이하로 입력해주세요")
 	private String password;
 	
+	@NotEmpty(message = "비밀번호가 일치하지 않습니다.")
+	private String password2;
 	
+	@NotEmpty(message = "주소는 필수 입력 값입니다.")
 	private String address;
 	
 	
@@ -37,12 +38,12 @@ public class UserFormDto {
 	@NotEmpty(message = "전화번호는 필수 입력 값입니다.")
 	private String phone;
 	
-
+	
 	@NotEmpty(message = "생년월일은 필수 입력 값입니다.")
 	private LocalDateTime birth;
 	
-	@NotEmpty(message = "필수사항입니다..")
-	private LocalDateTime gender;
+	@NotEmpty(message = "필수사항입니다.")
+	private String gender;
 
 	
 	@NotEmpty(message = "수신정보에 체크하여주세요")

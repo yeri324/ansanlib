@@ -1,5 +1,9 @@
 package com.ansanlib.controller.user;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ansanlib.constant.Role;
 import com.ansanlib.dto.user.UserFormDto;
 import com.ansanlib.entity.LibUser;
 import com.ansanlib.service.user.UserService;
@@ -41,7 +46,7 @@ public class UserController {
 			model.addAttribute("errorMessage", e.getMessage());
 			return "user/userForm";
 		}
-		return "redirect:/";
+		return "redirect:user/userForm";
 	}
 
 	@GetMapping(value = "/login")
@@ -62,13 +67,32 @@ public class UserController {
 		return "/user/findidForm";
 	}
 
-	//비밀번호 찾기 뷰
+	// 비밀번호 찾기 뷰
 	@GetMapping(value = "/findpwd")
 	public String findpwdForm(Model model) {
 		model.addAttribute("userFormDto", new UserFormDto());
 		return "/user/findpwdForm";
 	}
 
-	
+	// 임시 회원 만들기
+	@GetMapping("/create")
+	public ResponseEntity<String> test() {
+		LibUser user = new LibUser();
+
+
+		user.setLoginid("test");
+		user.setName("홍길동");
+		user.setPassword(passwordEncoder.encode("1234"));
+		// user.setBirth(LocalDateTime.of(2000, 01, 01));
+		user.setPhone("010-1234-1234");
+		user.setEmail("test@test.com");
+		user.setAddress("대전시 중구");
+		user.setSms("동의");
+
+		user.setRole(Role.USER);
+
+		userService.saveUser(user);
+		return ResponseEntity.ok("테스트 유저");
+	}
 
 }
