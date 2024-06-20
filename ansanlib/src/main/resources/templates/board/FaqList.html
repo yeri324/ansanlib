@@ -4,7 +4,7 @@
 <div layout:fragment="content">
 	<div>
 		<div>
-			<a th:href="@{/faq/new}">질문 등록하기</a>
+			<a th:href="@{/api/faq/new}">질문 등록하기</a>
 		</div>
 		<div>
 			<table>
@@ -19,7 +19,7 @@
 				</thead>
 			<tr th:each="faq : ${faqList}">
 					<td th:text="${faq.id}"></td>
-					<td><a th:href="@{|/faq/detail/${faq.id}|}" th:text="${faq.title}"></a></td>
+					<td><a th:href="@{|/api/faq/detail/${faq.id}|}" th:text="${faq.title}"></a></td>
 					<td th:text="${faq.regTime}"></td>
 					<td th:text="${faq.updateTime}"></td>
 				</tr>
