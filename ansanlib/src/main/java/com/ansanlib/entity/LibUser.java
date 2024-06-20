@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import com.ansanlib.constant.Gender;
 import com.ansanlib.constant.Role;
 import com.ansanlib.constant.UserStatus;
+import com.ansanlib.dto.user.UserFormDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,13 +32,14 @@ public class LibUser extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	
+	@Column(name="user_name")
 	private String name;
 	
 	@Column(unique = true)
 	private String email;
 	
 	private String loginid;
+	
 	
 	private String password;
 	

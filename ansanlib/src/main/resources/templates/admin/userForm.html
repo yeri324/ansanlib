@@ -38,12 +38,12 @@
 		                </tr>
 		            </thead>
 		            <tbody>
-		                <th:block th:each="user : ${users}">
+		                <th:block th:each="user : ${users}" >
 		                    <tr>
-		                        <td th:text="${user.loginid}">ID</td>
-		                        <td th:text="${user.name}">Name</td>
-		                        <td th:text="${user.penalty}">Penalty</td>
-		                        <td th:text="${user.lateFee}">Late Fee</td>
+		                        <td><a th:href="@{|/admin/user/${user.id}|}" th:text="${user.loginid}">ID</a></td>
+		                         <td><a th:href="@{|/admin/user/${user.id}|}" th:text="${user.name}">Name</a></td>
+		                        <td> <a th:href="@{|/admin/user/${user.id}|}" th:text="${user.penalty}">Penalty</a></td>
+		                         <td><a th:href="@{|/admin/user/${user.id}|}" th:text="${user.lateFee}">Late Fee</a></td>
 		                    </tr>
 		                </th:block>
 		            </tbody>
