@@ -1,12 +1,10 @@
-import React from 'react';
 import Header from './header/header';
 import Footer from './footer/footer';
+import React from 'react';
 
-function homePage() {
-
-
+  function homePage() {
     return (
-        <div>
+      <>
         <Header />
         <section>
           <div className="main_content">
@@ -30,6 +28,8 @@ function homePage() {
           </div>
         </section>
         <Footer />
-      </div>
+      </>
     );
-}
+  };
+
+export default homePage;

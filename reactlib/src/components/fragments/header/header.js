@@ -1,8 +1,8 @@
+import React from 'react';
 import './header.css';
-import React, { useState } from 'react';
 
 
-const Header = ({ useState }) => {
+const Header = () => {
 
   const menu = [
     {
