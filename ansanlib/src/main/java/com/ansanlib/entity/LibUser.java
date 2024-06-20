@@ -2,12 +2,9 @@ package com.ansanlib.entity;
 
 import java.time.LocalDateTime;
 
-//import org.springframework.security.crypto.password.PasswordEncoder;
-
 import com.ansanlib.constant.Gender;
 import com.ansanlib.constant.Role;
 import com.ansanlib.constant.UserStatus;
-import com.ansanlib.dto.user.UserFormDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,16 +18,21 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+//import org.springframework.security.crypto.password.PasswordEncoder;
+
+
+
 @Entity
 @Getter
 @Setter
 @Table(name="lib_user")
 @ToString
 public class LibUser extends BaseEntity {
+	
 	@Id
 	@Column(name="user_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private Long user_id;
 	
 	@Column(name="user_name")
 	private String name;
@@ -47,8 +49,9 @@ public class LibUser extends BaseEntity {
 	
 	private String address;
 	
-	private LocalDateTime birth;
+	private String address2;
 	
+
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
 
@@ -68,17 +71,26 @@ public class LibUser extends BaseEntity {
 	private int lateFee;
 
 	
-
 	
 	
-//	public static LibUser createUser(UserFormDto userFormDto, PasswordEncoder passwordEncoder) {
+//	public static LibUser createUser(UserDto userFormDto, PasswordEncoder passwordEncoder) {
 //		LibUser user = new LibUser();
 //		user.setName(userFormDto.getName());
 //		user.setEmail(userFormDto.getEmail());
 //		user.setAddress(userFormDto.getAddress());
+//		user.setAddress2(userFormDto.getAddress2());
+//		
+//		user.setLoginid(userFormDto.getLoginid());
+//		user.setLoginDate(userFormDto.getLoginDate());
+//	
+//		user.setJoinDate(userFormDto.getJoinDate());
+//	
+//		user.setSms(userFormDto.getSms());
+//		
 //		String password = passwordEncoder.encode(userFormDto.getPassword());
 //		user.setPassword(password);
 //		user.setRole(Role.USER);
+//	
 //		return user;
 //	}
 }
