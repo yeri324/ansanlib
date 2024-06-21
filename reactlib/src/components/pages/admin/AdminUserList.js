@@ -76,6 +76,7 @@ const AdminUserList = ()=>{
             <tbody>
                     {searchResult.map((user)=>(
                          <tr>
+                           <td>{user.id}</td>
                          <td>{user.loginid}</td>
                           <td>{user.name}</td>
                          <td> {user.penalty}</td>
