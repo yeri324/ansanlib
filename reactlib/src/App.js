@@ -7,6 +7,8 @@ import FaqForm from './components/pages/faq/FaqForm';
 import FaqDetailForm from './components/pages/faq/FaqDetailForm';
 
 import Header from './components/fragments/header/header';
+import Footer from './components/fragments/footer/footer';
+import HomePage from './components/fragments/home/homePage';
 
 import Admin from './components/pages/admin/Admin';
 
@@ -17,12 +19,15 @@ function App() {
     <div>
       <Routes>
         <Route path="/fragments/header" element={<Header />} />
+        <Route path="/fragments/footer" element={<Footer />} />
+        <Route path="/fragments/home" element={<HomePage />} />
+        
         <Route path="/faq/list" element={<FaqList />} />
         <Route path="/faq/new" element={<FaqForm />} />
         <Route path="/faq/detail/:id" element={<FaqDetailForm />} />
 
         <Route path="/admin/user/search" element={<Admin />} />
-        
+
         {/* <Route path="/login" element={<LoginForm isLoggedIn={isLoggedIn} setIsLoggedIn={(value) => setIsLoggedIn(value)} />} />
         <Route path="/signup" element={<SignUpSelect isLoggedIn={isLoggedIn} />} />
         <Route path="/signup/normal" element={<SignUp isLoggedIn={isLoggedIn} isComp={false} />} />

@@ -19,11 +19,16 @@
   }
   
   /* 개별 메뉴 항목 스타일 */
-  .header_menu > div {
+  .top_menu > div {
     position: relative;
     padding: 10px 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+  }
+  .top_menu {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
   }
   
   /* 서브 메뉴 스타일 */
@@ -46,16 +51,25 @@
   }
   
   /* 메뉴 항목 호버 스타일 */
-  .header_menu > div:hover {
+  .top_menu > div:hover {
     background-color: #ffffff;
   }
   
   /* 서브 메뉴 보이기 */
-  .header_menu > div:hover .sub_menu {
+  .top_menu > div:hover .sub_menu {
     display: block;
   }
   
   /* 서브 메뉴 항목 호버 스타일 */
   .sub_menu > div:hover {
     background-color: #f8f9fa;
+  }
+
+  /* 센터 로고 스타일 */
+  .top_logo {
+    margin: 10px;
+  }
+  .top_logo img {
+    width: 200px;
+    height: auto;
   }
