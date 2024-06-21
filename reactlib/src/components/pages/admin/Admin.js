@@ -8,31 +8,35 @@ import { useEffect, useState } from "react";
 const Admin = () => {
 
     const [searchOption, setSearchOption] = useState({
-        searchBy:"",
+        searchBy:"id",
         searchQuery:"",
         selectRadio:"all",
     });
+    const [searchResult,setSerchResult] = useState([]);
 
-    useEffect(() => {
-        setSearchOption();
-        console.log(searchOption);
-    },[searchOption])
+    const onSearch = ()=> {
+        axios(
+            {
+              url: '/admin/user/search',
+              method: 'post',
+              data: {
+                searchBy : searchOption.searchBy,
+                searchQuery : searchOption.searchQuery,
+                selectRadio : searchOption.selectRadio,
+              }, 
+              baseURL: 'http://localhost:8090',
+            }
+          ).then((response) => { setSerchResult(response.data);
+          });
+    }
 
-    const onClickSearch = (_searchBy,_searchQuery,_selectRadio)=>{
-        setSearchOption({
-            ...searchOption,
-            searchBy : _searchBy,
-            searchQuery:_searchQuery,
-            selectRadio:_selectRadio,
-        })
-    };
 
     return (
         <div>
            <AdminHeader />
            <AdminSide />
-           <AdminSearch onClickSearch={onClickSearch} />
-           <AdminUserList searchOption={searchOption}/>
+           <AdminSearch searchOption={searchOption} setSearchOption={setSearchOption} onSearch={onSearch} />
+           <AdminUserList searchResult={searchResult}/>
 
         </div>
     );

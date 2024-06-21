@@ -1,32 +1,33 @@
-import { useState,useEffect } from "react";
-import axios from "axios";
-function sendOption(){
-    
-}
+import React, { useState,useEffect } from "react";
 
-const AdminSearch = ({onClickSearch})=>{
 
+
+const AdminSearch = (searchOption, setSearchOption, onSearch)=>{
+
+	const handleOnChange = (e)=>{
+		const {name,value} =e.target;
+		setSearchOption((prevState) => {
+			return { ...prevState,
+				[name]: value,
+			}});
+	};
   
     return (
         <div>
-             <form action={onClickSearch()} method="get">
-		        <label for="searchBy">searchBy</label>
-		        <select id="searchBy" name="searchBy">
+            
+		        <select name="searchBy" value={searchOption.searchBy} onChange={handleOnChange}>
 		            <option value="userId">ID</option>
 		            <option value="userName">Name</option>
 		        </select>
 
-		        <input type="text" id="searchQuery" name="searchQuery" />
+		        <input type="text" name="searchQuery" value={searchOption.searchQuery} onChange={handleOnChange}/>
 
-		        <label for="selectRadio">select</label>
-		        <select id="selectRadio" name="selectRadio">
-		            <option value="all">All</option>
-		            <option value="penalty">Penalty</option>
-		            <option value="latefee">Late Fee</option>
-		        </select>
+				<input type="radio" name="selectRadio" value="all" checked={searchOption.selectRadio==="all"} onChange={handleOnChange}/>
+				<input type="radio" name="selectRadio" value="penalty" checked={searchOption.selectRadio==="penalty"} onChange={handleOnChange}/>
+				<input type="radio" name="selectRadio" value="latefee" checked={searchOption.selectRadio==="latefee"} onChange={handleOnChange}/>
+		        
 
-		        <button type="submit">Search</button>
-		    </form>
+		        <button onClick={onSearch}>Search</button>
         </div>
     );
     }

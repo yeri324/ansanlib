@@ -1,8 +1,8 @@
 import React, { useState,useEffect } from "react";
 import axios from "axios";
 
-const AdminUserList = ()=>{
-    const [faqForm, setFaqForm] = useState()
+const AdminUserList = ({searchResult})=>{
+   
   
     return (
         <div>
@@ -17,12 +17,15 @@ const AdminUserList = ()=>{
                 </tr>
             </thead>
             <tbody>
-                    <tr>
-                        <td>ID</td>
-                         <td>Name</td>
-                        <td> Penalty</td>
-                         <td>Late Fee</td>
-                    </tr>
+                    {searchResult.map((user)=>(
+                         <tr>
+                         <td>{user.loginId}</td>
+                          <td>{user.userName}</td>
+                         <td> {user.penalty}</td>
+                          <td>{user.lateFee}</td>
+                     </tr>
+                    ))};
+                   
 
             </tbody>
         </table>
