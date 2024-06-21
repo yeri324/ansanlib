@@ -1,5 +1,7 @@
 package com.ansanlib.board.dto;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 
 import com.ansanlib.entity.Faq;
@@ -18,6 +20,7 @@ public class FaqFormDto {
     @NotBlank(message="내용은 필수 입력 값입니다.")
     private String content;
 
+    private List<Long> idList;
     
     private static ModelMapper modelMapper = new ModelMapper();
     

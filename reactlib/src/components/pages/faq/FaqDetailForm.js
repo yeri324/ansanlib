@@ -11,7 +11,6 @@ function FaqDetailForm() {
     const [title, setTitle] = useState(faqInfo.title);
     const [content, setContent] = useState(faqInfo.content);
 
-
     const updateTitle = e => setTitle(e.target.value);
     const updateContent = e => setContent(e.target.value);
 

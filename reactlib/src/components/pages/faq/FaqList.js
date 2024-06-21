@@ -1,6 +1,6 @@
 import './FaqList.css';
 import axios from 'axios';
-import React, { useEffect, useState, useCallback, } from 'react';
+import React, { useEffect, useState, } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function FaqList() {
@@ -28,11 +28,7 @@ function FaqList() {
     const handleDetail = ({ item }) => {
         navigate(`/faq/detail/${item.id}`, {
             state: {
-                id: `${item.id}`,
-                title: `${item.title}`,
-                content: `${item.content}`,
-                regTime: `${item.regTime}`,
-                updateTime: `${item.updateTime}`,
+                ...item,
             }
         })
     }
@@ -79,27 +75,22 @@ function FaqList() {
     // }, [checkedList])
 
     //FAQ 다중삭제하기
-    const DelFaqList = useCallback(
-        (e) => {
-            console.log('checkedList:', checkedList);
-            if (window.confirm('삭제 하시겠습니까?')) {
-                axios(
-                    {
-                        url: `/faq/delete`,
-                        method: 'DELETE',
-                        data: {
-                            id: checkedList,
-                        },
-                        baseURL: 'http://localhost:8090',
-                    }
-                ).then(function (response) {
-                    console.log(response.data);
-                });
-                navigate("/faq/list", { repalce: true });
-            }
-        },
-        [checkedList]
-    )
+    const DelFaqList = () => {
+        if (window.confirm('삭제 하시겠습니까?')) {
+            axios(
+                {
+                    url: `/faq/delete`,
+                    method: 'DELETE',
+                    data: {
+                        idList: checkedList,
+                    },
+                    baseURL: 'http://localhost:8090',
+                }
+            )
+            navigate("/faq/list", { repalce: true });
+        }
+        
+    }
 
     return (
         <div>

@@ -24,7 +24,6 @@ public class Faq extends BaseEntity {
    private String title;
    private String content;
    
-   
    public void updateFaq(FaqFormDto faqFormDto) {
 	   this.id = faqFormDto.getId();
 	   this.title = faqFormDto.getTitle();
