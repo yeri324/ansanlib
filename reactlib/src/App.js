@@ -7,7 +7,7 @@ import FaqForm from './components/pages/faq/FaqForm';
 import FaqDetailForm from './components/pages/faq/FaqDetailForm';
 
 import Header from './components/fragments/header/header';
-
+import ReservationForm from './components/pages/reservation/ReservationForm';
 import Admin from './components/pages/admin/Admin';
 
 
@@ -20,7 +20,7 @@ function App() {
         <Route path="/faq/list" element={<FaqList />} />
         <Route path="/faq/new" element={<FaqForm />} />
         <Route path="/faq/detail/:id" element={<FaqDetailForm />} />
-
+        <Route path="/reservation/" element={<ReservationForm/>} />
         <Route path="/admin/user/search" element={<Admin />} />
         
         {/* <Route path="/login" element={<LoginForm isLoggedIn={isLoggedIn} setIsLoggedIn={(value) => setIsLoggedIn(value)} />} />
