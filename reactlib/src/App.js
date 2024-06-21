@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import React, { useEffect, useState } from 'react';
 // import axios from 'axios';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import FaqList from './components/pages/faq/FaqList';
 import FaqForm from './components/pages/faq/FaqForm';
 import FaqDetailForm from './components/pages/faq/FaqDetailForm';
@@ -9,9 +9,17 @@ import FaqDetailForm from './components/pages/faq/FaqDetailForm';
 import Header from './components/fragments/header/header';
 import ReservationForm from './components/pages/reservation/ReservationForm';
 import Admin from './components/pages/admin/Admin';
-
+import AuthenticationForm from './components/pages/userAuthentication/AuthenticationForm';
+import MyPage from './components/pages/myPage/MyPage';
 
 function App() {
+  const [isVerified, setIsVerified] = useState(false);
+  const navigate = useNavigate();
+
+  const handleVerification=()=>{
+    setIsVerified(true);
+    navigate('/mypage');
+  };
 
   return (
     <div>
@@ -22,7 +30,8 @@ function App() {
         <Route path="/faq/detail/:id" element={<FaqDetailForm />} />
         <Route path="/reservation/" element={<ReservationForm/>} />
         <Route path="/admin/user/search" element={<Admin />} />
-        
+        <Route path="/user/authentication" element={<AuthenticationForm/>} />
+        <Route path="/mypage" element={<MyPage/>}/>
         {/* <Route path="/login" element={<LoginForm isLoggedIn={isLoggedIn} setIsLoggedIn={(value) => setIsLoggedIn(value)} />} />
         <Route path="/signup" element={<SignUpSelect isLoggedIn={isLoggedIn} />} />
         <Route path="/signup/normal" element={<SignUp isLoggedIn={isLoggedIn} isComp={false} />} />
