@@ -28,4 +28,5 @@ public class FaqFormDto {
     public static FaqFormDto of(Faq faq) {
         return modelMapper.map(faq, FaqFormDto.class);
     }
+ 
 }

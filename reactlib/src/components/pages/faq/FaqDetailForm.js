@@ -1,69 +1,71 @@
 import './FaqDetailForm.css';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 function FaqDetailForm() {
-    const {id} = useParams();
     const navigate = useNavigate();
-    const [faqDetail, setFaqDetail] = useState();
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
+    const location = useLocation();
+    const faqInfo = { ...location.state };
+    const { id } = useParams();
+    const [title, setTitle] = useState(faqInfo.title);
+    const [content, setContent] = useState(faqInfo.content);
 
-    const writeTitle = e => setTitle(e.target.value);
-    const writeContent = e => setContent(e.target.value);
 
-    useEffect(() => {
-        getDataset();
-    }, []);
+    const updateTitle = e => setTitle(e.target.value);
+    const updateContent = e => setContent(e.target.value);
 
-    const getDataset = () => {
-        axios.get(`/faq/detail/${id}`)
-            .then((res) => {
-
-                setFaqDetail(res.data);
-            })
-            .catch((err) => {
-                setFaqDetail([]);
-            });
-    };
-
+    // 수정한 데이터 보내기
     function Send() {
-        axios(
-            {
-              url: `/faq/detail/${id}`,
-              method: 'put',
-              data: {
-                title:title,
-                content:content
-              }, 
-              baseURL: 'http://localhost:8090',
-            }
-          ).then(function (response) {
-            console.log(response.data);
-          });
-          navigate("/faq/list",{repalce:true});
+        if (window.confirm('수정 하시겠습니까?')) {
+            axios(
+                {
+                    url: `/faq/detail/${id}`,
+                    method: 'put',
+                    data: {
+                        id: id,
+                        title: title,
+                        content: content,
+                    },
+                    baseURL: 'http://localhost:8090',
+                }
+            ).then(function (response) {
+                console.log(response.data);
+            });
+            navigate("/faq/list", { repalce: true });
+        }
+    }
+
+    //상세 페이지 내 게시글 삭제
+    function Delete() {
+        if (window.confirm('삭제 하시겠습니까?')) {
+            axios(
+                {
+                    url: `/faq/delete`,
+                    method: 'DELETE',
+                    data: {
+                        id: id,
+                    },
+                    baseURL: 'http://localhost:8090',
+                }
+            ).then(function (response) {
+                console.log(response.data);
+            });
+            navigate("/faq/list", { repalce: true });
+        }
     }
 
     return (
         <div>
             <p>수정하기</p>
-            <input onChange={writeTitle} />
-            <input onChange={writeContent} />
-            <button onClick={()=> Send()}>수정</button>
-            {faqDetail && faqDetail.map((item, index) => (
-                    <div key={index} className="slide">
-
-                        <div >
-                            <tr>
-                                <th>{item.id}</th>
-                                <th>{item.title}</th>
-                                <th>{item.content}</th>
-                            </tr>
-                        </div>
-
-                    </div>
-                ))}
+            <form>
+                <textarea onChange={updateTitle}>{title}</textarea>
+                <br />
+                <textarea onChange={updateContent}>{content}</textarea>
+                <br />
+                <button onClick={() => Send()}>수정</button>
+                <button onClick={() => Delete()}>삭제</button>
+            </form>
         </div>
     );
 };
