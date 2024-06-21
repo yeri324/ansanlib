@@ -14,6 +14,8 @@ import com.ansanlib.entity.Reservation;
 public interface ReservationRepository extends JpaRepository<Reservation, Long>{
 	List<Reservation> findByUserId(String userId);
 	
+	Reservation findById(long reservationId);
+	
 	@Query("SELECT r FROM Reservation r " +
 	           "WHERE r.bookIsbn = :bookIsbn " +
 	           "AND ((r.startDate <= :endDate AND r.endDate >= :startDate) " +

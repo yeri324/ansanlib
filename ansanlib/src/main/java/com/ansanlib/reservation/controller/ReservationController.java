@@ -32,9 +32,23 @@ public class ReservationController {
 		
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/get/by-user/{userId}")
     public ResponseEntity<List<Reservation>> getReservationsByUser(@PathVariable String userId) {
         List<Reservation> reservations = reservationService.getReservationByUser(userId);
+        if(reservations.isEmpty()) {
+        	return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(reservations);
     }
+ 
+    @GetMapping("/get/by-id/{reservationId}")
+    public ResponseEntity<Reservation> getReservationById(@PathVariable Long reservationId){
+    	Reservation reservation = reservationService.getReservationById(reservationId);
+    	if(reservation != null) {
+    		return ResponseEntity.ok(reservation);
+    	} else {
+    		return ResponseEntity.notFound().build();
+    	}
+    }
+ 
 }

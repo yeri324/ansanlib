@@ -11,6 +11,7 @@ import ReservationForm from './components/pages/reservation/ReservationForm';
 import Admin from './components/pages/admin/Admin';
 import AuthenticationForm from './components/pages/userAuthentication/AuthenticationForm';
 import MyPage from './components/pages/myPage/MyPage';
+import ReservationList from './components/pages/reservation/ReservationList';
 
 function App() {
   const [isVerified, setIsVerified] = useState(false);
@@ -28,7 +29,8 @@ function App() {
         <Route path="/faq/list" element={<FaqList />} />
         <Route path="/faq/new" element={<FaqForm />} />
         <Route path="/faq/detail/:id" element={<FaqDetailForm />} />
-        <Route path="/reservation/" element={<ReservationForm/>} />
+        <Route path="/reservation/new" element={<ReservationForm/>} />
+        <Route path="/reservation/list/:userId" element={<ReservationList/>} />
         <Route path="/admin/user/search" element={<Admin />} />
         <Route path="/user/authentication" element={<AuthenticationForm/>} />
         <Route path="/mypage" element={<MyPage/>}/>

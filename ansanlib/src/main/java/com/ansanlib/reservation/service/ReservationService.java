@@ -51,4 +51,8 @@ public class ReservationService {
 	public List<Reservation> getReservationByUser(String userId){
 		return reservationRepository.findByUserId(userId);
 	}
+	
+	public Reservation getReservationById(long reservationId){
+		return reservationRepository.findById(reservationId);
+	}
 }
