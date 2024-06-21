@@ -3,8 +3,8 @@ package com.ansanlib.admin.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,8 +29,8 @@ public class AdminUserController {
 //        return "admin/userForm";
 //    } 
 	
-	@GetMapping("/search")
-    public ResponseEntity<List<LibUser>> searchUsers(@ModelAttribute AdminUserDto adminUserDto) {
+	@PostMapping("/search")
+    public ResponseEntity<List<LibUser>> searchUsers(@RequestBody AdminUserDto adminUserDto) {
 		
         List<LibUser> users = adminUserService.ListUser(adminUserDto);
    
