@@ -38,9 +38,7 @@ public class FaqService {
 	}
 
 	public void deleteFaq(FaqFormDto faqFormDto) {
-		Faq faq = faqRepository.findById(faqFormDto.getId());
-		
-		faqRepository.delete(faq);
+		faqRepository.deleteById(faqFormDto.getId());
 	}
 
 	@Transactional(readOnly = true) 

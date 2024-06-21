@@ -54,16 +54,14 @@ public class FaqController {
 	}
 	
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<String> deleteFaq(@RequestBody FaqFormDto faqFormDto) throws Exception {
-		ResponseEntity<String> resEntity = null;
+	public void deleteFaq(@RequestBody FaqFormDto faqFormDto){
+		ResponseEntity resEntity = null;
 		try {
 			faqService.deleteFaq(faqFormDto);
 			resEntity = new ResponseEntity("DELETE_OK", HttpStatus.OK);
 		} catch (Exception e) {
 			resEntity = new ResponseEntity("삭제 중 에러가 발생하였습니다.", HttpStatus.BAD_REQUEST);
 		}
-		
-		
 	}
 
 }
