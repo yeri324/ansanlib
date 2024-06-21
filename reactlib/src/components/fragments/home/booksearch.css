@@ -1,0 +1,42 @@
+.search {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    /* border: 1px solid #ccc; */
+}
+
+.search_navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar_container {
+    width: 100%;
+}
+/* 검색 */
+.search_place {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+}
+/* 버튼 */
+.search_btn {
+    cursor: pointer;
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 0 4px 4px 0;
+    border-left: none;
+    background-color: #007BFF;
+    color: white;
+    font-size: 16px;
+}
+
+.search_btn:hover {
+    background-color: #0056b3;
+}
+
