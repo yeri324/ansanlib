@@ -87,7 +87,7 @@ function FaqList() {
                     baseURL: 'http://localhost:8090',
                 }
             )
-            navigate("/faq/list", { repalce: true });
+            window.location.reload(navigate("/faq/list", { repalce: true }));
         }
         
     }
