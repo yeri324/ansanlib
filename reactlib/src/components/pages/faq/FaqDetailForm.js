@@ -4,13 +4,14 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 function FaqDetailForm() {
-    const { id } = useParams();
     const navigate = useNavigate();
-    const [faqDetail, setFaqDetail] = useState();
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
     const location = useLocation();
     const faqInfo = {...location.state};
+    const { id } = useParams();
+    const [faqDetail, setFaqDetail] = useState();
+    const [title, setTitle] = useState(faqInfo.title);
+    const [content, setContent] = useState(faqInfo.content);
+    
 
     const updateTitle = e => setTitle(e.target.value);
     const updateContent = e => setContent(e.target.value);
