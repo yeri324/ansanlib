@@ -4,17 +4,16 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ansanlib.board.dto.FaqDto;
 import com.ansanlib.board.dto.FaqFormDto;
 import com.ansanlib.board.service.FaqService;
 import com.ansanlib.entity.Faq;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -52,6 +51,19 @@ public class FaqController {
 			resEntity = new ResponseEntity("글 등록 중 에러가 발생하였습니다.", HttpStatus.BAD_REQUEST);
 		}
 		return resEntity;
+	}
+	
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<String> deleteFaq(@RequestBody FaqFormDto faqFormDto) throws Exception {
+		ResponseEntity<String> resEntity = null;
+		try {
+			faqService.deleteFaq(faqFormDto);
+			resEntity = new ResponseEntity("DELETE_OK", HttpStatus.OK);
+		} catch (Exception e) {
+			resEntity = new ResponseEntity("삭제 중 에러가 발생하였습니다.", HttpStatus.BAD_REQUEST);
+		}
+		
+		
 	}
 
 }

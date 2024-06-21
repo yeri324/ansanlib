@@ -37,14 +37,15 @@ public class FaqService {
 		return faq.getId();
 	}
 
-	public void delete(Faq faq) {
-		this.faqRepository.delete(faq);
+	public void deleteFaq(FaqFormDto faqFormDto) {
+		Faq faq = faqRepository.findById(faqFormDto.getId());
+		
+		faqRepository.delete(faq);
 	}
 
 	@Transactional(readOnly = true) 
 	public Faq getFaqDtl(Long faqId){ 
 		return faqRepository.findById(faqId)
 					.orElseThrow(EntityNotFoundException::new);
-		
 }
 	}
