@@ -1,18 +1,19 @@
 import './FaqDetailForm.css';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 function FaqDetailForm() {
-    const {id} = useParams();
+    const { id } = useParams();
     const navigate = useNavigate();
     const [faqDetail, setFaqDetail] = useState();
-    const [faqId, setFaqId] = useState('');
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const location = useLocation();
+    const faqInfo = {...location.state};
 
-    const writeTitle = e => setTitle(e.target.value);
-    const writeContent = e => setContent(e.target.value);
+    const updateTitle = e => setTitle(e.target.value);
+    const updateContent = e => setContent(e.target.value);
 
     useEffect(() => {
         getDataset();
@@ -32,40 +33,31 @@ function FaqDetailForm() {
     function Send() {
         axios(
             {
-              url: `/faq/detail/${id}`,
-              method: 'put',
-              data: {
-                faqId:setFaqId,
-                title:title,
-                content:content
-              }, 
-              baseURL: 'http://localhost:8090',
+                url: `/faq/detail/${id}`,
+                method: 'put',
+                data: {
+                    id : id,
+                    title: title,
+                    content: content,
+                },
+                baseURL: 'http://localhost:8090',
             }
-          ).then(function (response) {
+        ).then(function (response) {
             console.log(response.data);
-          });
-          navigate("/faq/list",{repalce:true});
+        });
+        navigate("/faq/list", { repalce: true });
     }
 
     return (
         <div>
             <p>수정하기</p>
-            <input onChange={writeTitle} />
-            <input onChange={writeContent} />
-            <button onClick={()=> Send()}>수정</button>
-            {faqDetail && faqDetail.map((item, index) => (
-                    <div key={index} className="slide">
-
-                        <div >
-                            <tr>
-                                <th>{item.id}</th>
-                                <th>{item.title}</th>
-                                <th>{item.content}</th>
-                            </tr>
-                        </div>
-
-                    </div>
-                ))}
+            <form>
+            <textarea onChange={updateTitle}>{faqInfo.title}</textarea>
+            <br/>
+            <textarea onChange={updateContent}>{faqInfo.content}</textarea>
+            <br/>
+            <button onClick={() => Send()}>수정</button>
+            </form>
         </div>
     );
 };

@@ -1,5 +1,7 @@
 package com.ansanlib.entity;
 
+import com.ansanlib.board.dto.FaqFormDto;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,4 +23,12 @@ public class Faq extends BaseEntity {
    
    private String title;
    private String content;
+   
+   
+   public void updateFaq(FaqFormDto faqFormDto) {
+	   this.id = faqFormDto.getId();
+	   this.title = faqFormDto.getTitle();
+	   this.content = faqFormDto.getContent();
+	}
+   
 }

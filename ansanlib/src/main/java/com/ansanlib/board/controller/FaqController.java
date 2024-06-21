@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,27 +31,27 @@ public class FaqController {
 	}
 
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
-	public ResponseEntity<String> faqNew(@RequestBody FaqFormDto faqFormDto) throws Exception {
+	public ResponseEntity<String> createfaq(@RequestBody FaqFormDto faqFormDto) throws Exception {
 		ResponseEntity<String> resEntity = null;
 		try {
-			faqService.saveFaq(faqFormDto);
+			faqService.createFaq(faqFormDto);
 			resEntity = new ResponseEntity("Save_OK", HttpStatus.OK);
 		} catch (Exception e) {
-			resEntity = new ResponseEntity("글 등록 중 에러가 발생하였습니다.",  HttpStatus.BAD_REQUEST);
+			resEntity = new ResponseEntity("글 등록 중 에러가 발생하였습니다.", HttpStatus.BAD_REQUEST);
 		}
 		return resEntity;
 	}
 
-	@RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
-	public String faqDtl(@PathVariable("faqId") Long faqId, Model model) {
+	@RequestMapping(value = "/detail/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<String> updateFaq(@RequestBody FaqFormDto faqFormDto) throws Exception {
+		ResponseEntity<String> resEntity = null;
 		try {
-			Faq faq = faqService.getFaqDtl(faqId);
-			model.addAttribute("faq", faq);
-		} catch (EntityNotFoundException e) {
-			model.addAttribute("errorMessage", "존재하지 않는 상품 입니다.");
-			return "board/FaqList";
+			faqService.updateFaq(faqFormDto);
+			resEntity = new ResponseEntity("UPDATE_OK", HttpStatus.OK);
+		} catch (Exception e) {
+			resEntity = new ResponseEntity("글 등록 중 에러가 발생하였습니다.", HttpStatus.BAD_REQUEST);
 		}
-		return "board/FaqDetailForm";
+		return resEntity;
 	}
 
 }
