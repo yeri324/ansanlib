@@ -53,11 +53,12 @@ public class FaqController {
 		return resEntity;
 	}
 	
-	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-	public void deleteFaq(@RequestBody FaqFormDto faqFormDto){
+	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+	public void deleteFaq(@RequestBody List<Integer> id){
 		ResponseEntity resEntity = null;
+		System.out.print(id.toString()+"*********************************************************");
 		try {
-			faqService.deleteFaq(faqFormDto);
+			faqService.deleteFaq();
 			resEntity = new ResponseEntity("DELETE_OK", HttpStatus.OK);
 		} catch (Exception e) {
 			resEntity = new ResponseEntity("삭제 중 에러가 발생하였습니다.", HttpStatus.BAD_REQUEST);

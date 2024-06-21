@@ -1,6 +1,6 @@
 import './FaqDetailForm.css';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 function FaqDetailForm() {
@@ -8,28 +8,12 @@ function FaqDetailForm() {
     const location = useLocation();
     const faqInfo = { ...location.state };
     const { id } = useParams();
-    const [faqDetail, setFaqDetail] = useState();
     const [title, setTitle] = useState(faqInfo.title);
     const [content, setContent] = useState(faqInfo.content);
 
 
     const updateTitle = e => setTitle(e.target.value);
     const updateContent = e => setContent(e.target.value);
-
-    // 해당 게시글 데이터 가져오기
-    useEffect(() => {
-        getDataset();
-    }, []);
-
-    const getDataset = () => {
-        axios.get(`/faq/detail/${id}`)
-            .then((res) => {
-                setFaqDetail(res.data);
-            })
-            .catch((err) => {
-                setFaqDetail([]);
-            });
-    };
 
     // 수정한 데이터 보내기
     function Send() {
@@ -57,7 +41,7 @@ function FaqDetailForm() {
         if (window.confirm('삭제 하시겠습니까?')) {
             axios(
                 {
-                    url: `/faq/delete/${id}`,
+                    url: `/faq/delete`,
                     method: 'DELETE',
                     data: {
                         id: id,
@@ -75,9 +59,9 @@ function FaqDetailForm() {
         <div>
             <p>수정하기</p>
             <form>
-                <textarea onChange={updateTitle}>{faqInfo.title}</textarea>
+                <textarea onChange={updateTitle}>{title}</textarea>
                 <br />
-                <textarea onChange={updateContent}>{faqInfo.content}</textarea>
+                <textarea onChange={updateContent}>{content}</textarea>
                 <br />
                 <button onClick={() => Send()}>수정</button>
                 <button onClick={() => Delete()}>삭제</button>
