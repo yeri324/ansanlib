@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ansanlib.admin.dto.AdminUserDto;
 import com.ansanlib.admin.service.AdminUserService;
 import com.ansanlib.board.dto.FaqFormDto;
+import com.ansanlib.entity.Faq;
 import com.ansanlib.entity.LibUser;
 
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,13 @@ public class AdminUserController {
 //        model.addAttribute("users", users);
 //        return "admin/userForm";
 //    } 
+	
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ResponseEntity<List<LibUser>> userList() {
+		List<LibUser> userList = adminUserService.getUserList();
+		return ResponseEntity.ok(userList);
+	}
+	
 	
 	@PostMapping("/search")
     public ResponseEntity<List<LibUser>> searchUsers(@RequestBody AdminUserDto adminUserDto) {

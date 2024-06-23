@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ansanlib.admin.dto.AdminUserDto;
 import com.ansanlib.admin.repository.AdminUserRepository;
+import com.ansanlib.entity.Faq;
 import com.ansanlib.entity.LibUser;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -23,10 +24,16 @@ public class AdminUserService {
 	public List<LibUser> ListUser(AdminUserDto adminUserDto) {
 		return adminUserRepository.AdminUserList(adminUserDto);
 	}
+	
+	public List<LibUser> getUserList() {
+		return adminUserRepository.findAll();
+	}
 
+	@Transactional(readOnly = true) 
 	public LibUser getUserById(Long id) {
 		Optional<LibUser> user = adminUserRepository.findById(id);
 		return user.orElseThrow(EntityNotFoundException::new);
 	}
+	
 	
 }
