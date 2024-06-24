@@ -9,19 +9,19 @@ const AdminUserDetail = ()=>{
     const [userDetail, setUserDetail] = useState();
     const [getUserName, setGetUserName] = useState(userInfo.name);
 
-    // useEffect(() => {
-    //     getDataset();
-    // }, []);
+    useEffect(() => {
+        getDataset();
+    }, []);
 
-    // const getDataset = () => {
-    //     axios.get(`/admin/user/detail/${id}`)
-    //         .then((res) => {
-    //             setUserDetail(res.data);
-    //         })
-    //         .catch((err) => {
-    //             setUserDetail([]);
-    //         });
-    // };
+    const getDataset = () => {
+        axios.get(`/admin/user/detail/${id}`)
+            .then((res) => {
+                setUserDetail(res.data);
+            })
+            .catch((err) => {
+                setUserDetail([]);
+            });
+    };
 
    
 
