@@ -28,3 +28,17 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     flex: 1;
 }
+
+.sub_content1 {
+    display: flex;
+    border: 1px solid #ccc;
+    width: 100%;
+    align-items: center;
+}
+
+
+
+
+
+
+

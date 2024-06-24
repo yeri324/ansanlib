@@ -23,17 +23,6 @@ const HomePage = () => {
     ]
   };
 
-  const category2 = {
-    id: 'category2',
-    title: '카테고리 2',
-    books: [
-      {title : '도서 1', image: book1},
-      {title : '도서 2', image: book2},
-      {title : '도서 3', image: book3},
-      {title : '도서 4', image: book4}
-    ]
-  };
-
 
   return (
     <>
@@ -51,15 +40,16 @@ const HomePage = () => {
             <div className="login_box">로그인</div>
           </div>
         </div>
-
-        <div className="sub_content">
+        <div className="sub_content1">
+          <div className="trend_list">
+            인기 도서
+          </div>
+        </div>
+        <div className="sub_content2">
           <div className="recommend_content">
             <div className="recommend_menu">
               <div className="recommend_list">
                 <CategorySlider title={category1.title} books={category1.books} />
-              </div>
-              <div className="recommend_list">
-              <CategorySlider title={category2.title} books={category2.books} />
               </div>
             </div>
           </div>

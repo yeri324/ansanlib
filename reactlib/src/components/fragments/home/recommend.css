@@ -3,6 +3,7 @@
     width: 60%;
     max-width: 1000px;
     margin-bottom: 40px;
+    text-align: center;
   }
   
   .slider {
@@ -14,6 +15,7 @@
   .slides {
     display: flex;
     transition: transform 0.5s ease-in-out;
+    /* justify-content: center; */
   }
   
   .slide {

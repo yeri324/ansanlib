@@ -22,20 +22,17 @@ function App() {
       <Routes>
         <Route path="/fragments/header" element={<Header />} />
         <Route path="/fragments/footer" element={<Footer />} />
-        <Route path="/fragments/home" element={<HomePage />} />
+        <Route path="/home" element={<HomePage />} />
         
         <Route path="/faq/list" element={<FaqList />} />
         <Route path="/faq/new" element={<FaqForm />} />
         <Route path="/faq/detail/:id" element={<FaqDetailForm />} />
 
-<<<<<<< HEAD
         <Route path="/admin/user/search" element={<Admin />} />
 
-=======
         <Route path="/admin/user/search" element={<AdminUserList />} />
         <Route path="/admin/user/detail/:id" element={<AdminUserDetail />} />
         
->>>>>>> main
         {/* <Route path="/login" element={<LoginForm isLoggedIn={isLoggedIn} setIsLoggedIn={(value) => setIsLoggedIn(value)} />} />
         <Route path="/signup" element={<SignUpSelect isLoggedIn={isLoggedIn} />} />
         <Route path="/signup/normal" element={<SignUp isLoggedIn={isLoggedIn} isComp={false} />} />
