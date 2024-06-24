@@ -32,7 +32,7 @@ public class LibUser extends BaseEntity {
 	@Id
 	@Column(name="user_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long user_id;
+	private Long userId;
 	
 	@Column(name="user_name")
 	private String name;
