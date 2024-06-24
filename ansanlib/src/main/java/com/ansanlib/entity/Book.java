@@ -24,7 +24,7 @@ import lombok.Setter;
 public class Book extends BaseEntity {
 
 	@Id
-	@Column(name = "book_num")
+	@JoinColumn(name = "book_num")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
