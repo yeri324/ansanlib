@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ansanlib.entity.Book;
+import com.ansanlib.entity.LibUser;
 import com.ansanlib.entity.Reservation;
 import com.ansanlib.reservation.dto.CreateReservationDto;
 import com.ansanlib.reservation.repository.ReservationRepository;
@@ -28,16 +30,21 @@ public class ReservationService {
 		LocalDateTime endDate = LocalDateTime.now().plusDays(7);
 		
 		//예약 entity 생성
+		Book book = new Book();
+		book.setId(createReservationDto.getBookId());
+		LibUser user = new LibUser();
+		user.setUserId(createReservationDto.getBookId());
+		
 		Reservation reservation = Reservation.builder()
-				.bookIsbn(createReservationDto.getBookIsbn())
-				.userId(createReservationDto.getUserId())
+				.bookId(book)
+				.libUser(user)
 				.startDate(startDate)
 				.endDate(endDate)
 				.build();
 		
 		//예약 기간 중복 검사
 		if (reservationRepository.checkIfOverlappingReservationsExists(
-				reservation.getBookIsbn(),
+				reservation.getBookId().getId(),
 				reservation.getStartDate(),
 				reservation.getEndDate()
 		)) {
@@ -48,7 +55,7 @@ public class ReservationService {
 		return reservationRepository.save(reservation);
 	}
 	
-	public List<Reservation> getReservationByUser(String userId){
-		return reservationRepository.findByUserId(userId);
+	public List<Reservation> getReservationByUser(Long user_id){
+		return reservationRepository.findByLibUser_UserId(user_id);
 	}
 }

@@ -12,25 +12,25 @@ import com.ansanlib.entity.Reservation;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long>{
-	List<Reservation> findByUserId(String userId);
+	List<Reservation> findByLibUser_UserId(Long user_id);
 	
 	@Query("SELECT r FROM Reservation r " +
-	           "WHERE r.bookIsbn = :bookIsbn " +
+	           "WHERE r.bookId = :bookId " +
 	           "AND ((r.startDate <= :endDate AND r.endDate >= :startDate) " +
 	           "OR (r.startDate BETWEEN :startDate AND :endDate) " +
 	           "OR (r.endDate BETWEEN :startDate AND :endDate))")
 	List<Reservation> findOverlappingReservations(
-			@Param("bookIsbn") String bookIsbn, 
+			@Param("bookId") Long bookId, 
             @Param("startDate") LocalDateTime startDate, 
             @Param("endDate") LocalDateTime endDate);
 	
     @Query("SELECT CASE WHEN COUNT(r) > 0 THEN true ELSE false END " +
             "FROM Reservation r " +
-            "WHERE r.bookIsbn = :bookIsbn " +
+            "WHERE r.bookId = :bookId " +
             "AND ((r.startDate < :endDate AND :endDate < r.endDate) " +
             "OR (r.startDate < :startDate AND :startDate < r.endDate))")
 	boolean checkIfOverlappingReservationsExists(
-			@Param("bookIsbn") String bookIsbn, 
+			@Param("bookId") Long bookId, 
             @Param("startDate") LocalDateTime startDate, 
             @Param("endDate") LocalDateTime endDate);
 }
