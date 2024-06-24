@@ -3,63 +3,47 @@
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
-//import org.springframework.security.authentication.AuthenticationProvider;
-//import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+//import org.springframework.security.authentication.AuthenticationManager;
+//import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 //import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 //import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-//import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+//import org.springframework.security.config.http.SessionCreationPolicy;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.crypto.password.PasswordEncoder;
-//import org.springframework.security.web.SecurityFilterChain;
-//import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-//
-//import com.ansanlib.service.user.UserService;
+//import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 //
 //@Configuration
 //@EnableWebSecurity
-//public class SecurityConfig {
+//public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //
-//	@Autowired
-//	UserService userService;
+//    @Autowired
+//    private MyJwtAuthenticationFilter myJwtAuthenticationFilter;
 //
-//	@Bean
-//	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//		http.formLogin(formLogin -> formLogin.loginPage("/users/login") // 로그인 페이지 url을 설정
-//				.defaultSuccessUrl("/") // 로그인 성공 시 이동할 url
-//				.usernameParameter("loginid") // 로그인 시 사용할 파라미터 이름으로 login을 지정
-//				.failureUrl("/users/login/error")) // 로그인 실패 시 이동할 url을 설정
-//				.logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/users/logout")) // 로그아웃 url을
-//																											// 설정
-//						.logoutSuccessUrl("/"))
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http.csrf().disable()
+//            .authorizeRequests()
+//            .antMatchers("/api/auth/**").permitAll()
+//            .anyRequest().authenticated()
+//            .and()
+//            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 //
-//				.authorizeHttpRequests(
-//						request -> request.requestMatchers("/", "/users/**", "/item/**", "/images/**").permitAll() 
-//																												
-//								.requestMatchers("/admin/**").hasRole("ADMIN") 
-//								.anyRequest().authenticated())
+//        http.addFilterBefore(myJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+//    }
 //
-//				.exceptionHandling(handling -> handling.authenticationEntryPoint(new CustomAuthenticationEntryPoint()));
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        // Configure authentication manager
+//    }
 //
-//		return http.build();
-//	}
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
 //
-//	@Bean
-//	public WebSecurityCustomizer webSecurityCustomizer() {
-//		return (web) -> web.ignoring().requestMatchers("/css/**", "/js/**", "/img/**");
-//	}
-//
-//	@Bean
-//	public PasswordEncoder passwordEncoder() {
-//		return new BCryptPasswordEncoder();
-//	}
-//
-//	@Bean
-//	public AuthenticationProvider authenticationProvider() {
-//		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-//		provider.setUserDetailsService(userService);
-//		provider.setPasswordEncoder(passwordEncoder());
-//		return provider;
-//	}
-//
-//	
+//    @Bean
+//    @Override
+//    public AuthenticationManager authenticationManagerBean() throws Exception {
+//        return super.authenticationManagerBean();
+//    }
 //}

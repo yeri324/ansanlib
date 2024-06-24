@@ -1,83 +1,115 @@
-//package com.ansanlib.dto.user;
-//
-//import java.time.LocalDateTime;
-//
-//import org.hibernate.validator.constraints.Length;
-//
-//import com.ansanlib.constant.Gender;
-//import com.ansanlib.constant.Role;
-//import com.ansanlib.entity.LibUser;
-//
-//import jakarta.validation.constraints.NotBlank;
-//import jakarta.validation.constraints.NotEmpty;
-//import lombok.Getter;
-//import lombok.Setter;
-//
-//@Getter
-//@Setter
-//public class UserDto {
-//	
-//	private Long id;
-//
-//	@NotBlank(message = "이름은 필수 입력 값입니다.")
-//	private String name;
-//	
-//	@NotEmpty(message = "이메일은 필수 입력 값입니다.")
-//	private String email;
-//	
-//	@NotEmpty(message = "비밀번호는 필수 입력 값입니다.")
-//	@Length(min=8, max=16, message = "비밀번호는 8자 이상, 16자 이하로 입력해주세요")
-//	private String password;
-//	
-//	@NotEmpty(message = "비밀번호가 일치하지 않습니다.")
-//	private String password2;
-//	
-//	@NotEmpty(message = "주소는 필수 입력 값입니다.")
-//	private String address;
-//	private String address2;
-//	
-//	
-//	@NotEmpty(message = "아이디는 필수 입력 값입니다.")
-//	private String loginid;
-//	
-//	@NotEmpty(message = "전화번호는 필수 입력 값입니다.")
-//	private String phone;
-//	
-//
-//	
-//
-//	private Gender gender;
-//
-//	
-//	@NotEmpty(message = "수신정보에 체크하여주세요")
-//	private String sms;
-//	
-//	
-//	private LocalDateTime joinDate;
-//	
-//	private LocalDateTime loginDate;
-//	
-//	private String penalty;
-//	
-//	private String status;
-//
-//	private Role role;
-//
-//	public static UserDto createUserDto(LibUser user) {
-//		UserDto userDto = new UserDto();
-//		userDto.loginid = user.getLoginid();
-//		userDto.name = user.getName();
-//		userDto.email = user.getEmail();
-//		userDto.password = user.getPassword();
-//		userDto.address = user.getAddress();
-//		userDto.address2 = user.getAddress2();
-//		userDto.gender = user.getGender();
-//		userDto.role = user.getRole();
-//		userDto.phone=user.getPhone();
-//		
-//
-//		return userDto;
-//	}
-//
-//}
-//
+package com.ansanlib.user.dto;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+public class UserDto {
+    private String name;
+    private String email;
+    private String loginid;
+    private String password;
+    private String password2;
+    private String phone;
+    private String address;
+    private String address2;
+    private String gender;
+    private String role;
+    
+    private String sms;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getLoginid() {
+		return loginid;
+	}
+
+	public void setLoginid(String loginid) {
+		this.loginid = loginid;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public String getPassword2() {
+		return password2;
+	}
+
+	public void setPassword2(String password2) {
+		this.password2 = password2;
+
+	}
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getAddress2() {
+		return address2;
+	}
+
+	public void setAddress2(String address2) {
+		this.address2 = address2;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public String getSms() {
+		return sms;
+	}
+
+	public void setSms(String sms) {
+		this.sms = sms;
+	}
+
+    // Getters and setters (omitted for brevity)
+
+    
+}
