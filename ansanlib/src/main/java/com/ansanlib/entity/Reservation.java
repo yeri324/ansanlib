@@ -26,19 +26,19 @@ public class Reservation {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private Long id; //예약번호
 	
 	@ManyToOne
 	@JoinColumn(name = "book_id", nullable = false)
-    private Book bookId;
+    private Book bookId; //도서번호
     
 	@ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private LibUser libUser;
+    private LibUser libUser; //사용자번호
     
     @Column(name = "start_date", nullable = false)
-    private LocalDateTime startDate;
+    private LocalDateTime startDate; //예약시작일
     
     @Column(name = "end_date", nullable = false)
-    private LocalDateTime endDate;
+    private LocalDateTime endDate; //예약종료일
 }

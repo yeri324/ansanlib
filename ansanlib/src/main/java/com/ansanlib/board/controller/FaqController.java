@@ -7,9 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.ansanlib.board.dto.FaqDto;
 import com.ansanlib.board.dto.FaqFormDto;
 import com.ansanlib.board.service.FaqService;
 import com.ansanlib.entity.Faq;
@@ -52,17 +53,25 @@ public class FaqController {
 		}
 		return resEntity;
 	}
-	
+
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-	public void deleteFaq(@RequestBody List<Integer> id){
+	public void deleteFaq(@RequestBody FaqFormDto params){
 		ResponseEntity resEntity = null;
-		System.out.print(id.toString()+"*********************************************************");
+		List<Long> idList = params.getIdList();
 		try {
-			faqService.deleteFaq();
+			for(Long id : idList) {faqService.deleteFaq(id);}
 			resEntity = new ResponseEntity("DELETE_OK", HttpStatus.OK);
 		} catch (Exception e) {
 			resEntity = new ResponseEntity("삭제 중 에러가 발생하였습니다.", HttpStatus.BAD_REQUEST);
 		}
+	}
+	
+	@RequestMapping(value = "/uploads", method = RequestMethod.POST)
+	public void uploadFaqImg(@RequestParam("itemImgFile") List<MultipartFile> itemImgFileList){
+		ResponseEntity resEntity = null;
+		System.out.println("****");
+		
+		
 	}
 
 }

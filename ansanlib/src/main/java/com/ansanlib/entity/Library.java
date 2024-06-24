@@ -1,7 +1,5 @@
 package com.ansanlib.entity;
 
-import java.time.LocalDateTime;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,15 +21,17 @@ public class Library extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	private String lib_num;
 	
-	private String lib_name;
+	@Column(unique = true)
+	private String lib_num; //도서관 코드
 	
-	private String address;
+	private String lib_name; // 도서관 이름
 	
-	private String phone;
+	private String address; // 도서관 주소
 	
-	private String web_address;
+	private String phone; // 도서관 번호
+	
+	private String web_address; // 도서관 웹주소
 	
 }
 
