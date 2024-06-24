@@ -25,17 +25,17 @@ public class LoanStatus extends BaseEntity {
 	private Long id;
 
 	@Column(nullable = false)
-	private LocalDateTime loan_start;
+	private LocalDateTime loan_start; //대출시작일
 
 	@Column(nullable = false)
-	private LocalDateTime loan_end;
+	private LocalDateTime loan_end; //대출만료일
 
 	@ManyToOne
 	@JoinColumn(name = "book_id", nullable = false)
-	private Book book;
+	private Book book; //도서번호
 
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
-	private LibUser libuser;
+	private LibUser libuser; //사용자번호
 
 }
