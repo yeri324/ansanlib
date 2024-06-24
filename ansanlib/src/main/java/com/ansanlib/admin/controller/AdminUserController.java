@@ -2,8 +2,10 @@ package com.ansanlib.admin.controller;
 
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,8 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ansanlib.admin.dto.AdminUserDto;
 import com.ansanlib.admin.service.AdminUserService;
-import com.ansanlib.board.dto.FaqFormDto;
-import com.ansanlib.entity.Faq;
 import com.ansanlib.entity.LibUser;
 
 import lombok.RequiredArgsConstructor;
@@ -50,12 +50,12 @@ public class AdminUserController {
 	
 	
 	
-//	 @GetMapping("/{id}")
-//	    public String getUserDetails(@PathVariable Long id, Model model) {
-//	        LibUser user = adminUserService.getUserById(id);
-//	        model.addAttribute("user", user);
-//	        return "admin/userDetail";
-//	    }
-//	 
+	 @PostMapping("/detail")
+	    public ResponseEntity getUserDetails(@RequestBody AdminUserDto adminUserDto) {
+	        LibUser user = adminUserService.getUserById(id);
+	        return ResponseEntity.ok(user);
+	        
+	    }
+	 
 	
 }

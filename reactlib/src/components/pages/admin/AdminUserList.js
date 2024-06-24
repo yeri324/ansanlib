@@ -51,7 +51,7 @@ const AdminUserList = () => {
 
   /// 상세페이지 이동
   const handleDetail = ({ user }) => {
-    navigate(`/admin/user/detail/${user.user_id}`);
+    navigate(`/admin/user/detail/${user.userId}`);
   };
   ///
 
