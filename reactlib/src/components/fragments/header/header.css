@@ -9,6 +9,7 @@
   .top_login {
     text-align: right;
     margin-bottom: 10px;
+    font-size: 15px;
   }
   
   /* 메뉴 스타일 */
@@ -21,9 +22,10 @@
   /* 개별 메뉴 항목 스타일 */
   .top_menu > div {
     position: relative;
-    padding: 10px 20px;
+    padding: 10px 30px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    font-size: 17px;
   }
   .top_menu {
     display: flex;

@@ -13,6 +13,7 @@
     /* grid-gap: 10px; */
     flex-direction: row;
     gap: 20px;
+    padding: 30px;
 }
 
 .top_column {
@@ -27,4 +28,3 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     flex: 1;
 }
-
