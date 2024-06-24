@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import AdminUserItem from './AdminUserItem';
 
 const AdminUserList = () => {
   const navigate = useNavigate();
@@ -51,7 +52,11 @@ const AdminUserList = () => {
 
   /// 상세페이지 이동
   const handleDetail = ({ user }) => {
-    navigate(`/admin/user/detail/${user.userId}`);
+    navigate(`/admin/user/detail/${user.userId}`, {
+      state : {
+        ...user
+      }
+    });
   };
   ///
 
@@ -90,13 +95,14 @@ const AdminUserList = () => {
           
          <tbody>
             {searchResult.map((user) => (
-              <tr>
-                <td>{user.user_id}</td>
-                <td onClick={() => handleDetail({ user })}>{user.loginid}</td>
-                <td>{user.name}</td>
-                <td>{user.penalty}</td>
-                <td>{user.lateFee}</td>
-              </tr>
+              <AdminUserItem key={user.userId} {...user}/>
+              // <tr>
+              //   <td>{user.userId}</td>
+              //   <td onClick={() => handleDetail({ user })}>{user.loginid}</td>
+              //   <td>{user.name}</td>
+              //   <td>{user.penalty}</td>
+              //   <td>{user.lateFee}</td>
+              // </tr>
             ))}
 
 

@@ -13,6 +13,5 @@ public class AdminUserDto {
 	
 	private String selectRadio;
 	
-	private String userId;
 
 }

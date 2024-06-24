@@ -6,10 +6,12 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ansanlib.admin.dto.AdminDetailUserDto;
 import com.ansanlib.admin.dto.AdminUserDto;
 import com.ansanlib.admin.repository.AdminUserRepository;
-import com.ansanlib.entity.Faq;
 import com.ansanlib.entity.LibUser;
+import com.ansanlib.entity.Reservation;
+import com.ansanlib.reservation.repository.ReservationRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 public class AdminUserService {
 	private final AdminUserRepository adminUserRepository;
+	private final ReservationRepository reservationRepository;
 
 	public List<LibUser> ListUser(AdminUserDto adminUserDto) {
 		return adminUserRepository.AdminUserList(adminUserDto);
@@ -30,9 +33,13 @@ public class AdminUserService {
 	}
 
 	@Transactional(readOnly = true) 
-	public LibUser getUserById(Long id) {
-		Optional<LibUser> user = adminUserRepository.findById(id);
-		return user.orElseThrow(EntityNotFoundException::new);
+	public LibUser getUserById(AdminDetailUserDto adminDetailUserDto) {
+		return adminUserRepository.findById(adminDetailUserDto.getId()).orElseThrow(EntityNotFoundException::new);
+		
+	}
+	@Transactional(readOnly = true) 
+	public Reservation getReservation(AdminDetailUserDto adminDetailUserDto) {
+		return reservationRepository.findById(adminDetailUserDto.getId()).orElseThrow(EntityNotFoundException::new);
 	}
 	
 	
