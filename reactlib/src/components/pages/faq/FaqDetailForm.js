@@ -50,7 +50,7 @@ function FaqDetailForm() {
             ).then(function (response) {
                 console.log(response.data);
             });
-            navigate("/faq/list", { repalce: true });
+            window.location.reload(navigate("/faq/list", { repalce: true }));
         }
     }
 

@@ -1,4 +1,3 @@
-import usePagination from '@mui/material/usePagination/usePagination';
 import './FaqForm.css';
 import axios from 'axios';
 import React, { useState } from 'react';
@@ -79,7 +78,7 @@ const FaqForm = ()=> {
           placeholder={isContentClicked === true ? "" : "내용을 작성해주세요."}
           onChange={writeContent} />
         <br />
-        <button onClick={() => uploadFiles()}>저장</button>
+        <button onClick={() => Send()}>저장</button>
         <input
           className='file-input'
           type="file"

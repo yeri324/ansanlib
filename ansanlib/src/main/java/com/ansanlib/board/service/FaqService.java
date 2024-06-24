@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ansanlib.board.dto.FaqDto;
 import com.ansanlib.board.dto.FaqFormDto;
 import com.ansanlib.board.repository.FaqRepository;
 import com.ansanlib.entity.Faq;
@@ -30,8 +31,7 @@ public class FaqService {
 	}
 
 	public Long updateFaq(FaqFormDto faqFormDto) {
-		Faq faq = faqRepository.findById(faqFormDto.getId())
-					.orElseThrow(EntityNotFoundException::new);
+		Faq faq = faqRepository.findById(faqFormDto.getId()).orElseThrow(EntityNotFoundException::new);
 		faq.updateFaq(faqFormDto);
 		faqRepository.save(faq);
 		return faq.getId();
@@ -41,9 +41,18 @@ public class FaqService {
 		faqRepository.deleteById(id);
 	}
 
-	@Transactional(readOnly = true) 
-	public Faq getFaqDtl(Long faqId){ 
-		return faqRepository.findById(faqId)
-					.orElseThrow(EntityNotFoundException::new);
-}
+	@Transactional(readOnly = true)
+	public Faq getFaqDtl(Long faqId) {
+		return faqRepository.findById(faqId).orElseThrow(EntityNotFoundException::new);
 	}
+	
+	public List<Faq> ListFaq(FaqDto faqDto) {
+		if("loginid".equals(faqDto.getSearchBy())) {
+			return faqRepository.findByLibUser_LoginidContains(faqDto.getSearchQuery());
+		}
+		else {
+			return faqRepository.findByTitleContains(faqDto.getSearchQuery());
+		}
+
+	}
+}

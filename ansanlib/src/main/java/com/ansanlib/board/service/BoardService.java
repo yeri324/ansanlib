@@ -13,5 +13,6 @@ import lombok.RequiredArgsConstructor;
 public class BoardService {
 	
 	private final BoardRepository boardRepository;
+	
 
 }

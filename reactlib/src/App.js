@@ -8,7 +8,6 @@ import FaqDetailForm from './components/pages/faq/FaqDetailForm';
 
 import Header from './components/fragments/header/header';
 
-import Admin from './components/pages/admin/Admin';
 import AdminUserList from './components/pages/admin/AdminUserList';
 import AdminUserDetail from './components/pages/admin/AdminUserDetail';
 

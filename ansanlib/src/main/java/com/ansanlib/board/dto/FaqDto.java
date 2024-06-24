@@ -18,6 +18,9 @@ public class FaqDto {
     private String title;
     private String content;
     
+    private String searchBy;
+    private String searchQuery="";
+    
     private List<FaqDto> faqDtoList = new ArrayList<>();
     
     private static ModelMapper modelMapper = new ModelMapper();
