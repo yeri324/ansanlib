@@ -11,6 +11,8 @@ import Footer from './components/fragments/footer/footer';
 import HomePage from './components/fragments/home/homePage';
 
 import Admin from './components/pages/admin/Admin';
+import AdminUserList from './components/pages/admin/AdminUserList';
+import AdminUserDetail from './components/pages/admin/AdminUserDetail';
 
 
 function App() {
@@ -26,8 +28,14 @@ function App() {
         <Route path="/faq/new" element={<FaqForm />} />
         <Route path="/faq/detail/:id" element={<FaqDetailForm />} />
 
+<<<<<<< HEAD
         <Route path="/admin/user/search" element={<Admin />} />
 
+=======
+        <Route path="/admin/user/search" element={<AdminUserList />} />
+        <Route path="/admin/user/detail/:id" element={<AdminUserDetail />} />
+        
+>>>>>>> main
         {/* <Route path="/login" element={<LoginForm isLoggedIn={isLoggedIn} setIsLoggedIn={(value) => setIsLoggedIn(value)} />} />
         <Route path="/signup" element={<SignUpSelect isLoggedIn={isLoggedIn} />} />
         <Route path="/signup/normal" element={<SignUp isLoggedIn={isLoggedIn} isComp={false} />} />
