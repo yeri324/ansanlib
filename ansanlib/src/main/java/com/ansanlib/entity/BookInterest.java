@@ -25,15 +25,15 @@ public class BookInterest {
    
     @Id
     @Column(name="book_interest_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_id")
+    @JoinColumn(name = "book_num")
     private Book book; //도서번호
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "libUser_id")
+    @JoinColumn(name = "user_id")
     private LibUser libUser; //사용자아이디
 
     @CreatedDate

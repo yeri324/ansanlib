@@ -50,7 +50,8 @@ const AdminUserList = () => {
   
 
 
-  /// 상세페이지 이동
+  // 상세페이지 이동
+  
   const handleDetail = ({ user }) => {
     navigate(`/admin/user/detail/${user.userId}`, {
       state : {
@@ -58,7 +59,7 @@ const AdminUserList = () => {
       }
     });
   };
-  ///
+
 
   return (
     <div className="userList">
