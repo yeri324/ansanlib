@@ -10,7 +10,6 @@ import Header from './components/fragments/header/header';
 
 import Admin from './components/pages/admin/Admin';
 
-
 function App() {
 
   return (
@@ -22,7 +21,6 @@ function App() {
         <Route path="/faq/detail/:id" element={<FaqDetailForm />} />
 
         <Route path="/admin/user/search" element={<Admin />} />
-        
         {/* <Route path="/login" element={<LoginForm isLoggedIn={isLoggedIn} setIsLoggedIn={(value) => setIsLoggedIn(value)} />} />
         <Route path="/signup" element={<SignUpSelect isLoggedIn={isLoggedIn} />} />
         <Route path="/signup/normal" element={<SignUp isLoggedIn={isLoggedIn} isComp={false} />} />
