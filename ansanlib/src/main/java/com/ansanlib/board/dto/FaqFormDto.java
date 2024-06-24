@@ -1,5 +1,6 @@
 package com.ansanlib.board.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -22,6 +23,10 @@ public class FaqFormDto {
 
     private List<Long> idList;
     
+    private List<FaqImgDto> faqImgDtoList = new ArrayList<>();
+    
+    private List<Long> faqImgIdList = new ArrayList<>();
+    
     private static ModelMapper modelMapper = new ModelMapper();
     
     public Faq createFaq() {
@@ -31,5 +36,5 @@ public class FaqFormDto {
     public static FaqFormDto of(Faq faq) {
         return modelMapper.map(faq, FaqFormDto.class);
     }
- 
+
 }

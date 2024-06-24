@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 function FaqList() {
     const [faqList, setFaqList] = useState();
     const [isChecked, setIsChecked] = useState(false);
-    const [isCheckAll, setIsCheckAll] = useState(false);
     const [checkedList, setCheckedList] = useState([]);
     const navigate = useNavigate();
 
@@ -33,22 +32,6 @@ function FaqList() {
         })
     }
 
-    // 전체선택하기
-    const changeAllCheck = (e) => {
-        if (e.target.checked) {
-            setIsCheckAll(true)
-        } else {
-            setIsCheckAll(false)
-            setCheckedList([])
-        }
-    };
-
-    // 개별선택하기
-    const checkedBox = () => {
-        setIsCheckAll(false)
-        setIsChecked(true)
-        setCheckedList([])
-    }
     const checkedHandler = (value, isChecked) => {
         if (isChecked) {
             setCheckedList((prev) => [...prev, value]);
@@ -66,16 +49,8 @@ function FaqList() {
         checkedHandler(value, e.target.checked);
     };
 
-
-    // //체크박스 관리
-    // useEffect(() => {
-    //     if (checkedList.length !== 0 && checkedList.length === faqList.length) {
-    //         setIsCheckAll(true)
-    //     }
-    // }, [checkedList])
-
     //FAQ 다중삭제하기
-    const DelFaqList = () => {
+    const delFaqList = () => {
         if (window.confirm('삭제 하시겠습니까?')) {
             axios(
                 {
@@ -92,15 +67,17 @@ function FaqList() {
         
     }
 
+    // 생성페이지 이동
+    const handleNew = () => {
+        navigate(`/faq/new`)
+    }
+
     return (
         <div>
             <table>
                 <thead>
                     <tr>
-                        <th>
-                            <input type='checkbox' id='all_class_checkbox' onClick={e => changeAllCheck(e)} checked={isCheckAll} />
-                            <label htmlFor='all_class_checkbox' />
-                            전체선택</th>
+                        <th> - </th>
                         <th>번호</th>
                         <th>제목</th>
                         <th>작성시간</th>
@@ -120,7 +97,8 @@ function FaqList() {
                         </div>
                     ))}
                 </div>
-                <button onClick={DelFaqList}>삭제하기</button>
+                <button onClick={delFaqList}>삭제하기</button>
+                <button onClick={handleNew}>작성하기</button>
             </table >
         </div >
     );

@@ -1,14 +1,15 @@
 package com.ansanlib.board.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ansanlib.board.dto.FaqFormDto;
 import com.ansanlib.board.service.FaqService;
@@ -63,6 +64,14 @@ public class FaqController {
 		} catch (Exception e) {
 			resEntity = new ResponseEntity("삭제 중 에러가 발생하였습니다.", HttpStatus.BAD_REQUEST);
 		}
+	}
+	
+	@RequestMapping(value = "/uploads", method = RequestMethod.POST)
+	public void uploadFaqImg(@RequestParam("itemImgFile") List<MultipartFile> itemImgFileList){
+		ResponseEntity resEntity = null;
+		System.out.println("****");
+		
+		
 	}
 
 }
