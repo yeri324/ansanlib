@@ -2,14 +2,18 @@ package com.ansanlib.admin.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ansanlib.admin.dto.AdminUserDto;
 import com.ansanlib.admin.service.AdminUserService;
+import com.ansanlib.board.dto.FaqFormDto;
+import com.ansanlib.entity.Faq;
 import com.ansanlib.entity.LibUser;
 
 import lombok.RequiredArgsConstructor;
@@ -29,13 +33,21 @@ public class AdminUserController {
 //        return "admin/userForm";
 //    } 
 	
-	@GetMapping("/search")
-    public ResponseEntity<List<LibUser>> searchUsers(@ModelAttribute AdminUserDto adminUserDto) {
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ResponseEntity<List<LibUser>> userList() {
+		List<LibUser> userList = adminUserService.getUserList();
+		return ResponseEntity.ok(userList);
+	}
+	
+	
+	@PostMapping("/search")
+    public ResponseEntity<List<LibUser>> searchUsers(@RequestBody AdminUserDto adminUserDto) {
 		
         List<LibUser> users = adminUserService.ListUser(adminUserDto);
    
         return ResponseEntity.ok(users);
-    } 
+    }
+	
 	
 	
 //	 @GetMapping("/{id}")

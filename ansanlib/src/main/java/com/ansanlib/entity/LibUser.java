@@ -31,43 +31,44 @@ public class LibUser extends BaseEntity {
 	@Id
 	@Column(name = "user_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long user_id;
+	private Long userId;
 
-	@Column(name = "user_name")
-	private String name;
-
+	
+	@Column(name="user_name")
+	private String name; //이름
+	
 	@Column(unique = true)
-	private String email;
-
-	@Column(name = "login_id")
-	private String loginid;
-
-	private String password;
-
-	private String phone;
-	@Column(name = "address")
-	private String address;
-
-	@Column(name = "address2")
-	private String address2;
+	private String email; //이메일
+	
+	private String loginid; //사용자아이디
+	
+	
+	private String password; //비밀번호
+	
+	private String phone; //전화번호
+	
+	private String address; //주소
+	
+	private String address2; //상세주소
+	
+	
+	@Enumerated(EnumType.STRING)
+	private Gender gender; //성별
 
 	@Enumerated(EnumType.STRING)
-	private Gender gender;
-
-	@Enumerated(EnumType.STRING)
-	private Role role;
-
-	private String sms;
-
-	private LocalDateTime joinDate;
-
-	private LocalDateTime loginDate;
-
-	private int penalty;
-
-	private UserStatus status;
-
-	private int lateFee;
+	private Role role; //역할
+	
+	private String sms; //문자 수신동의
+	
+	private LocalDateTime joinDate; //가입일
+	
+	private LocalDateTime loginDate; //최근접속일
+	
+	private int penalty; //벌점
+	
+	private UserStatus status; //제재여부
+	
+	private int lateFee; //연체료
 
 	public LibUser bind(UserDto userDto) {
 		this.setLoginid(userDto.getLoginid());
