@@ -33,7 +33,7 @@ public class ReservationService {
 		Book book = new Book();
 		book.setId(createReservationDto.getBookId());
 		LibUser user = new LibUser();
-		user.setUserId(createReservationDto.getBookId());
+		user.setUserId(createReservationDto.getUserId());
 		
 		Reservation reservation = Reservation.builder()
 				.bookId(book)
@@ -55,8 +55,8 @@ public class ReservationService {
 		return reservationRepository.save(reservation);
 	}
 	
-	public List<Reservation> getReservationByUser(Long user_id){
-		return reservationRepository.findByLibUser_UserId(user_id);
+	public List<Reservation> getReservationByUser(Long userId){
+		return reservationRepository.findByUserId(userId);
 	}
 	
 	public Reservation getReservationById(long reservationId){

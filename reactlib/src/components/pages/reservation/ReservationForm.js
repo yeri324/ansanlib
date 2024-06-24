@@ -3,13 +3,13 @@ import axios from 'axios';
 
 const ReservationForm = () => {
   const [userId, setUserName] = useState('');
-  const [bookIsbn, setBookIsbn] = useState('');
+  const [bookId, setBookId] = useState('');
   const [reservationDate, setReservationDate] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const reservation = { userId, bookIsbn, reservationDate };
+    const reservation = { userId, bookId, reservationDate };
     
     try {
       const response = await axios.post('/api/reservations', reservation);
@@ -28,8 +28,8 @@ const ReservationForm = () => {
         <input type="text" value={userId} onChange={(e) => setUserName(e.target.value)} required />
       </label>
       <label>
-        Book ISBN:
-        <input type="text" value={bookIsbn} onChange={(e) => setBookIsbn(e.target.value)} required />
+        Book Id:
+        <input type="text" value={bookId} onChange={(e) => setBookId(e.target.value)} required />
       </label>
       <label>
         Reservation Date:
