@@ -12,6 +12,9 @@ import Admin from './components/pages/admin/Admin';
 import AuthenticationForm from './components/pages/userAuthentication/AuthenticationForm';
 import MyPage from './components/pages/myPage/MyPage';
 import ReservationList from './components/pages/reservation/ReservationList';
+import AdminUserList from './components/pages/admin/AdminUserList';
+import AdminUserDetail from './components/pages/admin/AdminUserDetail';
+
 
 function App() {
   const [isVerified, setIsVerified] = useState(false);
@@ -34,6 +37,10 @@ function App() {
         <Route path="/admin/user/search" element={<Admin />} />
         <Route path="/user/authentication" element={<AuthenticationForm/>} />
         <Route path="/mypage" element={<MyPage/>}/>
+
+        <Route path="/admin/user/search" element={<AdminUserList />} />
+        <Route path="/admin/user/detail/:id" element={<AdminUserDetail />} />
+        
         {/* <Route path="/login" element={<LoginForm isLoggedIn={isLoggedIn} setIsLoggedIn={(value) => setIsLoggedIn(value)} />} />
         <Route path="/signup" element={<SignUpSelect isLoggedIn={isLoggedIn} />} />
         <Route path="/signup/normal" element={<SignUp isLoggedIn={isLoggedIn} isComp={false} />} />
