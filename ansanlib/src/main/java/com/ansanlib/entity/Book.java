@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+<<<<<<< HEAD
 @Getter @Setter
 @Table(name="book")
 @Builder
@@ -66,4 +67,40 @@ public class Book extends BaseEntity {
 	
 	@Column(nullable = false)
 	private BookStatus status;
+=======
+@Getter
+@Setter
+@Table(name = "book")
+public class Book extends BaseEntity {
+
+	@Id
+	@Column(name = "book_num")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+
+	private String isbn; // 바코드
+
+	private String title; // 제목
+	private String author; // 저자
+	private String publisher; // 출판사
+	private LocalDateTime pub_date; // 출판일
+	private String genre; // 장르
+	private String category_code; // 분류코드
+	private String image; // 이미지
+
+	private String loan_sataus; // 대출상태
+
+	private String location; // 위치
+
+	@Lob
+	private String bookDetail; // 책 설명
+	private int count;
+
+	@Column(nullable = false) // 책 상태
+	private BookStatus status;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="lib_num")
+	private Library library;
+>>>>>>> main
 }
