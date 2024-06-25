@@ -65,6 +65,45 @@ const AdminUserDetail = () => {
 
     };
 
+    const onClickTo = () => {
+        if (window.confirm('수정 하시겠습니까?')) {axios(
+            {
+                url: '/admin/user/detail',
+                method: 'put',
+                data: {
+               
+                },
+                baseURL: 'http://localhost:8090',
+            }
+        ).then((res) => {
+            setUserDetail(res.data);
+        })
+            .catch((err) => {
+                setUserDetail([]);
+            });
+        }
+    }
+
+    function onUpdate() {
+        //     if (window.confirm('수정 하시겠습니까?')) {
+        //         axios(
+        //             {
+        //                 url: `/faq/detail/${id}`,
+        //                 method: 'put',
+        //                 data: {
+        //                     id: id,
+        //                     title: title,
+        //                     content: content,
+        //                 },
+        //                 baseURL: 'http://localhost:8090',
+        //             }
+        //         ).then(function (response) {
+        //             console.log(response.data);
+        //         });
+        //         navigate("/faq/list", { repalce: true });
+        //     }
+        // }
+    
 
 
     return (
@@ -83,10 +122,10 @@ const AdminUserDetail = () => {
             {console.log(userRes)}
             {userRes.map((res) => (
                 <tr>
-                    <td>{res.id}</td> 
-                    <td>{res.bookId.id}</td> 
-                     <td>{res.startDate}</td>
-                     <td>{res.endDate}</td>
+                    <td>{res.id}</td>
+                    <td>{res.bookId.id}</td>
+                    <td>{res.startDate}</td>
+                    <td>{res.endDate}</td>
 
                 </tr>
             ))}
@@ -99,5 +138,5 @@ const AdminUserDetail = () => {
         </div>
     );
 };
-
+}
 export default AdminUserDetail;

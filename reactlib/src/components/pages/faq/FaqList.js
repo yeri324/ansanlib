@@ -82,32 +82,32 @@ function FaqList() {
     }
 
     // 업데이트
-    function onUpdate() {
-        if (window.confirm('수정 하시겠습니까?')) {
-            axios(
-                {
-                    url: `/faq/detail/${id}`,
-                    method: 'put',
-                    data: {
-                        id: id,
-                        title: title,
-                        content: content,
-                    },
-                    baseURL: 'http://localhost:8090',
-                }
-            ).then(function (response) {
-                console.log(response.data);
-            });
-            navigate("/faq/list", { repalce: true });
-        }
-    }
+    // function onUpdate() {
+    //     if (window.confirm('수정 하시겠습니까?')) {
+    //         axios(
+    //             {
+    //                 url: `/faq/detail/${id}`,
+    //                 method: 'put',
+    //                 data: {
+    //                     id: id,
+    //                     title: title,
+    //                     content: content,
+    //                 },
+    //                 baseURL: 'http://localhost:8090',
+    //             }
+    //         ).then(function (response) {
+    //             console.log(response.data);
+    //         });
+    //         navigate("/faq/list", { repalce: true });
+    //     }
+    // }
 
     return (
-        <FaqStateContext.Provider value={data}>
-            <FaqDispatchContext.Provider value={{onSearch, onDelete, onCreate, onUpdate}}>
+        // <FaqStateContext.Provider value={data}>
+        //     <FaqDispatchContext.Provider value={{onSearch, onDelete, onCreate, onUpdate}}>
                 <div>
                     
-                    {/* <div>
+                     <div>
                         <select name="searchBy" value={searchOption.searchBy} onChange={handleOnChange}>
                             <option value="loginid">ID</option>
                             <option value="title">Title</option>
@@ -129,22 +129,22 @@ function FaqList() {
 
                             {searchResult.map((item) => (
 
-                                <FaqItem key={item.id}  {...item} />
-                                //   <tr>
-                                //     <td>{item.id}</td>
-                                //     <td onClick={() => handleDetail({ item })}>{item.title}</td>
-                                //     <td>{item.regTime}</td>
-                                //     <td>{item.updateTime}</td>
-                                //   </tr>
+                                // <FaqItem key={item.id}  {...item} />
+                                  <tr>
+                                    <td>{item.id}</td>
+                                    <td onClick={() => handleDetail({ item })}>{item.title}</td>
+                                    <td>{item.regTime}</td>
+                                    <td>{item.updateTime}</td>
+                                  </tr>
                             ))}
 
                         </div>
                         <button onClick={onDelete}>삭제하기</button>
                         <button onClick={onCreate}>작성하기</button>
-                    </table > */}
+                    </table >
                 </div >
-            </FaqDispatchContext.Provider>
-        </FaqStateContext.Provider>
+        //     </FaqDispatchContext.Provider>
+        // </FaqStateContext.Provider>
     );
 };
 
