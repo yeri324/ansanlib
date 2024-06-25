@@ -12,11 +12,14 @@ import com.ansanlib.entity.Reservation;
 import com.ansanlib.reservation.dto.CreateReservationDto;
 import com.ansanlib.reservation.repository.ReservationRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ReservationService {
 	@Autowired
 	private ReservationRepository reservationRepository;
 	
+	@Transactional
 	public Reservation createReservation(CreateReservationDto createReservationDto) throws Exception {
 		//예약 시작 날짜
 		LocalDateTime startDate = createReservationDto.getReservationDate();
@@ -32,6 +35,7 @@ public class ReservationService {
 		//예약 entity 생성
 		Book book = new Book();
 		book.setId(createReservationDto.getBookId());
+		
 		LibUser user = new LibUser();
 		user.setUserId(createReservationDto.getUserId());
 		

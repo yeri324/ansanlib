@@ -28,13 +28,14 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long>{
             @Param("startDate") LocalDateTime startDate, 
             @Param("endDate") LocalDateTime endDate);
 	
-    @Query("SELECT CASE WHEN COUNT(r) > 0 THEN true ELSE false END " +
-            "FROM Reservation r " +
-            "WHERE r.bookId.id = :bookId " +
-            "AND ((r.startDate < :endDate AND :endDate < r.endDate) " +
-            "OR (r.startDate < :startDate AND :startDate < r.endDate))")
-	boolean checkIfOverlappingReservationsExists(
-			@Param("bookId") Long bookId, 
+	   @Query("SELECT CASE WHEN COUNT(r) > 0 THEN true ELSE false END " +
+	            "FROM Reservation r " +
+	            "WHERE r.bookId.id = :bookId " +
+	            "AND (r.startDate <= :endDate AND r.endDate >= :startDate)")
+   boolean checkIfOverlappingReservationsExists(
+         @Param("bookId") Long bookId, 
             @Param("startDate") LocalDateTime startDate, 
             @Param("endDate") LocalDateTime endDate);
 }
+
+
