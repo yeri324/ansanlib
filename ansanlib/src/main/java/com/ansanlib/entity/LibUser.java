@@ -67,6 +67,7 @@ public class LibUser extends BaseEntity {
 	private int penalty; //벌점
 	
 	private UserStatus status; //제재여부
+	private LocalDateTime penaltyDate; //제재마감시간
 	
 	private int lateFee; //연체료
 
@@ -83,4 +84,10 @@ public class LibUser extends BaseEntity {
 
 		return this;
 	}
+	
+	public void libUserToPenalty() {
+		this.status = UserStatus.ONPENALTY;
+		this.penaltyDate = LocalDateTime.now().plusDays(7);
+		}
+
 }

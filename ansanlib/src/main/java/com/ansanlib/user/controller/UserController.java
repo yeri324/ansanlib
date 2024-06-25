@@ -22,6 +22,7 @@ public class UserController {
 
 	    @PostMapping("/user/join")
 	    public ResponseEntity<String> join(@RequestBody UserDto userDto) {
+	    	System.out.println(userDto.getName()+userDto.getLoginid());
 	        return userService.join(userDto);
 	    }
 	

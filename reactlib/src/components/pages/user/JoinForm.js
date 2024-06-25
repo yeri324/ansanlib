@@ -163,7 +163,19 @@ const JoinForm = ({ isLoggedIn }) => {
             alert(`다음 값을 입력해주세요: ${missingFieldsMessage}`);
         } else {
             if (idAvailable && passwordMatch && isValidPhone && ((formData.password).length >= 8)) {
-                axios.post("/api/user/join", formData)
+                console.log(formData);
+                axios(
+                      {
+                        url: '/api/user/join',
+                        method: 'post',
+                        data:{
+                            ...formData,
+                        },
+                       
+                        baseURL: 'http://localhost:8090',
+                       
+                      })
+               
                 .then(response => {
                     alert(response.data);
                     console.log(response.data); // 회원가입 성공 시 처리

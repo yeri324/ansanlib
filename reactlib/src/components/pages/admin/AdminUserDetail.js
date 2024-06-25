@@ -65,13 +65,13 @@ const AdminUserDetail = () => {
 
     };
 
-    const onClickTo = () => {
+    const onClickToPenalty = () => {
         if (window.confirm('수정 하시겠습니까?')) {axios(
             {
-                url: '/admin/user/detail',
+                url: '/admin/user/penalty',
                 method: 'put',
                 data: {
-               
+                    id: id,
                 },
                 baseURL: 'http://localhost:8090',
             }
@@ -84,7 +84,7 @@ const AdminUserDetail = () => {
         }
     }
 
-    function onUpdate() {
+    // function onUpdate() {
         //     if (window.confirm('수정 하시겠습니까?')) {
         //         axios(
         //             {
@@ -116,7 +116,9 @@ const AdminUserDetail = () => {
             <p>{userDetail.lateFee}</p>
             <p>{userDetail.name}</p>
             <p>{userDetail.status}</p>
-
+            <p>penaltyDate</p>
+            <p>{userDetail.penaltyDate}</p>
+        
             <p>userRes</p>
 
             {console.log(userRes)}
@@ -129,8 +131,7 @@ const AdminUserDetail = () => {
 
                 </tr>
             ))}
-
-            <button>제지</button>
+<button onClick={onClickToPenalty}>penalty</button>
 
 
 
@@ -138,5 +139,5 @@ const AdminUserDetail = () => {
         </div>
     );
 };
-}
+
 export default AdminUserDetail;

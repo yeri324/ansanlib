@@ -31,8 +31,6 @@ function App() {
         <Route path="/faq/new" element={<FaqForm />} />
         <Route path="/faq/detail/:id" element={<FaqDetailForm />} />
 
-        <Route path="/admin/user/search" element={<Admin />} />
-
         <Route path="/admin/user/search" element={<AdminUserList />} />
         <Route path="/admin/user/detail/:id" element={<AdminUserDetail />} />
         

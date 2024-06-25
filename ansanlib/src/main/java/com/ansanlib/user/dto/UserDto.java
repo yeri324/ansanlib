@@ -19,7 +19,7 @@ public class UserDto {
     private String phone;
     private String address;
     private String address2;
-    private Gender gender;
+    private String gender;
   //  private Role role;
     
     private String sms;

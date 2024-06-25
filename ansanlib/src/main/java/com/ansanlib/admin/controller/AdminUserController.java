@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -52,7 +53,6 @@ public class AdminUserController {
 	public ResponseEntity getUserDetails(@RequestBody AdminDetailUserDto adminDetailUserDto) {
 
 		LibUser user = adminUserService.getUserById(adminDetailUserDto);
-//		Reservation res = adminUserService.getReservation(adminDetailUserDto);
 		return ResponseEntity.ok(user);
 
 	}
@@ -61,7 +61,16 @@ public class AdminUserController {
 	public ResponseEntity getUserRes(@RequestBody AdminDetailUserDto adminDetailUserDto) {
 //		LibUser user = adminUserService.getUserById(adminDetailUserDto);
 		List<Reservation> res = adminUserService.getReservation(adminDetailUserDto);
-		System.out.println(res + "**************************************************");
 		return ResponseEntity.ok(res);
 	}
+	
+	
+	@PutMapping("/penalty")
+	public ResponseEntity updateFaq(@RequestBody AdminDetailUserDto adminDetailUserDto) throws Exception {
+		LibUser updateUser = adminUserService.updateUserStatus(adminDetailUserDto);
+		 return ResponseEntity.ok(updateUser);
+		
+
+	}
+
 }

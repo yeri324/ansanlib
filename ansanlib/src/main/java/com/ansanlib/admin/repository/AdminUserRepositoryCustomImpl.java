@@ -19,28 +19,28 @@ public class AdminUserRepositoryCustomImpl implements AdminUserRepositoryCustom 
 
 
 	@Override
-	public List<LibUser>  AdminUserList(AdminUserDto adminUserDto) {
+	public List<LibUser> AdminUserList(AdminUserDto adminUserDto) {
 		QLibUser libUser = QLibUser.libUser;
 		var query = queryFactory.selectFrom(libUser);
 		
 
-//        if ("userId".equals(adminUserDto.getSearchBy())) {
-//            query.where(libUser.loginid.containsIgnoreCase(adminUserDto.getSearchQuery()));
-//        } else if ("userName".equals(adminUserDto.getSearchBy())) {
-//            query.where(libUser.name.containsIgnoreCase(adminUserDto.getSearchQuery()));
-//        }
-//
-//  
-//		if ("penalty".equals(adminUserDto.getSelectRadio())) {
-//			query.where(libUser.penalty.gt(0)).orderBy(libUser.penalty.desc());
-//			}
-//		else if ("latefee".equals(adminUserDto.getSelectRadio())) {
-//			query.where(libUser.lateFee.gt(0));
-//		}
-//		
-//		List<LibUser> users = new ArrayList<>();
-//		users = query.fetch();
-//		return users;
+        if ("userId".equals(adminUserDto.getSearchBy())) {
+            query.where(libUser.loginid.containsIgnoreCase(adminUserDto.getSearchQuery()));
+        } else if ("userName".equals(adminUserDto.getSearchBy())) {
+            query.where(libUser.name.containsIgnoreCase(adminUserDto.getSearchQuery()));
+        }
+
+  
+		if ("penalty".equals(adminUserDto.getSelectRadio())) {
+			query.where(libUser.penalty.gt(0)).orderBy(libUser.penalty.desc());
+			}
+		else if ("latefee".equals(adminUserDto.getSelectRadio())) {
+			query.where(libUser.lateFee.gt(0));
+		}
+		
+		List<LibUser> users = new ArrayList<>();
+		users = query.fetch();
+		return users;
 		
 	}
 	
