@@ -1,31 +1,32 @@
 .notice_board {
     padding: 10px;
     background-color: #f9f9f9;
+    max-width: 300px; /* 적당한 크기로 제한 */
+    margin: 0 auto; /* 가운데 정렬 */
   }
   
   .notice_tabs {
     list-style-type: none;
-    display: flex;
-    justify-content: flex-start; /* 왼쪽 정렬 */
     padding: 0;
-    margin-bottom: 10px; /* 위쪽 거리 */
+    margin-bottom: 10px;
   }
   
   .notice_tabs li {
     cursor: pointer;
-    padding: 10px 20px; /* 패딩 추가 */
+    padding: 8px 12px; /* 패딩을 줄여서 버튼 크기 조정 */
     background-color: #e9e9e9;
-    margin-right: 10px; /* 왼쪽 거리 */
-    transition: background-color 0.3s ease; /* hover 효과 전환 */
+    margin-bottom: 5px; /* 아래쪽 간격 */
+    transition: background-color 0.3s ease;
+    text-align: center; /* 가운데 정렬 */
   }
   
   .notice_tabs li.active {
     background-color: #d9d9d9;
-    font-weight: bold; /* 활성화된 항목 강조 */
+    font-weight: bold;
   }
   
   .notice_tabs li:hover {
-    background-color: #c9c9c9; /* hover 효과 */
+    background-color: #c9c9c9;
   }
   
   .notice_content ul {
@@ -35,10 +36,10 @@
   
   .notice_content li {
     padding: 5px 0;
-    transition: color 0.3s ease; /* hover 효과 전환 */
+    transition: color 0.3s ease;
   }
   
   .notice_content li:hover {
-    color: #007bff; /* hover 효과 */
+    color: #007bff;
   }
   
