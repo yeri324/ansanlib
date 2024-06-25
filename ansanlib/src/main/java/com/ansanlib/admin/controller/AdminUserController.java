@@ -56,5 +56,11 @@ public class AdminUserController {
 		return ResponseEntity.ok(user);
 
 	}
-
+	
+	@PostMapping("/getRes")
+	public ResponseEntity getUserRes(@RequestBody AdminDetailUserDto adminDetailUserDto) {
+//		LibUser user = adminUserService.getUserById(adminDetailUserDto);
+		Reservation res = adminUserService.getReservation(adminDetailUserDto);
+		return ResponseEntity.ok(res);
+	}
 }

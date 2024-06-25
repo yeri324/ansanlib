@@ -96,14 +96,14 @@ const AdminUserList = () => {
           
          <tbody>
             {searchResult.map((user) => (
-              <AdminUserItem key={user.userId} {...user}/>
-              // <tr>
-              //   <td>{user.userId}</td>
-              //   <td onClick={() => handleDetail({ user })}>{user.loginid}</td>
-              //   <td>{user.name}</td>
-              //   <td>{user.penalty}</td>
-              //   <td>{user.lateFee}</td>
-              // </tr>
+              // <AdminUserItem key={user.userId} {...user}/>
+              <tr>
+                <td>{user.userId}</td>
+                <td onClick={() => handleDetail({ user })}>{user.loginid}</td>
+                <td>{user.name}</td>
+                <td>{user.penalty}</td>
+                <td>{user.lateFee}</td>
+              </tr>
             ))}
 
 
