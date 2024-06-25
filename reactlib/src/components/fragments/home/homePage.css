@@ -1,0 +1,44 @@
+.main_content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content_grid {
+    width: 80%;
+    margin: 0 auto;
+    display: grid;
+    display: flex;
+    /* grid-template-columns: repeat(1, 1fr); */
+    /* grid-gap: 10px; */
+    flex-direction: row;
+    gap: 20px;
+    padding: 30px;
+}
+
+.top_column {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.notice_board, .monthly_plan, .login_box {
+    border: 1px solid #ccc;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    flex: 1;
+}
+
+.sub_content1 {
+    display: flex;
+    border: 1px solid #ccc;
+    width: 100%;
+    align-items: center;
+}
+
+
+
+
+
+
+

@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import com.ansanlib.constant.Gender;
 import com.ansanlib.constant.Role;
 import com.ansanlib.constant.UserStatus;
+import com.ansanlib.user.dto.UserDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,19 +21,18 @@ import lombok.ToString;
 
 //import org.springframework.security.crypto.password.PasswordEncoder;
 
-
-
 @Entity
 @Getter
 @Setter
-@Table(name="lib_user")
+@Table(name = "lib_user")
 @ToString
 public class LibUser extends BaseEntity {
-	
+
 	@Id
-	@Column(name="user_id")
+	@Column(name = "user_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long userId;
+
 	
 	@Column(name="user_name")
 	private String name; //이름
@@ -51,7 +51,7 @@ public class LibUser extends BaseEntity {
 	
 	private String address2; //상세주소
 	
-
+	
 	@Enumerated(EnumType.STRING)
 	private Gender gender; //성별
 
@@ -70,27 +70,17 @@ public class LibUser extends BaseEntity {
 	
 	private int lateFee; //연체료
 
-	
-	
-	
-//	public static LibUser createUser(UserDto userFormDto, PasswordEncoder passwordEncoder) {
-//		LibUser user = new LibUser();
-//		user.setName(userFormDto.getName());
-//		user.setEmail(userFormDto.getEmail());
-//		user.setAddress(userFormDto.getAddress());
-//		user.setAddress2(userFormDto.getAddress2());
-//		
-//		user.setLoginid(userFormDto.getLoginid());
-//		user.setLoginDate(userFormDto.getLoginDate());
-//	
-//		user.setJoinDate(userFormDto.getJoinDate());
-//	
-//		user.setSms(userFormDto.getSms());
-//		
-//		String password = passwordEncoder.encode(userFormDto.getPassword());
-//		user.setPassword(password);
-//		user.setRole(Role.USER);
-//	
-//		return user;
-//	}
+	public LibUser bind(UserDto userDto) {
+		this.setLoginid(userDto.getLoginid());
+		// this.setPassword(passwordEncoder.encode(userDto.getPassword()));
+		this.setName(userDto.getName());
+
+		this.setAddress(userDto.getAddress());
+		this.setAddress2(userDto.getAddress2());
+		// this.setBirth(userDto.getBirth());
+		this.setEmail(userDto.getEmail());
+		this.setPhone(userDto.getPhone());
+
+		return this;
+	}
 }
