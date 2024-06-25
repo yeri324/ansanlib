@@ -3,6 +3,7 @@ package com.ansanlib.admin.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,20 +28,14 @@ public class AdminUserController {
 	private final AdminUserService adminUserService;
 	private final ReservationService reservationService;
 
-//	@GetMapping("/search")
-//    public String searchUsers(@ModelAttribute AdminUserDto adminUserDto, Model model) {
-//		
-//        List<LibUser> users = adminUserService.ListUser(adminUserDto);
-//        model.addAttribute("users", users);
-//        return "admin/userForm";
-//    } 
-
+	// 모든 유저 가져오기
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ResponseEntity<List<LibUser>> userList() {
 		List<LibUser> userList = adminUserService.getUserList();
 		return ResponseEntity.ok(userList);
 	}
 
+	// 검색으로 찾기
 	@PostMapping("/search")
 	public ResponseEntity<List<LibUser>> searchUsers(@RequestBody AdminUserDto adminUserDto) {
 
@@ -49,6 +44,7 @@ public class AdminUserController {
 		return ResponseEntity.ok(users);
 	}
 
+	// 유저정보 가져오기
 	@PostMapping("/detail")
 	public ResponseEntity getUserDetails(@RequestBody AdminDetailUserDto adminDetailUserDto) {
 
@@ -56,20 +52,26 @@ public class AdminUserController {
 		return ResponseEntity.ok(user);
 
 	}
-	
+
+	// 예약정보가져오기
 	@PostMapping("/getRes")
 	public ResponseEntity getUserRes(@RequestBody AdminDetailUserDto adminDetailUserDto) {
-//		LibUser user = adminUserService.getUserById(adminDetailUserDto);
 		List<Reservation> res = adminUserService.getReservation(adminDetailUserDto);
 		return ResponseEntity.ok(res);
 	}
-	
-	
+
+	// 제재상태부여하기
 	@PutMapping("/penalty")
 	public ResponseEntity updateFaq(@RequestBody AdminDetailUserDto adminDetailUserDto) throws Exception {
 		LibUser updateUser = adminUserService.updateUserStatus(adminDetailUserDto);
-		 return ResponseEntity.ok(updateUser);
-		
+		return ResponseEntity.ok(updateUser);
+	}
+
+	// 예약취소하기
+	@DeleteMapping("/cancelRes")
+	public ResponseEntity cancelRes(@RequestBody AdminDetailUserDto adminDetailUserDto) throws Exception {
+		adminUserService.cancelRes(adminDetailUserDto.getId());
+		return ResponseEntity.ok("삭제완료");
 
 	}
 

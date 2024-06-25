@@ -37,5 +37,5 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long>{
             @Param("endDate") LocalDateTime endDate);
     
 
-    List<Reservation> findByLibUser_userId(Long userId);
+
 }

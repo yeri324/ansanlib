@@ -43,7 +43,7 @@ public class AdminUserService {
 	
 	@Transactional(readOnly = true) 
 	public List<Reservation> getReservation(AdminDetailUserDto adminDetailUserDto) {
-		return reservationRepository.findByLibUser_userId(adminDetailUserDto.getId());
+		return reservationRepository.findByLibUser_UserId(adminDetailUserDto.getId());
 	}
 	
 	
@@ -52,6 +52,10 @@ public class AdminUserService {
 		user.libUserToPenalty();
 		return adminUserRepository.save(user);
 		
+	}
+	
+	public void cancelRes(Long id) {
+		 reservationRepository.deleteById(id);
 	}
 	
 	

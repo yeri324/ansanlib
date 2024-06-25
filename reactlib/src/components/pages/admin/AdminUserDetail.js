@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 const AdminUserDetail = () => {
+    const navigate = useNavigate();
     const { id } = useParams();
     const [userDetail, setUserDetail] = useState({});
     const [userRes, setUserRes] = useState([]);
@@ -47,25 +48,11 @@ const AdminUserDetail = () => {
                 setUserRes([]);
             });
 
-        // axios(
-        //     {
-        //       url: '/admin/user/detail',
-        //       method: 'post',
-        //       data: {
-        //         id: id,
-        //     },
-        //       baseURL: 'http://localhost:8090',
-        //     }
-        //   ) .then((res) => {
-        //     setUserDetail(res.data);
-        // })
-        // .catch((err) => {
-        //     setUserDetail([]);
-        // });  
-
     };
 
     const onClickToPenalty = () => {
+        if(userDetail.status==="ONPENALTY"){alert("이미....")}
+        else{
         if (window.confirm('수정 하시겠습니까?')) {axios(
             {
                 url: '/admin/user/penalty',
@@ -83,27 +70,24 @@ const AdminUserDetail = () => {
             });
         }
     }
+    }
 
-    // function onUpdate() {
-        //     if (window.confirm('수정 하시겠습니까?')) {
-        //         axios(
-        //             {
-        //                 url: `/faq/detail/${id}`,
-        //                 method: 'put',
-        //                 data: {
-        //                     id: id,
-        //                     title: title,
-        //                     content: content,
-        //                 },
-        //                 baseURL: 'http://localhost:8090',
-        //             }
-        //         ).then(function (response) {
-        //             console.log(response.data);
-        //         });
-        //         navigate("/faq/list", { repalce: true });
-        //     }
-        // }
-    
+    const onClickToCancelRes = (e) => {
+        if (window.confirm('예약을 취소하시겠습니까?')) {
+            axios(
+            {
+                url: '/admin/user/cancelRes',
+                method: 'delete',
+                data: {
+                    id: e.target.value,
+                },
+                baseURL: 'http://localhost:8090',
+            }
+        )
+        window.location.reload(navigate(`/admin/user/detail/${id}`, { repalce: true }));
+    }
+}
+   
 
 
     return (
@@ -128,14 +112,12 @@ const AdminUserDetail = () => {
                     <td>{res.bookId.id}</td>
                     <td>{res.startDate}</td>
                     <td>{res.endDate}</td>
+                    <td><button value={res.id} onClick={onClickToCancelRes}>삭제</button></td>
+                    <td><button value={res.id}>기간연장</button></td>
 
                 </tr>
             ))}
-<button onClick={onClickToPenalty}>penalty</button>
-
-
-
-
+        <button onClick={(e)=> onClickToPenalty(e)}>penalty</button>
         </div>
     );
 };
