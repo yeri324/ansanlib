@@ -37,6 +37,8 @@ public class UserController {
 
 	@GetMapping("user/checkId")
 	public ResponseEntity<String> checkId(@RequestParam("loginid") String loginid) {
+		
+		
 		return userService.checkId(loginid);
 	}
 	

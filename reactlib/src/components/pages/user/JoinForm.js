@@ -254,35 +254,44 @@ const JoinForm = ({ isLoggedIn }) => {
             </div>
 
             <div className="input-box">
-                <label>
-                    주소
-                    <input className="long-input" type="text" value={formData.address} readOnly={!addressEditable} onChange={(e) => setFormData({ ...formData, address: e.target.value })} />
-                    <button className="center-button" onClick={handlePostcode}>주소 찾기</button>
-                </label>
+            <label>주소
+                        <input type="text" id="sample4_postcode" placeholder="우편번호" value={formData.postcode}disabled />
+                        <input type="button" onClick={handlePostcode} value="우편번호 찾기" /><br />
+                        <input type="text"  id="sample4_roadAddress" placeholder="도로명주소" value={formData.roadAddress} disabled />
+                        <input type="text" name="address" id="sample4_jibunAddress" placeholder="지번주소" value={formData.jibunAddress} disabled />
+                        <span id="guide" style={{ color: '#999', display: 'none' }}></span>
+                      
+                        <input type="text" name="address2" id="sample4_extraAddress" placeholder="참고항목" value={formData.extraAddress} disabled
+                        onChange={(e) => setFormData({...formData, address2: e.target.value})} />
+                        <input type="text" id="sample4_detailAddress" placeholder="상세주소"/>
+                        </label>
             </div>
 
-            <div className="input-box">
-                <label>
-                    상세 주소
-                    <input className="long-input" type="text" value={formData.address2} onChange={(e) => setFormData({ ...formData, address2: e.target.value })} />
-                </label>
-            </div>
+           
 
             <div className="input-box">
                 <label>
                     성별
-                    <input className="long-input" type="text" value={formData.gender} onChange={(e) => setFormData({ ...formData, gender: e.target.value })} />
+                    <input type="radio" name="gender"  checked={formData.gender === '남'} value={formData.gender} />남성
+                    <input type="radio" name="gender"  checked={formData.gender === '여'} value={formData.gender}  />여성
                 </label>
             </div>
 
             <div className="input-box">
                 <label>
                     SMS 수신 동의
-                    <input className="long-input" type="text" value={formData.sms} onChange={(e) => setFormData({ ...formData, sms: e.target.value })} />
+                   
+                        <input type="radio" name="sms"  checked={formData.sms === 'yes'}value={formData.sms}  />예
+                        <input type="radio" name="sms"  checked={formData.sms === 'no'}value={formData.sms}  />아니오
+               
+             
                 </label>
             </div>
 
             <button className="center-button" onClick={handleSignUp}>회원가입</button>
+            <button type="button" className="btn btn-primary" onClick={() => window.location.href = '/login'}>
+                    로그인하기
+                </button>
         </div>
     );
 };

@@ -1,73 +1,79 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+// import React, { useState } from "react";
+// import axios from "axios";
 
-function FindPwForm() {
-    const [formData, setFormData] = useState({
-        email: ''
-    });
 
-    const [errorMessage, setErrorMessage] = useState('');
-    const [successMessage, setSuccessMessage] = useState('');
+// const FindpwForm= () => {
+//     const [formData, setFormData] = useState ( {
+//         id:"",
+//         name:"",
+//         email:"",
+        
+//     })
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value
-        });
-    };
 
-    const handleResetPassword = async () => {
-        try {
-            const res = await axios.post('/api/resetPassword', {
-                email: formData.email
-            });
 
-            if (res.data.success) {
-                setSuccessMessage('임시 비밀번호가 이메일로 발송되었습니다.');
-                setErrorMessage('');
-            } else {
-                setSuccessMessage('');
-                setErrorMessage('이메일 주소를 확인해주세요.');
-            }
-        } catch (error) {
-            console.error(error);
-            setErrorMessage('서버 오류가 발생했습니다.');
-        }
-    };
+// const [verificationStatus, setVerificationStatus] = useState ({
+//     idVerified: false,
+//     emailVerified: false,
+//     nameVerified: false
+// });
 
-    return (
-        <div className="container">
-            <h2>비밀번호 찾기</h2>
-            <form>
-                <div className="form-group">
-                    <label htmlFor="email">이메일</label>
-                    <input
-                        type="email"
-                        className="form-control"
-                        id="email"
-                        name="email"
-                        placeholder="이메일 입력"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                    />
-                </div>
-                <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={handleResetPassword}
-                >
-                    임시비밀번호받기
-                </button>
-            </form>
-            {errorMessage && <p className="text-danger">{errorMessage}</p>}
-            {successMessage && <p className="text-success">{successMessage}</p>}
-       
-            <button type="button" className="btn btn-primary" onClick={() => window.location.href = '/login'}>
-                    로그인하기
-                </button>
-        </div>
-    );
-}
+// const [verificationCode, setVerificationCode] = useState("");
+// const [emailCode, setEmailCode] = useState("");
+// const [isEmail, setIsEmail] = useState(true);
 
-export default FindPwForm;
+
+// const handleIsEmailChange = () => {
+//     setIsEmail(!isEmail);
+//     setVerificationStatus({
+//         ...verificationStatus,
+//         emailVerified: false,
+//     }); // Reset verification status
+// };
+
+// const handleSendCode = () => {
+//     if (isEmail) {
+//         alert("임시번호가 발송되었습니다.");
+//         axios.post('/auth/sendCode', { email: formData.email })
+//             .catch(error => alert("임시번호 전송이 실패하였습니다."));
+    
+//     }
+// };
+
+// const verifyUserDetails = () => {
+//     const { id, name } = formData;
+//     axios.post("/user/verify", { id, name })
+//         .then(response => {
+//             if (response.status === 200) {
+//                 setVerificationStatus({ ...verificationStatus, idVerified: true, nameVerified: true });
+//                 alert("사용자 정보가 확인되었습니다.");
+//             }
+//         })
+//         .catch(error => {
+//             alert("사용자 정보가 일치하지 않습니다.");
+//             console.error(error);
+//         });
+// };
+
+
+// return ( 
+//     <div className="input-box">
+//     <label>
+//         아이디<input type="text" value={formData.loginid} onChange={(e) => setFormData({ ...formData, loginid: e.target.value })} />
+//     </label>
+// </div>
+
+
+
+// <div className="input-box">
+//     <label>
+//      이메일 <input type="text" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
+//     </label>
+// </div>
+
+
+
+// );
+// };
+
+// export default FindpwForm;
