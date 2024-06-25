@@ -29,6 +29,8 @@ public class ReservationService {
 		//예약 종료 날짜
 		LocalDateTime endDate = LocalDateTime.now().plusDays(7);
 		
+		
+		
 		//예약 entity 생성
 		Book book = new Book();
 		book.setId(createReservationDto.getBookId());
@@ -62,4 +64,10 @@ public class ReservationService {
 	public Reservation getReservationById(long reservationId){
 		return reservationRepository.findById(reservationId);
 	}
+	
+	public void deleteReservation(Long reservationId) throws Exception {
+	        Reservation reservation = reservationRepository.findById(reservationId)
+	            .orElseThrow(() -> new Exception("예약을 찾을 수 없습니다."));
+	        reservationRepository.delete(reservation);
+	    }
 }

@@ -6,7 +6,7 @@ const ReservationList = () => {
     const { userId } = useParams();
 
     const [reservations, setReservations] = useState([]);
-
+    const [selectedReservations, setSelectedReservations] = useState([]); 
     const [isErrored, setErrored] = useState(false);
 
     useEffect(async () => {
@@ -22,28 +22,47 @@ const ReservationList = () => {
         }
     }, [userId]); //이부분은 의존성 배열인데, userId 값이 변경될 때 마다 useEffect를 새로 실행하여 예약목록을 업데이트 하도록 함.
 
-    const element = !isErrored ? (
-        //오류가 발생하지 않은 경우는 예약목록 표시
+    const handleSelectReservation = (reservationId) => {
+        setSelectedReservations(prevSelected =>
+            prevSelected.includes(reservationId)
+                ? prevSelected.filter(id => id !== reservationId)
+                : [...prevSelected, reservationId]
+        );
+    };
+
+    const handleDeleteReservations = async () => {
+        try {
+            await Promise.all(selectedReservations.map(id =>
+                axios.delete(`/api/reservations/${id}`)
+            ));
+            setReservations(reservations.filter(reservation => !selectedReservations.includes(reservation.id)));
+            setSelectedReservations([]);
+        } catch (error) {
+            console.error('Error deleting reservations:', error);
+        }
+    };
+
+    return (
         <div>
             <h2>{userId}의 예약 목록</h2>
             <ul>
                 {reservations.map(reservation => (
                     <li key={reservation.id}>
+                        <input
+                            type="checkbox"
+                            checked={selectedReservations.includes(reservation.id)}
+                            onChange={() => handleSelectReservation(reservation.id)}
+                        />
                         <strong>책 ISBN:</strong> {reservation.bookIsbn} <br />
                         <strong>시작 날짜:</strong> {reservation.startDate} <br />
                         <strong>종료 날짜:</strong> {reservation.endDate}
                     </li>
                 ))}
             </ul>
-        </div>
-    ) : (
-        //오류가 발생한 경우
-        <div>
-         <h2>자료를 가져오지 못했습니다.</h2>
+            <button onClick={handleDeleteReservations}> 예약 삭제</button>
+            {isErrored && <h2>자료를 가져오지 못했습니다.</h2>}
         </div>
     );
-
-    return element;
 };
 
 export default ReservationList;
