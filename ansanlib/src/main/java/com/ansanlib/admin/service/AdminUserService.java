@@ -43,7 +43,7 @@ public class AdminUserService {
 	
 	@Transactional(readOnly = true) 
 	public List<Reservation> getReservation(AdminDetailUserDto adminDetailUserDto) {
-		return reservationRepository.findByLibUser_UserId(adminDetailUserDto.getId());
+		return reservationRepository.findByLibUser_UserIdOrderByStartDateAsc(adminDetailUserDto.getId());
 	}
 	
 	

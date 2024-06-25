@@ -107,15 +107,16 @@ const AdminUserDetail = () => {
 
             {console.log(userRes)}
             {userRes.map((res) => (
-                <tr>
-                    <td>{res.id}</td>
-                    <td>{res.bookId.id}</td>
-                    <td>{res.startDate}</td>
-                    <td>{res.endDate}</td>
-                    <td><button value={res.id} onClick={onClickToCancelRes}>삭제</button></td>
-                    <td><button value={res.id}>기간연장</button></td>
+                 <UserResItem key={res.id} res={res} onClickToCancelRes={onClickToCancelRes} />
+                // <tr>
+                //     <td>{res.id}</td>
+                //     <td>{res.bookId.id}</td>
+                //     <td>{res.startDate}</td>
+                //     <td>{res.endDate}</td>
+                //     <td><button value={res.id} onClick={onClickToCancelRes}>삭제</button></td>
+                //     <td><button value={res.id}>기간연장</button></td>
 
-                </tr>
+                // </tr>
             ))}
         <button onClick={(e)=> onClickToPenalty(e)}>penalty</button>
         </div>

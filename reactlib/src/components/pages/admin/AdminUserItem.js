@@ -1,14 +1,15 @@
-const AdminUserItem= (userId,name,loginid,penalty,lateFee)=>{
+import React from 'react';
+
+const AdminUserItem = ({ user, handleDetail }) => {
     return (
-        <div>
-            <tr>
-                <td>{userId}</td>
-                <td>{name}</td>
-                <td>{loginid}</td>
-                <td>{penalty}</td>
-                <td>{lateFee}</td>
-            </tr>
-        </div>
+        <tr>
+            <td>{user.userId}</td>
+            <td onClick={() => handleDetail(user)}>{user.loginid}</td>
+            <td>{user.name}</td>
+            <td>{user.penalty}</td>
+            <td>{user.lateFee}</td>
+        </tr>
     );
-    }
-    export default AdminUserItem;
+};
+
+export default AdminUserItem;
