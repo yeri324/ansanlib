@@ -42,6 +42,10 @@ const ReservationList = () => {
         }
     };
 
+    const deselectAll = () => setSelectedReservations([]);
+
+    const selectAll = () => setSelectedReservations(reservations.map(({id}) => id));
+
     return (
         <div>
             <h2>{userId}의 예약 목록</h2>
@@ -59,7 +63,30 @@ const ReservationList = () => {
                     </li>
                 ))}
             </ul>
-            <button onClick={handleDeleteReservations}> 예약 삭제</button>
+            {
+                !isErrored &&
+                <>
+                    <button
+                        onClick={selectAll}
+                        disabled={selectedReservations.length === reservations.length}
+                    >
+                        전체 선택
+                    </button>
+                    <button
+                        onClick={deselectAll}
+                        disabled={selectedReservations.length === 0}
+                    >
+                        전체 선택해제
+                    </button>
+                    <button
+                        onClick={handleDeleteReservations}
+                        disabled={selectedReservations.length === 0}
+                    >
+                        예약 삭제
+                    </button>
+                </>
+
+            }
             {isErrored && <h2>자료를 가져오지 못했습니다.</h2>}
         </div>
     );
