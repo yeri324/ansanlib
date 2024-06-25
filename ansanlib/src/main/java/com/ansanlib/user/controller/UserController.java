@@ -1,10 +1,6 @@
 package com.ansanlib.user.controller;
 
-import java.util.Map;
-
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,18 +18,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserController {
 
-	private final UserService userService;
+	   private final UserService userService;
 
-
-//	public UserController(UserService userService) {
-//		this.userService = userService;
-//	}
-
-	@PostMapping("/user/join")
-	public ResponseEntity<String> join(@RequestBody UserDto userDto, PasswordEncoder passwordEncoder) {
-		// System.out.println("signup");
-		return userService.join(userDto);
-	}
+	    @PostMapping("/user/join")
+	    public ResponseEntity<String> join(@RequestBody UserDto userDto) {
+	        return userService.join(userDto);
+	    }
+	
 
 	@GetMapping("user/checkId")
 	public ResponseEntity<String> checkId(@RequestParam("loginid") String loginid) {
@@ -43,24 +34,24 @@ public class UserController {
 	}
 	
 	
-	 //아이디 찾기
-	@PostMapping("/user/findId")
-	public ResponseEntity<String> findId(@RequestBody Map<String, String> request) {
-	    String email = request.get("email");
-	    String name = request.get("name");
-	    String foundId;
-
-	    if (email != null) {
-	        foundId = userService.findIdByEmail(email);
-	        if (foundId != null) {
-	            return ResponseEntity.ok(foundId);
-	        } else {
-	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("아이디를 찾을 수 없습니다.");
-	        }
-	    } else {
-	        return ResponseEntity.badRequest().body("이메일이 필요합니다.");
-	    }
-	}
+//	 //아이디 찾기
+//	@PostMapping("/user/findId")
+//	public ResponseEntity<String> findId(@RequestBody Map<String, String> request) {
+//	    String email = request.get("email");
+//	    String name = request.get("name");
+//	    String foundId;
+//
+//	    if (email != null) {
+//	        foundId = userService.findIdByEmail(email);
+//	        if (foundId != null) {
+//	            return ResponseEntity.ok(foundId);
+//	        } else {
+//	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("아이디를 찾을 수 없습니다.");
+//	        }
+//	    } else {
+//	        return ResponseEntity.badRequest().body("이메일이 필요합니다.");
+//	    }
+//	}
 
 	
 }

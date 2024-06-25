@@ -1,87 +1,107 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./LoginForm.css";
 
-function LoginForm() {
-    const [loginId, setLoginId] = useState('');
-    const [password, setPassword] = useState('');
-    const [loginErrorMsg, setLoginErrorMsg] = useState('');
+const LoginForm = ({ isLoggedIn, setIsLoggedIn }) => {
+    const navigate = useNavigate();
+    const [loginForm, setLoginForm] = useState({
+        loginid: "",
+        password: "",
+    });
 
-    const handleLogin = async (e) => {
+    const onLogin = async (e) => {
         e.preventDefault();
-        // Implement login logic here, e.g., make a POST request to your backend.
+
+        try {
+            const response = await axios.post("/api/login", loginForm);
+            if (response.status === 200) {
+                const { token } = response.data;
+                // 토큰을 로컬 스토리지에 저장
+                sessionStorage.setItem("token", token);
+                setIsLoggedIn(true);
+                navigate(-1); // 로그인 성공 시 이전 페이지로 이동
+            }
+        } catch (error) {
+            if (error.response && (error.response.status === 403 || error.response.status === 401)) {
+                alert("아이디 또는 비밀번호를 확인해주세요.");
+            } else {
+                alert("알 수 없는 오류가 발생했습니다." + error);
+            }
+        }
     };
 
+    const handleFindIdClick = () => {
+        navigate('/findid');
+    };
+
+    const handleFindPwdClick = () => {
+        navigate('/findpw');
+    };
+
+
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter") {
+            onLogin(e);
+        }
+    }
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            navigate('/');
+        }
+    }, []);
+
     return (
-        <div>
-            <style>
-                {`
-                .error {
-                    color: #bd2130;
-                }
-                `}
-            </style>
+    
 
-            <form role="form" method="post" action="/users/login" onSubmit={handleLogin}>
-                <div className="form-group">
-                    <label htmlFor="loginId">아이디</label>
-                    <input 
-                        type="text" 
-                        name="loginId" 
-                        className="form-control" 
-                        placeholder="아이디를 입력해주세요" 
-                        value={loginId} 
-                        onChange={(e) => setLoginId(e.target.value)}
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password">비밀번호</label>
-                    <input 
-                        type="password" 
-                        name="password" 
-                        id="password" 
-                        className="form-control" 
-                        placeholder="비밀번호 입력" 
-                        value={password} 
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </div>
-                {loginErrorMsg && <p className="error">{loginErrorMsg}</p>}
-
-                <div>
-                    <button 
-                        type="button" 
-                        className="btn btn-primary"  
-                        id="findid" 
-                        onClick={() => window.location.href='/findid'}
-                    >
-                        아이디 찾기
-                    </button>
-                    <button 
-                        type="button" 
-                        className="btn btn-primary" 
-                        id="findpwd" 
-                        onClick={() => window.location.href='/findpw'}
-                    >
-                        비밀번호 찾기
-                    </button>
+        <div className="LoginForm-compo">
+            <div className="form-box">
+                <div className="login-text">
+                    <h1>로그인</h1>
                 </div>
 
-                <button 
-                    className="btn btn-primary" 
-                    type="submit"
-                >
-                    로그인
-                </button>
-                <button 
-                    type="button" 
-                    className="btn btn-primary" 
-                    onClick={() => window.location.href='/join'}
-                >
-                    회원가입
-                </button>
-                <input type="hidden" name="_csrf" value="${_csrf.token}" />
-            </form>
+
+                <div className="login-form">
+
+                    <div className="input-row">
+                        <input
+                            type="text"
+                            onChange={(e) => setLoginForm({ ...loginForm, loginid: e.target.value })}
+                            placeholder="아이디 입력"
+                            onKeyPress={handleKeyPress}
+                        />
+                        <input
+                            type="password"
+                            onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
+                            placeholder="비밀번호 입력"
+                            onKeyPress={handleKeyPress}
+                        />
+                    </div>
+
+                    <div className="button-row">
+                        <div className="button-login">
+                            <button  onClick={onLogin}>로그인</button>
+                        </div>
+                    </div>
+
+                    </div>
+
+                    
+              
+
+                <div className="extra-buttons">
+                    <button onClick={handleFindIdClick}>아이디 찾기</button>
+                    <button onClick={handleFindPwdClick}>비밀번호 찾기</button>
+                   
+                        <Link to="/join" >
+                            <button>회원가입</button>
+                        </Link>
+                
+                </div>
+            </div>
         </div>
     );
-}
+};
 
 export default LoginForm;

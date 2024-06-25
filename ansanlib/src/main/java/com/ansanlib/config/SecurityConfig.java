@@ -1,49 +1,57 @@
 //package com.ansanlib.config;
 //
-//import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
-//import org.springframework.security.authentication.AuthenticationManager;
-//import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+//import org.springframework.security.authentication.AuthenticationProvider;
+//import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 //import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 //import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-//import org.springframework.security.config.http.SessionCreationPolicy;
+//import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.web.SecurityFilterChain;
 //import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+//import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+//
+//import com.ansanlib.user.service.UserService;
+//
+//import lombok.RequiredArgsConstructor;
 //
 //@Configuration
 //@EnableWebSecurity
-//public class SecurityConfig extends WebSecurityConfigurerAdapter {
+//@RequiredArgsConstructor
+//public class SecurityConfig {
 //
-//    @Autowired
-//    private MyJwtAuthenticationFilter myJwtAuthenticationFilter;
+//    private final UserService userService;
+//    private final JwtRequestFilter jwtRequestFilter;
 //
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.csrf().disable()
-//            .authorizeRequests()
-//            .antMatchers("/api/auth/**").permitAll()
-//            .anyRequest().authenticated()
-//            .and()
-//            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        http
+//                .csrf(AbstractHttpConfigurer::disable) // 배포 시 설정
+//                .authorizeHttpRequests(request -> request
+//                        .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
+//                        .requestMatchers(new AntPathRequestMatcher("/api/admin/**")).hasRole("ADMIN")
+//                        .anyRequest().permitAll())
+//                .sessionManagement(sm -> sm
+//                        .maximumSessions(1)
+//                        .maxSessionsPreventsLogin(false))
+//                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+//                // .addFilterAfter(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 //
-//        http.addFilterBefore(myJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-//    }
-//
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        // Configure authentication manager
+//        return http.build();
 //    }
 //
 //    @Bean
-//    public PasswordEncoder passwordEncoder() {
+//    public PasswordEncoder passwordEncoder() {	
 //        return new BCryptPasswordEncoder();
 //    }
 //
-//    @Bean
-//    @Override
-//    public AuthenticationManager authenticationManagerBean() throws Exception {
-//        return super.authenticationManagerBean();
-//    }
+////    @Bean
+////    public AuthenticationProvider authenticationProvider() {
+////        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+////        provider.setUserDetailsService(userService);
+////        provider.setPasswordEncoder(passwordEncoder());
+////        return provider;
+////    }
 //}

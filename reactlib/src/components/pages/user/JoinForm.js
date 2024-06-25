@@ -3,7 +3,7 @@ import axios from "axios";
 
 const JoinForm = ({ isLoggedIn }) => {
     if (isLoggedIn) {
-        window.location.href = "/";
+        window.location.href = "/login";
     }
 
     const [formData, setFormData] = useState({
@@ -17,11 +17,9 @@ const JoinForm = ({ isLoggedIn }) => {
         address2: '',
         gender: '',
         sms: '',
-        role: '',
-        joinDate: '',
-        loginDate: '',
-        penalty: '',
-        status: '',
+      
+       
+     
     });
 
     const [idAvailable, setIdAvailable] = useState(false);
@@ -138,45 +136,61 @@ const JoinForm = ({ isLoggedIn }) => {
         }).open();
     };
 
+    // const axiosInstance = axios.create({
+    //     baseURL: 'https://localhost:8090',
+    //     timeout: 5000,
+    //     withCredentials: true
+    // });
+
+
+
+
     const handleSignUp = () => {
         const missingFields = [];
-
+    
         if (formData.name === "") missingFields.push("이름");
         if (formData.email === "") missingFields.push("이메일");
         if (formData.loginid === "") missingFields.push("아이디");
         if (formData.password === "") missingFields.push("비밀번호");
         if (formData.password2 === "") missingFields.push("비밀번호 확인");
         if (formData.phone === "") missingFields.push("전화번호");
-        if (formData.address === "") missingFields.push("주소");
+        if (formData.jibunAddress === "") missingFields.push("주소");
         if (formData.gender === "") missingFields.push("성별");
         if (formData.sms === "") missingFields.push("SMS 수신 동의");
-
+    
         if (missingFields.length > 0) {
             const missingFieldsMessage = missingFields.join(", ");
             alert(`다음 값을 입력해주세요: ${missingFieldsMessage}`);
         } else {
             if (idAvailable && passwordMatch && isValidPhone && ((formData.password).length >= 8)) {
                 axios.post("/api/user/join", formData)
-                    .then(response => {
-                        alert(response.data);
-                        console.log(response.data); // 회원가입 성공 시 처리
-                        window.location.href = '/';
-                    })
+                .then(response => {
+                    alert(response.data);
+                    console.log(response.data); // 회원가입 성공 시 처리
+                    window.location.href = '/login';
+                })
                     .catch(error => {
-                        alert(error.response.data);
-                        console.error(error); // 오류 발생 시 처리
+                        if (error.response) {
+                            alert(error.response.data); // 서버에서 응답이 온 경우 에러 메시지 출력
+                            console.error(error.response.data);
+                        } else if (error.request) {
+                            alert("서버로 요청을 보내는 중에 문제가 발생했습니다."); // 요청이 보내지지 않은 경우 에러 메시지 출력
+                            console.error(error.request);
+                        } else {
+                            alert("오류가 발생했습니다."); // 요청 설정이 잘못된 경우 에러 메시지 출력
+                            console.error('Error', error.message);
+                        }
                     });
             } else {
+                // 필수 조건이 충족되지 않았을 때 처리
                 if (!idAvailable) {
-                    alert("아이디 중복확인이 필요합니다.");
+                    alert("아이디 중복 확인이 필요합니다.");
                 } else if (!passwordMatch) {
-                    alert("비밀번호가 같지 않습니다.");
-                
-                    
+                    alert("비밀번호가 일치하지 않습니다.");
                 } else if (!isValidPhone) {
                     alert("전화번호의 형식이 잘못되었습니다.");
-                } else if (!((formData.password).length >= 8)) {
-                    alert("비밀번호는 8글자 이상이어야 합니다.");
+                } else if (formData.password.length < 8) {
+                    alert("비밀번호는 8자 이상이어야 합니다.");
                 }
             }
         }
@@ -196,13 +210,16 @@ const JoinForm = ({ isLoggedIn }) => {
 
             <div className="input-box">
                 <label>
-                    아이디: {idAvailable && <span className="complete">중복 확인 완료</span>}
+                    아이디
                     <input className="long-input" type="text" value={formData.loginid} onChange={(e) => {
                         setFormData({ ...formData, loginid: e.target.value });
                         setIdAvailable(false);
                     }} />
+                    
                 </label>
                 <button className="center-button" onClick={checkUserId}>중복 확인</button>
+                <div>
+                {idAvailable && <span className="complete">중복 확인 완료</span>}</div>
             </div>
 
             <div className="input-box">
@@ -270,22 +287,49 @@ const JoinForm = ({ isLoggedIn }) => {
            
 
             <div className="input-box">
-                <label>
-                    성별
-                    <input type="radio" name="gender"  checked={formData.gender === '남'} value={formData.gender} />남성
-                    <input type="radio" name="gender"  checked={formData.gender === '여'} value={formData.gender}  />여성
-                </label>
+            <label>성별
+                <input 
+                    type="radio" 
+                    name="gender" 
+                    value="남" 
+                    checked={formData.gender === '남'} 
+                    onChange={handleChange} 
+                />
+            남
+            </label>
+            <label>
+                <input 
+                    type="radio" 
+                    name="gender" 
+                    value="여" 
+                    checked={formData.gender === '여'} 
+                    onChange={handleChange} 
+                />
+              여
+            </label>
             </div>
 
             <div className="input-box">
-                <label>
-                    SMS 수신 동의
-                   
-                        <input type="radio" name="sms"  checked={formData.sms === 'yes'}value={formData.sms}  />예
-                        <input type="radio" name="sms"  checked={formData.sms === 'no'}value={formData.sms}  />아니오
-               
-             
-                </label>
+            <label>sms수신동의
+                <input 
+                    type="radio" 
+                    name="sms" 
+                    value="yes" 
+                    checked={formData.sms === 'yes'} 
+                    onChange={handleChange} 
+                />
+                예
+            </label>
+            <label>
+                <input 
+                    type="radio" 
+                    name="sms" 
+                    value="no" 
+                    checked={formData.sms === 'no'} 
+                    onChange={handleChange} 
+                />
+                아니오
+            </label>
             </div>
 
             <button className="center-button" onClick={handleSignUp}>회원가입</button>

@@ -14,6 +14,10 @@ import Admin from './components/pages/admin/Admin';
 import AdminUserList from './components/pages/admin/AdminUserList';
 import AdminUserDetail from './components/pages/admin/AdminUserDetail';
 
+import LoginForm from './components/pages/user/LoginForm';
+import JoinForm from './components/pages/user/JoinForm';
+import FindIdForm from './components/pages/user/FindIdForm';
+import FindPwForm from './components/pages/user/FindPwForm';
 
 function App() {
 
@@ -33,16 +37,12 @@ function App() {
         <Route path="/admin/user/search" element={<AdminUserList />} />
         <Route path="/admin/user/detail/:id" element={<AdminUserDetail />} />
         
-        {/* <Route path="/login" element={<LoginForm isLoggedIn={isLoggedIn} setIsLoggedIn={(value) => setIsLoggedIn(value)} />} />
-        <Route path="/signup" element={<SignUpSelect isLoggedIn={isLoggedIn} />} />
-        <Route path="/signup/normal" element={<SignUp isLoggedIn={isLoggedIn} isComp={false} />} />
-        <Route path="/signup/company" element={<SignUp isLoggedIn={isLoggedIn} isComp={true} />} />
-        <Route path="/logout" element={<LoginForm />} />
+       <Route path="/login" element={<LoginForm />} />
+       <Route path="/join" element={<JoinForm />} />
+       <Route path="/findid" element={<FindIdForm />} />
+       <Route path="/findpw" element={<FindPwForm />} />
 
-
-        <Route path="/find-id" element={<FindId />} />
-        <Route path="/find-pwd" element={<FindPwd />} />
-        <Route path="/businessUpgrade" element={<BusinessUpgrade memberId={memberId} memberState={memberState} />} /> */}
+        
       </Routes>
 
 
