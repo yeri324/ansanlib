@@ -7,7 +7,7 @@ const AdminUserList = () => {
   const navigate = useNavigate();
 
   const [searchOption, setSearchOption] = useState({
-    searchBy: "id",
+    searchBy: "userId",
     searchQuery: "",
     selectRadio: "all",
   });

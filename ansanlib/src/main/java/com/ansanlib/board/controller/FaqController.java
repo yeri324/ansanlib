@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ansanlib.board.dto.FaqDto;
 import com.ansanlib.board.dto.FaqFormDto;
 import com.ansanlib.board.service.FaqService;
 import com.ansanlib.entity.Faq;
+import com.ansanlib.entity.LibUser;
 
 import lombok.RequiredArgsConstructor;
 
@@ -69,9 +72,19 @@ public class FaqController {
 	@RequestMapping(value = "/uploads", method = RequestMethod.POST)
 	public void uploadFaqImg(@RequestParam("itemImgFile") List<MultipartFile> itemImgFileList){
 		ResponseEntity resEntity = null;
-		System.out.println("****");
+		
 		
 		
 	}
 
+	
+	@PostMapping("/search")
+    public ResponseEntity<List<Faq>> searchUsers(@RequestBody FaqDto faqDto) {
+        List<Faq> faqs = faqService.ListFaq(faqDto);
+        for(Faq faq : faqs) {
+        	System.out.println(faq.getTitle());
+        }
+        return ResponseEntity.ok(faqs);
+    }
+	
 }
