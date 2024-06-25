@@ -3,6 +3,7 @@ package com.ansanlib.entity;
 import java.time.LocalDateTime;
 
 import com.ansanlib.constant.BookStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -51,5 +52,6 @@ public class Book extends BaseEntity {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="lib_num")
+	@JsonIgnore
 	private Library library;
 }

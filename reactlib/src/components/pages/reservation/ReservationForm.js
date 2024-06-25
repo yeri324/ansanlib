@@ -23,8 +23,9 @@ const ReservationForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <h2>도서예약</h2>
       <label>
-        User Name:
+        User Id:
         <input type="text" value={userId} onChange={(e) => setUserName(e.target.value)} required />
       </label>
       <label>
