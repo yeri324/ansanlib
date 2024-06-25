@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import com.ansanlib.entity.Reservation;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long>{
 	List<Reservation> findByLibUser_UserId(Long user_id);
@@ -33,4 +35,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long>{
 			@Param("bookId") Long bookId, 
             @Param("startDate") LocalDateTime startDate, 
             @Param("endDate") LocalDateTime endDate);
+    
+
+    List<Reservation> findByLibUser_userId(Long userId);
 }

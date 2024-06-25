@@ -38,8 +38,8 @@ public class AdminUserService {
 		
 	}
 	@Transactional(readOnly = true) 
-	public Reservation getReservation(AdminDetailUserDto adminDetailUserDto) {
-		return reservationRepository.findById(adminDetailUserDto.getId()).orElseThrow(EntityNotFoundException::new);
+	public List<Reservation> getReservation(AdminDetailUserDto adminDetailUserDto) {
+		return reservationRepository.findByLibUser_userId(adminDetailUserDto.getId());
 	}
 	
 	

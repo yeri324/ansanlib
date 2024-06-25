@@ -50,7 +50,7 @@ public class AdminUserController {
 
 	@PostMapping("/detail")
 	public ResponseEntity getUserDetails(@RequestBody AdminDetailUserDto adminDetailUserDto) {
-		System.out.println(adminDetailUserDto + "**************************************************");
+
 		LibUser user = adminUserService.getUserById(adminDetailUserDto);
 //		Reservation res = adminUserService.getReservation(adminDetailUserDto);
 		return ResponseEntity.ok(user);
@@ -60,7 +60,8 @@ public class AdminUserController {
 	@PostMapping("/getRes")
 	public ResponseEntity getUserRes(@RequestBody AdminDetailUserDto adminDetailUserDto) {
 //		LibUser user = adminUserService.getUserById(adminDetailUserDto);
-		Reservation res = adminUserService.getReservation(adminDetailUserDto);
+		List<Reservation> res = adminUserService.getReservation(adminDetailUserDto);
+		System.out.println(res + "**************************************************");
 		return ResponseEntity.ok(res);
 	}
 }

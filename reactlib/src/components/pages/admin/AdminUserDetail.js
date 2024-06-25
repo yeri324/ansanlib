@@ -1,50 +1,51 @@
 import axios from 'axios';
+import UserResItem from './UserResItem';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 const AdminUserDetail = () => {
     const { id } = useParams();
     const [userDetail, setUserDetail] = useState({});
-    const [userRes, setUserRes] = useState({});
+    const [userRes, setUserRes] = useState([]);
 
     useEffect(() => {
-       getDataset(id);
-    
+        getDataset(id);
+
     }, []);
 
 
     const getDataset = () => {
         axios(
             {
-              url: '/admin/user/detail',
-              method: 'post',
-              data: {
-                id: id,
-            },
-              baseURL: 'http://localhost:8090',
+                url: '/admin/user/detail',
+                method: 'post',
+                data: {
+                    id: id,
+                },
+                baseURL: 'http://localhost:8090',
             }
-          ) .then((res) => {
+        ).then((res) => {
             setUserDetail(res.data);
         })
-        .catch((err) => {
-            setUserDetail([]);
-        });  
+            .catch((err) => {
+                setUserDetail([]);
+            });
 
         axios(
             {
-              url: '/admin/user/getRes',
-              method: 'post',
-              data: {
-                id: id,
-            },
-              baseURL: 'http://localhost:8090',
+                url: '/admin/user/getRes',
+                method: 'post',
+                data: {
+                    id: id,
+                },
+                baseURL: 'http://localhost:8090',
             }
-          ) .then((res) => {
+        ).then((res) => {
             setUserRes(res.data);
         })
-        .catch((err) => {
-            setUserRes([]);
-        });  
+            .catch((err) => {
+                setUserRes([]);
+            });
 
         // axios(
         //     {
@@ -75,9 +76,23 @@ const AdminUserDetail = () => {
             <p>{userDetail.penalty}</p>
             <p>{userDetail.lateFee}</p>
             <p>{userDetail.name}</p>
+            <p>{userDetail.status}</p>
 
             <p>userRes</p>
-            <p>{console.log(userRes)}</p>
+
+            {console.log(userRes)}
+            {userRes.map((res) => (
+                <tr>
+                    <td>{res.id}</td> 
+                    <td>{res.bookId.id}</td> 
+                     <td>{res.startDate}</td>
+                     <td>{res.endDate}</td>
+
+                </tr>
+            ))}
+
+            <button>제지</button>
+
 
 
 
