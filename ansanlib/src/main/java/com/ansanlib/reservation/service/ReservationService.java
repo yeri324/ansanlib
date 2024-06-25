@@ -27,10 +27,8 @@ public class ReservationService {
 		}
 		
 		//예약 종료 날짜
-		LocalDateTime endDate = LocalDateTime.now().plusDays(7);
-		
-		
-		
+		LocalDateTime endDate = startDate.plusDays(7);
+
 		//예약 entity 생성
 		Book book = new Book();
 		book.setId(createReservationDto.getBookId());
