@@ -10,6 +10,7 @@ import book1 from '../../images/cover/book1.jpg'
 import book2 from '../../images/cover/book2.jpg'
 import book3 from '../../images/cover/book3.jpg'
 import book4 from '../../images/cover/book4.jpg'
+import Calendar from './calendar';
 
 
 const HomePage = () => {
@@ -39,7 +40,9 @@ const HomePage = () => {
                 </div>
                 <Notice />
               </div>
-              <div className="monthly_plan">캘린더</div>
+              <div className="monthly_plan">
+                <Calendar />
+              </div>
               <div className="login_box">로그인</div>
             </div>
           </div>
