@@ -1,89 +1,84 @@
 import './FaqForm.css';
 import axios from 'axios';
-import React, { useState,  } from 'react';
+import React, { useState, } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 
 const FaqForm = () => {
   const navigate = useNavigate();
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
   const [isTitleClicked, setIsTitleClicked] = useState(false);
   const [isContentClicked, setIsContentClicked] = useState(false);
+  const [faqData, setFaqData] = useState({
+    title: '',
+    content: ''
+  });
 
-  const writeTitle = e => setTitle(e.target.value);
-  const writeContent = e => setContent(e.target.value);
+  const onInputChange = (e) => {
+    setFaqData({ ...faqData, [e.target.name]: e.target.value });
+  };
 
-
-  //파일 업로드
-  const [files, setFiles] = useState([]);
+  // 파일 업로드
+  const [file, setFile] = useState(null);
   const handleFileChange = (e) => {
-    setFiles(Array.from(e.target.files));
-  }
-
-  //파일 보내기
-  const uploadFiles = () => {
-    const formData = new FormData();
-
-    files.map((file) => {
-      formData.append("files", file);
-    });
-    axios(
-      {
-        url: '/faq/uploads',
-        method: 'post',
-        data: {
-          formData: formData,
-        },
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        baseURL: 'http://localhost:8090',
-      });
+    setFile(e.target.files[0]);
   };
 
   // 생성 정보 보내기
-  const onCreate = () => {
-    axios(
-      {
-        url: '/faq/new',
-        method: 'post',
-        data: {
-          title: title,
-          content: content
-        },
-        baseURL: 'http://localhost:8090',
-      }
-    ).then(function (response) {
-      console.log(response.data);
-    });
-    window.location.reload(navigate("/faq/list", { repalce: true }));
-  }
+  const onCreate = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+
+    formData.append("title", faqData.title);
+    formData.append("content", faqData.content);
+    formData.append("file", file);
+    console.log(formData.title);
+    console.log(formData.content);
+    console.log(formData.file);
+    console.log(faqData.title);
+    console.log(faqData.content);
+    console.log(file);
+
+    try { 
+      axios.post(
+        'http://localhost:8090/faq/new', 
+        formData, 
+        {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      navigate("/faq/list", { replace: true });
+    } catch (error) {
+      console.error("There was an error uploading the data!", error);
+    }
+
+  };
 
   return (
     <div>
       <p>글 등록하기</p>
-      <form>
+      <form onSubmit={onCreate}>
         <input
+          type='text'
+          name='title'
+          value={faqData.title}
+          placeholder={isTitleClicked === true ? "" : "제목을 작성해주세요."}
           onFocus={() => { setIsTitleClicked(true); }}
           onBlur={() => { setIsTitleClicked(false); }}
-          placeholder={isTitleClicked === true ? "" : "제목을 작성해주세요."}
-          onChange={writeTitle} />
-        <br />
+          onChange={onInputChange} />
+
         <input
+          type='text'
+          name='content'
+          value={faqData.content}
+          placeholder={isContentClicked === true ? "" : "내용을 작성해주세요."}
           onFocus={() => { setIsContentClicked(true); }}
           onBlur={() => { setIsContentClicked(false); }}
-          placeholder={isContentClicked === true ? "" : "내용을 작성해주세요."}
-          onChange={writeContent} />
-        <br />
+          onChange={onInputChange} />
+
         <input
-          className='file-input'
-          type="file"
-          accept="image/*"
-          mulitple
-          onChange={handleFileChange}
+          className='file-input' type="file" accept="image/*" onChange={handleFileChange}
         />
-        <button onClick={() => onCreate()}>저장</button>
+        <button type='submit'>저장</button>
       </form>
     </div>
   );

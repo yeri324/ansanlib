@@ -28,7 +28,7 @@ public class FaqImgService {
 		String imgUrl = "";
 
 		// 파일업로드
-		if (!StringUtils.isEmpty(oriImgName)) {
+		if (!StringUtils.hasText(oriImgName)) {
 			imgName = fileService.uploadFile(itemImgLocation, oriImgName, itemImgFile.getBytes());
 			imgUrl = "/faq/" + imgName; //이미지 저장 위치
 		}

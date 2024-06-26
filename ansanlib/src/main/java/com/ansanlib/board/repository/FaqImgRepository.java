@@ -8,7 +8,5 @@ import com.ansanlib.entity.FaqImg;
 
 public interface FaqImgRepository extends JpaRepository<FaqImg, Long> {
 
-	List<FaqImg> findByFaqIdOrderByIdAsc(Long id);
-
-	FaqImg findByFaqIdAndRepImgYn(Long id, String repImgYn);
+	List<FaqImg> findByFaq_IdOrderByIdAsc(Long id);
 }
