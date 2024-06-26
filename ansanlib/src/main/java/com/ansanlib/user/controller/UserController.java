@@ -63,19 +63,7 @@ public class UserController {
         }
     }
 
-//	 // 로그인
-//	 @PostMapping("/user/login")
-//	    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
-//	        LibUser user = userService.authenticate(loginRequest.getLoginid(), loginRequest.getPassword());
-//	        
-//	        if (user != null) {
-//	            return new ResponseEntity<>("로그인 되었습니다.", HttpStatus.OK);
-//	        } else {
-//	            return new ResponseEntity<>("아이디 또는 비밀번호가 잘못되었습니다.", HttpStatus.UNAUTHORIZED);
-//	        }
-//	    }
-//	
-	
+
 	
 	// 아이디 찾기
 	@PostMapping("/user/findId")

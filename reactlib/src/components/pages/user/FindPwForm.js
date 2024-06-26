@@ -35,7 +35,7 @@ const FindPwForm = () => {
             url: '/api/user/findPw', // 요청할 엔드포인트
             method: 'post',
             data: {
-                name: FindPwForm.loginid,
+                loginid: FindPwForm.loginid,
                 email: FindPwForm.email,
                
             },
@@ -72,6 +72,7 @@ const FindPwForm = () => {
                             <div>
                                 <label>아이디
                                     <input
+                                    type="text"
                                         placeholder="아이디 입력"
                                         value={FindPwForm.loginid}
                                         onChange={(e) => setFindPwForm({ ...FindPwForm, loginid: e.target.value })}
@@ -80,6 +81,7 @@ const FindPwForm = () => {
                             </div>
                             <label>이메일
                                 <input
+                                type="email"
                                     placeholder='이메일 입력("@" 포함)'
                                     value={FindPwForm.email}
                                     onChange={(e) => setFindPwForm({ ...FindPwForm, email: e.target.value })}

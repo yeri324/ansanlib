@@ -109,23 +109,6 @@ public class UserService {
 	 }
 
 	
-//	 // 로그인 처리
-//	 public LibUser authenticate(String loginid, String password) {
-//	        try {
-//	            Optional<LibUser> userOptional = userRepository.findByLoginidAndPassword(loginid,password);
-//
-//	            if (userOptional.isPresent()) {
-//	                return userOptional.get();
-//	            } else {
-//	                System.out.println("아이디 또는 비밀번호가 일치하지 않습니다.");
-//	                return null;
-//	            }
-//	        } catch (Exception e) {
-//	            System.out.println("예외:" + e.getMessage());
-//	            return null;
-//	        }
-//	    
-//	    }
 	 
 	 
 		// 아이디 찾기
@@ -135,7 +118,9 @@ public class UserService {
 		}
 		
 		
-		// 비밀번호찾기
+		
+		
+		// 비밀번호찾기 - findPw
 		public String findPw(UserDto userDto) {
 			Optional<LibUser> foundPw = userRepository.findByLoginidAndEmail(userDto.getLoginid(), userDto.getEmail());
 			
@@ -146,7 +131,7 @@ public class UserService {
 				LibUser user = foundPw.get();
 	
 				String tempPassword = generateTempPassword();
-			//	sendEmail(user.getEmail(), "[AnsanLibrary]임시비밀번호", "\n\n 안녕하세요. 임시비밀번호는 다음과 같습니다.\n\n" + tempPassword);
+				sendEmail(user.getEmail(), "[AnsanLibrary]임시비밀번호", "\n\n 안녕하세요. 임시비밀번호는 다음과 같습니다.\n\n" + tempPassword);
 	
 				// 데베에 임시비밀번호 저장하는 로직 추가
 	String encodedPassword = tempPassword;
@@ -161,7 +146,7 @@ public class UserService {
 	
 		}
 		
-		
+		//TempPass - 임시비밀번호 생성
 		public String generateTempPassword() {
 		SecureRandom random = new SecureRandom();
 		StringBuilder password = new StringBuilder(PASSWORD_LENGTH);
@@ -175,7 +160,7 @@ public class UserService {
 		private static final int PASSWORD_LENGTH = 10;
 	
 
-	
+	//메일보내~
 		public void sendEmail(String to, String subject, String text) {
 			SimpleMailMessage message = new SimpleMailMessage();
 			message.setTo(to);
