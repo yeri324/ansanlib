@@ -69,7 +69,7 @@
     background-color: #ffffff; /* 하얀 배경색 */
 }
 
-/* 부가 콘텐츠 스타일 */
+
 .sub_content1, .sub_content2 {
     /* display: flex;
     flex-direction: column;
@@ -105,14 +105,12 @@
 }
 
 
-/* 트렌드 리스트 스타일 */
 .trend_list {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-/* 추천 콘텐츠 스타일 */
 .recommend_content {
     display: flex;
     flex-direction: column;
