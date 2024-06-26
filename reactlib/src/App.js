@@ -19,6 +19,12 @@ import JoinForm from './components/pages/user/JoinForm';
 import FindIdForm from './components/pages/user/FindIdForm';
 import FindPwForm from './components/pages/user/FindPwForm';
 
+
+
+/*메인홈페이지에서 이동) 로그인 "/login",  횐가입 "/join" */
+
+
+
 function App() {
 
   return (
@@ -42,6 +48,7 @@ function App() {
        <Route path="/findid" element={<FindIdForm />} />
        <Route path="/findpw" element={<FindPwForm />} />
 
+
         
       </Routes>
 
@@ -51,3 +58,6 @@ function App() {
 }
 
 export default App;
+
+
+

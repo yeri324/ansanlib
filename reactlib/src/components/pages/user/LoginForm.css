@@ -1,12 +1,13 @@
-.LoginForm-compo {
+.loginForm{
     display: flex;
     flex-direction: column;
     align-items: center;
     border: 1px solid #ccc;
 }
 
-.LoginForm-compo input[type="text"],
-.LoginForm-compo input[type="password"] {
+.loginForm input[type="text"],
+.loginForm input[type="password"] {
+    
   width: calc(100% - 1500px);
   padding: 10px;
   margin-top: 10px;
@@ -17,7 +18,7 @@
   display: inline-block;
 }
 
-.LoginForm-compo .login-form {
+.loginForm .input_login {
 
     display: flex;
     flex-direction: row;
@@ -27,8 +28,10 @@
 }
 
 
+
+
 /*로그인버튼 */
-.LoginForm-compo .login-form button {
+.login_btn  {
     width: 100px;
     height: 100px;
     margin-left: 10px;

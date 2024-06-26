@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+
 const JoinForm = ({ isLoggedIn }) => {
     if (isLoggedIn) {
         window.location.href = "/login";
@@ -174,7 +175,7 @@ const JoinForm = ({ isLoggedIn }) => {
             const missingFieldsMessage = missingFields.join(", ");
             alert(`다음 값을 입력해주세요: ${missingFieldsMessage}`);
         } else {
-            if (passwordMatch && isValidPhone && ((formData.password).length >= 8)) {
+            if (idAvailable && passwordMatch && isValidPhone && ((formData.password).length >= 8)) {
                 console.log(formData);
                 axios({
                     url: '/api/user/join', // 요청할 엔드포인트
@@ -231,7 +232,9 @@ const JoinForm = ({ isLoggedIn }) => {
     };
 
     return (
+        
         <div>
+           
             {errorMessage && <script>alert(errorMessage);</script>}
 
             <div className="userFormPage">

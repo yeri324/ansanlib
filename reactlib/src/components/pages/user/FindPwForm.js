@@ -69,6 +69,7 @@ const FindPwForm = () => {
                     <div id="findId_input_INFO">
                         <div>
                             <div>
+                            <div>
                                 <label>아이디
                                     <input
                                         placeholder="아이디 입력"
@@ -88,6 +89,9 @@ const FindPwForm = () => {
                         <button type="submit" id="find_btn" onClick={handleFindPw}>
                             인증하기
                         </button>
+                        </div>
+                        <button type="button" className='findId_btn' onClick={() => window.location.href = '/findid'}>아이디 찾기</button>
+                        <button type="button" className='login_btn' onClick={() => window.location.href = '/login'}>돌아가기</button>
                     </div>
                 </div>
             )}
@@ -112,7 +116,8 @@ const FindPwForm = () => {
                             ❗<br/><br/>존재하지 않는 회원입니다.
                         </div>
                         <button  id="go_signUp"><a href="/join">회원가입 하기</a></button>
-                        <button id="find_id" onClick={() => window.location.href = '/findid'}>아이디찾기</button>
+                        <button id="findid_btn" onClick={() => window.location.href = '/findid'}>아이디찾기</button>
+                        <button id="login_btn" onClick={() => window.location.href = '/login'}>돌아가기</button>
                     </div>
                 </div>
             )}

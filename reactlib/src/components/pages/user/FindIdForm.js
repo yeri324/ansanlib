@@ -68,6 +68,7 @@ const FindIdForm = () => {
                     <div className="line"></div>
                     <div id="findId_input_INFO">
                         <div>
+                        <div>
                             <div>
                                 <label>이름
                                     <input
@@ -88,6 +89,9 @@ const FindIdForm = () => {
                         <button type="submit" id="findId_btn" onClick={handleFindId}>
                             아이디 찾기
                         </button>
+                        </div>
+                        <button type="button" className='findPw_btn' onClick={() => window.location.href = '/findpw'}>비밀번호 찾기</button>
+                        <button type="button" className='login_btn' onClick={() => window.location.href = '/login'}>돌아가기</button>
                     </div>
                 </div>
             )}

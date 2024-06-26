@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,7 +52,9 @@ public class UserService {
 
 	}
 
-	@Transactional
+	
+	//횐가입
+	   @Transactional(rollbackFor = Exception.class)
 	public ResponseEntity<String> join(UserDto userDto) {
 		// 비밀번호 일치 여부 확인
 
@@ -79,54 +80,140 @@ public class UserService {
 
 	}
 
-	// 아이디 찾기
-	public String findIdByEmail(String email) {
-		Optional<LibUser> user = userRepository.findByEmail(email);
-		return user.map(LibUser::getLoginid).orElse(null);
-	}
+	//로긴처리
+	 public LibUser authenticate(String loginid, String password) {
+	        try {
+	            Optional<LibUser> userOptional = userRepository.findByLoginid(loginid);
 
-//	private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-//	private static final int PASSWORD_LENGTH = 10;
+	            if (userOptional.isPresent()) {
+	                LibUser user = userOptional.get();
+
+	                // 비밀번호 매칭
+	                boolean matches = password.equals(user.getPassword());
+	                System.out.println("비밀번호 매칭 결과:" + matches);
+
+	                if (matches) {
+	                    return user;
+	                } else {
+	                    System.out.println("비밀번호가 일치하지 않습니다.");
+	                    return null; // 비밀번호가 일치하지 않는 경우 null 반환
+	                }
+	            } else {
+	                System.out.println("회원이 존재하지 않습니다.");
+	                return null;
+	            }
+	        } catch (Exception e) {
+	            System.out.println("예외:" + e.getMessage());
+	            return null;
+	        }
+	 }
+
+	
+//	 // 로그인 처리
+//	 public LibUser authenticate(String loginid, String password) {
+//	        try {
+//	            Optional<LibUser> userOptional = userRepository.findByLoginidAndPassword(loginid,password);
 //
-//	public String generateTempPassword() {
-//		SecureRandom random = new SecureRandom();
-//		StringBuilder password = new StringBuilder(PASSWORD_LENGTH);
-//		for (int i = 0; i < PASSWORD_LENGTH; i++) {
-//			password.append(CHARACTERS.charAt(random.nextInt(CHARACTERS.length())));
-//		}
-//		return password.toString();
-//	}
-//
-//	public void sendEmail(String to, String subject, String text) {
-//		SimpleMailMessage message = new SimpleMailMessage();
-//		message.setTo(to);
-//		message.setSubject(subject);
-//		message.setText(text);
-//		//mailSender.send(message);
-//	}
-//
-//	// 비밀번호찾기
-//	public String findPw(UserDto userDto) {
-//		Optional<LibUser> foundPw = userRepository.findByIdAndEmail(userDto.getLoginid(), userDto.getEmail());
-//		if (foundPw.isPresent())
-//			;
-//		if (foundPw.isPresent()) {
-//			LibUser user = foundPw.get();
-//
-//			String tempPassword = generateTempPassword();
-//			sendEmail(user.getEmail(), "[AnsanLibrary]임시비밀번호", "\n\n 안녕하세요. 임시비밀번호는 다음과 같습니다.\n\n" + tempPassword);
-//
-//			// 데베에 임시비밀번호 저장하는 로직 추가
-//String encodedPassword = tempPassword;
-//			//String encodedPassword = passwordEncoder.encode(tempPassword);
-//			user.setPassword(encodedPassword);
-//			userRepository.save(user);
-//
-//			return user.getEmail();
-//		} else {
-//			return null;
-//		}
-//
-//	}
+//	            if (userOptional.isPresent()) {
+//	                return userOptional.get();
+//	            } else {
+//	                System.out.println("아이디 또는 비밀번호가 일치하지 않습니다.");
+//	                return null;
+//	            }
+//	        } catch (Exception e) {
+//	            System.out.println("예외:" + e.getMessage());
+//	            return null;
+//	        }
+//	    
+//	    }
+	 
+	 
+		// 아이디 찾기
+		public String findIdByEmailAndName(String email, String name) {
+			  Optional<LibUser> userOptional = userRepository.findIdByEmailAndName(email, name);
+			  return userOptional.map(LibUser::getLoginid).orElse(null);
+		}
+		
+		
+		// 비밀번호찾기
+		public String findPw(UserDto userDto) {
+			Optional<LibUser> foundPw = userRepository.findByLoginidAndEmail(userDto.getLoginid(), userDto.getEmail());
+			
+			
+			if (foundPw.isPresent())
+				;
+			if (foundPw.isPresent()) {
+				LibUser user = foundPw.get();
+	
+				String tempPassword = generateTempPassword();
+			//	sendEmail(user.getEmail(), "[AnsanLibrary]임시비밀번호", "\n\n 안녕하세요. 임시비밀번호는 다음과 같습니다.\n\n" + tempPassword);
+	
+				// 데베에 임시비밀번호 저장하는 로직 추가
+	String encodedPassword = tempPassword;
+				//String encodedPassword = passwordEncoder.encode(tempPassword);
+				user.setPassword(encodedPassword);
+				userRepository.save(user);
+	
+				return user.getEmail();
+			} else {
+				return null;
+			}
+	
+		}
+		
+		
+		public String generateTempPassword() {
+		SecureRandom random = new SecureRandom();
+		StringBuilder password = new StringBuilder(PASSWORD_LENGTH);
+		for (int i = 0; i < PASSWORD_LENGTH; i++) {
+			password.append(CHARACTERS.charAt(random.nextInt(CHARACTERS.length())));
+		}
+		return password.toString();
+	}
+		
+		private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		private static final int PASSWORD_LENGTH = 10;
+	
+
+	
+		public void sendEmail(String to, String subject, String text) {
+			SimpleMailMessage message = new SimpleMailMessage();
+			message.setTo(to);
+			message.setSubject(subject);
+			message.setText(text);
+			//mailSender.send(message);
+		}
+	
+		
+		
+		
+    
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+	
+
+
 
 }

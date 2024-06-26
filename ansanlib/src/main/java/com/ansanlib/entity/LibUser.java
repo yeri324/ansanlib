@@ -39,6 +39,7 @@ public class LibUser extends BaseEntity {
 	@Column(unique = true)
 	private String email; // 이메일
 
+	
 	private String loginid; // 사용자아이디
 
 	private String password; // 비밀번호

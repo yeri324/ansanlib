@@ -2,7 +2,6 @@ package com.ansanlib.user.dto;
 
 import java.time.LocalDateTime;
 
-import com.ansanlib.constant.Gender;
 import com.ansanlib.constant.Role;
 
 import lombok.Getter;
