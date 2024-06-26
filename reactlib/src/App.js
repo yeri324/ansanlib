@@ -15,6 +15,9 @@ import ReservationList from './components/pages/reservation/ReservationList';
 import AdminUserList from './components/pages/admin/AdminUserList';
 import AdminUserDetail from './components/pages/admin/AdminUserDetail';
 
+import RequestBookForm from './components/pages/requestBook/RequestBookForm';
+import RequestBookList from './components/pages/requestBook/RequestBookList';
+
 
 function App() {
   const [isVerified, setIsVerified] = useState(false);
@@ -41,6 +44,8 @@ function App() {
         <Route path="/admin/user/search" element={<AdminUserList />} />
         <Route path="/admin/user/detail/:id" element={<AdminUserDetail />} />
         
+        <Route path="/requestbook/new" element={<RequestBookForm/>} />
+        <Route path="/requestbook/list:userId" element={<RequestBookList/>} />
         {/* <Route path="/login" element={<LoginForm isLoggedIn={isLoggedIn} setIsLoggedIn={(value) => setIsLoggedIn(value)} />} />
         <Route path="/signup" element={<SignUpSelect isLoggedIn={isLoggedIn} />} />
         <Route path="/signup/normal" element={<SignUp isLoggedIn={isLoggedIn} isComp={false} />} />
