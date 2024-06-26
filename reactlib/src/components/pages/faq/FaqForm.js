@@ -1,10 +1,10 @@
 import './FaqForm.css';
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState,  } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
-const FaqForm = ()=> {
+const FaqForm = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -21,31 +21,29 @@ const FaqForm = ()=> {
     setFiles(Array.from(e.target.files));
   }
 
- 
+  //파일 보내기
   const uploadFiles = () => {
     const formData = new FormData();
 
     files.map((file) => {
       formData.append("files", file);
     });
-    console.log(formData);
-    // axios(
-    //   {
-    //     url: '/faq/uploads',
-    //     method: 'post',
-    //     data: {
-    //       formData: formData,
-    //     },
-    //     headers: {
-    //       'Content-Type': 'multipart/form-data'
-    //     },
-    //     baseURL: 'http://localhost:8090',
-    //   });
+    axios(
+      {
+        url: '/faq/uploads',
+        method: 'post',
+        data: {
+          formData: formData,
+        },
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        baseURL: 'http://localhost:8090',
+      });
   };
 
   // 생성 정보 보내기
-  const Send = () => {
-    
+  const onCreate = () => {
     axios(
       {
         url: '/faq/new',
@@ -59,7 +57,7 @@ const FaqForm = ()=> {
     ).then(function (response) {
       console.log(response.data);
     });
-    navigate("/faq/list", { repalce: true });
+    window.location.reload(navigate("/faq/list", { repalce: true }));
   }
 
   return (
@@ -78,13 +76,14 @@ const FaqForm = ()=> {
           placeholder={isContentClicked === true ? "" : "내용을 작성해주세요."}
           onChange={writeContent} />
         <br />
-        <button onClick={() => Send()}>저장</button>
         <input
           className='file-input'
           type="file"
+          accept="image/*"
           mulitple
           onChange={handleFileChange}
         />
+        <button onClick={() => onCreate()}>저장</button>
       </form>
     </div>
   );

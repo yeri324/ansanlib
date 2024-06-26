@@ -27,11 +27,11 @@ public class FaqController {
 
 	private final FaqService faqService;
 
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ResponseEntity<List<Faq>> faqList() {
-		List<Faq> faqList = faqService.getFaqList();
-		return ResponseEntity.ok(faqList);
-	}
+//	@RequestMapping(value = "/list", method = RequestMethod.GET)
+//	public ResponseEntity<List<Faq>> faqList() {
+//		List<Faq> faqList = faqService.getFaqList();
+//		return ResponseEntity.ok(faqList);
+//	}
 
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
 	public ResponseEntity<String> createfaq(@RequestBody FaqFormDto faqFormDto) throws Exception {
@@ -45,7 +45,7 @@ public class FaqController {
 		return resEntity;
 	}
 
-	@RequestMapping(value = "/detail/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/detail", method = RequestMethod.PUT)
 	public ResponseEntity<String> updateFaq(@RequestBody FaqFormDto faqFormDto) throws Exception {
 		ResponseEntity<String> resEntity = null;
 		try {
@@ -76,14 +76,10 @@ public class FaqController {
 		
 		
 	}
-
 	
 	@PostMapping("/search")
     public ResponseEntity<List<Faq>> searchUsers(@RequestBody FaqDto faqDto) {
         List<Faq> faqs = faqService.ListFaq(faqDto);
-        for(Faq faq : faqs) {
-        	System.out.println(faq.getTitle());
-        }
         return ResponseEntity.ok(faqs);
     }
 	

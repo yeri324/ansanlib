@@ -1,10 +1,13 @@
-const FaqItem = (id,title,regTime,updateTime) => {
+import React from "react";
+
+const FaqItem = ({faq, handleDetail, checkedList, checkHandler, }) => {
     return (
         <tr>
-            <td>{id}</td>
-            <td >{title}</td>
-            <td>{regTime}</td>
-            <td>{updateTime}</td>
+            <td><input type='checkbox' id={faq.id} checkedList={checkedList.includes(faq.id)} onChange={(e) => checkHandler(e, faq.id)} /></td>
+            <td>{faq.id}</td>
+            <td onClick={() => handleDetail( faq )}>{faq.title}</td>
+            <td>{faq.regTime}</td>
+            <td>{faq.updateTime}</td>
         </tr>
     );
 }

@@ -15,8 +15,7 @@ public class FaqImgDto {
 	private String oriImgName; 
 	private String imgUrl; 
 	private String repImgYn;
-	
-	
+
 	private static ModelMapper modelMapper = new ModelMapper();
 
 	public static FaqImgDto of(FaqImg faqImg) {
