@@ -12,6 +12,10 @@ import Admin from './components/pages/admin/Admin';
 import AdminUserList from './components/pages/admin/AdminUserList';
 import AdminUserDetail from './components/pages/admin/AdminUserDetail';
 
+import SearchPage from './components/pages/book/searchBook';
+import SearchPageList from './components/pages/book/searchBookList/searchPage';
+import BookDetailPage from './components/pages/book/bookDetail/bookDetailPage';
+
 function App() {
 
   return (
@@ -21,14 +25,14 @@ function App() {
         <Route path="/faq/list" element={<FaqList />} />
         <Route path="/faq/new" element={<FaqForm />} />
         <Route path="/faq/detail/:id" element={<FaqDetailForm />} />
-
-<<<<<<< HEAD
-        <Route path="/admin/user/search" element={<Admin />} />
-=======
+        
         <Route path="/admin/user/search" element={<AdminUserList />} />
         <Route path="/admin/user/detail/:id" element={<AdminUserDetail />} />
-        
->>>>>>> main
+
+        <Route path="/book/search/searchBook" element={<SearchPage />} />
+        <Route path="/book/search/result" element={<SearchPageList />} />
+        <Route path="/book/detail/{id}" element={<BookDetailPage />} />
+
         {/* <Route path="/login" element={<LoginForm isLoggedIn={isLoggedIn} setIsLoggedIn={(value) => setIsLoggedIn(value)} />} />
         <Route path="/signup" element={<SignUpSelect isLoggedIn={isLoggedIn} />} />
         <Route path="/signup/normal" element={<SignUp isLoggedIn={isLoggedIn} isComp={false} />} />

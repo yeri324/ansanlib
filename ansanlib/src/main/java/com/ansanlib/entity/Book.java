@@ -2,10 +2,13 @@ package com.ansanlib.entity;
 
 import java.time.LocalDateTime;
 
+import com.ansanlib.book.dto.BookFormDto;
 import com.ansanlib.constant.BookStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,6 +16,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,56 +25,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-<<<<<<< HEAD
 @Getter @Setter
 @Table(name="book")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Book extends BaseEntity {
-
-	@Id
-	@Column(name="book_num")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	
-	@Column(nullable = false)
-	private String isbn; 			// 바코드
-	
-	@Column(nullable = false)
-	private String title; 			// 제목
-	
-	@Column(nullable = false)
-	private String author;			// 저자
-	
-	@Column(nullable = false)
-	private String publisher;		// 출판사
-	
-	@Column(nullable = false)
-	private LocalDateTime pub_date; // 출판 날짜
-	
-	@Column(nullable = false)
-	private String genre; 			// 장르
-	
-	@Column(nullable = false)
-	private String category_code; 	// 분류 코드
-	
-	private String image; 			// 이미지
-	
-	@Column(nullable = false)
-	private String loan_status; 	// 대출 상태
-	private String location;		// 위치
-	
-	@Lob
-	private String bookDetail; 		// 책 설명
-	private int count;
-	
-	@Column(nullable = false)
-	private BookStatus status;
-=======
-@Getter
-@Setter
-@Table(name = "book")
 public class Book extends BaseEntity {
 
 	@Id
@@ -86,9 +45,6 @@ public class Book extends BaseEntity {
 	private LocalDateTime pub_date; // 출판일
 	private String genre; // 장르
 	private String category_code; // 분류코드
-	private String image; // 이미지
-
-	private String loan_sataus; // 대출상태
 
 	private String location; // 위치
 
@@ -96,11 +52,21 @@ public class Book extends BaseEntity {
 	private String bookDetail; // 책 설명
 	private int count;
 
-	@Column(nullable = false) // 책 상태
+	@Enumerated(EnumType.STRING)
 	private BookStatus status;
+	
+	@OneToOne(mappedBy = "book")
+    private BookImg bookImg;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private LibUser libUser;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="lib_num")
 	private Library library;
->>>>>>> main
+	
+	public void updateBook(BookFormDto itemFormDto){
+
+    }
 }

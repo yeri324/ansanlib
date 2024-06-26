@@ -22,40 +22,22 @@ import lombok.Setter;
 @Getter @Setter
 @NoArgsConstructor
 public class BookInterest {
-<<<<<<< HEAD
-	
-=======
-   
->>>>>>> main
     @Id
     @Column(name="book_interest_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-<<<<<<< HEAD
     @JoinColumn(name = "book_num")
-    private Book book;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private LibUser libUser;
-
-    @CreatedDate
-    @Column(updatable = false)
-    private LocalDateTime regTime;
-=======
-    @JoinColumn(name = "book_id")
     private Book book; //도서번호
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "libUser_id")
+    @JoinColumn(name = "user_id")
     private LibUser libUser; //사용자아이디
 
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime regTime; //지정일
->>>>>>> main
 
     public BookInterest(Book book, LibUser libUser, LocalDateTime regTime) {
         this.book = book;
