@@ -37,5 +37,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long>{
             @Param("endDate") LocalDateTime endDate);
     
     List<Reservation> findByLibUser_UserIdOrderByStartDateAsc(Long user_id);
+    List<Reservation> findBybookId_Id(Long id);
 
 }

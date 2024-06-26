@@ -58,6 +58,11 @@ public class AdminUserService {
 		 reservationRepository.deleteById(id);
 	}
 	
+	@Transactional(readOnly = true) 
+	public List<Reservation> getBookRes(AdminDetailUserDto adminDetailUserDto) {
+		return reservationRepository.findBybookId_Id(adminDetailUserDto.getId());
+	}
+	
 	
 	
 }

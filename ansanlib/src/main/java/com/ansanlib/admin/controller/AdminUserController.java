@@ -72,7 +72,12 @@ public class AdminUserController {
 	public ResponseEntity cancelRes(@RequestBody AdminDetailUserDto adminDetailUserDto) throws Exception {
 		adminUserService.cancelRes(adminDetailUserDto.getId());
 		return ResponseEntity.ok("삭제완료");
-
+	}
+	
+	@PostMapping("/bookRes")
+	public ResponseEntity BookRes(@RequestBody AdminDetailUserDto adminDetailUserDto) throws Exception {
+		List<Reservation> res =  adminUserService.getBookRes(adminDetailUserDto);
+		return ResponseEntity.ok(res);
 	}
 
 }

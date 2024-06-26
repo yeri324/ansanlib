@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import AdminUserItem from './AdminUserItem';
+
 
 const AdminUserList = () => {
   const navigate = useNavigate();
@@ -47,24 +48,26 @@ const AdminUserList = () => {
   useEffect(() => {
     onSearch();
   }, [])
-  
+
 
 
   // 상세페이지 이동
-  
+
   const handleDetail = (user) => {
     // setSelectedUser(user);
- 
+
     navigate(`/admin/user/detail/${user.userId}`, {
-      state : {
+      state: {
         ...user
       }
     });
   };
 
 
+
   return (
-    <div className="userList">
+  
+           <div className="userList">
       <div>
 
         <select name="searchBy" value={searchOption.searchBy} onChange={handleOnChange}>
@@ -113,6 +116,10 @@ const AdminUserList = () => {
         </table>
       </div>
     </div>
+
+
   );
-}
+};
+
+
 export default AdminUserList;
