@@ -17,9 +17,7 @@ const JoinForm = ({ isLoggedIn }) => {
         address2: '',
         gender: '',
         sms: '',
-      
-       
-     
+
     });
 
     const [idAvailable, setIdAvailable] = useState(false);
@@ -35,32 +33,40 @@ const JoinForm = ({ isLoggedIn }) => {
    
 
     const checkUserId = () => {
-        axios.get("/api/user/checkId?loginid=" + formData.loginid)
+        axios.get("http://localhost:8090/api/user/checkId", { params: { loginid: formData.loginid } })
+        
             .then(response => {
-                alert(response.data);
                 if (response.status === 200) {
+                    alert(response.data);
                     setIdAvailable(true);
                 }
             })
             .catch(error => {
-                alert(error.response.data);
-                console.error(error);
+                if (error.response) {
+                    alert(error.response.data);
+                    console.error(error.response.data);
+                } else {
+                    alert("중복 확인 요청 중 문제가 발생했습니다.");
+                    console.error(error);
+                }
             });
     };
 
-    const checkEmail = () => {
-        axios.get("/api/checkEmail?email=" + formData.email)
-            .then(response => {
-                alert(response.data);
-                if (response.status === 200) {
-                    setEmailAvailable(true);
-                }
-            })
-            .catch(error => {
-                alert(error.response.data);
-                console.error(error);
-            });
-    };
+
+    // const checkEmail = () => {
+    //     axios.get("/api/checkEmail?email=" + formData.email)
+    //         .then(response => {
+               
+    //             if (response.status === 200) {
+    //                 alert(response.data);
+    //                 setEmailAvailable(true);
+    //             }
+    //         })
+    //         .catch(error => {
+    //             alert(error.response.data);
+    //             console.error(error);
+    //         });
+    // };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -74,7 +80,7 @@ const JoinForm = ({ isLoggedIn }) => {
     };
 
     const addressRegEx = /.+/;
-    const addressIsValid = addressRegEx.test(formData.address2);
+    const addressIsValid = addressRegEx.test(formData.extraAddress);
 
     let formIsValid = false;
     if (addressIsValid) {
@@ -83,11 +89,14 @@ const JoinForm = ({ isLoggedIn }) => {
 
     const formSubmitHandler = () => {
         const userData = {
-            address: `${formData.address}`,
-            address2: `${formData.address2}`,
+            address: formData.jibunAddress,
+            address2: formData.extraAddress,
         };
-        setFormData({ ...formData, address: userData.address, address2: userData.address2 });
+       // setFormData({ ...formData, address: userData.jibunAddress, address2: userData.extraAddress });
     };
+
+
+
 
     useEffect(() => {
         formSubmitHandler();
@@ -111,10 +120,17 @@ const JoinForm = ({ isLoggedIn }) => {
 
                 setFormData({
                     ...formData,
+                    // postcode: data.zonecode,
+                    // roadAddress: roadAddr,
+                    // address: data.jibunAddress,
+                    // address2: extraRoadAddr,
+
                     postcode: data.zonecode,
                     roadAddress: roadAddr,
                     jibunAddress: data.jibunAddress,
                     extraAddress: extraRoadAddr,
+                    address: data.jibunAddress,
+                    address2: extraRoadAddr
                 });
 
                 setAddressEditable(false);
@@ -136,11 +152,7 @@ const JoinForm = ({ isLoggedIn }) => {
         }).open();
     };
 
-    // const axiosInstance = axios.create({
-    //     baseURL: 'https://localhost:8090',
-    //     timeout: 5000,
-    //     withCredentials: true
-    // });
+
 
 
 
@@ -154,33 +166,51 @@ const JoinForm = ({ isLoggedIn }) => {
         if (formData.password === "") missingFields.push("비밀번호");
         if (formData.password2 === "") missingFields.push("비밀번호 확인");
         if (formData.phone === "") missingFields.push("전화번호");
-        if (formData.jibunAddress === "") missingFields.push("주소");
         if (formData.gender === "") missingFields.push("성별");
+        if (formData.address ==="")  missingFields.push("주소");
         if (formData.sms === "") missingFields.push("SMS 수신 동의");
     
         if (missingFields.length > 0) {
             const missingFieldsMessage = missingFields.join(", ");
             alert(`다음 값을 입력해주세요: ${missingFieldsMessage}`);
         } else {
-            if (idAvailable && passwordMatch && isValidPhone && ((formData.password).length >= 8)) {
-                axios.post("/api/user/join", formData)
+            if (passwordMatch && isValidPhone && ((formData.password).length >= 8)) {
+                console.log(formData);
+                axios({
+                    url: '/api/user/join', // 요청할 엔드포인트
+                    method: 'post',
+                    data: {
+                        name: formData.name,
+                        email: formData.email,
+                        loginid: formData.loginid,
+                        password: formData.password,
+                        password2: formData.password2,
+                        phone: formData.phone,
+                        address: formData.jibunAddress,
+                        address2: formData.extraAddress,
+                        gender: formData.gender,
+                        sms: formData.sms,
+                    },
+                    baseURL: 'http://localhost:8090', // 백엔드 서버의 주소
+                    withCredentials: true // 인증 정보 포함
+                })
                 .then(response => {
                     alert(response.data);
                     console.log(response.data); // 회원가입 성공 시 처리
                     window.location.href = '/login';
                 })
-                    .catch(error => {
-                        if (error.response) {
-                            alert(error.response.data); // 서버에서 응답이 온 경우 에러 메시지 출력
-                            console.error(error.response.data);
-                        } else if (error.request) {
-                            alert("서버로 요청을 보내는 중에 문제가 발생했습니다."); // 요청이 보내지지 않은 경우 에러 메시지 출력
-                            console.error(error.request);
-                        } else {
-                            alert("오류가 발생했습니다."); // 요청 설정이 잘못된 경우 에러 메시지 출력
-                            console.error('Error', error.message);
-                        }
-                    });
+                .catch(error => {
+                    if (error.response) {
+                        alert(error.response.data); // 서버에서 응답이 온 경우 에러 메시지 출력
+                        console.error(error.response.data);
+                    } else if (error.request) {
+                        alert("서버로 요청을 보내는 중에 문제가 발생했습니다."); // 요청이 보내지지 않은 경우 에러 메시지 출력
+                        console.error(error.request);
+                    } else {
+                        alert("오류가 발생했습니다."); // 요청 설정이 잘못된 경우 에러 메시지 출력
+                        console.error('Error', error.message);
+                    }
+                });
             } else {
                 // 필수 조건이 충족되지 않았을 때 처리
                 if (!idAvailable) {
@@ -195,7 +225,7 @@ const JoinForm = ({ isLoggedIn }) => {
             }
         }
     };
-
+    
     const handlePasswordMatch = () => {
         setPasswordMatch(formData.password === formData.password2);
     };
@@ -267,7 +297,7 @@ const JoinForm = ({ isLoggedIn }) => {
                     <input className="long-input" type="text" name="phone" placeholder="(-제외 11자리)" value={formData.phone}
                         onChange={(e) => handleChange(e)} />
                 </label>
-                {/* {!isValidPhone && <span className="error">다시 확인하여주세요</span>} */}
+             
             </div>
 
             <div className="input-box">
@@ -275,11 +305,10 @@ const JoinForm = ({ isLoggedIn }) => {
                         <input type="text" id="sample4_postcode" placeholder="우편번호" value={formData.postcode}disabled />
                         <input type="button" onClick={handlePostcode} value="우편번호 찾기" /><br />
                         <input type="text"  id="sample4_roadAddress" placeholder="도로명주소" value={formData.roadAddress} disabled />
-                        <input type="text" name="address" id="sample4_jibunAddress" placeholder="지번주소" value={formData.jibunAddress} disabled />
+                        <input type="text" id="sample4_jibunAddress" placeholder="지번주소" value={formData.jibunAddress} disabled />
                         <span id="guide" style={{ color: '#999', display: 'none' }}></span>
                       
-                        <input type="text" name="address2" id="sample4_extraAddress" placeholder="참고항목" value={formData.extraAddress} disabled
-                        onChange={(e) => setFormData({...formData, address2: e.target.value})} />
+                        <input type="text"  id="sample4_extraAddress" placeholder="참고항목" value={formData.extraAddress} disabled />
                         <input type="text" id="sample4_detailAddress" placeholder="상세주소"/>
                         </label>
             </div>
@@ -332,8 +361,8 @@ const JoinForm = ({ isLoggedIn }) => {
             </label>
             </div>
 
-            <button className="center-button" onClick={handleSignUp}>회원가입</button>
-            <button type="button" className="btn btn-primary" onClick={() => window.location.href = '/login'}>
+            <button className="find-join-btn" onClick={handleSignUp}>회원가입</button>
+            <button className="find-login-btn" onClick={() => window.location.href = '/login'}>
                     로그인하기
                 </button>
         </div>
