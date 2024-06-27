@@ -85,14 +85,6 @@ public class LibUser extends BaseEntity {
 		return this;
 	}
 	
-	public void libUserToPenalty() {
-		this.status = UserStatus.ONPENALTY;
-		this.penaltyDate = LocalDateTime.now().plusDays(7);
-		this.penalty = 0;
-		}
-	
-	public void payLateFee() {
-		this.lateFee = 0;
-		}
+
 
 }

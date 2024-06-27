@@ -1,6 +1,7 @@
 package com.ansanlib.admin.service;
 
 import java.lang.reflect.InvocationTargetException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import com.ansanlib.admin.dto.AdminDetailUserDto;
 import com.ansanlib.admin.dto.AdminUserDto;
 import com.ansanlib.admin.repository.AdminUserRepository;
 import com.ansanlib.admin.repository.LoanStatusRepository;
+import com.ansanlib.constant.UserStatus;
 import com.ansanlib.entity.LibUser;
 import com.ansanlib.entity.LoanStatus;
 import com.ansanlib.entity.Reservation;
@@ -55,7 +57,10 @@ public class AdminUserService {
 	
 	public LibUser updateUserStatus(AdminDetailUserDto adminDetailUserDto) throws IllegalAccessException, InvocationTargetException {
 		LibUser user = adminUserRepository.findById(adminDetailUserDto.getId()).orElseThrow(EntityNotFoundException::new);
-		user.libUserToPenalty();
+		
+		user.setStatus(UserStatus.ONPENALTY);
+		user.setPenaltyDate(LocalDateTime.now().plusDays(7));
+		user.setPenalty(0);
 		return adminUserRepository.save(user);
 		
 	}
@@ -74,8 +79,17 @@ public class AdminUserService {
 	
 	public LibUser payLateFee(AdminDetailUserDto adminDetailUserDto) throws IllegalAccessException, InvocationTargetException {
 		LibUser user = adminUserRepository.findById(adminDetailUserDto.getId()).orElseThrow(EntityNotFoundException::new);
-		user.payLateFee();
+		user.setLateFee(0);
 		return adminUserRepository.save(user);
+		
+	}
+	
+	public Reservation extendRes(AdminDetailUserDto adminDetailUserDto) throws IllegalAccessException, InvocationTargetException {
+		Reservation res = reservationRepository.findById(adminDetailUserDto.getId()).orElseThrow(EntityNotFoundException::new);
+		
+		res.setEndDate(adminDetailUserDto.getExDate());
+		
+		return reservationRepository.save(res);
 		
 	}
 

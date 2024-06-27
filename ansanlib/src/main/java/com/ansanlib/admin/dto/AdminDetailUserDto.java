@@ -14,6 +14,7 @@ import lombok.Setter;
 public class AdminDetailUserDto {
 	private Long id;
 	
+	private LocalDateTime exDate; 
 	
 	private static ModelMapper modelMapper = new ModelMapper();
 	

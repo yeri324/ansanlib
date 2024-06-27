@@ -77,12 +77,12 @@ const AdminUserList = () => {
 
         <input type="text" name="searchQuery" value={searchOption.searchQuery} onChange={handleOnChange} />
 
-        <label value="all">all</label>
-        <input type="radio" name="selectRadio" value="all" checked={searchOption.selectRadio === "all"} onChange={handleOnChange} />
-        <label value="penalty">penalty</label>
-        <input type="radio" name="selectRadio" value="penalty" checked={searchOption.selectRadio === "penalty"} onChange={handleOnChange} />
-        <label value="latefee">latefee</label>
-        <input type="radio" name="selectRadio" value="latefee" checked={searchOption.selectRadio === "latefee"} onChange={handleOnChange} />
+        <input type="radio" id="all" name="selectRadio" value="all" checked={searchOption.selectRadio === "all"} onChange={handleOnChange} />
+        <label id="all">all</label>
+        <input type="radio" id="penalty" name="selectRadio" value="penalty" checked={searchOption.selectRadio === "penalty"} onChange={handleOnChange} />
+        <label id="penalty">penalty</label>        
+        <input type="radio" id="latefee" name="selectRadio" value="latefee" checked={searchOption.selectRadio === "latefee"} onChange={handleOnChange} />
+        <label id="latefee">latefee</label>
 
 
         <button onClick={onSearch}>Search</button>
@@ -96,6 +96,7 @@ const AdminUserList = () => {
           <thead>
             <tr>
               <th>ID</th>
+              <th>loginID</th>
               <th>Name</th>
               <th>Penalty</th>
               <th>Late Fee</th>

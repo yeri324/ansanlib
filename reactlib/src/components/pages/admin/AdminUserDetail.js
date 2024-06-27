@@ -151,22 +151,22 @@ const AdminUserDetail = () => {
         <div>
             <p>userDetail</p>
             {console.log(userDetail)}
-            <p>{userDetail.loginid}</p>
-            <p>{userDetail.userId}</p>
-            <p>{userDetail.penalty}</p>
-            <p>{userDetail.lateFee}</p>
-            <p>{userDetail.name}</p>
-            <p>{userDetail.status}</p>
-            <p>penaltyDate</p>
+            <p>loginid : {userDetail.loginid}</p>
+            <p>userId : {userDetail.userId}</p>
+            <p>penalty : {userDetail.penalty}</p>
+            <p>lateFee : {userDetail.lateFee}</p>
+            <p>name : {userDetail.name}</p>
+            <p>status : {userDetail.status}</p>
+            <p>--penaltyDate--</p>
             <p>{userDetail.penaltyDate}</p>
 
-            <p>userRes</p>
+            <p>---userRes---</p>
 
             {console.log(userRes)}
             {userRes.map((res) => (
                 <UserResItem key={res.id} res={res} onClickToCancelRes={onClickToCancelRes} />
             ))}
-           <p>userLoan</p>
+           <p>---userLoan---</p>
            {console.log(userLoan)}
            {userLoan.map((loan) => (
                 <UserLoanItem key={loan.id} loan={loan} onClickToReturn={onClickToReturn}/>

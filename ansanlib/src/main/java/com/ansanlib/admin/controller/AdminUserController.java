@@ -102,5 +102,13 @@ public class AdminUserController {
 		LibUser updateUser = adminUserService.payLateFee(adminDetailUserDto);
 		return ResponseEntity.ok(updateUser);
 	}
+	
+	//예약기간연장하기
+	@PutMapping("/extendRes")
+	public ResponseEntity extendRes(@RequestBody AdminDetailUserDto adminDetailUserDto) throws Exception {
+		Reservation updateRes = adminUserService.extendRes(adminDetailUserDto);
+		return ResponseEntity.ok(updateRes);
+	}
+	
 
 }
