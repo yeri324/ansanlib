@@ -18,15 +18,5 @@ public interface UserRepository extends JpaRepository<LibUser, Long> {
 	//비번찾기
 	Optional<LibUser> findByLoginidAndEmail(String loginid, String email);
 
-	
-
-	
-
-	
-
-
-
-
-	
-   
+ 
 }

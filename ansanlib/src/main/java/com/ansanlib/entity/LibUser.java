@@ -2,6 +2,8 @@ package com.ansanlib.entity;
 
 import java.time.LocalDateTime;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import com.ansanlib.constant.Gender;
 import com.ansanlib.constant.Role;
 import com.ansanlib.constant.UserStatus;
@@ -18,8 +20,6 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-//import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity
 @Getter
@@ -39,7 +39,6 @@ public class LibUser extends BaseEntity {
 	@Column(unique = true)
 	private String email; // 이메일
 
-	
 	private String loginid; // 사용자아이디
 
 	private String password; // 비밀번호
@@ -68,9 +67,14 @@ public class LibUser extends BaseEntity {
 
 	private int lateFee; // 연체료
 
-	public LibUser bind(UserDto userDto) {
+	
+	
+	public LibUser bind(UserDto userDto, PasswordEncoder passwordEncoder) {
 		this.setLoginid(userDto.getLoginid());
-		// this.setPassword(passwordEncoder.encode(userDto.getPassword()));
+
+		  this.password = passwordEncoder.encode(userDto.getPassword());
+		// this.setPassword(userDto.getPassword());
+
 		this.setName(userDto.getName());
 
 		this.setAddress(userDto.getAddress());
@@ -80,7 +84,7 @@ public class LibUser extends BaseEntity {
 		this.setPhone(userDto.getPhone());
 
 		this.setSms(userDto.getSms());
-		this.setPassword(userDto.getPassword());
+
 		this.setLoginDate(userDto.getLoginDate());
 		this.setJoinDate(userDto.getJoinDate());
 		this.setRegTime(userDto.getRegTime());
@@ -95,4 +99,26 @@ public class LibUser extends BaseEntity {
 
 		return this;
 	}
+	
+	
+	
+	
+	
+	public void bindExceptLoginidAndPassword(UserDto userDto) {
+		this.setName(userDto.getName());
+		this.setAddress(userDto.getAddress());
+		this.setAddress2(userDto.getAddress2());
+		this.setEmail(userDto.getEmail());
+		this.setPhone(userDto.getPhone());
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

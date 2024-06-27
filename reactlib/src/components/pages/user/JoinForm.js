@@ -90,7 +90,7 @@ const JoinForm = ({ isLoggedIn }) => {
 
     const formSubmitHandler = () => {
         const userData = {
-            address: formData.jibunAddress,
+            address: formData.roadAddress,
             address2: formData.extraAddress,
         };
        // setFormData({ ...formData, address: userData.jibunAddress, address2: userData.extraAddress });
@@ -123,6 +123,7 @@ const JoinForm = ({ isLoggedIn }) => {
                     ...formData,
                     // postcode: data.zonecode,
                     // roadAddress: roadAddr,
+                    
                     // address: data.jibunAddress,
                     // address2: extraRoadAddr,
 
@@ -130,7 +131,7 @@ const JoinForm = ({ isLoggedIn }) => {
                     roadAddress: roadAddr,
                     jibunAddress: data.jibunAddress,
                     extraAddress: extraRoadAddr,
-                    address: data.jibunAddress,
+                    address: roadAddr,
                     address2: extraRoadAddr
                 });
 
@@ -187,7 +188,7 @@ const JoinForm = ({ isLoggedIn }) => {
                         password: formData.password,
                         password2: formData.password2,
                         phone: formData.phone,
-                        address: formData.jibunAddress,
+                        address: formData.roadAddress,
                         address2: formData.extraAddress,
                         gender: formData.gender,
                         sms: formData.sms,

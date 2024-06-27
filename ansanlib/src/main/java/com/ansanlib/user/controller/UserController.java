@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,10 +23,11 @@ import jakarta.servlet.http.HttpServletRequest;
 @RequestMapping("/api")
 public class UserController {
 
-	// private final PasswordEncoder passwordEncoder;
+	   @Autowired
+	    private UserService userService;
 
-	@Autowired
-	private UserService userService;
+	    @Autowired // PasswordEncoder를 주입받습니다.
+	    private PasswordEncoder passwordEncoder;
 
 	// 아이디 중복체쿠
 	@GetMapping("user/checkId")
@@ -33,17 +35,19 @@ public class UserController {
 		return userService.checkId(loginid);
 	}
 
+
+	 
 	// 가입가입
-	@PostMapping("/user/join")
-	public ResponseEntity<String> join(@RequestBody UserDto userDto) {
-		System.out.println("가입완뇨~");
-		try {
-			userService.join(userDto);
-			return new ResponseEntity<>("회원가입이 완료되었습니다.", HttpStatus.CREATED);
-		} catch (Exception e) {
-			return new ResponseEntity<>("회원가입 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		@PostMapping("/user/join")
+		public ResponseEntity<String> join(@RequestBody UserDto userDto) {
+			System.out.println("가입완뇨~");
+			try {
+				userService.join(userDto);
+				return new ResponseEntity<>("회원가입이 완료되었습니다.", HttpStatus.CREATED);
+			} catch (Exception e) {
+				return new ResponseEntity<>("회원가입 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+			}
 		}
-	}
 
 	//  로그인
     @PostMapping("/user/login")
@@ -94,6 +98,7 @@ public class UserController {
 			String foundPw = userService.findPw(userDto);
 			
 			if(foundPw != null) {
+				
 			      return ResponseEntity.ok("임시 비밀번호가 이메일로 전송되었습니다.");
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("존재하지 않는 회원이거나 잘못 입력된 정보입니다.");

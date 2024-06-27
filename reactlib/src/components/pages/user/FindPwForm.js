@@ -104,6 +104,7 @@ const FindPwForm = () => {
                     <div id="findPw_show_pw">
                         <div className="show_pw">
                              ✔<br /><br />{email} 로 <br />임시 비밀번호를 발송하였습니다.
+
                         </div>
                         <button  id="go_login"><a href="/login">로그인 하러가기</a></button>
                     </div>
