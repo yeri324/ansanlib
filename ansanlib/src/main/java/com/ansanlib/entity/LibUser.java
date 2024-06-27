@@ -75,7 +75,7 @@ public class LibUser extends BaseEntity {
 
 		this.setAddress(userDto.getAddress());
 		this.setAddress2(userDto.getAddress2());
-		// this.setBirth(userDto.getBirth());
+
 		this.setEmail(userDto.getEmail());
 		this.setPhone(userDto.getPhone());
 

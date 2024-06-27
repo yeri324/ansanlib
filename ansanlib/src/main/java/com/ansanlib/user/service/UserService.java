@@ -1,6 +1,7 @@
 package com.ansanlib.user.service;
 
 import java.security.SecureRandom;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -61,7 +62,7 @@ public class UserService {
 		if (!isPasswordMatch(userDto.getPassword(), userDto.getPassword2())) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("비밀번호가 일치하지 않습니다.");
 		}
-
+		 userDto.setJoinDate(LocalDateTime.now());
 		LibUser user = new LibUser();
 		user.bind(userDto);
 
@@ -88,25 +89,28 @@ public class UserService {
 	            if (userOptional.isPresent()) {
 	                LibUser user = userOptional.get();
 
-	                // 비밀번호 매칭
+	                // Validate password (use PasswordEncoder for secure validation)
 	                boolean matches = password.equals(user.getPassword());
-	                System.out.println("비밀번호 매칭 결과:" + matches);
 
 	                if (matches) {
+	                    // Update login date
+	                    user.setLoginDate(LocalDateTime.now());
+	                    userRepository.save(user); // Save user with updated login date
+
 	                    return user;
 	                } else {
 	                    System.out.println("비밀번호가 일치하지 않습니다.");
-	                    return null; // 비밀번호가 일치하지 않는 경우 null 반환
+	                    return null; // Incorrect password
 	                }
 	            } else {
 	                System.out.println("회원이 존재하지 않습니다.");
-	                return null;
+	                return null; // User not found
 	            }
 	        } catch (Exception e) {
 	            System.out.println("예외:" + e.getMessage());
 	            return null;
 	        }
-	 }
+	    }
 
 	
 	 
