@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ansanlib.entity.Reservation;
 import com.ansanlib.reservation.dto.CreateReservationDto;
+import com.ansanlib.reservation.dto.ReservationDto;
+import com.ansanlib.reservation.exception.CreateReservationException;
 import com.ansanlib.reservation.service.ReservationService;
 
 @RestController
@@ -24,30 +26,35 @@ public class ReservationController {
 	private ReservationService reservationService;
 	
 	@PostMapping 
-	public ResponseEntity<Reservation> createReservation(@RequestBody CreateReservationDto createReservationDto) {
+	public ResponseEntity<?> createReservation(@RequestBody CreateReservationDto createReservationDto) {
        try {
     	   Reservation savedReservation = reservationService.createReservation(createReservationDto);
-           return ResponseEntity.ok(savedReservation);   
-       }catch(Exception e) {
-    	   return ResponseEntity.badRequest().body(null);
+    	   ReservationDto savedReservaationDto = new ReservationDto(savedReservation);
+           return ResponseEntity.ok(savedReservaationDto);   
+       } catch(CreateReservationException e1) {
+    	   return ResponseEntity.badRequest().body(e1.getMessage());
+       } catch(RuntimeException e2) {
+    	   return ResponseEntity.badRequest().body("서버 내부 오류.");
        }
 		
     }
 
     @GetMapping("/get/by-user/{userId}")
-    public ResponseEntity<List<Reservation>> getReservationsByUser(@PathVariable Long userId) {
+    public ResponseEntity<List<ReservationDto>> getReservationsByUser(@PathVariable Long userId) {
         List<Reservation> reservations = reservationService.getReservationByUser(userId);
-        if(reservations.isEmpty()) {
+        List<ReservationDto> reservationsDto = reservations.stream().map(ReservationDto::new).toList();
+        if(reservationsDto.isEmpty()) {
         	return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(reservations);
+        return ResponseEntity.ok(reservationsDto);
     }
  
     @GetMapping("/get/by-id/{reservationId}")
-    public ResponseEntity<Reservation> getReservationById(@PathVariable Long reservationId){
+    public ResponseEntity<ReservationDto> getReservationById(@PathVariable Long reservationId){
     	Reservation reservation = reservationService.getReservationById(reservationId);
     	if(reservation != null) {
-    		return ResponseEntity.ok(reservation);
+    		ReservationDto reservationDto = new ReservationDto(reservation);
+    		return ResponseEntity.ok(reservationDto);
     	} else {
     		return ResponseEntity.notFound().build();
     	}

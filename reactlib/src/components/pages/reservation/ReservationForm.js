@@ -16,8 +16,13 @@ const ReservationForm = () => {
       alert("예약 성공");
       console.log('Reservation created:', response.data);
     } catch (error) {
-      alert("예약 실패");
-      console.error('There was an error creating the reservation!', error);
+      if(typeof error.response.data === "string") {
+        alert(`예약 실패: ${error.response.data}`);
+      } else {
+        alert(`예약 실패: 서버 내부 오류.`);
+      }
+      
+      console.error('There was an error creating the reservation!', error.response.data);
     }
   };
 
