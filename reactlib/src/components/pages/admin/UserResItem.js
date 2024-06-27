@@ -10,8 +10,8 @@ const UserResItem = ({ res, onClickToCancelRes }) => {
             {
                 url: '/admin/user/bookRes',
                 method: 'post',
-                data: {
-                    id: res.bookId.id,
+                data : {
+                    id:res.bookId.id,
                 },
                 baseURL: 'http://localhost:8090',
             }).then(
@@ -22,14 +22,6 @@ const UserResItem = ({ res, onClickToCancelRes }) => {
     const closeModal = () => {
         setIsOpen(false);
     };
-
-    // const onClick = (e) => {
-
-    //       
-    //     )
-    //     window.location.reload(navigate(`/admin/user/detail/${id}`, { repalce: true }));
-    // }
-    // }
 
     return (
         <tr key={res.id}>

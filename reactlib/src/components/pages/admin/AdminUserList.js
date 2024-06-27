@@ -77,8 +77,11 @@ const AdminUserList = () => {
 
         <input type="text" name="searchQuery" value={searchOption.searchQuery} onChange={handleOnChange} />
 
+        <label value="all">all</label>
         <input type="radio" name="selectRadio" value="all" checked={searchOption.selectRadio === "all"} onChange={handleOnChange} />
+        <label value="penalty">penalty</label>
         <input type="radio" name="selectRadio" value="penalty" checked={searchOption.selectRadio === "penalty"} onChange={handleOnChange} />
+        <label value="latefee">latefee</label>
         <input type="radio" name="selectRadio" value="latefee" checked={searchOption.selectRadio === "latefee"} onChange={handleOnChange} />
 
 
@@ -101,14 +104,7 @@ const AdminUserList = () => {
           
          <tbody>
             {searchResult.map((user) => (
-              <AdminUserItem key={user.userId} user={user}  handleDetail={handleDetail}/>
-              // <tr>
-              //   <td>{user.userId}</td>
-              //   <td onClick={() => handleDetail({ user })}>{user.loginid}</td>
-              //   <td>{user.name}</td>
-              //   <td>{user.penalty}</td>
-              //   <td>{user.lateFee}</td>
-              // </tr>
+              <AdminUserItem key={user.userId} user={user} handleDetail={handleDetail}/>
             ))}
 
 

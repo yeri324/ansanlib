@@ -15,6 +15,7 @@ import com.ansanlib.admin.dto.AdminDetailUserDto;
 import com.ansanlib.admin.dto.AdminUserDto;
 import com.ansanlib.admin.service.AdminUserService;
 import com.ansanlib.entity.LibUser;
+import com.ansanlib.entity.LoanStatus;
 import com.ansanlib.entity.Reservation;
 import com.ansanlib.reservation.service.ReservationService;
 
@@ -59,6 +60,13 @@ public class AdminUserController {
 		List<Reservation> res = adminUserService.getReservation(adminDetailUserDto);
 		return ResponseEntity.ok(res);
 	}
+	
+	// 대출정보가져오기
+		@PostMapping("/getLoan")
+		public ResponseEntity getUserLoan(@RequestBody AdminDetailUserDto adminDetailUserDto) {
+			List<LoanStatus> loan = adminUserService.getLoanStatus(adminDetailUserDto);
+			return ResponseEntity.ok(loan);
+		}
 
 	// 제재상태부여하기
 	@PutMapping("/penalty")
@@ -74,10 +82,25 @@ public class AdminUserController {
 		return ResponseEntity.ok("삭제완료");
 	}
 	
+	// 대출반납하기
+		@DeleteMapping("/return")
+		public ResponseEntity returnBook(@RequestBody AdminDetailUserDto adminDetailUserDto) throws Exception {
+			adminUserService.returnBook(adminDetailUserDto.getId());
+			return ResponseEntity.ok("삭제완료");
+		}
+	
+	//책 예약정보 가져오기
 	@PostMapping("/bookRes")
 	public ResponseEntity BookRes(@RequestBody AdminDetailUserDto adminDetailUserDto) throws Exception {
 		List<Reservation> res =  adminUserService.getBookRes(adminDetailUserDto);
 		return ResponseEntity.ok(res);
+	}
+	
+	//연체료반납하기
+	@PutMapping("/pay")
+	public ResponseEntity toPay(@RequestBody AdminDetailUserDto adminDetailUserDto) throws Exception {
+		LibUser updateUser = adminUserService.payLateFee(adminDetailUserDto);
+		return ResponseEntity.ok(updateUser);
 	}
 
 }

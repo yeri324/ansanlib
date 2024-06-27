@@ -1,5 +1,6 @@
 import axios from 'axios';
 import UserResItem from './UserResItem';
+import UserLoanItem from './UserLoanItem';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
@@ -10,6 +11,7 @@ const AdminUserDetail = () => {
     const { id } = useParams();
     const [userDetail, setUserDetail] = useState({});
     const [userRes, setUserRes] = useState([]);
+    const [userLoan, setUserLoan] = useState([]);
 
     useEffect(() => {
         getDataset(id);
@@ -50,62 +52,99 @@ const AdminUserDetail = () => {
                 setUserRes([]);
             });
 
-    };
-
-    const onClickToPenalty = () => {
-        if(userDetail.status==="ONPENALTY"){alert("이미....")}
-        else{
-        if (window.confirm('수정 하시겠습니까?')) {axios(
+        axios(
             {
-                url: '/admin/user/penalty',
-                method: 'put',
+                url: '/admin/user/getLoan',
+                method: 'post',
                 data: {
                     id: id,
                 },
                 baseURL: 'http://localhost:8090',
             }
         ).then((res) => {
-            setUserDetail(res.data);
+            setUserLoan(res.data);
         })
             .catch((err) => {
-                setUserDetail([]);
+                setUserLoan([]);
             });
+
+    };
+
+    const onClickToPenalty = () => {
+        if (userDetail.status === "ONPENALTY") { alert("이미....") }
+        else {
+            if (window.confirm('수정 하시겠습니까?')) {
+                axios(
+                    {
+                        url: '/admin/user/penalty',
+                        method: 'put',
+                        data: {
+                            id: id,
+                        },
+                        baseURL: 'http://localhost:8090',
+                    }
+                ).then((res) => {
+                    setUserDetail(res.data);
+                })
+                .catch((err) => {
+                    setUserDetail([]);
+                });
+            }
         }
-    }
     }
 
     const onClickToCancelRes = (e) => {
         if (window.confirm('예약을 취소하시겠습니까?')) {
             axios(
-            {
-                url: '/admin/user/cancelRes',
-                method: 'delete',
-                data: {
-                    id: e.target.value,
-                },
-                baseURL: 'http://localhost:8090',
-            }
-        )
-        window.location.reload(navigate(`/admin/user/detail/${id}`, { repalce: true }));
+                {
+                    url: '/admin/user/cancelRes',
+                    method: 'delete',
+                    data: {
+                        id: e.target.value,
+                    },
+                    baseURL: 'http://localhost:8090',
+                }
+            )
+            window.location.reload(navigate(`/admin/user/detail/${id}`, { repalce: true }));
+        }
     }
-}
+    const onClickToReturn = (e) => {
+        if (window.confirm('반납하시겠습니까?')) {
+            axios(
+                {
+                    url: '/admin/user/return',
+                    method: 'delete',
+                    data: {
+                        id: e.target.value,
+                    },
+                    baseURL: 'http://localhost:8090',
+                }
+            )
+            window.location.reload(navigate(`/admin/user/detail/${id}`, { repalce: true }));
+        }
+    }
 
-// const onClick = (e) => {
-    
-//         axios(
-//         {
-//             url: '/admin/user/BookRes',
-//             method: 'delete',
-//             data: {
-//                 id: e.target.value,
-//             },
-//             baseURL: 'http://localhost:8090',
-//         }
-//     )
-//     window.location.reload(navigate(`/admin/user/detail/${id}`, { repalce: true }));
-// }
-// }
-   
+    const onClickToPay = () => {
+        if (userDetail.lateFee === 0) { alert("납부할 연체료가 없습니다."); }
+        else if (window.confirm('연체료를 납부하겠습니까?')) {
+            axios(
+                {
+                    url: '/admin/user/pay',
+                    method: 'put',
+                    data: {
+                        id: id,
+                    },
+                    baseURL: 'http://localhost:8090',
+                }
+            );
+        }
+        alert("납부완료")
+        window.location.reload(navigate(`/admin/user/detail/${id}`, { repalce: true }));
+
+    }
+
+
+
 
 
     return (
@@ -120,24 +159,23 @@ const AdminUserDetail = () => {
             <p>{userDetail.status}</p>
             <p>penaltyDate</p>
             <p>{userDetail.penaltyDate}</p>
-        
+
             <p>userRes</p>
 
             {console.log(userRes)}
             {userRes.map((res) => (
-                 <UserResItem key={res.id} res={res} onClickToCancelRes={onClickToCancelRes} />
-                 
-                // <tr>
-                //     <td>{res.id}</td>
-                //     <td>{res.bookId.id}</td>
-                //     <td>{res.startDate}</td>
-                //     <td>{res.endDate}</td>
-                //     <td><button value={res.id} onClick={onClickToCancelRes}>삭제</button></td>
-                //     <td><button value={res.id}>기간연장</button></td>
-
-                // </tr>
+                <UserResItem key={res.id} res={res} onClickToCancelRes={onClickToCancelRes} />
             ))}
-        <button onClick={(e)=> onClickToPenalty(e)}>penalty</button>
+           <p>userLoan</p>
+           {console.log(userLoan)}
+           {userLoan.map((loan) => (
+                <UserLoanItem key={loan.id} loan={loan} onClickToReturn={onClickToReturn}/>
+            ))}
+
+
+
+            <button onClick={(e) => onClickToPenalty(e)}>penalty</button>
+            <button onClick={() => onClickToPay()}>납부완료</button>
         </div>
     );
 };
