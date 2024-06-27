@@ -29,13 +29,7 @@ const FaqForm = () => {
 
     formData.append("title", faqData.title);
     formData.append("content", faqData.content);
-    formData.append("file", file);
-    console.log(formData.title);
-    console.log(formData.content);
-    console.log(formData.file);
-    console.log(faqData.title);
-    console.log(faqData.content);
-    console.log(file);
+    formData.append("faqImgFile", file);
 
     try { 
       axios.post(

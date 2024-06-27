@@ -25,16 +25,12 @@ public class FaqService {
 	private final FaqImgRepository faqImgRepository;
 	private final FaqImgService faqImgService;
 
-	public Long createFaq(FaqFormDto faqFormDto, List<MultipartFile> faqImgFileList) throws Exception {
+	public Long createFaq(FaqFormDto faqFormDto, MultipartFile faqImgFile) throws Exception {
 		Faq faq = faqFormDto.createFaq();
-		faqRepository.save(faq);
-		
-		for(int i=0; i<faqImgFileList.size(); i++) {
+			faqRepository.save(faq);
 			FaqImg faqImg = new FaqImg();
 			faqImg.setFaq(faq);
-			
-			faqImgService.saveFaqImg(faqImg, faqImgFileList.get(i));
-		}
+			faqImgService.saveFaqImg(faqImg, faqImgFile);
 		
 		return faq.getId();
 	}
