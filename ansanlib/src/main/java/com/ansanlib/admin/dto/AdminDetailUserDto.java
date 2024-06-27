@@ -1,5 +1,7 @@
 package com.ansanlib.admin.dto;
 
+import java.time.LocalDateTime;
+
 import org.modelmapper.ModelMapper;
 
 import com.ansanlib.entity.LibUser;
@@ -11,6 +13,7 @@ import lombok.Setter;
 @Setter
 public class AdminDetailUserDto {
 	private Long id;
+	
 	
 	private static ModelMapper modelMapper = new ModelMapper();
 	
