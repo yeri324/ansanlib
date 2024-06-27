@@ -1,176 +1,93 @@
-import { useCallback, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components"
-// import { __holiday } from "../../redux/modules/loginSlice";
+import { useState } from "react";
+import { styled } from "styled-components";
+import * as S from "./StyleTodoCalendar";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 
-const Calendar = () => {
-// 사용할 날짜들 상수로 선언
-  const today = {
-    year: new Date().getFullYear(),
-    month: new Date().getMonth() + 1,
-    date: new Date().getDate(),
+export const CalendarBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const StyleCalendar = styled(Calendar)`
+  max-width: 100%;
+  border: none;
+  margin-bottom: 15px;
+  padding: 20px;
+
+  .react-calendar__navigation {
+    display: flex;
+    height: 24px;
+    margin-bottom: 1em;
+  }
+
+  .react-calendar__navigation button {
+    min-width: 24px;
+    background-color: none;
+  }
+
+  .react-calendar__navigation button:disabled {
+    background-color: #e8e8e8;
+  }
+
+  .react-calendar__navigation button:enabled:hover,
+  .react-calendar__navigation button:enabled:focus {
+    background-color: #e8e8e8;
+  }
+
+  .react-calendar__month-view__weekdays {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.15em;
+  }
+
+  .react-calendar__year-view .react-calendar__tile,
+  .react-calendar__decade-view .react-calendar__tile,
+  .react-calendar__century-view .react-calendar__tile {
+    padding: 1.2em 0.5em;
+  }
+
+  .react-calendar__tile--hasActive {
+    color: #ffffff;
+    background-color: #797979;
+    border-radius: 5px;
+  }
+
+  .react-calendar__tile--hasActive:enabled:hover,
+  .react-calendar__tile--hasActive:enabled:focus {
+    background-color: #797979;
+  }
+
+  .react-calendar__tile--active {
+    color: #ffffff;
+    background-color: #6a6a6a;
+    border-radius: 7px;
+  }
+
+  .react-calendar__tile--active:enabled:hover,
+  .react-calendar__tile--active:enabled:focus {
+    background-color: #6a6a6a;
+  }
+`;
+
+
+const TodoCalendar = () => {
+  // useState 훅의 초기값으로 현재 날짜를 넣어줌
+  const [today, setToday] = useState(new Date()); 
+
+  // onChange 이벤트에 넣어줘서 날짜가 지날 때마다 today값이 업데이트 되도록 구현
+  const onChangeToday = () => {
+    setToday(today);
   };
-  
-  // 리덕스 툴킷으로 받아온 공휴일 API 가져오기
-  const dispatch = useDispatch()
-  const { holiday } = useSelector(state => state.loginSlice)
-  
-  // 사용할 요소들 useState로 선언
-  const [selectedYear, setSelectedYear] = useState(today.year)
-  const [selectedMonth, setSelectedMonth] = useState(today.month)
-  const [selectedDate, setSelectedDate] = useState("")
-  const [toggle, setToggle] = useState(false)
-
-// 달력의 주/일을 만들기 위한 상수 선언 
-  const week = ["일", "월", "화", "수", "목", "금", "토"];
-  const lastDay = new Date(selectedYear, selectedMonth, 0).getDate();
-
-//이전 달 버튼에 대한 함수
-  const prevMonth = useCallback(() => {
-    if (selectedMonth === 1) {
-      setSelectedMonth(12);
-      setSelectedYear(selectedYear - 1);
-    } else {
-      setSelectedMonth(selectedMonth - 1);
-    }
-  }, [selectedMonth]);
-
-//다음 달 버튼에 대한 함수
-  const nextMonth = useCallback(() => {
-    if (selectedMonth === 12) {
-      setSelectedMonth(1);
-      setSelectedYear(selectedYear + 1);
-    } else {
-      setSelectedMonth(selectedMonth + 1);
-    }
-  }, [selectedMonth]);
-
-// 주 반환 함수
-  const returnWeek = useCallback(() => {
-    return week.map((v, i) => <div key={i} className={v === "일" ? "weekday sunday" : (v === "토" ? "weekday saturday" : "weekday")}>{v}</div>)
-  }, [])
-
-// 일 반환 함수
-  const returnDay = useCallback(() => {
-    let dayArr = []
-    
-    // 가져온 공휴일 데이터를 달력에 적용하기 위해 가공
-    let holidayMonth = holiday.filter(v => parseInt(String(v).substring(4, 6)) === selectedMonth)
-    let holidayDate = holidayMonth.map(v => parseInt(String(v).substring(6, 8)))
-
-// 공휴일을 빨간색으로 표시하기 위한 함수
-    const compare = (i) => {
-      for (let h = 0; h <= holidayDate.length; h++) {
-        if (holidayDate[h] === i) return true
-      }
-    }
-
-// 일 반환 함수 로직
-    for (const today of week) {
-      const day = new Date(selectedYear, selectedMonth - 1, 1).getDay();
-      if (week[day] === today) {
-        for (let i = 1; i <= lastDay; i++) {
-          dayArr.push(
-            <button key={i}
-              className={new Date(selectedYear, selectedMonth - 1, i).getDay() === 0 || compare(i) ?
-                "weekday sunday" :
-                (new Date(selectedYear, selectedMonth - 1, i).getDay() === 6 ? "weekday saturday" : "weekday")}
-              onClick={() => setSelectedDate(`${selectedYear}년 ${selectedMonth}월 ${i}일`)} >
-              {i}</ button >
-          )
-        }
-      } else {
-        dayArr.push(<div key={today} className="weekday"></div>)
-      }
-    }
-    return dayArr
-  }, [selectedYear, selectedMonth, lastDay, holiday])
-
-
-// 공휴일 API 가져오기
-  // useEffect(() => {
-  //   dispatch(__holiday(selectedYear))
-  // }, [selectedYear])
 
   return (
-    <Container>
-      <StHeader>
-        <h3>{`${selectedYear}년 ${selectedMonth}월`}</h3>
-        <div className="buttons">
-          <div>
-            <button onClick={() => prevMonth()}>이전 달</button>
-            <button onClick={() => nextMonth()}>다음 달</button>
-          </div>
-          <div>
-            <button>x</button>
-          </div>
-        </div>
-      </StHeader>
-      <StWeek>{returnWeek()}</StWeek>
-      <StDate>{returnDay()}</StDate>
-    </Container>
-  )
-}
+    <S.CalendarBox>
+      <S.StyleCalendar locale="en" onChange={onChangeToday} value={today} />
+    </S.CalendarBox>
+  );
+};
 
-const Container = styled.section`
-  width: 350px;
-  height: 400px;
-  padding: 20px 20px;
-  border: 1px solid black;
-  `
 
-const StHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  .buttons {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  `
-
-const StWeek = styled.div`
-  display: flex;
-  .weekday {
-    width: calc(350px / 7);
-    text-align: center;
-  }
-  .saturday {
-    color: blue;
-  }
-  .sunday {
-    color: red;
-  }
-`
-
-const StDate = styled.div`
-  margin-top: 20px;
-  button {
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    :hover {
-      border: 1px solid black;
-      border-radius: 100%;
-    }
-    :focus {
-      border: 1px solid black;
-      border-radius: 100%;
-      background-color: black;
-      color: whitesmoke;
-    }
-  }
-  .weekday {
-    float: left;
-    width: calc(350px / 7);
-    height: 50px;
-  }
-  .saturday {
-    color: blue;
-  }
-  .sunday {
-    color: red;
-  }
-  `
-
-export default Calendar;
+export default TodoCalendar;

@@ -131,3 +131,19 @@
 .lib_guide {
     margin-top: 20px;
 }
+
+
+
+
+/* 색상 팔레트 */
+:root {
+    --main-bg-color: #f1f4f8; /* 전체 배경 색상 */
+    --text-color: #333333; /* 텍스트 기본 색상 */
+}
+
+/* 기본 레이아웃 스타일 */
+body {
+    margin: 0 auto;
+    background-color: #ffffff;
+    font-family: 'Arial', sans-serif; /* 글꼴 설정 */
+}
