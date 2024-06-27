@@ -20,13 +20,14 @@ const RequestBookList = () => {
 
   return (
     <div>
-      <h2>Requested Books</h2>
+      <h2>도서 신청 목록</h2>
       {requestBooks.length > 0 ?(
       <ul>
         {requestBooks.map(book => (
           <li key={book.id}>
-            {book.title} by {book.author} (ISBN: {book.isbn})<br />
-            Publisher: {book.publisher}, Publication Date: {new Date(book.pub_date).toLocaleDateString()}
+            책 제목:{book.title} <br/>
+            저자 : {book.author} (ISBN: {book.isbn})<br />
+            출판사: {book.publisher}, 출판일: {new Date(book.pub_date).toLocaleDateString()}
           </li>
         ))}
       </ul>
