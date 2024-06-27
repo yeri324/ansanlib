@@ -1,9 +1,8 @@
-import './FaqList.css';
 import axios from 'axios';
 import React, { useEffect, useState, } from 'react';
 import { useNavigate } from 'react-router-dom';
-import FaqDetailForm from './FaqDetailForm';
-import FaqItem from './FaqItem';
+import FaqDetailForm from '../faq/FaqDetailForm';
+import FaqItem from '../faq/FaqItem';
 
 function AdminFaqList() {
     const [checkedList, setCheckedList] = useState([]);
@@ -125,7 +124,7 @@ function AdminFaqList() {
                                 <th>수정시간</th>
                             </tr>
                         </thead>
-                        <div className="slide">
+                       
 
                             {searchResult.map((item) => (
 
@@ -138,7 +137,7 @@ function AdminFaqList() {
                                   </tr>
                             ))}
 
-                        </div>
+                      
                         <button onClick={onDelete}>삭제하기</button>
                         <button onClick={onCreate}>작성하기</button>
                     </table >

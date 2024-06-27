@@ -73,8 +73,8 @@ const UserResItem = ({ res, onClickToCancelRes }) => {
         <tr key={res.id}>
             <td>id : {res.id}</td>
             <td> || bookId : {res.bookId.id}</td>
-            <td> || {res.startDate}</td>
-            <td> || {res.endDate}</td>
+            <td> || {res.startDate.split('T')[0]}</td>
+            <td> || {res.endDate.split('T')[0]}</td>
             <td><button value={res.id} onClick={onClickToCancelRes}>삭제</button></td>
             <td><button value={res.id} onClick={openModal}>기간연장</button></td>
             <Modal

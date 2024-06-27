@@ -137,9 +137,10 @@ const AdminUserDetail = () => {
                     baseURL: 'http://localhost:8090',
                 }
             );
+            alert("납부완료")
+            window.location.reload(navigate(`/admin/user/detail/${id}`, { repalce: true }));
         }
-        alert("납부완료")
-        window.location.reload(navigate(`/admin/user/detail/${id}`, { repalce: true }));
+       
 
     }
 
