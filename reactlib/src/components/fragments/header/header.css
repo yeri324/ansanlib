@@ -5,7 +5,7 @@
 /* 전체 헤더 영역 스타일 */
 .full_header {
   background-color: #ffffff;
-  padding: 10px 20px;
+  padding: 10px 40px;
   border-bottom: 1px solid #ffffff;
 }
 
@@ -15,16 +15,17 @@
   margin-top: 5px;
   margin-left: 5px;
   margin-right: 5px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   font-size: 15px;
   font-weight: 600;
   font-family: 'Noto Sans KR', sans-serif;
+  text-shadow: 0.5px 0.5px#e0e0e0;
 }
 .top_login > .enter {
-  margin-right: 10px;
+  margin-right: 12px;
 }
 .top_login > .join {
-  margin-left: 10px;
+  margin-left: 12px;
 }
 
 
@@ -33,7 +34,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 }
 
 /* 개별 메뉴 항목 스타일 */
@@ -42,9 +43,11 @@
   padding: 10px 30px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  font-size: 17px;
+  font-size: 20px;
   font-weight: 600;
   font-family: 'Noto Sans KR', sans-serif;
+  margin: 10px;
+  text-shadow: 0.5px 0.5px#e0e0e0;
 }
 
 .top_menu {
@@ -74,12 +77,14 @@
 
 /* 메뉴 항목 호버 스타일 */
 .top_menu>div:hover {
-  background-color: #ffffff;
+  background-color: #f8f9fa;
 }
 
 /* 서브 메뉴 보이기 */
 .top_menu>div:hover .sub_menu {
   display: block;
+  font-size: 15px;
+  font-weight: 500;
 }
 
 /* 서브 메뉴 항목 호버 스타일 */

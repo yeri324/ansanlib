@@ -23,7 +23,8 @@
     align-items: center;
     width: 100%;
     max-width: 1200px; /* 최대 너비를 설정하여 너무 넓어지지 않도록 함 */
-    gap: 20px;
+    gap: 80px;
+    margin: 30px;
 }
 
 .top_column {

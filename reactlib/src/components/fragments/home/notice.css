@@ -1,7 +1,8 @@
 .notice_board {
   display: flex;
+  flex-direction: column; /* 세로 배치 */
   background-color: #f9f9f9;
-  width: 300px;
+  width: 100%;
   max-width: 500px; /* 적당한 크기로 제한 */
   margin: 0 auto; /* 가운데 정렬 */
   border: 1px solid #ddd; 
@@ -12,9 +13,8 @@
   list-style-type: none;
   padding: 0;
   margin: 0;
-  width: 150px;
-  background-color: #f1f1f1;
-  border-right: 1px solid #ddd; 
+  display: flex; /* 가로 배치 */
+  background-color: #f1f1f1; 
 }
 
 .notice_tabs li {
@@ -24,11 +24,7 @@
   border-bottom: 1px solid #ddd;
   transition: background-color 0.3s ease;
   text-align: center; /* 가운데 정렬 */
-}
-
-.notice_tabs {
-  background-color: #f9f9f9;
-  border-radius: 0px;
+  flex: 1; /* 모든 탭이 균등하게 배치되도록 */
 }
 
 .notice_tabs li.active {
@@ -41,7 +37,6 @@
 }
 
 .notice_content {
-  flex-grow: 1;
   padding: 20px;
   overflow-y: auto; /* 내용이 많을 때 스크롤 가능하게 */
 }
