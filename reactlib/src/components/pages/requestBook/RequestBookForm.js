@@ -24,6 +24,7 @@ const RequestBookForm = () => {
     })
     .then(response => {
       console.log('Book request created:', response.data);
+      alert('신청되었습니다.');
       setIsbn('');
       setTitle('');
       setAuthor('');

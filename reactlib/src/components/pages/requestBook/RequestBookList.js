@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const RequestBookList = () => {
+  const { userId} =useParams();
   const [requestBooks, setRequestBooks] = useState([]);
 
   useEffect(() => {
@@ -12,11 +14,12 @@ const RequestBookList = () => {
       .catch(error => {
         console.error('There was an error fetching the request books!', error);
       });
-  }, []);
+  }, [userId]);
 
   return (
     <div>
       <h2>Requested Books</h2>
+      {requestBooks.length > 0 ?(
       <ul>
         {requestBooks.map(book => (
           <li key={book.id}>
@@ -25,6 +28,9 @@ const RequestBookList = () => {
           </li>
         ))}
       </ul>
+      ) : (
+        <p>신청한 도서가 없습니다.</p>
+      )}
     </div>
   );
 };

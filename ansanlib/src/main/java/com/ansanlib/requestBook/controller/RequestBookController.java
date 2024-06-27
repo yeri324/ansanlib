@@ -27,19 +27,16 @@ public class RequestBookController {
 			RequestBook savedRequestBook = requestBookService.createRequestBook(createRequestBookDto);
 			return ResponseEntity.ok(savedRequestBook);
 		}catch (Exception e) {
+			e.printStackTrace();
 			return ResponseEntity.badRequest().body(null);
 		}
 	}
-	@GetMapping
-    public List<RequestBook> getAllRequestBooks() {
-        return requestBookService.getAllRequestBooks();
-    }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RequestBook> getRequestBookById(@PathVariable Long id) {
-        RequestBook requestBook = requestBookService.getRequestBookById(id);
-        if (requestBook != null) {
-            return ResponseEntity.ok(requestBook);
+    public ResponseEntity<List<RequestBook>> getRequestBooksByUserId(@PathVariable Long userId) {
+        List<RequestBook> requestBooks = requestBookService.getRequestBooksByUserId(userId);
+        if (requestBooks != null && !requestBooks.isEmpty()) {
+            return ResponseEntity.ok(requestBooks);
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -51,6 +48,7 @@ public class RequestBookController {
             requestBookService.deleteRequestBook(id);
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
+        	e.printStackTrace();
             return ResponseEntity.status(500).build();
         }
     }
