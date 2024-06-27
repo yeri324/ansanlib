@@ -19,6 +19,12 @@ import FindIdForm from './components/pages/user/FindIdForm';
 import FindPwForm from './components/pages/user/FindPwForm';
 import AdminFaqList from './components/pages/admin/AdminFaqList';
 
+
+
+
+
+
+
 function App() {
 
   return (
@@ -42,6 +48,7 @@ function App() {
        <Route path="/findid" element={<FindIdForm />} />
        <Route path="/findpw" element={<FindPwForm />} />
 
+
         
       </Routes>
 
@@ -51,3 +58,6 @@ function App() {
 }
 
 export default App;
+
+
+
