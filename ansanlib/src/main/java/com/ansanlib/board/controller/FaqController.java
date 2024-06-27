@@ -34,15 +34,10 @@ public class FaqController {
 
 
 	@PostMapping(value = "/new", consumes = { "multipart/form-data" })
-	public ResponseEntity<String> createfaq( @RequestParam String title,
-			  @RequestParam String content,
+	public ResponseEntity<String> createfaq( 
 			  @RequestParam MultipartFile faqImgFile, FaqFormDto faqFormDto) throws Exception{
-		faqFormDto.setTitle(title);
-		faqFormDto.setContent(content);
 		ResponseEntity<String> resEntity = null;		
 		try {
-			System.out.println(title+"**********************************");
-			System.out.println(content+"**********************************");
 			System.out.println(faqImgFile.getInputStream()+"**********************************");
 			faqService.createFaq(faqFormDto, faqImgFile);
 			resEntity = new ResponseEntity("Save_OK", HttpStatus.OK);

@@ -25,7 +25,7 @@ function FaqList() {
     }
 
     //상세페이지 이동
-    const handleDetail = ( faq ) => {
+    const handleDetail = (faq) => {
         window.location.reload(navigate(`/faq/detail/${faq.id}`, {
             state: {
                 ...faq,
@@ -64,6 +64,24 @@ function FaqList() {
         });
     };
 
+    // 삭제용 체크리스트
+    const checkHandler = (e, value) => {
+        setIsChecked(!isChecked);
+        checkedHandler(value, e.target.checked);
+    };
+
+    const checkedHandler = (value, isChecked) => {
+        if (isChecked) {
+            setCheckedList((prev) => [...prev, value]);
+            return;
+        }
+        if (!isChecked && checkedList.includes(value)) {
+            setCheckedList(checkedList.filter((faq) => faq !== value));
+            return;
+        }
+        return;
+    };
+
     //FAQ 다중삭제하기
     const onDelete = () => {
         if (window.confirm('삭제 하시겠습니까?')) {
@@ -81,24 +99,6 @@ function FaqList() {
         }
 
     }
-
-    // 삭제용 체크리스트
-    const checkHandler = (e, value) => {
-        setIsChecked(!isChecked);
-        checkedHandler(value, e.target.checked);
-    };
-    
-    const checkedHandler = (value, isChecked) => {
-        if (isChecked) {
-            setCheckedList((prev) => [...prev, value]);
-            return;
-        }
-        if (!isChecked && checkedList.includes(value)) {
-            setCheckedList(checkedList.filter((faq) => faq !== value));
-            return;
-        }
-        return;
-    };
 
     return (
         <div>
