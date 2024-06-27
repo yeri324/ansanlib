@@ -32,16 +32,23 @@ public class FaqController {
 //		return ResponseEntity.ok(faqList);
 //	}
 
-	@RequestMapping(value = "/new", method = RequestMethod.POST)
-	public ResponseEntity<String> createfaq(@RequestBody FaqFormDto faqFormDto, 
-			@RequestParam("faqImgFile") List<MultipartFile> faqImgFileList){
+
+	@PostMapping(value = "/new", consumes = { "multipart/form-data" })
+	public ResponseEntity<String> createfaq( @RequestParam String title,
+			  @RequestParam String content,
+			  @RequestParam MultipartFile file){
 		ResponseEntity<String> resEntity = null;
-		try {
-			faqService.createFaq(faqFormDto, faqImgFileList);
-			resEntity = new ResponseEntity("Save_OK", HttpStatus.OK);
-		} catch (Exception e) {
-			resEntity = new ResponseEntity("글 등록 중 에러가 발생하였습니다.", HttpStatus.BAD_REQUEST);
-		}
+		
+		System.out.println(title+"**********************************");
+		System.out.println(content+"**********************************");
+		System.out.println(file+"**********************************");
+//		try {
+//			faqService.createFaq(faqFormDto, faqImgFileList);
+//			resEntity = new ResponseEntity("Save_OK", HttpStatus.OK);
+//		} catch (Exception e) {
+//			resEntity = new ResponseEntity("글 등록 중 에러가 발생하였습니다.", HttpStatus.BAD_REQUEST);
+//		}
+//		return resEntity;
 		return resEntity;
 	}
 
