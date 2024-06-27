@@ -83,8 +83,9 @@
 /* 서브 메뉴 보이기 */
 .top_menu>div:hover .sub_menu {
   display: block;
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 500;
+  text-shadow: 0.3px 0.3px#e0e0e0;
 }
 
 /* 서브 메뉴 항목 호버 스타일 */

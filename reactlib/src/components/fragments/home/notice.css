@@ -15,6 +15,9 @@
   margin: 0;
   display: flex; /* 가로 배치 */
   background-color: #f1f1f1; 
+  font-size: 15px;
+  font-weight: 600;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 .notice_tabs li {
