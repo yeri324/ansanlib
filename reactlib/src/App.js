@@ -45,7 +45,7 @@ function App() {
         <Route path="/admin/user/detail/:id" element={<AdminUserDetail />} />
         
         <Route path="/requestbook/new" element={<RequestBookForm/>} />
-        <Route path="/requestbook/list" element={<RequestBookList/>} />
+        <Route path="/requestbook/list/:userId" element={<RequestBookList/>} />
         {/* <Route path="/login" element={<LoginForm isLoggedIn={isLoggedIn} setIsLoggedIn={(value) => setIsLoggedIn(value)} />} />
         <Route path="/signup" element={<SignUpSelect isLoggedIn={isLoggedIn} />} />
         <Route path="/signup/normal" element={<SignUp isLoggedIn={isLoggedIn} isComp={false} />} />

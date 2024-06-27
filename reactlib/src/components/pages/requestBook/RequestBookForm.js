@@ -17,7 +17,7 @@ const RequestBookForm = () => {
       pubDate, userId: parseInt(userId)
   };
 
-    axios.post('http://localhost:8090/requestbook', requestBook, {
+    axios.post('/api/requestbook', requestBook, {
       headers: {
         'Content-Type': 'application/json'
       }

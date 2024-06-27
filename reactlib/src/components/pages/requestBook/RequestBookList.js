@@ -5,16 +5,18 @@ import { useParams } from 'react-router-dom';
 const RequestBookList = () => {
   const { userId} =useParams();
   const [requestBooks, setRequestBooks] = useState([]);
-
-  useEffect(() => {
-    axios.get('http://localhost:8090/requestbook')
-      .then(response => {
+  const [isErrored, setErrored] =useState(false);
+  
+  useEffect(async () => {
+    try{
+        const response = await axios.get(`/api/requestbook/get/by-user/${userId}`);
         setRequestBooks(response.data);
-      })
-      .catch(error => {
+    } catch(error){
+        setErrored(true);
         console.error('There was an error fetching the request books!', error);
-      });
-  }, [userId]);
+    }
+  },  [userId]);
+
 
   return (
     <div>
@@ -24,7 +26,7 @@ const RequestBookList = () => {
         {requestBooks.map(book => (
           <li key={book.id}>
             {book.title} by {book.author} (ISBN: {book.isbn})<br />
-            Publisher: {book.publisher}, Publication Date: {new Date(book.pubDate).toLocaleDateString()}
+            Publisher: {book.publisher}, Publication Date: {new Date(book.pub_date).toLocaleDateString()}
           </li>
         ))}
       </ul>

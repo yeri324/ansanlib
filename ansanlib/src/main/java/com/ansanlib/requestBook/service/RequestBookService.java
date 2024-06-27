@@ -36,8 +36,8 @@ public class RequestBookService {
 	    return requestBookRepository.save(requestBook);
 	}
 	
-    public List<RequestBook> getRequestBooksByUserId(Long userId) {
-        return requestBookRepository.findByLibUserUserId(userId);
+    public List<RequestBook> getRequestBooksByUser(Long userId) {
+        return requestBookRepository.findByUserId(userId);
     }
 
     public RequestBook getRequestBookById(Long id) {
