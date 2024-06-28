@@ -33,7 +33,7 @@ function FaqList() {
         }))
     }
 
-    // 기준검색
+    // 검색
     const onSearch = () => {
         console.log(searchOption.searchBy, searchOption.searchQuery)
         axios(
@@ -52,7 +52,7 @@ function FaqList() {
 
     }
 
-    //검색
+    //기준검색
     const handleOnChange = (e) => {
         const { name, value } = e.target;
         console.log(name, value);
@@ -123,7 +123,6 @@ function FaqList() {
                 <div className="slide">
                     {searchResult.map((faq) => (
                         <FaqItem key={faq.id} faq={faq} checkedList={checkedList} checkHandler={checkHandler} handleDetail={handleDetail} />
-
                     ))}
 
                 </div>

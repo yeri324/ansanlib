@@ -35,6 +35,5 @@ public class FaqImgService {
 		faqImg.updateFaqImg(oriImgName, imgName, imgUrl);
 		faqImgRepository.save(faqImg);
 	}
-
 	
 }

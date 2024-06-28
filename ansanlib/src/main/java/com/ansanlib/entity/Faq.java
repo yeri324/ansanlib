@@ -36,8 +36,8 @@ public class Faq extends BaseEntity {
    @JoinColumn(name="user_id")
    private LibUser libUser;
    
-   @OneToMany(mappedBy = "faq", fetch=FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-   private List<FaqImg> faqImgList = new ArrayList<>();
+//   @OneToMany(mappedBy = "faq", fetch=FetchType.EAGER, cascade = CascadeType.PERSIST, orphanRemoval = true)
+//   private List<FaqImg> faqImgs = new ArrayList<>();
    
    public void updateFaq(FaqFormDto faqFormDto) {
 	   this.id = faqFormDto.getId();
