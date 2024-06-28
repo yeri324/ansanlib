@@ -24,6 +24,8 @@ import RequestBookForm from './components/pages/requestBook/RequestBookForm';
 import RequestBookList from './components/pages/requestBook/RequestBookList';
 
 
+import SearchPage from './components/pages/book/searchBookList/searchPage';
+import BookDetailPage from './components/pages/book/bookDetail/bookDetailPage';
 
 function App() {
   const [isVerified, setIsVerified] = useState(false);
@@ -44,6 +46,7 @@ function App() {
         <Route path="/faq/list" element={<FaqList />} />
         <Route path="/faq/new" element={<FaqForm />} />
         <Route path="/faq/detail/:id" element={<FaqDetailForm />} />
+
         <Route path="/reservation/new" element={<ReservationForm/>} />
         <Route path="/reservation/list/:userId" element={<ReservationList/>} />
         <Route path="/admin/user/search" element={<Admin />} />
@@ -58,6 +61,9 @@ function App() {
        <Route path="/join" element={<JoinForm />} />
        <Route path="/findid" element={<FindIdForm />} />
        <Route path="/findpw" element={<FindPwForm />} />
+
+        <Route path="/book/search" element={<SearchPage />} />
+        <Route path="/book/detail/:id" element={<BookDetailPage />} />
 
         <Route path="/requestbook/new" element={<RequestBookForm/>} />
         <Route path="/requestbook/list/:userId" element={<RequestBookList/>} />

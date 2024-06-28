@@ -22,7 +22,6 @@ import lombok.Setter;
 @Getter @Setter
 @NoArgsConstructor
 public class BookInterest {
-   
     @Id
     @Column(name="book_interest_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
