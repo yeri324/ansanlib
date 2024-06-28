@@ -90,8 +90,11 @@ const UserResItem = ({ res, onClickToCancelRes }) => {
                     <Calendar
                         onChange={handleDateChange}
                         value={selectedDate}
+                        next2Label={null}
+                        prev2Label={null}
                         formatDay={(locale, date) => moment(date).format("DD")} 
                         tileDisabled={({ date }) => isDateReserved(date)}
+                        showNeighboringMonth={false}
                     />
                     </div>
                     <button onClick={extendRes}>연장하기</button>
