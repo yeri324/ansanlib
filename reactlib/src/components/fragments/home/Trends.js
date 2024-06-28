@@ -1,34 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import './Trends.css'; // Trends.css 파일을 임포트합니다.
+import React from 'react';
+import './trends.css';
+import book1 from '../../images/cover/book1.jpg'
+import book2 from '../../images/cover/book2.jpg'
+import book3 from '../../images/cover/book3.jpg'
+import book4 from '../../images/cover/book4.jpg'
+
+const books = [
+  { id: 1, title: 'Book 1', cover: book1 },
+  { id: 2, title: 'Book 2', cover: book2 },
+  { id: 3, title: 'Book 3', cover: book3 },
+  { id: 4, title: 'Book 4', cover: book4 },
+  // 필요한 만큼 책 추가
+];
 
 const Trends = () => {
-  const [books, setBooks] = useState([]);
-
-  useEffect(() => {
-    // 추천도서 게시판의 최신 5개의 도서를 가져옵니다.
-    const fetchBooks = async () => {
-      const url = '/api/recommended-books'; // 실제 API 엔드포인트로 교체해야 합니다.
-      const response = await fetch(url);
-      const data = await response.json();
-      setBooks(data.slice(0, 5));
-    };
-
-    fetchBooks();
-  }, []);
-
   return (
-    <div className="trend_board">
-      <h2 className="board_title">추천도서</h2>
-      <ul className="book_list">
-        {books.map((book, index) => (
-          <li key={index} className="book_item">
-            <img src={book.image} alt={book.title} className="book_image" />
-            <p className="book_title">{book.title}</p>
-          </li>
-        ))}
-      </ul>
+    <div className="trends-container">
+      {books.map((book) => (
+        <div key={book.id} className="book-item">
+          <img src={book.cover} alt={book.title} className="book-cover" />
+          <h3 className="book-title">{book.title}</h3>
+        </div>
+      ))}
     </div>
   );
-}
+};
 
 export default Trends;

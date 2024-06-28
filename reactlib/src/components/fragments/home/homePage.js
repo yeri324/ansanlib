@@ -4,9 +4,10 @@ import './homePage.css';
 import React from 'react';
 import BookSearch from './booksearch';
 import CategorySlider from './recommend';
-import Trends from './Trends';
+import Trends from './trends';
 import Notice from './notice';
 import Calendar from 'react-calendar'
+import Kakao from '../../map/mapForm';
 import { styled } from "styled-components";
 import "react-calendar/dist/Calendar.css";
 import book1 from '../../images/cover/book1.jpg'
@@ -129,11 +130,14 @@ const HomePage = () => {
             <div className="recommend_content">
               <div className="recommend_menu">
                 <div className="recommend_list">
-                  <CategorySlider title={category1.title} books={category1.books} />
+                  슬라이드 임시 제거
+                  {/* <CategorySlider title={category1.title} books={category1.books} /> */}
                 </div>
               </div>
             </div>
-            <div className="lib_guide"></div>
+            <div className="lib_guide">
+              <Kakao />
+            </div>
           </div>
         </div>
       </section>

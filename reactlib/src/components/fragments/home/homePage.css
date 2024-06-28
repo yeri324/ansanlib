@@ -1,7 +1,11 @@
 /* 색상 팔레트 */
 :root {
-    --main-bg-color: #fdfdfd; /* 전체 배경 색상 */
-    --text-color: #333333; /* 텍스트 기본 색상 */
+    /* 전체 배경 색상 */
+    --main-bg-color: #fdfdfd;
+    /* 새로운 배경 색상 (연하게) */
+    --new_bg_color: #fdf8f1;
+    --text-color: #333333;
+    /* 텍스트 기본 색상 */
 }
 
 /* 기본 레이아웃 스타일 */
@@ -17,7 +21,8 @@ body {
     width: 100%;
     align-items: center;
     justify-content: center;
-    background-color: var(--main-bg-color);
+    /* background-color: var(--main-bg-color); */
+    background-color: #fdf8f1;
 }
 
 .main_grid {
@@ -31,7 +36,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
     max-width: 1200px;
     gap: 20px;
 }
@@ -41,15 +45,16 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 10px;
+    width: 100%;
 }
 
 .bottom_column {
     display: flex;
     flex-direction: row;
+    justify-content: center;
     align-items: center;
     gap: 50px;
     width: 100%;
-    justify-content: center;
 }
 
 .notice_board {
@@ -57,9 +62,10 @@ body {
     text-align: left;
 }
 
- .monthly_plan, .login_box {
+.monthly_plan, .login_box {
     display: flex;
     flex: 1;
+    min-width: 300px;
     justify-content: center;
     align-items: center;
     padding: 20px;
@@ -71,20 +77,26 @@ body {
 
 
 
-.sub_content1, .sub_content2 {
+.sub_content1,
+.sub_content2 {
     width: 80%;
     max-width: 1200px;
     margin: 20px 0;
 }
 
-.sub_content1 .trend_list, .sub_content2 .recommend_content, .sub_content2 .lib_guide {
-    border: 1px solid #ddd;
+.sub_content1 .trend_list,
+.sub_content2 .recommend_content,
+.sub_content2 .lib_guide {
+    /* border: 1px solid #ddd; */
+    
     padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
     background-color: #ffffff;
 }
 
-.trend_list, .recommend_content, .recommend_menu {
+.trend_list,
+.recommend_content,
+.recommend_menu {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -98,5 +110,8 @@ body {
 }
 
 .lib_guide {
+    display: flex;
     margin-top: 20px;
+    align-items: center;
+    justify-content: center;
 }
