@@ -7,6 +7,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ansanlib.board.repository.FaqImgRepository;
+import com.ansanlib.book.service.FileService;
 import com.ansanlib.entity.FaqImg;
 
 import lombok.RequiredArgsConstructor;
