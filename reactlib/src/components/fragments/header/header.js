@@ -48,29 +48,31 @@ const Header = () => {
   ];
 
   return (
-    <div className="full_header">
-      <div className="top_login">
-        <a className="enter" >로그인</a><t> | </t>
-        <a className="join" >회원가입</a>
-      </div>
-      <div className="header_menu">
-        <div className="top_logo">
-          <img src={center_logo} alt="Center Logo" />
+    <header>
+      <div className="full_header">
+        <div className="top_login">
+          <a className="enter" >로그인</a><t> | </t>
+          <a className="join" >회원가입</a>
         </div>
-        <div className="top_menu">
-          {menus.map((menuItem, index) => (
-            <div key={index}>
-              <div>{menuItem.menu.title}</div>
-              <div className="sub_menu">
-                {menuItem.subs.map((sub, subIndex) => (
-                  <div key={subIndex}>{sub.title}</div>
-                ))}
+        <div className="header_menu">
+          <div className="top_logo">
+            <img src={center_logo} alt="Center Logo" />
+          </div>
+          <div className="top_menu">
+            {menus.map((menuItem, index) => (
+              <div key={index}>
+                <div>{menuItem.menu.title}</div>
+                <div className="sub_menu">
+                  {menuItem.subs.map((sub, subIndex) => (
+                    <div key={subIndex}>{sub.title}</div>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </header>
   );
 };
 

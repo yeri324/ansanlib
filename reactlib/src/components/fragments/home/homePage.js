@@ -107,12 +107,16 @@ const HomePage = () => {
                 <div className="book_search">
                   <BookSearch />
                 </div>
-                <Notice />
               </div>
-              <div className="monthly_plan">
-                <Calendar />
+              <div className="bottom_column">
+                <div className="notice_board">
+                  <Notice />
+                </div>
+                <div className="monthly_plan">
+                  <Calendar />
+                </div>
+                <div className="login_box">로그인</div>
               </div>
-              <div className="login_box">로그인</div>
             </div>
           </div>
 

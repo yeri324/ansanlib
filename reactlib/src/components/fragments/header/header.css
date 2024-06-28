@@ -1,6 +1,17 @@
 /* 구글 폰트 불러오기 */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
 
+/* 기본 설정 */
+header {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  font-family: 'Noto Sans KR', sans-serif;
+  /* cursor: pointer; */
+  /* position: relative; */
+  /* z-index: 10; */
+}
 
 /* 전체 헤더 영역 스타일 */
 .full_header {
@@ -18,7 +29,6 @@
   margin-bottom: 20px;
   font-size: 15px;
   font-weight: 600;
-  font-family: 'Noto Sans KR', sans-serif;
   text-shadow: 0.5px 0.5px#e0e0e0;
 }
 .top_login > .enter {
@@ -40,13 +50,12 @@
 /* 개별 메뉴 항목 스타일 */
 .top_menu>div {
   position: relative;
+  margin: 10px;
   padding: 10px 30px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   font-size: 20px;
   font-weight: 600;
-  font-family: 'Noto Sans KR', sans-serif;
-  margin: 10px;
   text-shadow: 0.5px 0.5px#e0e0e0;
 }
 
@@ -101,4 +110,8 @@
 .top_logo img {
   width: 200px;
   height: auto;
+}
+
+a {
+  cursor: pointer;
 }
