@@ -15,11 +15,11 @@ function FaqDetailForm() {
     const updateContent = e => setContent(e.target.value);
 
     // 수정한 데이터 보내기
-    function Send() {
+    function onUpdate() {
         if (window.confirm('수정 하시겠습니까?')) {
             axios(
                 {
-                    url: `/faq/detail/${id}`,
+                    url: `/faq/detail`,
                     method: 'put',
                     data: {
                         id: id,
@@ -36,7 +36,7 @@ function FaqDetailForm() {
     }
 
     //상세 페이지 내 게시글 삭제
-    function Delete() {
+    function onDelete() {
         if (window.confirm('삭제 하시겠습니까?')) {
             axios(
                 {
@@ -62,8 +62,8 @@ function FaqDetailForm() {
                 <br />
                 <textarea onChange={updateContent}>{content}</textarea>
                 <br />
-                <button onClick={() => Send()}>수정</button>
-                <button onClick={() => Delete()}>삭제</button>
+                <button onClick={() => onUpdate()}>수정</button>
+                <button onClick={() => onDelete()}>삭제</button>
             </form>
         </div>
     );
