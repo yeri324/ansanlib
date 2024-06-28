@@ -3,6 +3,7 @@ package com.ansanlib.entity;
 import java.time.LocalDateTime;
 
 import com.ansanlib.constant.BookStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,7 +25,7 @@ import lombok.Setter;
 public class Book extends BaseEntity {
 
 	@Id
-	@Column(name = "book_num")
+	@JoinColumn(name = "book_num")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
@@ -51,5 +52,6 @@ public class Book extends BaseEntity {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="lib_num")
+	@JsonIgnore
 	private Library library;
 }

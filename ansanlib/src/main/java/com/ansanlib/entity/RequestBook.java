@@ -1,5 +1,6 @@
 package com.ansanlib.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -20,7 +21,7 @@ import lombok.Setter;
 public class RequestBook extends BaseEntity {
 
 	@Id
-	@Column(name = "isbn_id")
+	@Column(name = "isbn_id", unique = true)
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
@@ -28,7 +29,7 @@ public class RequestBook extends BaseEntity {
 	private String title; //제목
 	private String author; //저자
 	private String publisher; //출판사
-	private LocalDateTime pub_date; //출판일
+	private LocalDate pub_date; //출판일
 	private LocalDateTime regist_date; //신청일
 	
 	@ManyToOne
