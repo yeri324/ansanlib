@@ -22,8 +22,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class Reservation {
 	
 	@Id
