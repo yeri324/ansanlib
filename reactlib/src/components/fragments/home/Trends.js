@@ -1,5 +1,5 @@
 import React from 'react';
-import './trends.css';
+import './Trends.css';
 import book1 from '../../images/cover/book1.jpg'
 import book2 from '../../images/cover/book2.jpg'
 import book3 from '../../images/cover/book3.jpg'

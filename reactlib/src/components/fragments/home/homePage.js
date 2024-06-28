@@ -4,17 +4,17 @@ import './homePage.css';
 import React from 'react';
 import BookSearch from './booksearch';
 import CategorySlider from './recommend';
-import Trends from './trends';
+import Trends from './Trends';
 import Notice from './notice';
 import Calendar from 'react-calendar'
 import Kakao from '../../map/mapForm';
-import { styled } from "styled-components";
+//import { styled } from "styled-components";
 import "react-calendar/dist/Calendar.css";
 import book1 from '../../images/cover/book1.jpg'
 import book2 from '../../images/cover/book2.jpg'
 import book3 from '../../images/cover/book3.jpg'
 import book4 from '../../images/cover/book4.jpg'
-
+/*
 export const CalendarBox = styled.div`
   display: flex;
   align-items: center;
@@ -82,7 +82,7 @@ export const StyleCalendar = styled(Calendar)`
     background-color: #6a6a6a;
   }
 `;
-
+*/
 const HomePage = () => {
 
   const category1 = {
