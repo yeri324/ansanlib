@@ -1,5 +1,10 @@
+/* 구글 폰트 불러오기 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+
+
 .App {
   text-align: center;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 .App-logo {
