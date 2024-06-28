@@ -1,9 +1,6 @@
 package com.ansanlib.entity;
 
-import org.modelmapper.ModelMapper;
-
-import com.ansanlib.board.dto.FaqDto;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
