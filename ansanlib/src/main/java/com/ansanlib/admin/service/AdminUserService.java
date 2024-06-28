@@ -39,8 +39,8 @@ public class AdminUserService {
 	}
 
 	@Transactional(readOnly = true) 
-	public LibUser getUserById(AdminDetailUserDto adminDetailUserDto) {
-		return adminUserRepository.findById(adminDetailUserDto.getId()).orElseThrow(EntityNotFoundException::new);
+	public LibUser getUserById(Long id) {
+		return adminUserRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 		
 	}
 	

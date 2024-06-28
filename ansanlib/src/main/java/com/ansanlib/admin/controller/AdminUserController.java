@@ -49,7 +49,7 @@ public class AdminUserController {
 	@PostMapping("/detail")
 	public ResponseEntity getUserDetails(@RequestBody AdminDetailUserDto adminDetailUserDto) {
 
-		LibUser user = adminUserService.getUserById(adminDetailUserDto);
+		LibUser user = adminUserService.getUserById(adminDetailUserDto.getId());
 		return ResponseEntity.ok(user);
 
 	}
