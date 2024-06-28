@@ -25,7 +25,6 @@ public class BoardImg extends BaseEntity{
 	private String imgName; // 이미지 파일명
 	private String oriImgName; // 원본 이미지 파일명
 	private String imgUrl; // 이미지 조회 경로
-	private String repimgYn; // 대표 이미지 여부
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "board_num")
