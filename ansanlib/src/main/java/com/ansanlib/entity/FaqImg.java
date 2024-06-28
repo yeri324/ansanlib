@@ -1,6 +1,7 @@
 package com.ansanlib.entity;
 
-import jakarta.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -29,6 +30,7 @@ public class FaqImg extends BaseEntity {
 	private String imgUrl; // 이미지 조회 경로
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonBackReference
 	@JoinColumn(name = "faq_num")
 	private Faq faq;
 

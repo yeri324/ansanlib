@@ -40,8 +40,8 @@ const FaqForm = () => {
           'Content-Type': 'multipart/form-data'
         }
       });
-      window.location.reload(navigate("/faq/list", { replace: true }));
-      // navigate("/faq/list", { replace: true });
+      // window.location.reload(navigate("/faq/list", { replace: true }));
+      navigate("/faq/list", { replace: true });
     } catch (error) {
       console.error("There was an error uploading the data!", error);
     }

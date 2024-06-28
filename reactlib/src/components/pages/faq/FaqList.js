@@ -47,7 +47,8 @@ function FaqList() {
                 baseURL: 'http://localhost:8090',
             }
         ).then((response) => {
-            setSerchResult(response.data);
+            console.log(response.data.result);
+            setSerchResult(response.data.result);
         });
 
     }
@@ -97,7 +98,6 @@ function FaqList() {
             )
             window.location.reload(navigate("/faq/list", { repalce: true }));
         }
-
     }
 
     return (

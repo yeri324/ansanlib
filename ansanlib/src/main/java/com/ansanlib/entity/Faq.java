@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ansanlib.board.dto.FaqFormDto;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -36,8 +37,9 @@ public class Faq extends BaseEntity {
    @JoinColumn(name="user_id")
    private LibUser libUser;
    
-//   @OneToMany(mappedBy = "faq", fetch=FetchType.EAGER, cascade = CascadeType.PERSIST, orphanRemoval = true)
-//   private List<FaqImg> faqImgs = new ArrayList<>();
+   @JsonManagedReference
+   @OneToMany(mappedBy = "faq", fetch=FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
+   private List<FaqImg> faqImgs = new ArrayList<>();
    
    public void updateFaq(FaqFormDto faqFormDto) {
 	   this.id = faqFormDto.getId();
