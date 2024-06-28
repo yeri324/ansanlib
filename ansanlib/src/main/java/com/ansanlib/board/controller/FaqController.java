@@ -38,7 +38,6 @@ public class FaqController {
 			  @RequestParam MultipartFile faqImgFile, FaqFormDto faqFormDto) throws Exception{
 		ResponseEntity<String> resEntity = null;		
 		try {
-			System.out.println(faqImgFile.getInputStream()+"**********************************");
 			faqService.createFaq(faqFormDto, faqImgFile);
 			resEntity = new ResponseEntity("Save_OK", HttpStatus.OK);
 		} catch (Exception e) {
