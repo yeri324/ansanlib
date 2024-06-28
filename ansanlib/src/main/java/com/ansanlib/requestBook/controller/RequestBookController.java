@@ -3,6 +3,7 @@ package com.ansanlib.requestBook.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ansanlib.entity.RequestBook;
 import com.ansanlib.requestBook.dto.CreateRequestBookDto;
 import com.ansanlib.requestBook.dto.RequestBookDto;
+import com.ansanlib.requestBook.exception.CreateRequestBookException;
 import com.ansanlib.requestBook.service.RequestBookService;
 
 @RestController
@@ -24,13 +26,15 @@ public class RequestBookController {
 	private RequestBookService requestBookService;
 	
 	@PostMapping
-	public ResponseEntity<RequestBook> createReqeustBook(@RequestBody CreateRequestBookDto createRequestBookDto){
+	public ResponseEntity<?> createReqeustBook(@RequestBody CreateRequestBookDto createRequestBookDto){
 		try {
 			RequestBook savedRequestBook = requestBookService.createRequestBook(createRequestBookDto);
+			RequestBookDto savedRequestBookDto = new RequestBookDto(savedRequestBook);
 			return ResponseEntity.ok(savedRequestBook);
-		}catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.badRequest().body(null);
+		}catch (CreateRequestBookException e1) {
+			return ResponseEntity.badRequest().body(e1.getMessage()); 
+		}catch (RuntimeException e2) {
+			return ResponseEntity.badRequest().body("아이디가 존재하지 않습니다");
 		}
 	}
 
@@ -52,7 +56,7 @@ public class RequestBookController {
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
         	e.printStackTrace();
-            return ResponseEntity.status(500).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 }

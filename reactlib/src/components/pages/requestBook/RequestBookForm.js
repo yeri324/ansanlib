@@ -33,7 +33,13 @@ const RequestBookForm = () => {
       setUserId('');
     })
     .catch(error => {
-      console.error('There was an error creating the book request!', error);
+      if(error.response){
+        alert(`에러 : ${error.response.data}`);
+      } else if(error.request){
+        alert('서버에 요청을 보내는 중 오류가 발생했습니다.');
+      } else{
+        alert(`에러 : ${error.message}`);
+      }
     });
   };
 
