@@ -7,10 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ansanlib.book.repository.BookInterestRepository;
 import com.ansanlib.book.repository.BookRepository;
+import com.ansanlib.book.repository.LibUserRepository;
 import com.ansanlib.entity.Book;
 import com.ansanlib.entity.BookInterest;
 import com.ansanlib.entity.LibUser;
-import com.library.repository.LibUserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 @RequiredArgsConstructor
 public class BookInterestService {
+	
     private final BookInterestRepository bookInterestRepository;
     private final LibUserRepository libUserRepository;
     private final BookRepository bookRepository;

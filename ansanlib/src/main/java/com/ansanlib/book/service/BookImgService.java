@@ -1,6 +1,5 @@
 package com.ansanlib.book.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,19 +10,18 @@ import com.ansanlib.book.repository.BookImgRepository;
 import com.ansanlib.entity.BookImg;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class BookImgService {
 	
 	@Value("${bookImgLocation}")
 	private String bookImgLocation;
 	
-	@Autowired
-	private BookImgRepository bookImgRepository;
-	
-	@Autowired
-	private FileService fileService;
+	private final BookImgRepository bookImgRepository;
+	private final FileService fileService;
 	
 	public void saveBookImg(BookImg bookImg, MultipartFile bookImgFile)throws Exception{
 		String oriImgName = bookImgFile.getOriginalFilename();

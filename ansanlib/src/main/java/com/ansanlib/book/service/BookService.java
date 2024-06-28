@@ -2,7 +2,6 @@ package com.ansanlib.book.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,6 +15,7 @@ import com.ansanlib.book.dto.BookImgSimpleDto;
 import com.ansanlib.book.dto.BookSearchCondition;
 import com.ansanlib.book.repository.BookImgRepository;
 import com.ansanlib.book.repository.BookRepository;
+import com.ansanlib.book.repository.LibUserRepository;
 import com.ansanlib.constant.BookStatus;
 import com.ansanlib.entity.Book;
 import com.ansanlib.entity.BookImg;
@@ -24,22 +24,17 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class BookService {
 
-	@Autowired
-	private BookRepository bookRepository;
-	
-	@Autowired
-	private LibUserRepository libUserRepository;
-	
-	@Autowired
-	private BookImgRepository bookImgRepository;
-	
-	@Autowired
-	private BookImgService bookImgService;
+	private final BookRepository bookRepository;
+	private final LibUserRepository libUserRepository;
+	private final BookImgRepository bookImgRepository;
+	private final BookImgService bookImgService;
 	
 	// 새로운 책 등록
     public Long saveBook(BookFormDto bookFormDto, MultipartFile bookImgFileList, String email) throws Exception{

@@ -1,7 +1,5 @@
 package com.ansanlib.entity;
 
-import java.time.LocalDateTime;
-
 import com.ansanlib.book.dto.BookFormDto;
 import com.ansanlib.constant.BookStatus;
 
@@ -42,7 +40,7 @@ public class Book extends BaseEntity {
 	private String title; // 제목
 	private String author; // 저자
 	private String publisher; // 출판사
-	private LocalDateTime pub_date; // 출판일
+	private String pub_date; // 출판일
 	private String genre; // 장르
 	private String category_code; // 분류코드
 

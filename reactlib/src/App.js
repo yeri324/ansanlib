@@ -12,8 +12,7 @@ import Admin from './components/pages/admin/Admin';
 import AdminUserList from './components/pages/admin/AdminUserList';
 import AdminUserDetail from './components/pages/admin/AdminUserDetail';
 
-import SearchPage from './components/pages/book/searchBook';
-import SearchPageList from './components/pages/book/searchBookList/searchPage';
+import SearchPage from './components/pages/book/searchBookList/searchPage';
 import BookDetailPage from './components/pages/book/bookDetail/bookDetailPage';
 
 function App() {
@@ -29,9 +28,8 @@ function App() {
         <Route path="/admin/user/search" element={<AdminUserList />} />
         <Route path="/admin/user/detail/:id" element={<AdminUserDetail />} />
 
-        <Route path="/book/search/searchBook" element={<SearchPage />} />
-        <Route path="/book/search/result" element={<SearchPageList />} />
-        <Route path="/book/detail/{id}" element={<BookDetailPage />} />
+        <Route path="/book/search" element={<SearchPage />} />
+        <Route path="/book/detail/:id" element={<BookDetailPage />} />
 
         {/* <Route path="/login" element={<LoginForm isLoggedIn={isLoggedIn} setIsLoggedIn={(value) => setIsLoggedIn(value)} />} />
         <Route path="/signup" element={<SignUpSelect isLoggedIn={isLoggedIn} />} />

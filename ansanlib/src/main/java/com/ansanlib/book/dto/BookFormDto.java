@@ -1,7 +1,5 @@
 package com.ansanlib.book.dto;
 
-import java.time.LocalDateTime;
-
 import org.modelmapper.ModelMapper;
 
 import com.ansanlib.constant.BookStatus;
@@ -36,7 +34,7 @@ public class BookFormDto {
     private String publisher;
     
     @NotNull(message = "출판년도는 필수 입력 값입니다.")
-    private LocalDateTime pub_date;
+    private String pub_date;
     
     private String bookDetail;
     
