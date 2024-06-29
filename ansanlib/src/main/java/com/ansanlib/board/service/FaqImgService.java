@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ansanlib.board.repository.FaqImgRepository;
 import com.ansanlib.book.service.FileService;
+import com.ansanlib.entity.Faq;
 import com.ansanlib.entity.FaqImg;
 
 import lombok.RequiredArgsConstructor;
@@ -23,11 +24,12 @@ public class FaqImgService {
 	private final FaqImgRepository faqImgRepository;
 	private final FileService fileService;
 
-	public void saveFaqImg(FaqImg faqImg, MultipartFile faqImgFile) throws Exception {
+	public void saveFaqImg(Faq faq, MultipartFile faqImgFile) throws Exception {
+		FaqImg faqImg = new FaqImg();
+		faqImg.setFaq(faq);
 		String oriImgName = faqImgFile.getOriginalFilename();
 		String imgName = "";
 		String imgUrl = "";
-
 		// 파일업로드
 		if (StringUtils.hasText(oriImgName)) {
 			imgName = fileService.uploadFile(itemImgLocation, oriImgName, faqImgFile.getBytes());
