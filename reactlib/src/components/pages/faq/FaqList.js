@@ -2,7 +2,6 @@ import './FaqList.css';
 import axios from 'axios';
 import React, { useEffect, useState, } from 'react';
 import { useNavigate } from 'react-router-dom';
-import FaqDetailForm from './FaqDetailForm';
 import FaqItem from './FaqItem';
 
 function FaqList() {
@@ -14,7 +13,6 @@ function FaqList() {
         searchBy: "title",
         searchQuery: "",
     });
-
 
     //리스트 읽기
     useEffect(() => {
@@ -35,19 +33,6 @@ function FaqList() {
         }))
     }
 
-    //검색
-    const handleOnChange = (e) => {
-        const { name, value } = e.target;
-        console.log(name, value);
-        setSearchOption((prevState) => {
-            return {
-                ...prevState,
-                [name]: value,
-            }
-        });
-    };
-
-    // 기준검색
     const onSearch = () => {
         console.log(searchOption.searchBy, searchOption.searchQuery)
         axios(
@@ -66,23 +51,17 @@ function FaqList() {
 
     }
 
-    //FAQ 다중삭제하기
-    const onDelete = () => {
-        if (window.confirm('삭제 하시겠습니까?')) {
-            axios(
-                {
-                    url: `/faq/delete`,
-                    method: 'DELETE',
-                    data: {
-                        idList: checkedList,
-                    },
-                    baseURL: 'http://localhost:8090',
-                }
-            )
-            window.location.reload(navigate("/faq/list", { repalce: true }));
-        }
-
-    }
+    //기준검색
+    const handleOnChange = (e) => {
+        const { name, value } = e.target;
+        console.log(name, value);
+        setSearchOption((prevState) => {
+            return {
+                ...prevState,
+                [name]: value,
+            }
+        });
+    };
 
     // 삭제용 체크리스트
     const checkHandler = (e, value) => {
@@ -101,6 +80,23 @@ function FaqList() {
         }
         return;
     };
+
+    //FAQ 다중삭제하기
+    const onDelete = () => {
+        if (window.confirm('삭제 하시겠습니까?')) {
+            axios(
+                {
+                    url: `/faq/delete`,
+                    method: 'DELETE',
+                    data: {
+                        idList: checkedList,
+                    },
+                    baseURL: 'http://localhost:8090',
+                }
+            )
+            window.location.reload(navigate("/faq/list", { repalce: true }));
+        }
+    }
 
     return (
         <div>
@@ -125,7 +121,6 @@ function FaqList() {
                 <div className="slide">
                     {searchResult.map((faq) => (
                         <FaqItem key={faq.id} faq={faq} checkedList={checkedList} checkHandler={checkHandler} handleDetail={handleDetail} />
-
                     ))}
 
                 </div>
