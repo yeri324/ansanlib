@@ -27,7 +27,7 @@ public class Faq extends BaseEntity {
 
    @Id
    @Column(name="faq_num")
-   @GeneratedValue(strategy= GenerationType.AUTO)
+   @GeneratedValue(strategy= GenerationType.IDENTITY)
    private Long id;
    
    private String title; //제목
