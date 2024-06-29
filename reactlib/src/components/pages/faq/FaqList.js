@@ -7,6 +7,7 @@ import FaqItem from './FaqItem';
 
 function FaqList() {
     const [checkedList, setCheckedList] = useState([]);
+    const [isChecked, setIsChecked] = useState(false);
     const navigate = useNavigate();
     const [searchResult, setSerchResult] = useState([]);
     const [searchOption, setSearchOption] = useState({
@@ -14,6 +15,27 @@ function FaqList() {
         searchQuery: "",
     });
 
+
+    //리스트 읽기
+    useEffect(() => {
+        onSearch();
+    }, []);
+
+    // 생성페이지 이동
+    const onCreate = () => {
+        navigate(`/faq/new`)
+    }
+
+    //상세페이지 이동
+    const handleDetail = (faq) => {
+        window.location.reload(navigate(`/faq/detail/${faq.id}`, {
+            state: {
+                ...faq,
+            }
+        }))
+    }
+
+    //검색
     const handleOnChange = (e) => {
         const { name, value } = e.target;
         console.log(name, value);
@@ -24,20 +46,6 @@ function FaqList() {
             }
         });
     };
-
-    //리스트 읽기
-    useEffect(() => {
-        onSearch();
-    }, []);
-
-    //상세페이지 이동
-    const handleDetail = ({ item }) => {
-        navigate(`/faq/detail/${item}`, {
-            state: {
-                ...item,
-            }
-        })
-    }
 
     // 기준검색
     const onSearch = () => {
@@ -53,7 +61,7 @@ function FaqList() {
                 baseURL: 'http://localhost:8090',
             }
         ).then((response) => {
-            setSerchResult(response.data);
+            setSerchResult(response.data.result);
         });
 
     }
@@ -76,79 +84,56 @@ function FaqList() {
 
     }
 
-    // 생성페이지 이동
-    const onCreate = () => {
-        navigate(`/faq/new`)
-    }
+    // 삭제용 체크리스트
+    const checkHandler = (e, value) => {
+        setIsChecked(!isChecked);
+        checkedHandler(value, e.target.checked);
+    };
 
-    // 업데이트
-    // function onUpdate() {
-    //     if (window.confirm('수정 하시겠습니까?')) {
-    //         axios(
-    //             {
-    //                 url: `/faq/detail/${id}`,
-    //                 method: 'put',
-    //                 data: {
-    //                     id: id,
-    //                     title: title,
-    //                     content: content,
-    //                 },
-    //                 baseURL: 'http://localhost:8090',
-    //             }
-    //         ).then(function (response) {
-    //             console.log(response.data);
-    //         });
-    //         navigate("/faq/list", { repalce: true });
-    //     }
-    // }
+    const checkedHandler = (value, isChecked) => {
+        if (isChecked) {
+            setCheckedList((prev) => [...prev, value]);
+            return;
+        }
+        if (!isChecked && checkedList.includes(value)) {
+            setCheckedList(checkedList.filter((faq) => faq !== value));
+            return;
+        }
+        return;
+    };
 
     return (
-        // <FaqStateContext.Provider value={data}>
-        //     <FaqDispatchContext.Provider value={{onSearch, onDelete, onCreate, onUpdate}}>
-                <div>
-                    
-                     <div>
-                        <select name="searchBy" value={searchOption.searchBy} onChange={handleOnChange}>
-                            <option value="loginid">ID</option>
-                            <option value="title">Title</option>
-                        </select>
-                        <input type="text" name="searchQuery" value={searchOption.searchQuery} onChange={handleOnChange} />
-                        <button onClick={onSearch}>Search</button>
-                    </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th> - </th>
-                                <th>번호</th>
-                                <th>제목</th>
-                                <th>작성시간</th>
-                                <th>수정시간</th>
-                            </tr>
-                        </thead>
-                        <div className="slide">
+        <div>
+            <div>
+                <select name="searchBy" value={searchOption.searchBy} onChange={handleOnChange}>
+                    <option value="loginid">ID</option>
+                    <option value="title">Title</option>
+                </select>
+                <input type="text" name="searchQuery" value={searchOption.searchQuery} onChange={handleOnChange} />
+                <button onClick={onSearch}>Search</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th> - </th>
+                        <th>번호</th>
+                        <th>제목</th>
+                        <th>작성시간</th>
+                        <th>수정시간</th>
+                    </tr>
+                </thead>
+                <div className="slide">
+                    {searchResult.map((faq) => (
+                        <FaqItem key={faq.id} faq={faq} checkedList={checkedList} checkHandler={checkHandler} handleDetail={handleDetail} />
 
-                            {searchResult.map((item) => (
+                    ))}
 
-                                // <FaqItem key={item.id}  {...item} />
-                                  <tr>
-                                    <td>{item.id}</td>
-                                    <td onClick={() => handleDetail({ item })}>{item.title}</td>
-                                    <td>{item.regTime}</td>
-                                    <td>{item.updateTime}</td>
-                                  </tr>
-                            ))}
-
-                        </div>
-                        <button onClick={onDelete}>삭제하기</button>
-                        <button onClick={onCreate}>작성하기</button>
-                    </table >
-                </div >
-        //     </FaqDispatchContext.Provider>
-        // </FaqStateContext.Provider>
+                </div>
+                <button onClick={onDelete}>삭제하기</button>
+                <button onClick={onCreate}>작성하기</button>
+            </table >
+        </div >
     );
 };
-
-export const FaqStateContext = React.createContext();
-export const FaqDispatchContext = React.createContext();
 
 export default FaqList;
