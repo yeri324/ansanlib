@@ -28,12 +28,10 @@ const FaqForm = () => {
     }
   };
 
-  
+  // 제목/내용 저장
   const onInputChange = (e) => {
     setFaqData({ ...faqData, [e.target.name]: e.target.value });
   };
-
-  
 
   // 생성 정보 보내기
   const onCreate = (e) => {
@@ -89,10 +87,6 @@ const FaqForm = () => {
           </div>
         ))}
         {images.length < 5 && <button type="button" onClick={handleAddImg}>이미지추가</button>}
-
-        {/* <input
-          className='file-input' type="file" accept="image/*" onChange={handleImagesChange}
-        /> */}
         <button type='submit'>저장</button>
       </form>
     </div>
