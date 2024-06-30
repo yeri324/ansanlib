@@ -33,7 +33,7 @@ public class Book extends BaseEntity {
 
 	@Id
 	@JoinColumn(name = "book_num")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 
 	private String isbn; // 바코드
