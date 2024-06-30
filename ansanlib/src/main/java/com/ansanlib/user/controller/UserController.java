@@ -1,8 +1,8 @@
-//package com.ansanlib.controller.user;
-//
+//package com.ansanlib.user.controller;
 //
 //import java.util.Map;
 //
+//import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.http.HttpStatus;
 //import org.springframework.http.ResponseEntity;
 //import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,160 +13,98 @@
 //import org.springframework.web.bind.annotation.RequestParam;
 //import org.springframework.web.bind.annotation.RestController;
 //
-//import com.ansanlib.constant.Role;
-//import com.ansanlib.dto.user.UserDto;
 //import com.ansanlib.entity.LibUser;
-//import com.ansanlib.service.user.UserService;
+//import com.ansanlib.user.dto.UserDto;
+//import com.ansanlib.user.service.UserService;
 //
-//import lombok.RequiredArgsConstructor;
+//import jakarta.servlet.http.HttpServletRequest;
 //
 //@RestController
-//@RequiredArgsConstructor
 //@RequestMapping("/api")
 //public class UserController {
 //
-//    private final UserService userService;
-//    private final PasswordEncoder passwordEncoder;
+//	   @Autowired
+//	    private UserService userService;
 //
-//    @PostMapping("/user/signup")
-//    public ResponseEntity<String> signUp(@RequestBody UserDto userDto) {
-//        // System.out.println("signup");
-//        return userService.signUp(userDto, passwordEncoder);
-//    }
+//	    @Autowired // PasswordEncoder를 주입받습니다.
+//	    private PasswordEncoder passwordEncoder;
 //
-//    @PostMapping("user/compSignup")
-//    public ResponseEntity<String> compSignup(@RequestBody UserDto memberDto) {
-//        // System.out.println("signup");
-//        return userService.compSignup(userDto, passwordEncoder);
-//    }
-//
-//    @GetMapping("/user/checkId")
-//    public ResponseEntity<String> checkId(@RequestParam("id") String id) {
-//        return userService.checkId(id);
-//    }
-//
-//    @GetMapping("/user/checkEmail")
-//    public ResponseEntity<String> checkEmail(@RequestParam("email") String email) {
-//        return userService.checkEmail(email);
-//    }
-//
-//    @GetMapping("/user/email")
-//    public ResponseEntity<String> isEmail(@RequestParam("email") String email,
-//                                          @RequestParam("id") String loginid) {
-//        return userService.currentEmail(email, loginid);
-//    }
+//	// 아이디 중복체쿠
+//	@GetMapping("user/checkId")
+//	public ResponseEntity<String> checkId(@RequestParam("loginid") String loginid) {
+//		return userService.checkId(loginid);
+//	}
 //
 //
-////    @GetMapping("/member/login")
-////    public String loginForm() {
-////        return "loginForm";
-////    }
+//	 
+//	// 가입가입
+//		@PostMapping("/user/join")
+//		public ResponseEntity<String> join(@RequestBody UserDto userDto) {
+//			System.out.println("가입완뇨~");
+//			try {
+//				userService.join(userDto);
+//				return new ResponseEntity<>("회원가입이 완료되었습니다.", HttpStatus.CREATED);
+//			} catch (Exception e) {
+//				return new ResponseEntity<>("회원가입 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+//			}
+//		}
 //
-////    @PostMapping("/login")
-////    public ResponseEntity<String> login(@RequestBody Map<String, String> loginData) {
-////        // 요청 본문에서 아이디와 비밀번호 가져오기
-////        String id = loginData.get("id");
-////        String password = loginData.get("password");
-////
-////        return ResponseEntity.ok("로그인 성공");
-////    }
+//	//  로그인
+//    @PostMapping("/user/login")
+//    public ResponseEntity<LibUser> login(@RequestBody Map<String, String> request, HttpServletRequest httpRequest) {
+//        String loginid = request.get("loginid");
+//        String password = request.get("password");
 //
-////    @PostMapping("/login")
-////    public ResponseEntity<Member> login(@RequestBody Map<String, String> request, HttpServletRequest httpRequest) {
-////        String id = request.get("id");
-////        String enteredPassword = request.get("password");
-////
-////        // 암호화된 패스워드
-////        String storedPasswordHash = memberService.getPassword(id);
-////
-////        // 입력된 비밀번호, 암호화된 비밀번호 비교
-////        boolean passwordMatches = passwordEncoder.matches(enteredPassword, storedPasswordHash);
-////
-////        if (passwordMatches) {
-////            Member member = memberService.login(id, storedPasswordHash);
-////
-////            HttpSession session = httpRequest.getSession();
-//////            if (session.getAttribute("id") != null) {
-//////                System.out.println("id: " + session.getAttribute("id"));
-//////            }
-////            session.setAttribute("id", id);
-////            session.setAttribute("state", member.getState());
-////
-////            return ResponseEntity.ok(member);
-////        } else {
-////            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-////        }
-////    }
+//        System.out.println("로그인 요청: 아이디 = " + loginid + ", 비밀번호 = " + password);
+//        
+//        LibUser authenticatedUser = userService.authenticate(loginid, password);
 //
-//
-////    @GetMapping("/logout")
-////    public ResponseEntity<String> logout(HttpServletRequest httpRequest) {
-////        HttpSession session = httpRequest.getSession();
-////        session.removeAttribute("id");
-////        session.removeAttribute("state");
-////        return ResponseEntity.ok("로그아웃 성공");
-////    }
-//
-//  
-//
-//
-//    @GetMapping("/create")
-//    public ResponseEntity<String> admin() {
-//        LibUser user = new LibUser();
-//        user.setLoginid("admin");
-//        user.setPassword(passwordEncoder.encode("1"));
-//        user.setName("admin");
-//        user.setAddress("admin's ");
-//        user.setAddress2("home");
-//        user.setEmail("admin@admin.com");
-//        user.setPhone("010-0000-0000");
-//        user.setRole(Role.ADMIN);
-//      
-//        userService.signUp(user);
-//        return ResponseEntity.ok("admin create");
-//    }
-//
-//
-//    
-//
-//  
-//    //아이디 찾기
-//    @PostMapping("/user/findId")
-//    public ResponseEntity<String> findId(@RequestBody Map<String, String> request) {
-//        String email = request.get("email");
-//     //   String phoneNum = request.get("phoneNum");
-//        String foundId;
-//
-//        if (email != null) {
-//            foundId = userService.findIdByEmail(email);
-//     //   } else if (phoneNum != null) {
-//          //  foundId = memberService.findIdByPhoneNum(phoneNum);
+//        if (authenticatedUser != null) {
+//       // httpRequest.getSession().setAttribute("userId", authenticatedUser.getLoginid());
+//            return ResponseEntity.ok(authenticatedUser); // 회원인증 시 정보 반환
 //        } else {
-//            return ResponseEntity.badRequest().body("이메일이 필요합니다.");
-//        }
-//
-//        if (foundId != null) {
-//            return ResponseEntity.ok(foundId);
-//        } else {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("아이디를 찾을 수 없습니다.");
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
 //        }
 //    }
 //
 //
+//	
+//	// 아이디 찾기
+//	@PostMapping("/user/findId")
+//	public ResponseEntity<String> findId(@RequestBody Map<String, String> request) {
+//		String email = request.get("email");
+//		String name = request.get("name");
+//		
 //
+//
+//		  if (email != null && name != null) {
+//	            String foundId = userService.findIdByEmailAndName(email, name);
+//	            if (foundId != null) {
+//	                return ResponseEntity.ok(foundId);
+//	            } else {
+//	                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("아이디를 찾을 수 없습니다.");
+//	            }
+//	        } else {
+//	            return ResponseEntity.badRequest().body("이메일과 이름이 필요합니다.");
+//	        }
+//	    }
+//
+//	//비번찾기
+//	@PostMapping("/user/findPw")
+//	public ResponseEntity<String> findPw(@RequestBody UserDto userDto) {
+//		
+//		
+//		try {
+//			String foundPw = userService.findPw(userDto);
+//			
+//			if(foundPw != null) {
+//				
+//			      return ResponseEntity.ok("임시 비밀번호가 이메일로 전송되었습니다.");
+//            } else {
+//                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("존재하지 않는 회원이거나 잘못 입력된 정보입니다.");
+//            }
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류 발생");
+//        }
+//    }
 //}
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//

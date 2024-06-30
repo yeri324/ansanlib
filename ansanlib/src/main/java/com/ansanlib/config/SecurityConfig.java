@@ -7,59 +7,64 @@
 //import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 //import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 //import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-//import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-//import org.springframework.security.crypto.password.PasswordEncoder;
 //import org.springframework.security.web.SecurityFilterChain;
 //import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 //
-//import com.ansanlib.service.user.UserService;
+//import com.ansanlib.user.service.UserService;
 //
 //@Configuration
 //@EnableWebSecurity
 //public class SecurityConfig {
 //
-//	@Autowired
-//	UserService userService;
 //
-//	@Bean
-//	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//		http.formLogin(formLogin -> formLogin.loginPage("/users/login") // 로그인 페이지 url을 설정
-//				.defaultSuccessUrl("/") // 로그인 성공 시 이동할 url
-//				.usernameParameter("loginid") // 로그인 시 사용할 파라미터 이름으로 login을 지정
-//				.failureUrl("/users/login/error")) // 로그인 실패 시 이동할 url을 설정
-//				.logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/users/logout")) // 로그아웃 url을
-//																											// 설정
-//						.logoutSuccessUrl("/"))
+//    @Autowired
+//    private UserService userService;
+//    
+//    @Autowired
+//    private PasswordEncoderConfig passwordEncoderConfig;
 //
-//				.authorizeHttpRequests(
-//						request -> request.requestMatchers("/", "/users/**", "/item/**", "/images/**").permitAll() 
-//																												
-//								.requestMatchers("/admin/**").hasRole("ADMIN") 
-//								.anyRequest().authenticated())
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        http
+//        		.csrf(csrf -> csrf.disable())
+//        		.sessionManagement(sessionManagement -> 
+//                	sessionManagement.maximumSessions(1)
+//                		.expiredUrl("/member/login?expired=true")
+//        		)
+//                .formLogin(formLogin -> formLogin
+//                        .loginPage("http://localhost:3000")  // 커스텀 로그인 페이지 설정
+//                        .defaultSuccessUrl("/home")  // 로그인 성공 시 이동할 기본 URL
+//                        .usernameParameter("loginid")  // 로그인 시 사용할 아이디 파라미터명
+//                        .passwordParameter("password")  // 로그인 시 사용할 비밀번호 파라미터명
+//                        .failureUrl("/user/login/error")  // 로그인 실패 시 이동할 URL
+//                        .permitAll())
+//                
+//                .logout(logout -> logout
+//                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+//                        .logoutSuccessUrl("/home")
+//                        .invalidateHttpSession(true) // 세션 무효화
+//                        .deleteCookies("JSESSIONID")) // 쿠키 삭제
 //
-//				.exceptionHandling(handling -> handling.authenticationEntryPoint(new CustomAuthenticationEntryPoint()));
+//                .authorizeHttpRequests(request -> request
+//                        .requestMatchers(new AntPathRequestMatcher("/user/**")).permitAll()  // 회원 관련 모든 URL 허용
+//                      
+//                        .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")  // 관리자 페이지 접근 권한 설정
+//                        .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
+//                        .requestMatchers("/**").authenticated())
 //
-//		return http.build();
-//	}
+//                .exceptionHandling(exceptionHandling -> exceptionHandling
+//                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint()));
 //
-//	@Bean
-//	public WebSecurityCustomizer webSecurityCustomizer() {
-//		return (web) -> web.ignoring().requestMatchers("/css/**", "/js/**", "/img/**");
-//	}
+//        return http.build();
+//    }
 //
-//	@Bean
-//	public PasswordEncoder passwordEncoder() {
-//		return new BCryptPasswordEncoder();
-//	}
 //
-//	@Bean
-//	public AuthenticationProvider authenticationProvider() {
-//		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-//		provider.setUserDetailsService(userService);
-//		provider.setPasswordEncoder(passwordEncoder());
-//		return provider;
-//	}
+//    @Bean
+//    public AuthenticationProvider authenticationProvider() {
+//        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+//        provider.setUserDetailsService(userService);
+//        provider.setPasswordEncoder(passwordEncoderConfig.passwordEncoder());
+//        return provider;
+//    }
 //
-//	
 //}

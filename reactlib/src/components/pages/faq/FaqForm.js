@@ -7,20 +7,33 @@ const FaqForm = () => {
   const navigate = useNavigate();
   const [isTitleClicked, setIsTitleClicked] = useState(false);
   const [isContentClicked, setIsContentClicked] = useState(false);
+  const [images, setImages] = useState([{ id: 1, file: null }]);
   const [faqData, setFaqData] = useState({
     title: '',
     content: ''
   });
 
+
+  
+  // 파일 업로드
+  const handleImgChange = (id, file) => {
+    setImages(images.map(item => item.id === id ? { ...item, file } : item));
+  };
+
+  
+  //이미지추가버튼
+  const handleAddImg = () => {
+    if (images.length < 5) {
+      setImages([...images, { id: images.length + 1, file: null }]);
+    }
+  };
+
+  
   const onInputChange = (e) => {
     setFaqData({ ...faqData, [e.target.name]: e.target.value });
   };
 
-  // 파일 업로드
-  const [file, setFile] = useState(null);
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-  };
+  
 
   // 생성 정보 보내기
   const onCreate = (e) => {
@@ -29,17 +42,17 @@ const FaqForm = () => {
 
     formData.append("title", faqData.title);
     formData.append("content", faqData.content);
-    formData.append("faqImgFile", file);
+    images.forEach((image)=>{ if (image.file) formData.append('faqImgFile', image.file);});
 
-    try { 
+    try {
       axios.post(
-        'http://localhost:8090/faq/new', 
-        formData, 
+        'http://localhost:8090/faq/new',
+        formData,
         {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
       // window.location.reload(navigate("/faq/list", { replace: true }));
       navigate("/faq/list", { replace: true });
     } catch (error) {
@@ -70,9 +83,16 @@ const FaqForm = () => {
           onBlur={() => { setIsContentClicked(false); }}
           onChange={onInputChange} />
 
-        <input
-          className='file-input' type="file" accept="image/*" onChange={handleFileChange}
-        />
+        {images.map(image => (
+          <div key={image.id}>
+            <input type="file" onChange={(e) => handleImgChange(image.id, e.target.files[0])} />
+          </div>
+        ))}
+        {images.length < 5 && <button type="button" onClick={handleAddImg}>이미지추가</button>}
+
+        {/* <input
+          className='file-input' type="file" accept="image/*" onChange={handleImagesChange}
+        /> */}
         <button type='submit'>저장</button>
       </form>
     </div>

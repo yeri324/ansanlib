@@ -25,18 +25,14 @@ public class FaqService {
 	private final FaqImgRepository faqImgRepository;
 	private final FaqImgService faqImgService;
 
-	public Long createFaq(FaqFormDto faqFormDto, MultipartFile faqImgFile) throws Exception {
-			Faq faq = faqFormDto.createFaq();
-			faqRepository.save(faq);
-			FaqImg faqImg = new FaqImg();
-			faqImg.setFaq(faq);
-			faqImgService.saveFaqImg(faqImg, faqImgFile);
+	public Long createFaq(Faq faq, List<MultipartFile> faqImgFile) throws Exception {
 		
-		return faq.getId();
-	}
+		faqRepository.save(faq);
+		
+		for(MultipartFile faqImage:faqImgFile)
+		faqImgService.saveFaqImg(faq,faqImage);
 
-	public List<Faq> getFaqList() {
-		return faqRepository.findAll();
+		return faq.getId();
 	}
 
 	public Long updateFaq(FaqFormDto faqFormDto) {
@@ -50,18 +46,13 @@ public class FaqService {
 		faqRepository.deleteById(id);
 	}
 
-	@Transactional(readOnly = true)
-	public Faq getFaqDtl(Long faqId) {
-		return faqRepository.findById(faqId).orElseThrow(EntityNotFoundException::new);
-	}
-	
 	public List<Faq> ListFaq(FaqDto faqDto) {
-		if("loginid".equals(faqDto.getSearchBy())) {
+		if ("loginid".equals(faqDto.getSearchBy())) {
 			return faqRepository.findByLibUser_LoginidContains(faqDto.getSearchQuery());
-		}
-		else {
+		} else {
 			return faqRepository.findByTitleContains(faqDto.getSearchQuery());
 		}
-
 	}
+
+
 }

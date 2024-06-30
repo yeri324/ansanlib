@@ -12,6 +12,6 @@ public class AdminUserDto {
 	private String searchQuery="";
 	
 	private String selectRadio;
-
+	
 
 }

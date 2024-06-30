@@ -17,7 +17,7 @@ import lombok.Setter;
 public class SearchList extends BaseEntity {
 	 @Id
      @Column(name="search_id")
-     @GeneratedValue(strategy= GenerationType.AUTO)
+     @GeneratedValue(strategy= GenerationType.IDENTITY)
      private Long id;
 	 
 	 private String searchContent;

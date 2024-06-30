@@ -1,45 +1,79 @@
-//package com.ansanlib.service.user;
+//package com.ansanlib.user.service;
 //
+//import java.security.SecureRandom;
+//import java.time.LocalDateTime;
 //import java.util.Optional;
 //import java.util.regex.Pattern;
 //
 //import org.springframework.http.HttpStatus;
 //import org.springframework.http.ResponseEntity;
-//import org.springframework.security.core.userdetails.User;
+//import org.springframework.mail.SimpleMailMessage;
 //import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.security.core.userdetails.UserDetailsService;
 //import org.springframework.security.core.userdetails.UsernameNotFoundException;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 //import org.springframework.stereotype.Service;
+//import org.springframework.transaction.annotation.Transactional;
 //
-//import com.ansanlib.constant.Role;
-//import com.ansanlib.dto.user.UserDto;
 //import com.ansanlib.entity.LibUser;
-//import com.ansanlib.repository.user.UserRepository;
-//
-//import lombok.RequiredArgsConstructor;
+//import com.ansanlib.user.dto.UserDto;
+//import com.ansanlib.user.repository.UserRepository;
 //
 //@Service
-//@RequiredArgsConstructor
 //public class UserService implements UserDetailsService {
 //
-//	private final UserRepository userRepository;
+//    private final UserRepository userRepository;
+//    private final PasswordEncoder passwordEncoder;
 //
-//
-//	// 비밀번호 일치 확인 메서드
-//	public boolean isPasswordMatch(String password, String confirmPassword) {
-//		return password.equals(confirmPassword);
+//    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+//        this.userRepository = userRepository;
+//        this.passwordEncoder = passwordEncoder;
+//    
 //	}
+////	public UserService(UserRepository userRepository) {
+////		this.userRepository = userRepository;	}
 //
-//	public ResponseEntity<String> signUp(UserDto userDto, PasswordEncoder passwordEncoder) {
-//		// 비밀번호 일치 여부 확인
-//		if (!isPasswordMatch(userDto.getPassword(), userDto.getConfirmPassword())) {
-//			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("비밀번호가 일치하지 않습니다.");
+//	
+//	
+//	
+//	
+//	// checkId 중복검사
+//	public ResponseEntity<String> checkId(String loginid) {
+//		if (loginid.length() < 5) {
+//			return ResponseEntity.status(HttpStatus.CONFLICT).body("아이디는 5글자 이상만 가능합니다.");
 //		}
 //
+//		if (!Pattern.matches("[a-zA-Z0-9]+", loginid)) {
+//			return ResponseEntity.status(HttpStatus.CONFLICT).body("아이디는 영문과 숫자만 가능합니다.");
+//		}
+//
+//		Optional<LibUser> user = userRepository.findByLoginid(loginid);
+//		if (user.isPresent()) {
+//			return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 존재하는 아이디 입니다.");
+//		} else {
+//			return ResponseEntity.ok("사용 가능한 아이디 입니다.");
+//		}
+//	}
+//
+//	// 비밀번호 일치 확인 메서드
+//	public boolean isPasswordMatch(String password, String password2) {
+//		return password.equals(password2);
+//
+//	}
+//
+//
+//	
+//	//횐가입
+//	   @Transactional(rollbackFor = Exception.class)
+//	public ResponseEntity<String> join(UserDto userDto) {
+//		// 비밀번호 일치 여부 확인
+//
+//		if (!isPasswordMatch(userDto.getPassword(), userDto.getPassword2())) {
+//			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("비밀번호가 일치하지 않습니다.");
+//		}
+//		 userDto.setJoinDate(LocalDateTime.now());
 //		LibUser user = new LibUser();
 //		user.bind(userDto, passwordEncoder);
-//		user.Role(Role.USER);
 //
 //		try {
 //			// 회원 정보를 데이터베이스에 저장
@@ -51,68 +85,130 @@
 //		}
 //	}
 //
-//	public void signUp(LibUser user) {
+//	public void join(LibUser user) {
 //		userRepository.save(user);
+//
 //	}
+//	
+//	
+//	
 //
-//	public ResponseEntity<String> checkId(String loginid) {
-//		if (loginid.length() < 5) {
-//			return ResponseEntity.status(HttpStatus.CONFLICT).body("아이디는 5글자 이상만 가능합니다.");
-//		}
+//	// 로긴처리
+//	public LibUser authenticate(String loginid, String password) {
+//		try {
+//			Optional<LibUser> userOptional = userRepository.findByLoginid(loginid);
 //
-//		if (!Pattern.matches("[a-zA-Z0-9]+", loginid)) {
-//			return ResponseEntity.status(HttpStatus.CONFLICT).body("아이디는 영문과 숫자만 가능합니다.");
-//		}
+//			if (userOptional.isPresent()) {
+//				LibUser user = userOptional.get();
 //
-//		Optional<LibUser> user = userRepository.findById(loginid);
-//		if (user.isPresent()) {
-//			return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 존재하는 아이디 입니다.");
-//		} else {
-//			return ResponseEntity.ok("사용 가능한 아이디 입니다.");
-//		}
-//	}
+//				// Validate password (use PasswordEncoder for secure validation)
+//				  boolean matches = passwordEncoder.matches(password, user.getPassword());
+//				  System.out.println("비밀번호 매칭 결과: " + matches);
+//				  
+//				  
+//				if (matches) {
+//					// Update login date
+//					user.setLoginDate(LocalDateTime.now());
+//					userRepository.save(user); // Save user with updated login date
 //
-//	public ResponseEntity<String> checkEmail(String email) {
-//
-//		if (!Pattern.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", email)) {
-//			return ResponseEntity.status(HttpStatus.CONFLICT).body("이메일 형식이 올바르지 않습니다.");
-//		}
-//
-//		Optional<LibUser> user = userRepository.findByEmail(email);
-//		if (user.isPresent()) {
-//			return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 존재하는 이메일 입니다.");
-//		} else {
-//			return ResponseEntity.ok("사용 가능한 이메일 입니다.");
-//		}
-//	}
-//
-//	@Override
-//	public UserDetails loadUserByUsername(String loginid) throws UsernameNotFoundException {
-//		Optional<LibUser> optionalUser = userRepository.findById(loginid);
-//		if (optionalUser.isEmpty()) {
-//			throw new UsernameNotFoundException(loginid);
-//		}
-//		LibUser user = optionalUser.get();
-//		return User.builder().username(user.getLoginid()).password(user.getPassword()).roles(user.getRole.toString())
-//				.build();
-//	}
-//
-//	public String getPassword(String userId) {
-//		Optional<LibUser> optionalUser = userRepository.findById(userId);
-//		if (optionalUser.isPresent()) {
-//			LibUser user = optionalUser.get();
-//			return user.getPassword();
-//		} else {
+//					return user;
+//				} else {
+//					System.out.println("비밀번호가 일치하지 않습니다." + loginid + password);
+//					
+//					return null; // Incorrect password
+//				}
+//			} else {
+//				System.out.println("회원이 존재하지 않습니다.");
+//				return null; // User not found
+//			}
+//		} catch (Exception e) {
+//			System.out.println("예외:" + e.getMessage());
 //			return null;
 //		}
 //	}
+//	
+//	 @Override
+//	    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//	        // Retrieve user from database based on username
+//	        LibUser user = userRepository.findByLoginid(username)
+//	                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
 //
-//	public LibUser login(String id, String hashedPassword) {
-//		Optional<LibUser> optionalMember = userRepository.findByIdAndPassword(id, hashedPassword);
-//		return optionalMember.orElse(null);
+//	        // Map user details to Spring Security's UserDetails
+//	        return org.springframework.security.core.userdetails.User.builder()
+//	                .username(user.getLoginid())
+//	                .password(user.getPassword()) // Already encoded password from database
+//	                .roles(user.getRole().toString()) // Assuming role is stored as Enum or String
+//	                .build();
+//	    }
+//	 
+//	 
+////    public String getPassword(String userId) {
+////    	  Optional<LibUser> optionalUser = userRepository.findByLoginid(userId);
+////        if (optionalUser.isPresent()) {
+////        	  LibUser user = optionalUser.get();
+////            return user.getPassword();
+////        } else {
+////            return null;
+////        }
+// //   }
+//	
+//	
+//
+//	
+//
+//	// 아이디 찾기
+//	public String findIdByEmailAndName(String email, String name) {
+//		Optional<LibUser> userOptional = userRepository.findIdByEmailAndName(email, name);
+//		return userOptional.map(LibUser::getLoginid).orElse(null);
 //	}
 //
-//	
-//	
+//	// 비밀번호찾기 - findPw
+//	public String findPw(UserDto userDto) {
+//		Optional<LibUser> foundPw = userRepository.findByLoginidAndEmail(userDto.getLoginid(), userDto.getEmail());
+//
+//		if (foundPw.isPresent())
+//			;
+//		if (foundPw.isPresent()) {
+//			LibUser user = foundPw.get();
+//
+//			String tempPassword = generateTempPassword();
+//			 System.out.println("임시 비밀번호: " + tempPassword); // 콘솔에 임시 비밀번호 출력
+//
+//			sendEmail(user.getEmail(), "[AnsanLibrary]임시비밀번호", "\n\n 안녕하세요. 임시비밀번호는 다음과 같습니다.\n\n" + tempPassword);
+//
+//			// 데베에 임시비밀번호 저장하는 로직 추가
+//			//String encodedPassword = tempPassword;
+//			 String encodedPassword = passwordEncoder.encode(tempPassword);
+//			user.setPassword(encodedPassword);
+//			userRepository.save(user);
+//
+//			return user.getEmail();
+//		} else {
+//			return null;
+//		}
+//
+//	}
+//
+//	// TempPass - 임시비밀번호 생성
+//	public String generateTempPassword() {
+//		SecureRandom random = new SecureRandom();
+//		StringBuilder password = new StringBuilder(PASSWORD_LENGTH);
+//		for (int i = 0; i < PASSWORD_LENGTH; i++) {
+//			password.append(CHARACTERS.charAt(random.nextInt(CHARACTERS.length())));
+//		}
+//		return password.toString();
+//	}
+//
+//	private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+//	private static final int PASSWORD_LENGTH = 10;
+//
+//	// 메일보내~
+//	public void sendEmail(String to, String subject, String text) {
+//		SimpleMailMessage message = new SimpleMailMessage();
+//		message.setTo(to);
+//		message.setSubject(subject);
+//		message.setText(text);
+//		// mailSender.send(message);
+//	}
 //
 //}

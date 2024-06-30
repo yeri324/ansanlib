@@ -1,61 +1,124 @@
+/* 구글 폰트 불러오기 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+
+/* 기본 설정 */
+header {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  font-family: 'Noto Sans KR', sans-serif;
+  /* cursor: pointer; */
+  /* position: relative; */
+  /* z-index: 10; */
+}
+
 /* 전체 헤더 영역 스타일 */
 .full_header {
-    background-color: #f8f9fa;
-    padding: 10px 20px;
-    border-bottom: 1px solid #e0e0e0;
-  }
-  
-  /* 상단 로그인 영역 스타일 */
-  .top_login {
-    text-align: right;
-    margin-bottom: 10px;
-  }
-  
-  /* 메뉴 스타일 */
-  .header_menu {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-  }
-  
-  /* 개별 메뉴 항목 스타일 */
-  .header_menu > div {
-    position: relative;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  /* 서브 메뉴 스타일 */
-  .sub_menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-  }
-  
-  /* 서브 메뉴 항목 스타일 */
-  .sub_menu > div {
-    padding: 10px 20px;
-    white-space: nowrap;
-    transition: background-color 0.3s ease;
-  }
-  
-  /* 메뉴 항목 호버 스타일 */
-  .header_menu > div:hover {
-    background-color: #ffffff;
-  }
-  
-  /* 서브 메뉴 보이기 */
-  .header_menu > div:hover .sub_menu {
-    display: block;
-  }
-  
-  /* 서브 메뉴 항목 호버 스타일 */
-  .sub_menu > div:hover {
-    background-color: #f8f9fa;
-  }
+  background-color: #ffffff;
+  padding: 10px 40px;
+  border-bottom: 1px solid #ffffff;
+}
+
+/* 상단 로그인 영역 스타일 */
+.top_login {
+  text-align: right;
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 20px;
+  font-size: 15px;
+  font-weight: 600;
+  text-shadow: 0.5px 0.5px#e0e0e0;
+}
+.top_login > .enter {
+  margin-right: 12px;
+}
+.top_login > .enter:hover {
+  background-color: #f8f9fa;
+}
+.top_login > .join {
+  margin-left: 12px;
+}
+.top_login > .join:hover {
+  background-color: #f8f9fa;
+}
+
+
+
+/* 메뉴 스타일 */
+.header_menu {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+/* 개별 메뉴 항목 스타일 */
+.top_menu>div {
+  position: relative;
+  margin: 10px;
+  padding: 10px 30px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 20px;
+  font-weight: 600;
+  text-shadow: 0.5px 0.5px#e0e0e0;
+}
+
+.top_menu {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+/* 서브 메뉴 스타일 */
+.sub_menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+/* 서브 메뉴 항목 스타일 */
+.sub_menu>div {
+  padding: 10px 20px;
+  white-space: nowrap;
+  transition: background-color 0.3s ease;
+}
+
+/* 메뉴 항목 호버 스타일 */
+.top_menu>div:hover {
+  background-color: #f8f9fa;
+}
+
+/* 서브 메뉴 보이기 */
+.top_menu>div:hover .sub_menu {
+  display: block;
+  font-size: 17px;
+  font-weight: 500;
+  text-shadow: 0.3px 0.3px#e0e0e0;
+}
+
+/* 서브 메뉴 항목 호버 스타일 */
+.sub_menu>div:hover {
+  background-color: #f8f9fa;
+}
+
+/* 센터 로고 스타일 */
+.top_logo {
+  margin: 10px;
+}
+
+.top_logo img {
+  width: 200px;
+  height: auto;
+}
+
+a {
+  cursor: pointer;
+}

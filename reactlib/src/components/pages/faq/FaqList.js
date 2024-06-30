@@ -33,7 +33,6 @@ function FaqList() {
         }))
     }
 
-    // 기준검색
     const onSearch = () => {
         console.log(searchOption.searchBy, searchOption.searchQuery)
         axios(
@@ -47,12 +46,12 @@ function FaqList() {
                 baseURL: 'http://localhost:8090',
             }
         ).then((response) => {
-            setSerchResult(response.data);
+            setSerchResult(response.data.result);
         });
 
     }
 
-    //검색
+    //기준검색
     const handleOnChange = (e) => {
         const { name, value } = e.target;
         console.log(name, value);
@@ -97,7 +96,6 @@ function FaqList() {
             )
             window.location.reload(navigate("/faq/list", { repalce: true }));
         }
-
     }
 
     return (
@@ -123,7 +121,6 @@ function FaqList() {
                 <div className="slide">
                     {searchResult.map((faq) => (
                         <FaqItem key={faq.id} faq={faq} checkedList={checkedList} checkHandler={checkHandler} handleDetail={handleDetail} />
-
                     ))}
 
                 </div>

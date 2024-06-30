@@ -19,7 +19,7 @@ public class AdminUserRepositoryCustomImpl implements AdminUserRepositoryCustom 
 
 
 	@Override
-	public List<LibUser>  AdminUserList(AdminUserDto adminUserDto) {
+	public List<LibUser> AdminUserList(AdminUserDto adminUserDto) {
 		QLibUser libUser = QLibUser.libUser;
 		var query = queryFactory.selectFrom(libUser);
 		

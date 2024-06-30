@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import AdminUserItem from './AdminUserItem';
+
 
 const AdminUserList = () => {
   const navigate = useNavigate();
@@ -46,17 +48,26 @@ const AdminUserList = () => {
   useEffect(() => {
     onSearch();
   }, [])
-  
 
 
-  /// 상세페이지 이동
-  const handleDetail = ({ user }) => {
-    navigate(`/admin/user/detail/${user.user_id}`);
+
+  // 상세페이지 이동
+
+  const handleDetail = (user) => {
+    // setSelectedUser(user);
+
+    navigate(`/admin/user/detail/${user.userId}`, {
+      state: {
+        ...user
+      }
+    });
   };
-  ///
+
+
 
   return (
-    <div className="userList">
+  
+           <div className="userList">
       <div>
 
         <select name="searchBy" value={searchOption.searchBy} onChange={handleOnChange}>
@@ -66,9 +77,12 @@ const AdminUserList = () => {
 
         <input type="text" name="searchQuery" value={searchOption.searchQuery} onChange={handleOnChange} />
 
-        <input type="radio" name="selectRadio" value="all" checked={searchOption.selectRadio === "all"} onChange={handleOnChange} />
-        <input type="radio" name="selectRadio" value="penalty" checked={searchOption.selectRadio === "penalty"} onChange={handleOnChange} />
-        <input type="radio" name="selectRadio" value="latefee" checked={searchOption.selectRadio === "latefee"} onChange={handleOnChange} />
+        <input type="radio" id="all" name="selectRadio" value="all" checked={searchOption.selectRadio === "all"} onChange={handleOnChange} />
+        <label id="all">all</label>
+        <input type="radio" id="penalty" name="selectRadio" value="penalty" checked={searchOption.selectRadio === "penalty"} onChange={handleOnChange} />
+        <label id="penalty">penalty</label>        
+        <input type="radio" id="latefee" name="selectRadio" value="latefee" checked={searchOption.selectRadio === "latefee"} onChange={handleOnChange} />
+        <label id="latefee">latefee</label>
 
 
         <button onClick={onSearch}>Search</button>
@@ -82,6 +96,7 @@ const AdminUserList = () => {
           <thead>
             <tr>
               <th>ID</th>
+              <th>loginID</th>
               <th>Name</th>
               <th>Penalty</th>
               <th>Late Fee</th>
@@ -90,13 +105,7 @@ const AdminUserList = () => {
           
          <tbody>
             {searchResult.map((user) => (
-              <tr>
-                <td>{user.user_id}</td>
-                <td onClick={() => handleDetail({ user })}>{user.loginid}</td>
-                <td>{user.name}</td>
-                <td>{user.penalty}</td>
-                <td>{user.lateFee}</td>
-              </tr>
+              <AdminUserItem key={user.userId} user={user} handleDetail={handleDetail}/>
             ))}
 
 
@@ -104,6 +113,10 @@ const AdminUserList = () => {
         </table>
       </div>
     </div>
+
+
   );
-}
+};
+
+
 export default AdminUserList;
