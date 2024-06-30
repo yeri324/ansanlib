@@ -169,3 +169,16 @@
   background-color: #e6e6e6;
 }
 
+.react-calendar__navigation__label {
+  pointer-events: none;
+  cursor: default;
+}
+
+.react-calendar__navigation__prev2-button,
+.react-calendar__navigation__next2-button {
+  display: none;
+}
+
+.react-calendar__navigation {
+  justify-content: space-between;
+}
