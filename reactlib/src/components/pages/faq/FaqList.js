@@ -28,7 +28,7 @@ function FaqList() {
     const handleDetail = (faq) => {
         window.location.reload(navigate(`/faq/detail/${faq.id}`, {
             state: {
-                ...faq,
+                ...faq
             }
         }))
     }
@@ -46,6 +46,7 @@ function FaqList() {
                 baseURL: 'http://localhost:8090',
             }
         ).then((response) => {
+            console.log(response.data.result);
             setSerchResult(response.data.result);
         });
 

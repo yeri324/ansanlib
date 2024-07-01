@@ -3,7 +3,7 @@ import axios from 'axios';
 import React, { useState, } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const FaqForm = () => {
+function FaqForm(){
   const navigate = useNavigate();
   const [isTitleClicked, setIsTitleClicked] = useState(false);
   const [isContentClicked, setIsContentClicked] = useState(false);
@@ -38,21 +38,24 @@ const FaqForm = () => {
     formData.append("title", faqData.title);
     formData.append("content", faqData.content);
     images.forEach((image)=>{ if (image.file) formData.append('faqImgFile', image.file);});
-
-    try {
-      axios.post(
-        'http://localhost:8090/faq/new',
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        });
-      window.location.reload(navigate("/faq/list", { replace: true }));
-      // navigate("/faq/list", { replace: true });
-    } catch (error) {
-      console.error("There was an error uploading the data!", error);
+    if(formData.get("faqImgFile")===null) console.log("널!");
+    for (let key of formData.keys()) {
+      console.log(key, ":", formData.get(key));
     }
+    // try {
+    //   axios.post(
+    //     'http://localhost:8090/faq/new',
+    //     formData,
+    //     {
+    //       headers: {
+    //         'Content-Type': 'multipart/form-data'
+    //       }
+    //     });
+    //   window.location.reload(navigate("/faq/list", { replace: true }));
+    //   // navigate("/faq/list", { replace: true });
+    // } catch (error) {
+    //   console.error("There was an error uploading the data!", error);
+    // }
 
   };
 
@@ -63,7 +66,6 @@ const FaqForm = () => {
         <input
           type='text'
           name='title'
-          value={faqData.title}
           placeholder={isTitleClicked === true ? "" : "제목을 작성해주세요."}
           onFocus={() => { setIsTitleClicked(true); }}
           onBlur={() => { setIsTitleClicked(false); }}
@@ -72,7 +74,6 @@ const FaqForm = () => {
         <input
           type='text'
           name='content'
-          value={faqData.content}
           placeholder={isContentClicked === true ? "" : "내용을 작성해주세요."}
           onFocus={() => { setIsContentClicked(true); }}
           onBlur={() => { setIsContentClicked(false); }}
