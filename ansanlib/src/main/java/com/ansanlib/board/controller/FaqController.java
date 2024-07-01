@@ -45,10 +45,10 @@ public class FaqController {
 	}
 
 	@PutMapping(value = "/detail")
-	public ResponseEntity<String> updateFaq(@RequestBody FaqFormDto faqFormDto) throws Exception {
+	public ResponseEntity<String> updateFaq(FaqFormDto faqFormDto, @RequestParam List<MultipartFile> faqImgFile) throws Exception {
 		ResponseEntity<String> resEntity = null;
 		try {
-			faqService.updateFaq(faqFormDto);
+			faqService.updateFaq(faqFormDto, faqImgFile);
 			resEntity = new ResponseEntity("UPDATE_OK", HttpStatus.OK);
 		} catch (Exception e) {
 			resEntity = new ResponseEntity("글 등록 중 에러가 발생하였습니다.", HttpStatus.BAD_REQUEST);
@@ -71,7 +71,7 @@ public class FaqController {
 	}
 
 	@PostMapping("/search")
-	public ResponseEntity<CommonListResponse<List<Faq>>> searchUsers(@RequestBody FaqDto faqDto) {
+	public ResponseEntity<CommonListResponse<List<Faq>>> searchUsers(FaqDto faqDto) {
 		List<Faq> faqs = faqService.ListFaq(faqDto);
 		return ResponseEntity.ok().body(new CommonListResponse<List<Faq>>(faqs.size(), faqs));
 	}

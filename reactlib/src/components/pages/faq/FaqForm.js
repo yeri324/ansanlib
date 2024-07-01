@@ -12,14 +12,11 @@ const FaqForm = () => {
     title: '',
     content: ''
   });
-
-
   
   // 파일 업로드
   const handleImgChange = (id, file) => {
     setImages(images.map(item => item.id === id ? { ...item, file } : item));
   };
-
   
   //이미지추가버튼
   const handleAddImg = () => {
@@ -51,8 +48,8 @@ const FaqForm = () => {
             'Content-Type': 'multipart/form-data'
           }
         });
-      // window.location.reload(navigate("/faq/list", { replace: true }));
-      navigate("/faq/list", { replace: true });
+      window.location.reload(navigate("/faq/list", { replace: true }));
+      // navigate("/faq/list", { replace: true });
     } catch (error) {
       console.error("There was an error uploading the data!", error);
     }

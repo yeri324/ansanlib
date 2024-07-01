@@ -29,16 +29,29 @@ public class FaqService {
 		
 		faqRepository.save(faq);
 		
-		for(MultipartFile faqImage:faqImgFile)
-		faqImgService.saveFaqImg(faq,faqImage);
+//		for(MultipartFile faqImage:faqImgFile)
+//		faqImgService.saveFaqImg(faq,faqImage);
 
+		for(int i=0; i<faqImgFile.size();i++) {
+	
+			faqImgService.saveFaqImg(faq, faqImgFile.get(i), i);
+		}
+		
 		return faq.getId();
 	}
 
-	public Long updateFaq(FaqFormDto faqFormDto) {
-		Faq faq = faqRepository.findById(faqFormDto.getId()).orElseThrow(EntityNotFoundException::new);
+	public Long updateFaq(FaqFormDto faqFormDto, List<MultipartFile> faqImgFile) throws Exception {
+		// 제목/내용수정
+		Faq faq = faqRepository.findById(faqFormDto.getId())
+					.orElseThrow(EntityNotFoundException::new);
 		faq.updateFaq(faqFormDto);
-		faqRepository.save(faq);
+		
+		// 이미지 수정
+		List<Long> faqImgIdList = faqFormDto.getFaqImgIdList();
+		
+		for(MultipartFile faqImage : faqImgFile)
+		faqImgService.updateFaqImg(faqFormDto.getId(), faqImage);
+		
 		return faq.getId();
 	}
 
