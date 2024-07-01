@@ -18,7 +18,7 @@ import lombok.ToString;
 public class Library extends BaseEntity {
 	@Id
 	@Column(name="library_id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
 	

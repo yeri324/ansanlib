@@ -30,11 +30,13 @@ public class FaqController {
 	private final FaqService faqService;
 
 	@PostMapping(value = "/new", consumes = { "multipart/form-data" })
-	public ResponseEntity<String> createfaq(@RequestParam MultipartFile faqImgFile, FaqFormDto faqFormDto)
+	public ResponseEntity<String> createfaq(@RequestParam List<MultipartFile> faqImgFile, FaqFormDto faqFormDto)
 			throws Exception {
+		System.out.println(faqImgFile.size());
 		ResponseEntity<String> resEntity = null;
+		Faq faq = faqFormDto.createFaq();
 		try {
-			faqService.createFaq(faqFormDto, faqImgFile);
+			faqService.createFaq(faq, faqImgFile);
 			resEntity = new ResponseEntity("Save_OK", HttpStatus.OK);
 		} catch (Exception e) {
 			resEntity = new ResponseEntity("글 등록 중 에러가 발생하였습니다.", HttpStatus.BAD_REQUEST);

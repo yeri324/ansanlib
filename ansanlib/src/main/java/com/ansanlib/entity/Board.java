@@ -18,7 +18,7 @@ public class Board extends BaseEntity{
 
     @Id
     @Column(name="board_num")
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.SEQUENCE)
     private Long id;
     
     @Column(name="board_title") 

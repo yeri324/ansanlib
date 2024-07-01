@@ -24,7 +24,7 @@ import lombok.Setter;
 public class BookInterest {
     @Id
     @Column(name="book_interest_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
