@@ -21,8 +21,8 @@ const noticePosts = {
     { id: 2, title: '추천도서 2' },
     { id: 3, title: '추천도서 3' },
     { id: 4, title: '추천도서 4' },
-    { id: 5, title: '추천도서 5' },
-  ],
+    { id: 5, title: '추천도서 5' }
+  ]
 };
 
 const Notice = () => {
