@@ -21,7 +21,7 @@ public class LoanStatus extends BaseEntity {
 
 	@Id
 	@Column(name = "Loan_num")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 
 	@Column(nullable = false)

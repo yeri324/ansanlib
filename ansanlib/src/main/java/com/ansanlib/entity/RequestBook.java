@@ -22,7 +22,7 @@ public class RequestBook extends BaseEntity {
 
 	@Id
 	@Column(name = "isbn_id", unique = true)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 
 	private String isbn; //isbn(도서고유번호)
