@@ -1,7 +1,4 @@
-import React, { useState } from 'react';
-// import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import React,{ Routes, Route } from 'react-router-dom';
 import FaqList from './components/pages/faq/FaqList';
 import FaqForm from './components/pages/faq/FaqForm';
 import FaqDetailForm from './components/pages/faq/FaqDetailForm';
@@ -26,16 +23,9 @@ import RequestBookList from './components/pages/requestBook/RequestBookList';
 
 import SearchPage from './components/pages/book/searchBookList/searchPage';
 import BookDetailPage from './components/pages/book/bookDetail/bookDetailPage';
+import LoanStatusList from './components/pages/loanStatus/LoanStatusList';
 
 function App() {
-  const [isVerified, setIsVerified] = useState(false);
-  const navigate = useNavigate();
-
-  const handleVerification=()=>{
-    setIsVerified(true);
-    navigate('/mypage');
-  };
-
   return (
     <div>
       <Routes>
@@ -68,6 +58,8 @@ function App() {
         <Route path="/requestbook/new" element={<RequestBookForm/>} />
         <Route path="/requestbook/list/:userId" element={<RequestBookList/>} />
         
+        <Route path="/loanstatus/:userId" element={<LoanStatusList/>} />
+
       </Routes>
 
     </div>
