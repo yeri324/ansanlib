@@ -5,10 +5,9 @@
     /* 새로운 배경 색상 (연하게) */
     --new_bg_color: #fdf8f1;
     --text-color: #333333;
-    /* 텍스트 기본 색상 */
 }
 
-/* 기본 레이아웃 스타일 */
+/* 기본 레이아웃 */
 body {
     margin: 0 auto;
     background-color: #ffffff;
@@ -62,7 +61,7 @@ body {
     text-align: left;
 }
 
-.monthly_plan, .login_box {
+.login_box {
     display: flex;
     flex: 1;
     min-width: 300px;
@@ -73,6 +72,19 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
 }
+/* 
+.monthly_plan {
+    display: flex;
+    flex: 1;
+    min-width: 300px;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+} */
+
 
 
 
