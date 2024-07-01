@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 const RequestBookList = () => {
   const { userId} =useParams();
   const [requestBooks, setRequestBooks] = useState([]);
+  const [selectedRequestBooks, setSelectedRequestBooks] = useState([]);
   const [isErrored, setErrored] =useState(false);
   
   useEffect(async () => {
@@ -17,23 +18,73 @@ const RequestBookList = () => {
     }
   },  [userId]);
 
+  const handleSelectRequestBook =(requestBookId)=>{
+    setSelectedRequestBooks(prevSelected=>
+      prevSelected.includes(requestBookId)
+        ? prevSelected.filter(id => id !== requestBookId)
+        : [...prevSelected, requestBookId]
+    );
+  };
+
+  const handleDeleteRequestBook = async()=>{
+    try{
+      await Promise.all(selectedRequestBooks.map(id =>
+          axios.delete(`/api/requestbook/${id}`)
+      ));
+      alert('선택한 도서가 삭제되었습니다.');
+      setRequestBooks(requestBooks.filter(requestBook => !selectedRequestBooks.includes(requestBook.id)));
+      setSelectedRequestBooks([]);
+    } catch (error){
+      console.error('도서 삭제 중 오류 발생',error)
+;      alert('희망도서 삭제 중 오류가 발생하였습니다. ');
+    }
+  };
+
+  const deselectAll =() => setSelectedRequestBooks([]);
+
+  const selectAll = () => setSelectedRequestBooks(requestBooks.map(({id}) => id));
 
   return (
     <div>
       <h2>도서 신청 목록</h2>
-      {requestBooks.length > 0 ?(
       <ul>
         {requestBooks.map(book => (
           <li key={book.id}>
+            <input
+              type="checkbox"
+              checked={selectedRequestBooks.includes(book.id)}
+              onChange={() => handleSelectRequestBook(book.id)}
+            />
             책 제목:{book.title} <br/>
             저자 : {book.author} (ISBN: {book.isbn})<br />
             출판사: {book.publisher}, 출판일: {new Date(book.pub_date).toLocaleDateString()}
           </li>
         ))}
       </ul>
-      ) : (
-        <p>신청한 도서가 없습니다.</p>
-      )}
+      {
+        !isErrored &&
+        <>
+          <button 
+            onClick={selectAll}
+            disabled={selectedRequestBooks.length === requestBooks.length}
+          >
+            전체 선택
+          </button>
+          <button 
+            onClick={deselectAll}
+            disabled={selectedRequestBooks.length === 0}
+          >
+            전체 선택해제
+          </button>
+          <button 
+            onClick={handleDeleteRequestBook}
+            disabled={selectedRequestBooks.length === 0}
+          >
+            삭제
+          </button>
+        </>
+      }
+     {isErrored && <h2>신청한 도서가 없습니다.</h2>}
     </div>
   );
 };
