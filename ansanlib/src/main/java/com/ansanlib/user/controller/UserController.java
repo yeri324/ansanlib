@@ -60,7 +60,7 @@ public class UserController {
         LibUser authenticatedUser = userService.authenticate(loginid, password);
 
         if (authenticatedUser != null) {
-       // httpRequest.getSession().setAttribute("userId", authenticatedUser.getLoginid());
+        httpRequest.getSession().setAttribute("userId", authenticatedUser.getUserId());
             return ResponseEntity.ok(authenticatedUser); // 회원인증 시 정보 반환
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);

@@ -157,7 +157,6 @@ public class UserService implements UserDetailsService {
 	    public UserDetails loadUserByUsername(String loginid) throws UsernameNotFoundException {
 	        // Retrieve user from database based on username
 		 Optional<LibUser> optionalUser = userRepository.findByLoginid(loginid);
-		 
 		 if (optionalUser.isEmpty()) {
 	            throw new UsernameNotFoundException(loginid);
 	        }

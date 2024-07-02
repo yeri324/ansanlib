@@ -19,7 +19,8 @@ const LoginForm = ({ onLogin }) => {
                     alert("로그인되었습니다.")
                     onLogin({
                         loginid: loginForm.loginid,
-                        name: response.data.name
+                        name: response.data.name,
+                        userId : response.data.userId,
                     });
                 }
             })

@@ -27,7 +27,7 @@ const AdminUserDetail = () => {
                 data: {
                     id: id,
                 },
-                baseURL: 'http://localhost:8090',
+              
             }
         ).then((res) => {
             setUserDetail(res.data);

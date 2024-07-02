@@ -38,7 +38,6 @@ const AdminUserList = () => {
           searchQuery: searchOption.searchQuery,
           selectRadio: searchOption.selectRadio,
         },
-        baseURL: 'http://localhost:8090',
       }
     ).then((response) => {
       setSerchResult(response.data);
