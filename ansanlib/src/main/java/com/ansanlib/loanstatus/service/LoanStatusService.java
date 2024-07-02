@@ -9,13 +9,13 @@ import com.ansanlib.admin.repository.LoanStatusRepository;
 import com.ansanlib.entity.LoanStatus;
 
 @Service
-public class LoanService {
-	
+public class LoanStatusService {
+
 	@Autowired
 	private LoanStatusRepository loanStatusRepository;
-	
-	public List<LoanStatus> getLoanStatusByUserId(Long userId){
+
+	public List<LoanStatus> getLoanStatusByUserId(Long userId) {
 		return loanStatusRepository.findByLibuserId(userId);
 	}
-	
-}	
+
+}

@@ -10,7 +10,7 @@ const LoanStatusList = ()=>{
     useEffect(()=>{
         const LoanStatuses = async()=>{
             try{
-                const response = await axios.get(`/api/loanstatus/user/${userId}`);
+                const response = await axios.get(`/api/loanstatus/get/by-user/${userId}`);
                 setLoanStatuses(response.data);
             } catch(error){
                 setErrored(true);
