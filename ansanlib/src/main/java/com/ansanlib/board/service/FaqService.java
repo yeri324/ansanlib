@@ -31,25 +31,24 @@ public class FaqService {
 		
 		faqRepository.save(faq);
 		
-//		for(MultipartFile faqImage:faqImgFile)
-//		faqImgService.saveFaqImg(faq,faqImage);
 
+		if(faqImgFile!=null) {
 		for(int i=0; i<faqImgFile.size();i++) {
 	
 			faqImgService.saveFaqImg(faq, faqImgFile.get(i), i);
+		}
 		}
 		
 		return faq.getId();
 	}
 
-	public Long updateFaq(FaqFormDto faqFormDto,@RequestParam List<MultipartFile> faqImgFile,@RequestParam List<String> faqImgFileId) throws Exception {
+	public Long updateFaq(FaqFormDto faqFormDto, List<MultipartFile> faqImgFile,List<String> faqImgFileId) throws Exception {
 		// 제목/내용수정
-		System.out.println("****************************");
 		Faq faq = faqRepository.findById(faqFormDto.getId())
 					.orElseThrow(EntityNotFoundException::new);
 		faq.updateFaq(faqFormDto);
-		
-		
+		System.out.println(faqImgFile);
+		if(faqImgFile!=null) {
 		Map<Long,MultipartFile> fileMap = new HashMap<>();
 		
 		faqImgFileId.forEach(str ->{
@@ -64,7 +63,7 @@ public class FaqService {
 			e.printStackTrace();
 		}});
 		
-		
+		}
 		return faq.getId();
 	}
 

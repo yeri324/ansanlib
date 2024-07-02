@@ -37,12 +37,12 @@ public class FaqImgService {
 		String oriImgName = faqImgFile.getOriginalFilename();
 		String imgName = "";
 		String imgUrl = "";
+		System.out.println(oriImgName+"*******");
 		
 		// 파일업로드
-		if (StringUtils.hasText(oriImgName)) {
 			imgName = fileService.uploadFile(itemImgLocation, oriImgName, faqImgFile.getBytes());
 			imgUrl = "/Faq/" + imgName; //이미지 저장 위치
-		}
+		
 		faqImg.updateFaqImg(oriImgName, imgName, imgUrl);
 		faqImgRepository.save(faqImg);
 	}

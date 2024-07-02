@@ -38,24 +38,24 @@ function FaqForm(){
     formData.append("title", faqData.title);
     formData.append("content", faqData.content);
     images.forEach((image)=>{ if (image.file) formData.append('faqImgFile', image.file);});
-    if(formData.get("faqImgFile")===null) console.log("널!");
-    for (let key of formData.keys()) {
-      console.log(key, ":", formData.get(key));
-    }
-    // try {
-    //   axios.post(
-    //     'http://localhost:8090/faq/new',
-    //     formData,
-    //     {
-    //       headers: {
-    //         'Content-Type': 'multipart/form-data'
-    //       }
-    //     });
-    //   window.location.reload(navigate("/faq/list", { replace: true }));
-    //   // navigate("/faq/list", { replace: true });
-    // } catch (error) {
-    //   console.error("There was an error uploading the data!", error);
+    // if(formData.get("faqImgFile")===null) console.log("널!");
+    // for (let key of formData.keys()) {
+    //   console.log(key, ":", formData.get(key));
     // }
+    try {
+      axios.post(
+        'http://localhost:8090/faq/new',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+      window.location.reload(navigate("/faq/list", { replace: true }));
+      // navigate("/faq/list", { replace: true });
+    } catch (error) {
+      console.error("There was an error uploading the data!", error);
+    }
 
   };
 

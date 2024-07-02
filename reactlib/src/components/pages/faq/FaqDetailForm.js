@@ -40,7 +40,10 @@ function FaqDetailForm() {
                 formData.append('faqImgFileId',image.id)
                 formData.append('faqImgFile', image.file); 
             }});
-
+            if(formData.get("faqImgFile")===null) console.log("널!");
+    for (let key of formData.keys()) {
+      console.log(key, ":", formData.get(key));
+    }
             try {
                 axios.put(
                     'http://localhost:8090/faq/detail',

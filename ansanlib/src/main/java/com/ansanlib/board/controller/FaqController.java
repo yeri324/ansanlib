@@ -30,11 +30,12 @@ public class FaqController {
 	private final FaqService faqService;
 
 	@PostMapping(value = "/new", consumes = { "multipart/form-data" })
-	public ResponseEntity<String> createfaq(@RequestParam List<MultipartFile> faqImgFile, FaqFormDto faqFormDto)
+	public ResponseEntity<String> createfaq(@RequestParam(required=false) List<MultipartFile> faqImgFile, FaqFormDto faqFormDto)
 			throws Exception {
-		System.out.println(faqImgFile.size());
+		
 		ResponseEntity<String> resEntity = null;
 		Faq faq = faqFormDto.createFaq();
+
 		try {
 			faqService.createFaq(faq, faqImgFile);
 			resEntity = new ResponseEntity("Save_OK", HttpStatus.OK);
@@ -45,8 +46,8 @@ public class FaqController {
 	}
 
 	@PutMapping(value = "/detail")
-	public ResponseEntity<String> updateFaq(FaqFormDto faqFormDto, @RequestParam List<MultipartFile> faqImgFile,
-			@RequestParam List<String> faqImgFileId) throws Exception {
+	public ResponseEntity<String> updateFaq(FaqFormDto faqFormDto, @RequestParam(required=false) List<MultipartFile> faqImgFile,
+			@RequestParam(required=false) List<String> faqImgFileId) throws Exception {
 		ResponseEntity<String> resEntity = null;
 		
 		try {
