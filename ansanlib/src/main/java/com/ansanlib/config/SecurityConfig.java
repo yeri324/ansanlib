@@ -48,7 +48,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request
 //                        .requestMatchers(new AntPathRequestMatcher("/user/**")).permitAll()  // 회원 관련 모든 URL 허용
 //                      
-//                        .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")  // 관리자 페이지 접근 권한 설정
+                        .requestMatchers(new AntPathRequestMatcher("/admin/user/**")).hasRole("ADMIN")  // 관리자 페이지 접근 권한 설정
                         .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
                        )
 

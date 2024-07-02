@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -153,17 +154,21 @@ public class UserService implements UserDetailsService {
 	}
 	
 	 @Override
-	    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	    public UserDetails loadUserByUsername(String loginid) throws UsernameNotFoundException {
 	        // Retrieve user from database based on username
-	        LibUser user = userRepository.findByLoginid(username)
-	                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+		 Optional<LibUser> optionalUser = userRepository.findByLoginid(loginid);
+		 
+		 if (optionalUser.isEmpty()) {
+	            throw new UsernameNotFoundException(loginid);
+	        }
+		 LibUser user = optionalUser.get();
 
 	        // Map user details to Spring Security's UserDetails
-	        return org.springframework.security.core.userdetails.User.builder()
-	                .username(user.getLoginid())
-	                .password(user.getPassword()) // Already encoded password from database
-	                .roles(user.getRole().toString()) // Assuming role is stored as Enum or String
-	                .build();
+	        return User.builder()
+	                   .username(user.getLoginid())
+	                   .password(user.getPassword())
+	                   .roles(user.getRole().toString())
+	                   .build();
 	    }
 	 
 	 
