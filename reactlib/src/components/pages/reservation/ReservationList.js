@@ -1,26 +1,44 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const ReservationList = () => {
-    const { userId } = useParams();
+    const navigate = useNavigate();
 
+    const [userId, setUserId] = useState(null);
+    const [userName, setUserName] = useState("");
     const [reservations, setReservations] = useState([]);
     const [selectedReservations, setSelectedReservations] = useState([]); 
     const [isErrored, setErrored] = useState(false);
 
-    useEffect(async () => {
-        try {
-            //서버에 get 요청으로 사용자 아이디를 보내서 해당 사용자의 예약정보 목록을 받아온다.
-            const response = await axios.get(`/api/reservations/get/by-user/${userId}`); // {userId} 부분은 실제 사용자 ID로 대체해야 합니다.
-            //예약 정보를 셋팅한다.
-            setReservations(response.data);
-        } catch (error) { //오류 발생시(서버에서 NOT_FOUND(404) 요청 받거나 기타 오류 등등..)
-            //오류 발생 플래그 true로 설정
+    useEffect(() => {
+        const memberData = JSON.parse(sessionStorage.getItem("member") ?? "null");
+        if(memberData?.userId) {
+            setUserId(memberData?.userId);   
+            setUserName(memberData?.name);
+        } else {
             setErrored(true);
-            console.error('Error fetching reservations:', error);
+            alert("로그인이 되어있지 않습니다.");
+            navigate("/login");
         }
-    }, [userId]); //이부분은 의존성 배열인데, userId 값이 변경될 때 마다 useEffect를 새로 실행하여 예약목록을 업데이트 하도록 함.
+    }, []);
+
+    const fetchReservations = async () => {
+        if(userId) {
+            try {
+                //서버에 get 요청으로 사용자 아이디를 보내서 해당 사용자의 예약정보 목록을 받아온다.
+                const response = await axios.get(`/api/reservations/get/by-user/${userId}`); // {userId} 부분은 실제 사용자 ID로 대체해야 합니다.
+                //예약 정보를 셋팅한다.
+                setReservations(response.data);
+            } catch (error) { //오류 발생시(서버에서 NOT_FOUND(404) 요청 받거나 기타 오류 등등..)
+                //오류 발생 플래그 true로 설정
+                setErrored(true);
+                console.error('Error fetching reservations:', error);
+            }
+        }
+    };
+
+    useEffect(() => { fetchReservations(); }, [userId]); //이부분은 의존성 배열인데, userId 값이 변경될 때 마다 useEffect를 새로 실행하여 예약목록을 업데이트 하도록 함.
 
     const handleSelectReservation = (reservationId) => {
         setSelectedReservations(prevSelected =>
@@ -48,7 +66,7 @@ const ReservationList = () => {
 
     return (
         <div>
-            <h2>{userId}의 예약 목록</h2>
+            <h2>{userName}의 예약 목록</h2>
             <ul>
                 {reservations.map(reservation => (
                     <li key={reservation.id}>

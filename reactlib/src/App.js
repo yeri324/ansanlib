@@ -96,7 +96,7 @@ function App() {
         <Route path="/faq/detail/:id" element={<FaqDetailForm />} />
 
         <Route path="/reservation/new" element={<ReservationForm />} />
-        <Route path="/reservation/list/:userId" element={<ReservationList />} />
+        <Route path="/reservation/list" element={<ReservationList />} />
         <Route path="/admin/user/search" element={<Admin />} />
         <Route path="/user/authentication" element={<AuthenticationForm />} />
         <Route path="/mypage" element={<MyPage />} />

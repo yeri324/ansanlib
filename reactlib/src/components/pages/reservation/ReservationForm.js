@@ -1,10 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const ReservationForm = () => {
-  const [userId, setUserName] = useState('');
+  const navigate = useNavigate();
+
+  const [userId, setUserId] = useState(null);
+  const [userName, setUserName] = useState("");
   const [bookId, setBookId] = useState('');
   const [reservationDate, setReservationDate] = useState('');
+
+  useEffect(() => {
+    const memberData = JSON.parse(sessionStorage.getItem("member") ?? "null");
+    if(memberData?.userId) {
+        setUserId(memberData?.userId);
+        setUserName(memberData?.name);
+    } else {
+        alert("로그인이 되어있지 않습니다.");
+        navigate("/login");
+    }
+  }, []);
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -28,11 +44,11 @@ const ReservationForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>도서예약</h2>
-      <label>
+      <h2>{userName}의 도서예약</h2>
+      {/* <label>
         User Id:
-        <input type="text" value={userId} onChange={(e) => setUserName(e.target.value)} required />
-      </label>
+        <input type="text" value={userId ?? ""} readOnly />
+      </label> */}
       <label>
         Book Id:
         <input type="text" value={bookId} onChange={(e) => setBookId(e.target.value)} required />
