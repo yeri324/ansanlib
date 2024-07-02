@@ -33,10 +33,10 @@ public class FaqService {
 		
 
 		if(faqImgFile!=null) {
-		for(int i=0; i<faqImgFile.size();i++) {
-	
-			faqImgService.saveFaqImg(faq, faqImgFile.get(i), i);
-		}
+			for(MultipartFile faqImg:faqImgFile) {
+				faqImgService.saveFaqImg(faq, faqImg);
+			}
+
 		}
 		
 		return faq.getId();
@@ -47,7 +47,6 @@ public class FaqService {
 		Faq faq = faqRepository.findById(faqFormDto.getId())
 					.orElseThrow(EntityNotFoundException::new);
 		faq.updateFaq(faqFormDto);
-		System.out.println(faqImgFile);
 		if(faqImgFile!=null) {
 		Map<Long,MultipartFile> fileMap = new HashMap<>();
 		
@@ -56,8 +55,13 @@ public class FaqService {
 			fileMap.put(key,faqImgFile.get(faqImgFileId.indexOf(str)));
 		});
 		
+		fileMap.forEach((key, value) -> {
+			System.out.println(key + " : " + value);        }); 
+		
+		
+		
 		fileMap.forEach((key,value)->{try {
-			faqImgService.updateFaqImg(key, value);
+			faqImgService.updateFaqImg(key, value,faq);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
