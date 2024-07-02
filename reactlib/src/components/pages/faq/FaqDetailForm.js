@@ -2,7 +2,6 @@ import './FaqDetailForm.css';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
-import FileItem from './FileItem';
 
 function FaqDetailForm() {
     const navigate = useNavigate();
@@ -12,38 +11,41 @@ function FaqDetailForm() {
     const [title, setTitle] = useState(faqInfo.title);
     const [content, setContent] = useState(faqInfo.content);
     const [images, setImages] = useState(faqInfo.faqImgs);
-    
 
-    const updateTitle = (e) => {setTitle(e.target.value)};
-    const updateContent = (e) => {setContent(e.target.value)};
+
+    const updateTitle = (e) => { setTitle(e.target.value) };
+    const updateContent = (e) => { setContent(e.target.value) };
 
     // 파일 수정
     const handleImgChange = (id, file) => {
-        setImages(images.map(item => item.id === id ? { ...item, file } : item ));
+        setImages(images.map(item => item.id === id ? { ...item, file } : item));        
     };
 
+    // 파일 추가
     const handleAddImg = () => {
         if (images.length < 5) {
-          setImages([...images, { id: images.length + 1, file: null }]);
+            setImages([...images, { id: images.length + 1, file: null }]);
         }
-      };
+    };
 
     // 수정한 데이터 보내기
     const onUpdate = (e) => {
         if (window.confirm('수정 하시겠습니까?')) {
             e.preventDefault();
             const formData = new FormData();
-            formData.append("id",id);
+            formData.append("id", id);
             formData.append("title", title);
             formData.append("content", content);
-            images.forEach((image) => { if (image.file) {
-                formData.append('faqImgFileId',image.id)
-                formData.append('faqImgFile', image.file); 
-            }});
-            if(formData.get("faqImgFile")===null) console.log("널!");
-    for (let key of formData.keys()) {
-      console.log(key, ":", formData.get(key));
-    }
+            images.forEach((image) => {
+                if (image.file) {
+                    formData.append('faqImgFileId', image.id)
+                    formData.append('faqImgFile', image.file);
+                }
+            });
+            if (formData.get("faqImgFile") === null) console.log("널!");
+            for (let key of formData.keys()) {
+                console.log(key, ":", formData.get(key));
+            }
             try {
                 axios.put(
                     'http://localhost:8090/faq/detail',
@@ -80,7 +82,15 @@ function FaqDetailForm() {
         }
     }
 
-
+    // 이미지 미리보기 테스트
+    // const [viewImg, setViewImg] = useState('');
+    // const handlePreview = (e) => {
+    //     const reader = new FileReader();
+    //     reader.readAsDataURL(image[0]);
+    //     reader.onload = () => {
+    //        setViewImg = reader.result;
+    //     };
+    // };
 
     return (
         <div>
@@ -88,22 +98,23 @@ function FaqDetailForm() {
             <form onSubmit={onUpdate}>
                 <input type='text' name='title' value={title} onChange={updateTitle} />
                 <input type='text' name='content' value={content} onChange={updateContent} />
-                
+
                 {images.map(image => (
-                    // <FileItem key={image.id} image={image} handleImgChange={handleImgChange}/>
                     <div>
-                    {
-                        <div key={image.id}>
-                            <input type="file" onChange={(e) => handleImgChange(image.id, e.target.files[0])} />
-                            <input type='hidden' value={image.id} />
-                            <label >{image.file==null?image.oriImgName:image.file.name}</label>
-                        </div>
-                    }
-                    
-                </div>
-      
+                        {
+                            <div key={image.id}>
+                                <input type="file" onChange={(e) => handleImgChange(image.id, e.target.files[0])} />
+                                <input type='hidden' value={image.id} />
+                                <label>{image.file == null ? image.oriImgName : image.file.name}</label>
+                                {/* <img src = {setViewImg}></img> */}
+                            </div>
+                        }
+                        {}
+                    </div>
+
                 ))}
-                 {images.length < 5 && <button type="button" onClick={handleAddImg}>이미지추가</button>}
+                {images.length < 5 && <button type="button" onClick={handleAddImg}>이미지추가</button>}
+                
                 <button type='submit' >수정</button>
                 <button onClick={() => onDelete()}>삭제</button>
             </form>

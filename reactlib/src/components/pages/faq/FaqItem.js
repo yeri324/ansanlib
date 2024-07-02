@@ -1,6 +1,6 @@
 import React from "react";
 
-function FaqItem ({ faq, handleDetail, checkedList, checkHandler, }) {
+function FaqItem ({ faq, handleDetail, checkedList, checkHandler, handlePreview}) {
     return (
         <div>
             <tr>
@@ -8,8 +8,10 @@ function FaqItem ({ faq, handleDetail, checkedList, checkHandler, }) {
                 <td>{faq.id}</td>
                 <td onClick={() => handleDetail(faq)}>{faq.title}</td>
                 <td>{faq.updateTime.split('T')[0]}</td>
+                {/* <td><img src={imgsrc} /></td> */}
+                {console.log(faq.faqImgs[0].imgUrl)}
             </tr>
-            {/* <img src={faq.faqImgs[0].imgUrl} /> */}
+            
         </div>
     );
 }

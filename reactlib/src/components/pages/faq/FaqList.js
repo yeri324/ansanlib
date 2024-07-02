@@ -14,6 +14,12 @@ function FaqList() {
         searchQuery: "",
     });
 
+    //페이징용
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [totalFaqCount, setTotalFaqCount] = useState(0);
+    const faqPerPage = 8;
+
     //리스트 읽기
     useEffect(() => {
         onSearch();
@@ -21,7 +27,7 @@ function FaqList() {
 
     // 생성페이지 이동
     const onCreate = () => {
-        navigate(`/faq/new`)
+        navigate('/faq/new')
     }
 
     //상세페이지 이동
@@ -33,6 +39,7 @@ function FaqList() {
         }))
     }
 
+    // 검색
     const onSearch = () => {
         console.log(searchOption.searchBy, searchOption.searchQuery)
         axios(
@@ -64,12 +71,13 @@ function FaqList() {
         });
     };
 
-    // 삭제용 체크리스트
+    // 삭제 체크박스 여부 확인
     const checkHandler = (e, value) => {
         setIsChecked(!isChecked);
         checkedHandler(value, e.target.checked);
     };
 
+    // 삭제용 체크리스트 확인
     const checkedHandler = (value, isChecked) => {
         if (isChecked) {
             setCheckedList((prev) => [...prev, value]);
@@ -97,7 +105,19 @@ function FaqList() {
             )
             window.location.reload(navigate("/faq/list", { repalce: true }));
         }
-    }
+    };
+
+    // //이미지 띄우기
+    const [viewImg, setViewImg] = useState('');
+   
+    const handlePreview = (e) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(e.target.files[0]);
+        reader.onload = () => {
+           setViewImg = reader.result;
+        };
+       
+    };
 
     return (
         <div>
@@ -121,13 +141,49 @@ function FaqList() {
                 </thead>
                 <div className="slide">
                     {searchResult.map((faq) => (
-                        <FaqItem key={faq.id} faq={faq} checkedList={checkedList} checkHandler={checkHandler} handleDetail={handleDetail} />
+                        <FaqItem key={faq.id} faq={faq} checkedList={checkedList} checkHandler={checkHandler} handleDetail={handleDetail} handlePreview={handlePreview} />
                     ))}
-
                 </div>
                 <button onClick={onDelete}>삭제하기</button>
                 <button onClick={onCreate}>작성하기</button>
             </table >
+
+            {/* 페이징 */}
+            <ul className="pagination">
+                <li className="page-item">
+                    <button onClick={() => setCurrentPage(1)} className="page-link">
+                        {'<<'}
+                    </button>
+                </li>
+                <li className="page-item">
+                    <button
+                        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                        className="page-link">
+                        {'<'}
+                    </button>
+                </li>
+                {[...Array(totalPages)].map((_, i) => (
+                    <li key={i} className="page-item">
+                        <button
+                            onClick={() => setCurrentPage(i + 1)}
+                            className="page-link">
+                            {i + 1}
+                        </button>
+                    </li>
+                ))}
+                <li className="page-item">
+                    <button
+                        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                        className="page-link">
+                        {'>'}
+                    </button>
+                </li>
+                <li className="page-item">
+                    <button onClick={() => setCurrentPage(totalPages)} className="page-link">
+                        {'>>'}
+                    </button>
+                </li>
+            </ul>
         </div >
     );
 };
