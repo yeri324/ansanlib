@@ -29,14 +29,6 @@ import BookDetailPage from './components/pages/book/bookDetail/bookDetailPage';
 import LoanStatusList from './components/pages/loanStatus/LoanStatusList';
 
 function App() {
-  const [isVerified, setIsVerified] = useState(false);
-  const navigate = useNavigate();
-
-  const handleVerification = () => {
-    setIsVerified(true);
-    navigate('/mypage');
-  };
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState("");
 
