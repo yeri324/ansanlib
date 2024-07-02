@@ -19,7 +19,7 @@ public class BoardImg extends BaseEntity{
 	
 	@Id
 	@Column(name = "board_img_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 
 	private String imgName; // 이미지 파일명

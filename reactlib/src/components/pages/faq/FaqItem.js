@@ -1,6 +1,6 @@
 import React from "react";
 
-const FaqItem = ({ faq, handleDetail, checkedList, checkHandler, }) => {
+function FaqItem ({ faq, handleDetail, checkedList, checkHandler, }) {
     return (
         <div>
             <tr>

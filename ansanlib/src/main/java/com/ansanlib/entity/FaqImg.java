@@ -22,12 +22,13 @@ public class FaqImg extends BaseEntity {
 
 	@Id
 	@Column(name = "faq_img_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 
 	private String imgName; // 이미지 파일명
 	private String oriImgName; // 원본 이미지 파일명
 	private String imgUrl; // 이미지 조회 경로
+	private String repImgYn;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonBackReference

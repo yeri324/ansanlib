@@ -23,7 +23,7 @@ public class Holiday extends BaseEntity {
 	
 	@Id
 	@Column(name="holiday_num")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
 	@ManyToOne

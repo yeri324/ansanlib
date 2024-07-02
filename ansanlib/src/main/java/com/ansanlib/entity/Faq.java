@@ -27,7 +27,7 @@ public class Faq extends BaseEntity {
 
    @Id
    @Column(name="faq_num")
-   @GeneratedValue(strategy= GenerationType.IDENTITY)
+   @GeneratedValue(strategy= GenerationType.SEQUENCE)
    private Long id;
    
    private String title; //제목
@@ -42,7 +42,6 @@ public class Faq extends BaseEntity {
    private List<FaqImg> faqImgs = new ArrayList<>();
    
    public void updateFaq(FaqFormDto faqFormDto) {
-	   this.id = faqFormDto.getId();
 	   this.title = faqFormDto.getTitle();
 	   this.content = faqFormDto.getContent();
 	}

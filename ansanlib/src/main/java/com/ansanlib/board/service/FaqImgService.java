@@ -11,6 +11,7 @@ import com.ansanlib.book.service.FileService;
 import com.ansanlib.entity.Faq;
 import com.ansanlib.entity.FaqImg;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -24,12 +25,19 @@ public class FaqImgService {
 	private final FaqImgRepository faqImgRepository;
 	private final FileService fileService;
 
-	public void saveFaqImg(Faq faq, MultipartFile faqImgFile) throws Exception {
+	public void saveFaqImg(Faq faq, MultipartFile faqImgFile, int i) throws Exception {
 		FaqImg faqImg = new FaqImg();
 		faqImg.setFaq(faq);
+		
+		if(i == 0)
+			faqImg.setRepImgYn("Y");
+		else
+			faqImg.setRepImgYn("N");
+		
 		String oriImgName = faqImgFile.getOriginalFilename();
 		String imgName = "";
 		String imgUrl = "";
+		
 		// 파일업로드
 		if (StringUtils.hasText(oriImgName)) {
 			imgName = fileService.uploadFile(itemImgLocation, oriImgName, faqImgFile.getBytes());
@@ -37,6 +45,26 @@ public class FaqImgService {
 		}
 		faqImg.updateFaqImg(oriImgName, imgName, imgUrl);
 		faqImgRepository.save(faqImg);
+	}
+	
+	public void updateFaqImg(Long id, MultipartFile faqImgFile) throws Exception {
+		
+		if(!faqImgFile.isEmpty()) {
+			//기존 파일 조회
+			FaqImg faqImg = faqImgRepository.findById(id)
+							.orElseThrow(EntityNotFoundException::new);
+			
+			//기존 파일 삭제
+			if(StringUtils.hasText(faqImg.getImgName())) {
+				fileService.deleteFile(itemImgLocation + "/" + faqImg.getImgName());
+			}
+			
+			// 새파일 등록
+			String oriImgName = faqImgFile.getOriginalFilename();
+			String imgName = fileService.uploadFile(itemImgLocation, oriImgName, faqImgFile.getBytes());
+			String imgUrl = "/Faq/" + imgName;
+			faqImg.updateFaqImg(oriImgName, imgName, imgUrl);
+		}
 	}
 	
 }

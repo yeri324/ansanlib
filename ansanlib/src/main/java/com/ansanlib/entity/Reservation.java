@@ -25,7 +25,7 @@ import lombok.Setter;
 public class Reservation {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id; //예약번호
 	
 	@ManyToOne

@@ -28,7 +28,7 @@ public class LibUser extends BaseEntity {
 
 	@Id
 	@Column(name = "user_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long userId;
 
 	@Column(name = "user_name")
