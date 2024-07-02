@@ -85,17 +85,17 @@ public class LibUser extends BaseEntity {
 		this.setEmail(userDto.getEmail());
 		this.setPhone(userDto.getPhone());
 
-		this.setSms(userDto.getSms());
+		this.setSms("yes");
 
 		this.setLoginDate(userDto.getLoginDate());
 		this.setJoinDate(userDto.getJoinDate());
 		this.setRegTime(userDto.getRegTime());
 
-		if ("여".equalsIgnoreCase(userDto.getGender())) {
+//		if ("여".equalsIgnoreCase(userDto.getGender())) {
 			this.setGender(Gender.FEMALE);
-		} else {
-			this.setGender(Gender.MALE);
-		}
+//		} else {
+//			this.setGender(Gender.MALE);
+//		}
 		this.setStatus(UserStatus.OFFPENALTY);
 
 		this.setRole(Role.USER);

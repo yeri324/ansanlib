@@ -38,17 +38,18 @@ const JoinForm = () => {
         phone: '',
         address: '',
         address2: '',
-        gender: '',
-        sms: '',
+        // gender: '',
+        // sms: '',
     });
 
     //아이디체크
     const checkUserId = () => {
+        
         axios(
             {
-                url: '/api/user/checkId',
+                url: `/api/user/checkId?loginid=${formData.loginid}`,
                 method: 'get',
-                data: { formData },
+                
                 baseURL: 'http://localhost:8090',
             }
         ).then(response => {
@@ -98,7 +99,7 @@ const JoinForm = () => {
     const handlePhoneNumberChange = (event) => {
         const value = event.target.value;
         const hyphenatedPhoneNumber = handleChange(value);
-        setFormData({ ...formData, phone_number: hyphenatedPhoneNumber });
+        setFormData({ ...formData, phone: event.target.value });
     };
 
     const completeHandler = (data) => {
@@ -124,7 +125,7 @@ const JoinForm = () => {
 
     const handleSignUp = async (event) => {
         event.preventDefault();
-        if (!formData.name || !formData.loginid || !formData.password || !formData.password2 || !formData.phone || !formData.email || !formData.address || !formData.gender || !formData.sms) {
+        if (!formData.name || !formData.loginid || !formData.password || !formData.password2 || !formData.phone || !formData.email || !formData.address ) {
             let errorMessage = '다음 필수 입력 값을 입력해주세요:\n';
 
             if (!formData.name) errorMessage += '- 이름\n';
@@ -134,8 +135,8 @@ const JoinForm = () => {
             if (!formData.phone) errorMessage += '- 휴대폰 번호\n';
             if (!formData.email) errorMessage += '- 이메일\n';
             if (!formData.address) errorMessage += '- 주소\n';
-            if (!formData.gender) errorMessage += '- 성별\n';
-            if (!formData.message_agreement) errorMessage += '- 문자 수신 동의\n';
+            // if (!formData.gender) errorMessage += '- 성별\n';
+            // if (!formData.message_agreement) errorMessage += '- 문자 수신 동의\n';
 
             alert(errorMessage);
             return;
@@ -146,6 +147,7 @@ const JoinForm = () => {
         //     alert("이용약관에 모두 동의해야 회원가입이 가능합니다.");
         //     return;
         // }
+
         axios.post('/api/user/join', formData)
             .then(response => {
                 alert(response.data);
@@ -193,7 +195,7 @@ const JoinForm = () => {
                                     <li><input name="name" id="name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} /></li>
                                     <li></li>
                                     <li>
-                                        <input name="loginid" id="loginid" value={formData.loginid} onChange={(e) => { setFormData({ ...formData, loginid: e.target.value }); setIdAvailable(false); }} />
+                                        <input name="loginid" id="loginid" value={formData.loginid} onChange={(e) => { setFormData({ ...formData, loginid: e.target.value });  }} />
                                         <button type="button" className="check_btn" id="id_check" onClick={checkUserId}> 중복확인</button>
                                         {/* {idAvailable && <span className="complete"> 중복 확인 완료</span>} */}
                                     </li>
@@ -248,12 +250,12 @@ const JoinForm = () => {
 
                                 </ul>
                                 <ul className="base_right2">
-                                    <li>
+                                    {/* <li>
                                         <input type="radio" className="radio" name="message_agreement" id="message_agreement" value={true} onChange={(e) => setFormData({ ...formData, message_agreement: e.target.value })} />
                                         <label htmlFor="message_agreement">동의</label>
                                         <input type="radio" className="radio" name="message_agreement" id="message_disagreement" value={false} onChange={(e) => setFormData({ ...formData, message_agreement: e.target.value })} />
                                         <label htmlFor="message_agreement">비동의</label>
-                                    </li>
+                                    </li> */}
                                 </ul>
                             </div>
                         </div>

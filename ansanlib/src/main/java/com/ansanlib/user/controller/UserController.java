@@ -31,7 +31,7 @@ public class UserController {
 
 	// 아이디 중복체쿠
 	@GetMapping("/user/checkId")
-	public ResponseEntity<String> checkId(String loginid) {
+	public ResponseEntity<String> checkId(@RequestParam(value="loginid") String loginid) {
 		System.out.println(loginid);
 		return userService.checkId(loginid);
 	}
@@ -40,7 +40,7 @@ public class UserController {
 	 
 	// 가입가입
 		@PostMapping("/user/join")
-		public ResponseEntity<String> join(UserDto userDto) {
+		public ResponseEntity<String> join(@RequestBody UserDto userDto) {
 			System.out.println("가입완뇨~");
 			try {
 				userService.join(userDto);

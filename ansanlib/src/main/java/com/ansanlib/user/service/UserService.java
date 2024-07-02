@@ -46,10 +46,11 @@ public class UserService implements UserDetailsService {
         return Pattern.matches(regex, loginid);
     }
 	
-    public boolean existsById(String loginid) {
-        System.out.println("아이디 존재 확인");
-        return userRepository.existsByLoginid(loginid);
-    }
+//    public boolean existsById(String loginid) {
+//        System.out.println("아이디 존재 확인");
+//        System.out.println(userRepository.existsByLoginid(loginid));
+//        return userRepository.existsByLoginid(loginid);
+//    }
     
     
 	// checkId 중복검사
@@ -60,11 +61,11 @@ public class UserService implements UserDetailsService {
                                  .body("아이디는 5글자 이상, 20자 이하이어야 하며 영문과 숫자를 포함해야 합니다. 특수문자는 사용 불가합니다.");
         }
 		System.out.println("아이디 존재 확인1");
-        if (existsById(loginid)) {
-            return ResponseEntity.ok("이미 사용 중인 아이디입니다. 아이디를 변경해주세요.");
-        } else {
-            return ResponseEntity.ok("사용 가능한 아이디입니다.");
-        }
+//        if (existsById(loginid)) {
+//            return ResponseEntity.ok("이미 사용 중인 아이디입니다. 아이디를 변경해주세요.");
+//        } else {
+//            return ResponseEntity.ok("사용 가능한 아이디입니다.");
+//        }
 //		if (loginid.length() < 5) {
 //			return ResponseEntity.status(HttpStatus.CONFLICT).body("아이디는 5글자 이상만 가능합니다.");
 //		}
@@ -73,12 +74,12 @@ public class UserService implements UserDetailsService {
 //			return ResponseEntity.status(HttpStatus.CONFLICT).body("아이디는 영문과 숫자만 가능합니다.");
 //		}
 //
-//		Optional<LibUser> user = userRepository.findByLoginid(loginid);
-//		if (user.isPresent()) {
-//			return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 존재하는 아이디 입니다.");
-//		} else {
-//			return ResponseEntity.ok("사용 가능한 아이디 입니다.");
-//		}
+		Optional<LibUser> user = userRepository.findByLoginid(loginid);
+		if (user.isPresent()) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 존재하는 아이디 입니다.");
+		} else {
+			return ResponseEntity.ok("사용 가능한 아이디 입니다.");
+		}
 	}
 
 	// 비밀번호 일치 확인 메서드
@@ -100,11 +101,9 @@ public class UserService implements UserDetailsService {
 		 userDto.setJoinDate(LocalDateTime.now());
 		LibUser user = new LibUser();
 		user.bind(userDto, passwordEncoder);
-
 		try {
 			// 회원 정보를 데이터베이스에 저장
 			userRepository.save(user);
-
 			return ResponseEntity.status(HttpStatus.CREATED).body("회원가입이 완료되었습니다.");
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원가입 중 오류가 발생했습니다.");
