@@ -17,7 +17,7 @@ import FindPwForm from './components/pages/user/FindPwForm';
 import AdminFaqList from './components/pages/admin/AdminFaqList';
 import ReservationForm from './components/pages/reservation/ReservationForm';
 import Admin from './components/pages/admin/Admin';
-import AuthenticationForm from './components/pages/userAuthentication/AuthenticationForm';
+//import AuthenticationForm from './components/pages/userAuthentication/AuthenticationForm';
 import MyPage from './components/pages/myPage/MyPage';
 import ReservationList from './components/pages/reservation/ReservationList';
 import RequestBookForm from './components/pages/requestBook/RequestBookForm';
@@ -26,6 +26,12 @@ import RequestBookList from './components/pages/requestBook/RequestBookList';
 
 import SearchPage from './components/pages/book/searchBookList/searchPage';
 import BookDetailPage from './components/pages/book/bookDetail/bookDetailPage';
+
+
+import Calendar from './components/pages/admin/Calender';
+import HolidayList from './components/pages/admin/HolidayList';
+
+
 
 function App() {
   const [isVerified, setIsVerified] = useState(false);
@@ -50,7 +56,7 @@ function App() {
         <Route path="/reservation/new" element={<ReservationForm/>} />
         <Route path="/reservation/list/:userId" element={<ReservationList/>} />
         <Route path="/admin/user/search" element={<Admin />} />
-        <Route path="/user/authentication" element={<AuthenticationForm/>} />
+        {/* <Route path="/user/authentication" element={<AuthenticationForm/>} /> */}
         <Route path="/mypage" element={<MyPage/>}/>
 
         <Route path="/admin/user/search" element={<AdminUserList />} />
@@ -68,6 +74,10 @@ function App() {
         <Route path="/requestbook/new" element={<RequestBookForm/>} />
         <Route path="/requestbook/list/:userId" element={<RequestBookList/>} />
         
+
+
+        <Route path="/admin/calendar" element={<Calendar/> } />
+        <Route path="/admin/holiday/list" element={<HolidayList />} />
       </Routes>
 
     </div>
