@@ -30,13 +30,11 @@ public class FaqService {
 	public Long createFaq(Faq faq, List<MultipartFile> faqImgFile) throws Exception {
 		
 		faqRepository.save(faq);
-		
 
 		if(faqImgFile!=null) {
 			for(MultipartFile faqImg:faqImgFile) {
 				faqImgService.saveFaqImg(faq, faqImg);
 			}
-
 		}
 		
 		return faq.getId();
@@ -47,6 +45,8 @@ public class FaqService {
 		Faq faq = faqRepository.findById(faqFormDto.getId())
 					.orElseThrow(EntityNotFoundException::new);
 		faq.updateFaq(faqFormDto);
+		
+		//이미지수정
 		if(faqImgFile!=null) {
 		Map<Long,MultipartFile> fileMap = new HashMap<>();
 		
@@ -58,12 +58,9 @@ public class FaqService {
 		fileMap.forEach((key, value) -> {
 			System.out.println(key + " : " + value);        }); 
 		
-		
-		
 		fileMap.forEach((key,value)->{try {
 			faqImgService.updateFaqImg(key, value,faq);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}});
 		

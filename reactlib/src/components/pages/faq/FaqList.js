@@ -87,8 +87,8 @@ function FaqList() {
         if (window.confirm('삭제 하시겠습니까?')) {
             axios(
                 {
-                    url: `/faq/delete`,
-                    method: 'DELETE',
+                    url: '/faq/delete',
+                    method: 'delete',
                     data: {
                         idList: checkedList,
                     },

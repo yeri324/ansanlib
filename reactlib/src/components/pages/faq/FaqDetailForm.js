@@ -68,16 +68,14 @@ function FaqDetailForm() {
         if (window.confirm('삭제 하시겠습니까?')) {
             axios(
                 {
-                    url: `/faq/delete`,
-                    method: 'DELETE',
+                    url: '/faq/delete',
+                    method: 'delete',
                     data: {
                         id: id,
                     },
                     baseURL: 'http://localhost:8090',
                 }
-            ).then(function (response) {
-                console.log(response.data);
-            });
+            )
             window.location.reload(navigate("/faq/list", { repalce: true }));
         }
     }

@@ -1,5 +1,7 @@
 package com.ansanlib.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -27,6 +29,7 @@ public class BoardImg extends BaseEntity{
 	private String imgUrl; // 이미지 조회 경로
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonBackReference
 	@JoinColumn(name = "board_num")
 	private Board board;
 

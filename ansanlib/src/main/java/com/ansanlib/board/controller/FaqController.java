@@ -1,14 +1,13 @@
 package com.ansanlib.board.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,10 +28,11 @@ public class FaqController {
 
 	private final FaqService faqService;
 
-	@PostMapping(value = "/new", consumes = { "multipart/form-data" })
-	public ResponseEntity<String> createfaq(@RequestParam(required=false) List<MultipartFile> faqImgFile, FaqFormDto faqFormDto)
-			throws Exception {
-		
+	@PostMapping(value = "/new")
+//	@PostMapping(value = "/new", consumes = { "multipart/form-data" })
+	public ResponseEntity<String> createfaq(@RequestParam(required = false) List<MultipartFile> faqImgFile,
+			FaqFormDto faqFormDto) throws Exception {
+
 		ResponseEntity<String> resEntity = null;
 		Faq faq = faqFormDto.createFaq();
 
@@ -46,12 +46,13 @@ public class FaqController {
 	}
 
 	@PutMapping(value = "/detail")
-	public ResponseEntity<String> updateFaq(FaqFormDto faqFormDto, @RequestParam(required=false) List<MultipartFile> faqImgFile,
-			@RequestParam(required=false) List<String> faqImgFileId) throws Exception {
+	public ResponseEntity<String> updateFaq(FaqFormDto faqFormDto,
+			@RequestParam(required = false) List<MultipartFile> faqImgFile,
+			@RequestParam(required = false) List<String> faqImgFileId) throws Exception {
 		ResponseEntity<String> resEntity = null;
-		
+
 		try {
-			faqService.updateFaq(faqFormDto, faqImgFile,faqImgFileId);
+			faqService.updateFaq(faqFormDto, faqImgFile, faqImgFileId);
 			resEntity = new ResponseEntity("UPDATE_OK", HttpStatus.OK);
 		} catch (Exception e) {
 			resEntity = new ResponseEntity("글 등록 중 에러가 발생하였습니다.", HttpStatus.BAD_REQUEST);
@@ -60,16 +61,20 @@ public class FaqController {
 	}
 
 	@DeleteMapping(value = "/delete")
-	public void deleteFaq(@RequestParam MultipartFile faqImgFile, FaqFormDto faqFormDto) {
+	public void deleteFaq(@RequestBody FaqFormDto faqFormDto) {
 		ResponseEntity resEntity = null;
 		List<Long> idList = faqFormDto.getIdList();
-		try {
-			for (Long id : idList) {
-				faqService.deleteFaq(id);
+		if (idList == null) {
+			faqService.deleteFaq(faqFormDto.getId());
+		} else {
+			try {
+				for (Long id : idList) {
+					faqService.deleteFaq(id);
+				}
+				resEntity = new ResponseEntity("DELETE_OK", HttpStatus.OK);
+			} catch (Exception e) {
+				resEntity = new ResponseEntity("삭제 중 에러가 발생하였습니다.", HttpStatus.BAD_REQUEST);
 			}
-			resEntity = new ResponseEntity("DELETE_OK", HttpStatus.OK);
-		} catch (Exception e) {
-			resEntity = new ResponseEntity("삭제 중 에러가 발생하였습니다.", HttpStatus.BAD_REQUEST);
 		}
 	}
 
