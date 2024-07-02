@@ -7,17 +7,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ansanlib.admin.dto.HolidayDto;
 import com.ansanlib.admin.repository.HolidayRepository;
+import com.ansanlib.admin.repository.LibraryRepository;
 import com.ansanlib.entity.Holiday;
+import com.ansanlib.entity.Library;
+
 
 @Service
 public class HolidayService {
 
     @Autowired
     private HolidayRepository holidayRepository;
+    @Autowired
+    private LibraryRepository libraryRepository;
 
-    public Holiday saveHoliday(Holiday holiday) {
-        return holidayRepository.save(holiday);
+    public Holiday saveHoliday(HolidayDto holidayDto) {
+    	Library lib =libraryRepository.findByLibNum(holidayDto.getLib_num());
+    	
+    	Holiday holiday = new Holiday();
+		holiday.setLibrary(lib);
+		holiday.setLib_name(holidayDto.getLib_name());
+		holiday.setHoliday(holidayDto.getHoliday());
+		return holidayRepository.save(holiday);
+        
     }
     
     public List<Holiday> getAllHolidays() {

@@ -29,6 +29,8 @@ public class Holiday extends BaseEntity {
 	
 	private LocalDate holiday; //휴관일
 	private String lib_name;
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -54,22 +56,7 @@ public class Holiday extends BaseEntity {
 		this.lib_name = lib_name;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
 
-
-	
-	
-	
-	
-	
-	
-	
 	}
 	
 		

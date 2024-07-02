@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import moment from 'moment';
 import { Modal, Button, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios';
 
 
 
@@ -28,14 +29,14 @@ const Calendar = () => {
   const saveToLocalStorage = (key, data) => {
     localStorage.setItem(key, JSON.stringify(data));
   };
-  
+
   const loadFromLocalStorage = (key) => {
     const data = localStorage.getItem(key);
     return data ? JSON.parse(data) : {};
   };
   const districts = {
-   '상록구': ['감골도서관', '반월도서관', '부곡도서관', '본오도서관', '상록수도서관', '상록어린이도서관', '성포도서관', '수암도서관'],
-    '단원구': ['관산도서관', '단원어린이도서관', '미디어도서관', '선부도서관', '원고잔도서관', ]
+    '상록구': ['감골도서관', '반월도서관', '부곡도서관', '본오도서관', '상록수도서관', '상록어린이도서관', '성포도서관', '수암도서관'],
+    '단원구': ['관산도서관', '단원어린이도서관', '미디어도서관', '선부도서관', '원고잔도서관',]
   };
 
   const [schedules, setSchedules] = useState({});
@@ -43,26 +44,26 @@ const Calendar = () => {
   const calendarArr = () => {
     let result = [];
     let week = firstWeek;
-  
+
     for (week; week <= lastWeek; week++) {
       result = result.concat(
         <tr key={week}>
           {Array(7).fill(0).map((data, index) => {
             let days = today.clone().startOf('year').week(week).startOf('week').add(index, 'day');
             let isWeekend = days.day() === 0 || days.day() === 6;
-  
+
             let tdStyle = {};
             if (moment().format('YYYYMMDD') === days.format('YYYYMMDD')) {
               tdStyle.backgroundColor = 'yellow';
             } else if (days.format('MM') !== today.format('MM')) {
               tdStyle.backgroundColor = 'lightgray';
             }
-  
+
             if (isWeekend) {
               tdStyle.color = 'red';
             }
-   // Assuming holiday is an object with updateTime field
-   let holiday = schedules[days.format('YYYYMMDD')];
+            // Assuming holiday is an object with updateTime field
+            let holiday = schedules[days.format('YYYYMMDD')];
             return (
               <td key={index} style={tdStyle} onClick={() => handleDateClick(days)}>
                 <span>{days.format('D')}</span>
@@ -83,58 +84,58 @@ const Calendar = () => {
     return result;
   };
 
-useEffect(() => {
-  const storedSchedules = loadFromLocalStorage('calendarSchedules');
-  setSchedules(storedSchedules);
-}, []);
+  useEffect(() => {
+    const storedSchedules = loadFromLocalStorage('calendarSchedules');
+    setSchedules(storedSchedules);
+  }, []);
 
   const handleDateClick = (date) => {
     setSelectedDate(date);
     setShowModal(true);
   };
 
+
+  //
   const handleAddSchedule = async () => {
     if (selectedDate && library) {
       const newSchedule = `\n휴관: ${library} `;
       const dateKey = selectedDate.format('YYYYMMDD');
-  
-      try {
-        const response = await fetch('http://localhost:8090/api/admin/holiday/new', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
+      axios(
+        {
+          url: 'api/admin/holiday/new',
+          method: 'post',
+          data: {
             holiday: selectedDate.format('YYYY-MM-DD'),
             lib_name: library,
             lib_num: libNum,
-          }),
-        });
-  
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
+          },
+          baseURL: 'http://localhost:8090',
         }
-  
+      ).then((response) => {
+
         // Update the schedules state with the new schedule
         const updatedSchedules = {
           ...schedules,
           [dateKey]: [...(schedules[dateKey] || []), newSchedule],
         };
         setSchedules(updatedSchedules);
-  
+
         // Save to local storage
         saveToLocalStorage('calendarSchedules', updatedSchedules);
-  
+
         setShowModal(false);
         setDistrict('');
         setLibrary('');
         setLibNum('');
-  
-      } catch (error) {
+      }).catch(error => {
         console.error('Error:', error);
       }
+      )
     }
   };
+  //---------------
+
+
 
   const handleCloseModal = () => {
     setShowModal(false);
@@ -155,20 +156,19 @@ useEffect(() => {
     // Implement your logic to get the corresponding library number
     // This might involve fetching from a predefined mapping or database
     return selectedLibrary === '감골도서관' ? '7004' :
-           selectedLibrary === '반월도서관' ? '7008' :
-           selectedLibrary === '부곡도서관' ? '7011' :
-           selectedLibrary === '부곡도서관' ? '7011' :
-           selectedLibrary === '본오도서관' ? '7026' :
-           selectedLibrary === '성포도서관' ? '7003' :
-           selectedLibrary === '상록수도서관' ? '7006' :
-           selectedLibrary === '수암도서관' ? '7023' :
-           selectedLibrary === '관산도서관' ? '7002' :
-           selectedLibrary === '단원어린이도서관' ? '7005' :
-           selectedLibrary === '미디어도서관' ? '7014' :
-           selectedLibrary === '선부도서관' ? '7028' :
-           selectedLibrary === '원고잔도서관' ? '7018' :
-          
-           '';
+      selectedLibrary === '반월도서관' ? '7008' :
+        selectedLibrary === '상록어린이도서관' ? '7007' :
+          selectedLibrary === '부곡도서관' ? '7011' :
+            selectedLibrary === '본오도서관' ? '7026' :
+              selectedLibrary === '성포도서관' ? '7003' :
+                selectedLibrary === '상록수도서관' ? '7006' :
+                  selectedLibrary === '수암도서관' ? '7023' :
+                    selectedLibrary === '관산도서관' ? '7002' :
+                      selectedLibrary === '단원어린이도서관' ? '7005' :
+                        selectedLibrary === '미디어도서관' ? '7014' :
+                          selectedLibrary === '선부도서관' ? '7028' :
+                            selectedLibrary === '원고잔도서관' ? '7018' :
+                              '';
   };
 
   return (
@@ -179,7 +179,7 @@ useEffect(() => {
           <span>{today.format('YYYY 년 MM 월')}</span>
           <Button onClick={() => setMoment(getMoment.clone().add(1, 'month'))}>다음달</Button>
         </div>
-        <Button className="regschedule"  onClick={() => window.location.href = '/admin/holiday/list'}>목록보기</Button>
+        <Button className="regschedule" onClick={() => window.location.href = '/admin/holiday/list'}>목록보기</Button>
       </div>
       <table>
         <tbody>
@@ -205,7 +205,7 @@ useEffect(() => {
             {district && (
               <Form.Group controlId="formLibrary">
                 <Form.Label>도서관 선택</Form.Label>
-                <Form.Control as="select" value={library} onChange={(e) => setLibrary(e.target.value)}>
+                <Form.Control as="select" value={library} onChange={(e) => handleLibraryChange(e.target.value)}>
                   <option value="">도서관 선택</option>
                   {districts[district].map((lib, index) => (
                     <option key={index} value={lib}>{lib}</option>
@@ -213,7 +213,7 @@ useEffect(() => {
                 </Form.Control>
               </Form.Group>
             )}
-           
+
           </Form>
         </Modal.Body>
         <Modal.Footer>

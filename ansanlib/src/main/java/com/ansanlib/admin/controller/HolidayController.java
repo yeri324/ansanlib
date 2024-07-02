@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ansanlib.admin.dto.HolidayDto;
 import com.ansanlib.admin.service.HolidayService;
 import com.ansanlib.entity.Holiday;
 
@@ -24,8 +25,9 @@ public class HolidayController {
     private HolidayService holidayService;
 
     @PostMapping("/holiday/new")
-    public Holiday createHoliday(@RequestBody Holiday holiday) {
-        return holidayService.saveHoliday(holiday);
+    public Holiday createHoliday(@RequestBody HolidayDto holidayDto) {
+    	System.out.println(holidayDto.getLib_num()+"*"+holidayDto.getLib_name()+"*"+holidayDto.getHoliday()+"*");
+        return holidayService.saveHoliday(holidayDto);
     }
     
     
