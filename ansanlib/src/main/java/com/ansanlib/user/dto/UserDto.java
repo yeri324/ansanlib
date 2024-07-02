@@ -20,9 +20,9 @@ public class UserDto {
     private String phone;
     private String address;
     private String address2;
-//    private String gender;
+    private String gender;
     private Role role;
-//    private String sms;
+    private String sms;
 private LocalDateTime joinDate; //가입일
 
 	private LocalDateTime regTime;

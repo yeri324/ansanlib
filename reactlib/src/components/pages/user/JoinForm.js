@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import'./JoinForm.css'
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import DaumPostcode from 'react-daum-postcode';
@@ -38,8 +39,8 @@ const JoinForm = () => {
         phone: '',
         address: '',
         address2: '',
-        // gender: '',
-        // sms: '',
+        gender: 'male',
+        sms: 'yes',
     });
 
     //아이디체크
@@ -99,7 +100,7 @@ const JoinForm = () => {
     const handlePhoneNumberChange = (event) => {
         const value = event.target.value;
         const hyphenatedPhoneNumber = handleChange(value);
-        setFormData({ ...formData, phone: event.target.value });
+        setFormData({ ...formData, phone: hyphenatedPhoneNumber });
     };
 
     const completeHandler = (data) => {
@@ -177,7 +178,6 @@ const JoinForm = () => {
                             <div className="base_left">
                                 <ul className="base_left1">
                                     <li>* 이름</li>
-                                    <li>* 성별</li>
                                     <li>* 아이디</li>
                                     <li>* 비밀번호</li>
                                     <li>* 비밀번호 확인</li>
@@ -189,11 +189,13 @@ const JoinForm = () => {
                                 <ul className="base_left2">
                                     <li>* 문자수신동의</li>
                                 </ul>
+                                <ul className="base_left3">
+                                    <li>* 성별</li>
+                                </ul>
                             </div>
                             <div className="base_right">
                                 <ul className="base_right1">
                                     <li><input name="name" id="name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} /></li>
-                                    <li></li>
                                     <li>
                                         <input name="loginid" id="loginid" value={formData.loginid} onChange={(e) => { setFormData({ ...formData, loginid: e.target.value });  }} />
                                         <button type="button" className="check_btn" id="id_check" onClick={checkUserId}> 중복확인</button>
@@ -250,12 +252,20 @@ const JoinForm = () => {
 
                                 </ul>
                                 <ul className="base_right2">
-                                    {/* <li>
-                                        <input type="radio" className="radio" name="message_agreement" id="message_agreement" value={true} onChange={(e) => setFormData({ ...formData, message_agreement: e.target.value })} />
-                                        <label htmlFor="message_agreement">동의</label>
-                                        <input type="radio" className="radio" name="message_agreement" id="message_disagreement" value={false} onChange={(e) => setFormData({ ...formData, message_agreement: e.target.value })} />
-                                        <label htmlFor="message_agreement">비동의</label>
-                                    </li> */}
+                                    <li>
+                    <input type="radio" name="sms" id="sms_yes" value="yes"  checked={formData.sms === 'yes'} onChange={(e) => setFormData({ ...formData, sms: e.target.value })}/>
+                    <label htmlFor="sms_yes">동의</label>
+                    <input type="radio" name="sms" id="sms_no" value="no"  checked={formData.sms === 'no'} onChange={(e) => setFormData({ ...formData, sms: e.target.value })}/>
+                    <label htmlFor="sms_no">비동의</label>
+                                    </li>
+                                </ul>
+                                <ul className="base_right3">
+                                    <li>
+                    <input type="radio" name="gender" id="male" value="male"  checked={formData.gender === 'male'} onChange={(e) => setFormData({ ...formData, gender : e.target.value })}/>
+                    <label htmlFor="male">남</label>
+                    <input type="radio" name="gender" id="female" value="female"  checked={formData.gender === 'female'} onChange={(e) => setFormData({ ...formData, gender : e.target.value })}/>
+                    <label htmlFor="female">녀</label>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -391,12 +401,7 @@ const JoinForm = () => {
 
             <div className="input-box">
                 <label>sms수신동의
-                    <input
-                        type="radio"
-                        name="sms"
-                        value="yes"
-                        checked={formData.sms === 'yes'}
-                        onChange={handleChange}
+                    <input type="radio" name="sms" value="yes"  checked={formData.sms === 'yes'} onChange={handleChange}
                     />
                     예
                 </label>
