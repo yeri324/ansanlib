@@ -2,12 +2,9 @@ package com.ansanlib.entity;
 
 import java.time.LocalDateTime;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 import com.ansanlib.constant.Gender;
 import com.ansanlib.constant.Role;
 import com.ansanlib.constant.UserStatus;
-import com.ansanlib.user.dto.UserDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -71,57 +68,51 @@ public class LibUser extends BaseEntity {
 
 	
 	
-	public LibUser bind(UserDto userDto, PasswordEncoder passwordEncoder) {
-		this.setLoginid(userDto.getLoginid());
+//	public LibUser bind(UserDto userDto, PasswordEncoder passwordEncoder) {
+//		this.setLoginid(userDto.getLoginid());
+//
+//		  this.password = passwordEncoder.encode(userDto.getPassword());
+//		// this.setPassword(userDto.getPassword());
+//
+//		this.setName(userDto.getName());
+//
+//		this.setAddress(userDto.getAddress());
+//		this.setAddress2(userDto.getAddress2());
+//
+//		this.setEmail(userDto.getEmail());
+//		this.setPhone(userDto.getPhone());
+//
+//		this.setSms(userDto.getSms());
+//
+//		this.setLoginDate(userDto.getLoginDate());
+//		this.setJoinDate(userDto.getJoinDate());
+//		this.setRegTime(userDto.getRegTime());
+//
+//		if ("female".equalsIgnoreCase(userDto.getGender())) {
+//			this.setGender(Gender.FEMALE);
+//		} else {
+//			this.setGender(Gender.MALE);
+//		}
+//		this.setStatus(UserStatus.OFFPENALTY);
+//
+//		this.setRole(Role.ADMIN);
+//
+//		return this;
+//	}
+//	
+//	
+//	
+//	
+//	
+//	public void bindExceptLoginidAndPassword(UserDto userDto) {
+//		this.setName(userDto.getName());
+//		this.setAddress(userDto.getAddress());
+//		this.setAddress2(userDto.getAddress2());
+//		this.setEmail(userDto.getEmail());
+//		this.setPhone(userDto.getPhone());
+//	}
+//	
+//	
 
-		  this.password = passwordEncoder.encode(userDto.getPassword());
-		// this.setPassword(userDto.getPassword());
-
-		this.setName(userDto.getName());
-
-		this.setAddress(userDto.getAddress());
-		this.setAddress2(userDto.getAddress2());
-
-		this.setEmail(userDto.getEmail());
-		this.setPhone(userDto.getPhone());
-
-		this.setSms(userDto.getSms());
-
-		this.setLoginDate(userDto.getLoginDate());
-		this.setJoinDate(userDto.getJoinDate());
-		this.setRegTime(userDto.getRegTime());
-
-		if ("female".equalsIgnoreCase(userDto.getGender())) {
-			this.setGender(Gender.FEMALE);
-		} else {
-			this.setGender(Gender.MALE);
-		}
-		this.setStatus(UserStatus.OFFPENALTY);
-
-		this.setRole(Role.USER);
-
-		return this;
-	}
-	
-	
-	
-	
-	
-	public void bindExceptLoginidAndPassword(UserDto userDto) {
-		this.setName(userDto.getName());
-		this.setAddress(userDto.getAddress());
-		this.setAddress2(userDto.getAddress2());
-		this.setEmail(userDto.getEmail());
-		this.setPhone(userDto.getPhone());
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }

@@ -12,8 +12,17 @@ const LoginForm = ({ onLogin }) => {
 
     const handleLogin = (e) => {
         e.preventDefault();
-
-        axios.post('/api/user/login', loginForm)
+        console.log(loginForm.loginid, loginForm.password);
+        axios(
+            {
+              url: '/api/user/login',
+              method: 'post',
+              data: {
+                loginid: loginForm.loginid,
+            password: loginForm.password
+              },
+              
+            })
             .then(response => {
                 if (response.status === 200) {
                     alert("로그인되었습니다.")
