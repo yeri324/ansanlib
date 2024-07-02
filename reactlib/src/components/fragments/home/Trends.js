@@ -44,6 +44,7 @@ const Trends = () => {
     setCurrentPage((prevPage) => (prevPage - 1 + Math.ceil(booksData.length / itemsPerPage)) % Math.ceil(booksData.length / itemsPerPage));
   };
 
+  // 시작 페이지 = 현재페이지 * 아이템갯수
   const startIndex = currentPage * itemsPerPage;
   const visibleBooks = booksData.slice(startIndex, startIndex + itemsPerPage);
 
@@ -56,8 +57,8 @@ const Trends = () => {
         </div>
       ))}
       <div className="pagination">
-        <button className="prev" onClick={goToPrevPage}>이전</button>
-        <button className="next" onClick={goToNextPage}>다음</button>
+        <button className='btn prev' onClick={goToPrevPage}>{'<'}</button>
+        <button className='btn next' onClick={goToNextPage}>{'>'}</button>
       </div>
     </div>
   );

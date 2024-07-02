@@ -38,21 +38,24 @@ const HomePage = () => {
             </div>
           </div>
 
-          <div className="sub_content1">
-            <div className="trend_list">
-              <Trends />
-            </div>
-          </div>
-          <div className="sub_content2">
-            <div className="recommend_content">
-              <div className="recommend_menu">
-                <div className="recommend_list">
-                  슬라이드 임시 제거
-                </div>
+          <div className="sub_content">
+            <div className="sub_content1">
+              <div className="trend_h2"><h2>인기도서</h2></div>
+              <div className="trend_list">
+                <Trends />
               </div>
             </div>
-            <div className="lib_guide">
-              <Kakao />
+            <div className="sub_content2">
+              <div className="recommend_content">
+                <div className="recommend_menu">
+                  <div className="recommend_list">
+                    슬라이드 임시 제거
+                  </div>
+                </div>
+              </div>
+              <div className="lib_guide">
+                <Kakao />
+              </div>
             </div>
           </div>
         </div>

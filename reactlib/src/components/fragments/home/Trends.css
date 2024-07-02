@@ -1,22 +1,28 @@
 .trends-container {
   display: flex;
   flex-wrap: wrap;
+  position: relative;
   gap: 40px;
   padding: 20px;
   justify-content: center;
   border: 1px solid #ccc;
+
 }
 
 .book-item {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .book-cover {
-  width: 150px;
-  height: 200px;
+  width: 200px;
+  min-width: 170px;
+  height: 240px;
+  min-height: 220px;
   object-fit: cover;
+  align-items: center;
   margin-bottom: 5px;
   border-radius: 10px;
 }
@@ -27,15 +33,17 @@
   color: #333;
 }
 
-.prev, .next {
-  /* position: absolute; */
+.btn {  
+  position: absolute;
+  transform: translate(0, -50%);
   top: 50%;
-  transform: translateY(-50%);
+  width: 30px; 
+  height: 50px;
+  padding: 10px;
+  cursor: pointer;
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
   border: none;
-  padding: 10px;
-  cursor: pointer;
 }
 .prev {
   left: 10px;
@@ -43,7 +51,7 @@
 .next {
   right: 10px;
 }
-
 .prev:hover, .next:hover {
   background-color: rgba(0, 0, 0, 0.6);
 }
+

@@ -5,7 +5,23 @@
     /* 새로운 배경 색상 (연하게) */
     --new_bg_color: #fdf8f1;
     --text-color: #333333;
-}
+    /* 또 새로운 배경 색상 #1 */
+    --bg_03: #f5f5f5;
+    --sub_bg_03: #B0C4DE;
+    --point_bg_03: #708090;
+    /* 또또 새로운 배경 색상 #2 */
+    --bg_04: #F0F8FF;
+    --sub_bg_04: #E6E6FA;
+    --point_bg_04: #778899;
+    /* 또또또 새로운 배경 색상 #4 */
+    --bg_05: #F5FFFA;
+    --sub_bg_05: #F0FFF0;
+    --point_bg_05: #5F9EA0;
+    /* 또또또또 새로운 배경 색상 #5 */
+    --bg_06: #FFF5EE;
+    --sub_bg_06: #E0FFFF;
+    --point_bg_06: #2F4F4F;
+  }
 
 /* 기본 레이아웃 */
 body {
@@ -22,6 +38,16 @@ body {
     justify-content: center;
     /* background-color: var(--main-bg-color); */
     background-color: #fdf8f1;
+}
+
+.sub_content {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    align-items: center;
+    /* justify-content: center; */
+    /* text-align: center; */
 }
 
 .main_grid {
@@ -105,6 +131,15 @@ body {
     /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
     background-color: #ffffff;
 }
+
+.trend_h2 {
+    display: flex;
+    position: relative;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+
 
 .trend_list,
 .recommend_content,
