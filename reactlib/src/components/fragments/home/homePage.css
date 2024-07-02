@@ -21,7 +21,7 @@
     --bg_06: #FFF5EE;
     --sub_bg_06: #E0FFFF;
     --point_bg_06: #2F4F4F;
-  }
+}
 
 /* 기본 레이아웃 */
 body {
@@ -31,30 +31,27 @@ body {
 }
 
 .main_content {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    width: 100%;
     align-items: center;
     justify-content: center;
-    /* background-color: var(--main-bg-color); */
-    background-color: #fdf8f1;
-}
-
-.sub_content {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    width: 100%;
-    align-items: center;
-    /* justify-content: center; */
-    /* text-align: center; */
+    background-color: var(--bg_03);
 }
 
 .main_grid {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.sub_content {
     width: 100%;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
 }
 
 .content_grid {
@@ -66,20 +63,20 @@ body {
 }
 
 .top_column {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    width: 100%;
 }
 
 .bottom_column {
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     gap: 50px;
-    width: 100%;
 }
 
 .notice_board {
@@ -98,37 +95,17 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
 }
-/* 
-.monthly_plan {
-    display: flex;
-    flex: 1;
-    min-width: 300px;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    border: 1px solid #ddd;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff;
-} */
-
-
-
-
 
 .sub_content1,
 .sub_content2 {
-    width: 80%;
+    width: 100%;
     max-width: 1200px;
     margin: 20px 0;
 }
 
 .sub_content1 .trend_list,
-.sub_content2 .recommend_content,
 .sub_content2 .lib_guide {
-    /* border: 1px solid #ddd; */
-    
     padding: 20px;
-    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
     background-color: #ffffff;
 }
 
@@ -139,26 +116,11 @@ body {
     font-weight: 600;
 }
 
-
-
 .trend_list,
-.recommend_content,
-.recommend_menu {
+.lib_guide {
     display: flex;
     flex-direction: column;
     gap: 10px;
-}
-
-.recommend_list {
-    display: flex;
-    justify-content: center;
+    margin: 0 auto;
     align-items: center;
-    overflow-x: auto;
-}
-
-.lib_guide {
-    display: flex;
-    margin-top: 20px;
-    align-items: center;
-    justify-content: center;
 }

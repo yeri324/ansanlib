@@ -1,7 +1,9 @@
 .trends-container {
   display: flex;
   flex-wrap: wrap;
+  /* overflow-x: auto; */
   position: relative;
+  width: 100%;
   gap: 40px;
   padding: 20px;
   justify-content: center;
@@ -10,17 +12,16 @@
 }
 
 .book-item {
-  position: relative;
+  /* position: relative; */
   display: flex;
+  flex: 0 0 auto;
   flex-direction: column;
   align-items: center;
 }
 
 .book-cover {
-  width: 200px;
-  min-width: 170px;
-  height: 240px;
-  min-height: 220px;
+  width: 170px;
+  height: 220px;
   object-fit: cover;
   align-items: center;
   margin-bottom: 5px;

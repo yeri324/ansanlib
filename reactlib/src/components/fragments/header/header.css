@@ -26,77 +26,79 @@
   --point_bg_06: #2F4F4F;
 }
 
+body {
+  margin: 0;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
 header {
+  background-color: #ffffff;
+}
+
+.full_header {
   display: flex;
   flex-direction: column;
-  margin: 0;
-  padding: 0;
-  font-family: 'Noto Sans KR', sans-serif;
-  /* cursor: pointer; */
-  /* position: relative; */
-  /* z-index: 10; */
+  align-items: center;
+  width: 100%;
+  padding: 10px 0;
+  border-bottom: 1px solid #e0e0e0;
 }
 
-/* 전체 헤더 영역 스타일 */
-.full_header {
-  background-color: #ffffff;
-  padding: 10px 40px;
-  border-bottom: 1px solid #ffffff;
-}
-
-/* 상단 로그인 영역 스타일 */
 .top_login {
+  width: 100%;
   text-align: right;
-  margin-top: 5px;
-  margin-left: 5px;
-  margin-right: 5px;
-  margin-bottom: 20px;
+  padding-right: 40px;
+  margin-bottom: 10px;
   font-size: 15px;
   font-weight: 600;
-  text-shadow: 0.5px 0.5px#e0e0e0;
-}
-.top_login > .enter {
-  margin-right: 12px;
-}
-.top_login > .enter:hover {
-  background-color: #f8f9fa;
-}
-.top_login > .join {
-  margin-left: 12px;
-}
-.top_login > .join:hover {
-  background-color: #f8f9fa;
+  color: var(--text-color);
 }
 
+.top_login .enter,
+.top_login .join {
+  margin: 0 12px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
 
+.top_login .enter:hover,
+.top_login .join:hover {
+  color: #007bff;
+}
 
-/* 메뉴 스타일 */
 .header_menu {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 40px;
+  margin-bottom: 20px;
+}
+
+.top_logo img {
+  width: 200px;
+  height: auto;
 }
 
 .top_menu {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  width: 100%;
 }
 
-/* 개별 메뉴 항목 스타일 */
-.top_menu>div {
+.top_menu > div {
   position: relative;
-  margin: 10px;
-  padding: 10px 30px;
+  padding: 10px 20px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
   font-size: 20px;
   font-weight: 600;
-  text-shadow: 0.5px 0.5px#e0e0e0;
+  color: var(--text-color);
+  transition: background-color 0.3s ease;
 }
 
-.top_menu>div:hover {
+.top_menu > div:hover {
   background-color: #f8f9fa;
 }
 
@@ -105,39 +107,30 @@ header {
   position: absolute;
   top: 100%;
   left: 0;
+  width: max-content;
   background-color: #ffffff;
-  /* border: 1px solid #e0e0e0; */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   z-index: 1000;
 }
 
-.sub_menu>div {
+.sub_menu > div {
   padding: 10px 20px;
   white-space: nowrap;
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--text-color);
   transition: background-color 0.3s ease;
 }
 
-/* 서브 메뉴 보이기 */
-.top_menu>div:hover .sub_menu {
+.top_menu > div:hover .sub_menu {
   display: block;
-  font-size: 17px;
-  font-weight: 500;
-  text-shadow: 0.3px 0.3px#e0e0e0;
 }
 
-.sub_menu>div:hover {
+.sub_menu > div:hover {
   background-color: #f8f9fa;
 }
 
-.top_logo {
-  margin: 10px;
-}
-
-.top_logo img {
-  width: 200px;
-  height: auto;
-}
-
 a {
-  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
 }
