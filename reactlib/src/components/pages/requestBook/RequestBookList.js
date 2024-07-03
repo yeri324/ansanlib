@@ -1,22 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const RequestBookList = () => {
-  const { userId} =useParams();
+  const navigate = useNavigate();
+
+  const [userId, setUserId] = useState(null);
+  const [userName, setUserName] = useState("");
   const [requestBooks, setRequestBooks] = useState([]);
   const [selectedRequestBooks, setSelectedRequestBooks] = useState([]);
   const [isErrored, setErrored] =useState(false);
+
+  useEffect(()=>{
+    const memberData = JSON.parse(sessionStorage.getItem("member") ?? "null");
+    if(memberData?.userId) {
+      setUserId(memberData?.userId);
+      setUserName(memberData?.name);
+    } else {
+        setErrored(true);
+        alert("로그인이 되어있지 않습니다.");
+        navigate("/login");
+    }
+  },[])
   
-  useEffect(async () => {
-    try{
+  const fetchRequestBook  = async () => {
+    if(userId) {
+      try{
         const response = await axios.get(`/api/requestbook/get/by-user/${userId}`);
         setRequestBooks(response.data);
-    } catch(error){
+      } catch(error){
         setErrored(true);
         console.error('There was an error fetching the request books!', error);
+      }
     }
-  },  [userId]);
+    
+  };
+
+  useEffect(()=>{ fetchRequestBook();}, [userId]);
 
   const handleSelectRequestBook =(requestBookId)=>{
     setSelectedRequestBooks(prevSelected=>
@@ -46,7 +66,7 @@ const RequestBookList = () => {
 
   return (
     <div>
-      <h2>도서 신청 목록</h2>
+      <h2>{userName}의 도서 신청 목록</h2>
       <ul>
         {requestBooks.map(book => (
           <li key={book.id}>

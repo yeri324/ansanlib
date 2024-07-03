@@ -109,9 +109,9 @@ function App() {
         <Route path="/book/detail/:id" element={<BookDetailPage />} />
 
         <Route path="/requestbook/new" element={<RequestBookForm/>} />
-        <Route path="/requestbook/list/:userId" element={<RequestBookList/>} />
+        <Route path="/requestbook/list" element={<RequestBookList/>} />
         
-        <Route path="/loanstatus/:userId" element={<LoanStatusList/>} />
+        <Route path="/loanstatus" element={<LoanStatusList/>} />
 
       </Routes>
 

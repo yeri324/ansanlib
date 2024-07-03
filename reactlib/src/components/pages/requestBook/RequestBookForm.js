@@ -1,13 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const RequestBookForm = () => {
+  const navigate = useNavigate();
+
   const [isbn, setIsbn] = useState('');
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [publisher, setPublisher] = useState('');
   const [pubDate, setPubDate] = useState('');
-  const [userId, setUserId] = useState('');
+  const [userId, setUserId] = useState(null);
+  const [userName, setUserName] = useState("");
+
+  useEffect(()=>{
+    const memberData = JSON.parse(sessionStorage.getItem("member") ?? "null");
+    if(memberData?.userId){
+      setUserId(memberData?.userId);
+      setUserName(memberData?.name);
+    } else{
+        alert("로그인이 되어있지 않습니다.");
+        navigate("/login");
+    }
+  },[]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -45,6 +60,7 @@ const RequestBookForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <h2> {userName}의 도서신청</h2>
       <div>
         <label>ISBN:</label>
         <input 
@@ -90,7 +106,7 @@ const RequestBookForm = () => {
           required 
         />
       </div>
-      <div>
+      {/*<div>
         <label>User ID:</label>
         <input 
           type="text" 
@@ -98,7 +114,7 @@ const RequestBookForm = () => {
           onChange={(e) => setUserId(e.target.value)} 
           required 
         />
-      </div>
+      </div>*/}
       <button type="submit">Submit Request</button>
     </form>
   );
