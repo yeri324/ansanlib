@@ -5,6 +5,7 @@ import React from 'react';
 import BookSearch from './booksearch';
 import Trends from './Trends';
 import Notice from './notice';
+import New from './new';
 // import Calendar from 'react-calendar'
 import TodoCalendar from './calendar';
 import Kakao from '../../map/mapForm';
@@ -33,7 +34,9 @@ const HomePage = () => {
                 <div className="monthly_plan">
                   <TodoCalendar />
                 </div>
-                <div className="login_box">로그인</div>
+                <div className="login_box">
+                  <New />
+                </div>
               </div>
             </div>
           </div>
@@ -41,11 +44,17 @@ const HomePage = () => {
           <div className="sub_content">
             <div className="sub_content1">
               <div className="trend_h2"><h2>인기도서</h2></div>
+              <div className="div_border"><hr></hr></div>
               <div className="trend_list">
                 <Trends />
               </div>
+              {/* <div className="new_list">
+                <New />
+              </div> */}
             </div>
             <div className="sub_content2">
+              <div className="lib_h2"><h2>오시는 길</h2></div>
+              <div className="div_border"><hr></hr></div>
               <div className="lib_guide">
                 <Kakao />
               </div>

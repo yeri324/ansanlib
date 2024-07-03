@@ -26,7 +26,7 @@
 /* 기본 레이아웃 */
 body {
     margin: 0 auto;
-    background-color: #ffffff;
+    background-color: #fff;
     font-family: 'Arial', sans-serif;
 }
 
@@ -44,6 +44,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #fff;
 }
 
 .sub_content {
@@ -59,7 +60,7 @@ body {
     flex-direction: column;
     align-items: center;
     max-width: 1200px;
-    gap: 20px;
+    /* gap: 2px; */
 }
 
 .top_column {
@@ -67,7 +68,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
 }
 
 .bottom_column {
@@ -76,7 +76,7 @@ body {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 50px;
+    gap: 30px;
 }
 
 .notice_board {
@@ -90,17 +90,22 @@ body {
     min-width: 300px;
     justify-content: center;
     align-items: center;
-    padding: 20px;
-    border: 1px solid #ddd;
+    padding: 10px;
+    /* border: 1px solid #ddd;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff;
+    background-color: #ffffff; */
+}
+
+.sub_content {
+    margin: 0 auto;
+    background-color: #fff;
 }
 
 .sub_content1,
 .sub_content2 {
     width: 100%;
     max-width: 1200px;
-    margin: 20px 0;
+    margin: 10px auto;
 }
 
 .sub_content1 .trend_list,
@@ -109,18 +114,36 @@ body {
     background-color: #ffffff;
 }
 
-.trend_h2 {
+.trend_h2,
+.lib_h2 {
     display: flex;
     position: relative;
+    margin-top: -10px;
+    margin-bottom: -20px;
     font-size: 18px;
     font-weight: 600;
 }
 
+.div_border {
+    height: 25px;
+}
+.div_border > hr {
+    border: 0;
+    height: 12px;
+    background-color: #ddd;
+}
+
+
 .trend_list,
+.new_list,
 .lib_guide {
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin: 0 auto;
     align-items: center;
+}
+
+.lib_guide {
+    margin-bottom: 20px;
 }
