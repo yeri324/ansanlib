@@ -14,12 +14,6 @@ function FaqList() {
         searchQuery: "",
     });
 
-    //페이징용
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
-    const [totalFaqCount, setTotalFaqCount] = useState(0);
-    const faqPerPage = 8;
-
     //리스트 읽기
     useEffect(() => {
         onSearch();
@@ -40,7 +34,7 @@ function FaqList() {
     }
 
     // 검색
-    const onSearch = () => {
+    const onSearch = (page) => {
         console.log(searchOption.searchBy, searchOption.searchQuery)
         axios(
             {
@@ -49,6 +43,8 @@ function FaqList() {
                 data: {
                     searchBy: searchOption.searchBy,
                     searchQuery: searchOption.searchQuery,
+                    page : page -1,
+                    size : faqPerPage,
                 },
                 baseURL: 'http://localhost:8090',
             }
@@ -119,6 +115,12 @@ function FaqList() {
        
     };
 
+   //페이징용 useState 
+   const [currentPage, setCurrentPage] = useState(1);
+   const [totalPages, setTotalPages] = useState(1);
+   const [totalFaqCount, setTotalFaqCount] = useState(0);
+   const faqPerPage = 8;
+
     return (
         <div>
             <div>
@@ -149,6 +151,9 @@ function FaqList() {
             </table >
 
             {/* 페이징 */}
+            <div className="count_item">
+                총 {totalFaqCount}건 / {totalPages} 페이지
+            </div>
             <ul className="pagination">
                 <li className="page-item">
                     <button onClick={() => setCurrentPage(1)} className="page-link">

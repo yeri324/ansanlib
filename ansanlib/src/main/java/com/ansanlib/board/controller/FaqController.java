@@ -2,9 +2,11 @@ package com.ansanlib.board.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -60,7 +62,7 @@ public class FaqController {
 		return resEntity;
 	}
 
-	@DeleteMapping(value = "/delete")
+	@DeleteMapping("/delete")
 	public void deleteFaq(@RequestBody FaqFormDto faqFormDto) {
 		ResponseEntity resEntity = null;
 		List<Long> idList = faqFormDto.getIdList();
@@ -79,9 +81,19 @@ public class FaqController {
 	}
 
 	@PostMapping("/search")
-	public ResponseEntity<CommonListResponse<List<Faq>>> searchUsers(FaqDto faqDto) {
-		List<Faq> faqs = faqService.ListFaq(faqDto);
-		return ResponseEntity.ok().body(new CommonListResponse<List<Faq>>(faqs.size(), faqs));
+	public ResponseEntity<CommonListResponse<Page<Faq>>> searchUsers(
+			@RequestParam(name = "page", defaultValue = "0") int page,
+	        @RequestParam(name = "size", defaultValue = "8") int size, 
+	        @RequestParam FaqDto faqDto) {
+		
+			Page<Faq> faqs = faqService.ListFaq(page, size, faqDto);
+			return ResponseEntity.ok().body(new CommonListResponse<Page<Faq>>(page, faqs));
 	}
 
+	
+	@GetMapping("/count")
+	public ResponseEntity<Long> totalFaqCount() {
+		Long count = faqService.getTotalCount();
+		return new ResponseEntity(count, HttpStatus.OK);
+	}
 }

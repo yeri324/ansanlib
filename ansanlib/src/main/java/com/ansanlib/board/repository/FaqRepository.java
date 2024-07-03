@@ -10,15 +10,15 @@ import com.ansanlib.entity.Faq;
 
 public interface FaqRepository extends JpaRepository<Faq, Long>{
 	
-	Faq findByTitle(String title);
-
-	Faq findByContent(String content);
-	
-	Page<Faq> findAllByOrderByRegTime(Pageable pageable);
+	//작성시간 역순으로 전부 가져오기
+	Page<Faq> findAllByOrderByRegTimeDesc(Pageable pageable);
 
 //	Page<Faq> findAll(Specification<Faq> spec, Pageable pageable);
 	
-	List<Faq> findByTitleContains(String title);
-	List<Faq> findByLibUser_LoginidContains(String userId);
+	//제목으로 검색
+	Page<Faq> findByTitleContains(String title, Pageable pageable);
+	
+	//작성자로 검색
+	Page<Faq> findByLibUser_LoginidContains(String userId, Pageable pageable);
 	
 }

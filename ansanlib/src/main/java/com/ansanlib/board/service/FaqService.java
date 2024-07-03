@@ -4,9 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ansanlib.board.dto.FaqDto;
@@ -27,6 +29,7 @@ public class FaqService {
 	private final FaqImgRepository faqImgRepository;
 	private final FaqImgService faqImgService;
 
+	//faq추가
 	public Long createFaq(Faq faq, List<MultipartFile> faqImgFile) throws Exception {
 		
 		faqRepository.save(faq);
@@ -40,6 +43,7 @@ public class FaqService {
 		return faq.getId();
 	}
 
+	//수정하기
 	public Long updateFaq(FaqFormDto faqFormDto, List<MultipartFile> faqImgFile,List<String> faqImgFileId) throws Exception {
 		// 제목/내용수정
 		Faq faq = faqRepository.findById(faqFormDto.getId())
@@ -68,17 +72,25 @@ public class FaqService {
 		return faq.getId();
 	}
 
+	//삭제하기
 	public void deleteFaq(Long id) {
 		faqRepository.deleteById(id);
 	}
 
-	public List<Faq> ListFaq(FaqDto faqDto) {
+	//총 개수 파악
+	public Long getTotalCount() {
+		return faqRepository.count();
+	}
+	
+	//기준 검색하기 or 전체 리스트 가져오기
+	public Page<Faq> ListFaq(int page, int size, FaqDto faqDto) {
+		Pageable pageable = PageRequest.of(page, size);
 		if ("loginid".equals(faqDto.getSearchBy())) {
-			return faqRepository.findByLibUser_LoginidContains(faqDto.getSearchQuery());
+			return faqRepository.findByLibUser_LoginidContains(faqDto.getSearchQuery(), pageable);
+		} else if ("title".equals(faqDto.getSearchBy())){
+			return faqRepository.findByTitleContains(faqDto.getSearchQuery(), pageable);
 		} else {
-			return faqRepository.findByTitleContains(faqDto.getSearchQuery());
+			return faqRepository.findAllByOrderByRegTimeDesc(pageable);
 		}
 	}
-
-
 }
