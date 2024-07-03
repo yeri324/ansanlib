@@ -34,8 +34,9 @@ function FaqList() {
     }
 
     // 검색
-    const onSearch = (page) => {
-        console.log(searchOption.searchBy, searchOption.searchQuery)
+    const onSearch = () => {
+        console.log(searchOption.searchBy, searchOption.searchQuery);
+        console.log(currentPage, faqPerPage);
         axios(
             {
                 url: '/faq/search',
@@ -43,14 +44,17 @@ function FaqList() {
                 data: {
                     searchBy: searchOption.searchBy,
                     searchQuery: searchOption.searchQuery,
-                    page : page -1,
+                    page : currentPage,
                     size : faqPerPage,
                 },
                 baseURL: 'http://localhost:8090',
             }
+            
         ).then((response) => {
-            console.log(response.data.result);
-            setSerchResult(response.data.result);
+            console.log(response.data);
+            setSerchResult(response.data.content);
+            setTotalPages(response.data.totalPages);
+            setTotalFaqCount(response.data.totalElements);
         });
 
     }
@@ -120,6 +124,9 @@ function FaqList() {
    const [totalPages, setTotalPages] = useState(1);
    const [totalFaqCount, setTotalFaqCount] = useState(0);
    const faqPerPage = 8;
+
+
+   // 전체 리스트 가져오기
 
     return (
         <div>

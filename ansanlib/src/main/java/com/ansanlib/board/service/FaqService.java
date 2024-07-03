@@ -7,6 +7,8 @@ import java.util.Map;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,68 +31,74 @@ public class FaqService {
 	private final FaqImgRepository faqImgRepository;
 	private final FaqImgService faqImgService;
 
-	//faq추가
+	// faq추가
 	public Long createFaq(Faq faq, List<MultipartFile> faqImgFile) throws Exception {
-		
+
 		faqRepository.save(faq);
 
-		if(faqImgFile!=null) {
-			for(MultipartFile faqImg:faqImgFile) {
+		if (faqImgFile != null) {
+			for (MultipartFile faqImg : faqImgFile) {
 				faqImgService.saveFaqImg(faq, faqImg);
 			}
 		}
-		
+
 		return faq.getId();
 	}
 
-	//수정하기
-	public Long updateFaq(FaqFormDto faqFormDto, List<MultipartFile> faqImgFile,List<String> faqImgFileId) throws Exception {
+	// 수정하기
+	public Long updateFaq(FaqFormDto faqFormDto, List<MultipartFile> faqImgFile, List<String> faqImgFileId)
+			throws Exception {
 		// 제목/내용수정
-		Faq faq = faqRepository.findById(faqFormDto.getId())
-					.orElseThrow(EntityNotFoundException::new);
+		Faq faq = faqRepository.findById(faqFormDto.getId()).orElseThrow(EntityNotFoundException::new);
 		faq.updateFaq(faqFormDto);
-		
-		//이미지수정
-		if(faqImgFile!=null) {
-		Map<Long,MultipartFile> fileMap = new HashMap<>();
-		
-		faqImgFileId.forEach(str ->{
-			Long key=Long.parseLong(str);
-			fileMap.put(key,faqImgFile.get(faqImgFileId.indexOf(str)));
-		});
-		
-		fileMap.forEach((key, value) -> {
-			System.out.println(key + " : " + value);        }); 
-		
-		fileMap.forEach((key,value)->{try {
-			faqImgService.updateFaqImg(key, value,faq);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}});
-		
+
+		// 이미지수정
+		if (faqImgFile != null) {
+			Map<Long, MultipartFile> fileMap = new HashMap<>();
+
+			faqImgFileId.forEach(str -> {
+				Long key = Long.parseLong(str);
+				fileMap.put(key, faqImgFile.get(faqImgFileId.indexOf(str)));
+			});
+
+			fileMap.forEach((key, value) -> {
+				System.out.println(key + " : " + value);
+			});
+
+			fileMap.forEach((key, value) -> {
+				try {
+					faqImgService.updateFaqImg(key, value, faq);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			});
+
 		}
 		return faq.getId();
 	}
 
-	//삭제하기
+	// 삭제하기
 	public void deleteFaq(Long id) {
 		faqRepository.deleteById(id);
 	}
 
-	//총 개수 파악
-	public Long getTotalCount() {
-		return faqRepository.count();
-	}
-	
-	//기준 검색하기 or 전체 리스트 가져오기
+
+	// 기준 검색하기 or 전체 리스트 가져오기
 	public Page<Faq> ListFaq(int page, int size, FaqDto faqDto) {
-		Pageable pageable = PageRequest.of(page, size);
+		Pageable pageable = PageRequest.of(page, size, Sort.by(Order.desc("regTime")));
+
 		if ("loginid".equals(faqDto.getSearchBy())) {
 			return faqRepository.findByLibUser_LoginidContains(faqDto.getSearchQuery(), pageable);
-		} else if ("title".equals(faqDto.getSearchBy())){
+		} else if ("title".equals(faqDto.getSearchBy())) {
 			return faqRepository.findByTitleContains(faqDto.getSearchQuery(), pageable);
 		} else {
-			return faqRepository.findAllByOrderByRegTimeDesc(pageable);
+			return faqRepository.findAll(pageable);
 		}
 	}
+	
+//	public Page<Faq> ListFaq(int page, int size) {
+//		Pageable pageable = PageRequest.of(page, size);
+//		System.out.println(pageable);
+//		return faqRepository.findAll(pageable);
+//	}
 }
