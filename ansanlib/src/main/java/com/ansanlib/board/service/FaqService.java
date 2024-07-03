@@ -82,7 +82,6 @@ public class FaqService {
 		faqRepository.deleteById(id);
 	}
 
-
 	// 기준 검색하기 or 전체 리스트 가져오기
 	public Page<Faq> ListFaq(int page, int size, FaqDto faqDto) {
 		Pageable pageable = PageRequest.of(page, size, Sort.by(Order.desc("regTime")));
@@ -96,9 +95,4 @@ public class FaqService {
 		}
 	}
 	
-//	public Page<Faq> ListFaq(int page, int size) {
-//		Pageable pageable = PageRequest.of(page, size);
-//		System.out.println(pageable);
-//		return faqRepository.findAll(pageable);
-//	}
 }
