@@ -41,7 +41,6 @@ public class UserController {
 	// 가입가입
 		@PostMapping("/user/join")
 		public ResponseEntity<String> join(@RequestBody UserDto userDto) {
-			System.out.println("가입완뇨~");
 			try {
 				userService.join(userDto);
 				return new ResponseEntity<>("회원가입이 완료되었습니다.", HttpStatus.CREATED);
@@ -61,7 +60,7 @@ public class UserController {
         LibUser authenticatedUser = userService.authenticate(loginid, password);
 
         if (authenticatedUser != null) {
-       // httpRequest.getSession().setAttribute("userId", authenticatedUser.getLoginid());
+        httpRequest.getSession().setAttribute("userId", authenticatedUser.getUserId());
             return ResponseEntity.ok(authenticatedUser); // 회원인증 시 정보 반환
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);

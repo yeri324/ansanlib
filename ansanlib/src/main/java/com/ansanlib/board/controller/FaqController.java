@@ -57,7 +57,7 @@ public class FaqController {
 	}
 
 	@DeleteMapping(value = "/delete")
-	public void deleteFaq(@RequestParam MultipartFile faqImgFile, FaqFormDto faqFormDto) {
+	public void deleteFaq( FaqFormDto faqFormDto) {
 		ResponseEntity resEntity = null;
 		List<Long> idList = faqFormDto.getIdList();
 		try {
