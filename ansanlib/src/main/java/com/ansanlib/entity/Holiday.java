@@ -19,7 +19,7 @@ import jakarta.persistence.Table;
 public class Holiday extends BaseEntity {
 	
 	 @Id
-	    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    @Column(name = "holiday_num")
 	    private Long id;
 	
