@@ -1,118 +1,101 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import './SearchPage.css'; // 스타일 파일을 임포트합니다.
 
-const SearchPage = () => {
-  const [formData, setFormData] = useState({
-    keyword: '',
+const SearchPage = ({ isAuthenticated, isAnonymous }) => {
+  const [formValues, setFormValues] = useState({
+    title: '',
     isbn: '',
     author: '',
     publisher: '',
     pub_date: '',
-    category_code: '',
-    page: 0
+    category_code: ''
   });
-  const [searchResults, setSearchResults] = useState([]);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [bookList, setBookList] = useState([]);
   const [pagination, setPagination] = useState({
     hasPrev: false,
     hasNext: false,
     previous: 0,
     next: 0
   });
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSearch = async (e, page = 0) => {
+    if (e) e.preventDefault();
     try {
-      const response = await axios.get('/api/books/searchList', { params: formData });
-      setSearchResults(response.data.content); // 검색 결과 처리
+      const cleanFormValues = { 
+        ...formValues,
+        page: page // page 매개변수를 추가하여 현재 페이지 정보 전달
+      };
+      //console.log('Request Params:', cleanFormValues); // 요청 파라미터 로그 출력
+      const response = await axios.get('/api/book/search', { params: cleanFormValues });
+      const data = response.data;
+
+      //console.log('Response Data:', data); // 응답 데이터 로그 출력
+
+      setBookList(data.bookList);
       setPagination({
-        hasPrev: response.data.hasPrevious,
-        hasNext: response.data.hasNext,
-        previous: response.data.previous,
-        next: response.data.next
+        hasPrev: data.hasPrev,
+        hasNext: data.hasNext,
+        previous: data.previous,
+        next: data.next
       });
     } catch (error) {
-      setErrorMessage('검색 중 오류 발생: ' + error.message);
+      setErrorMessage('검색 중 오류가 발생했습니다.');
     }
   };
 
-  const handlePageChange = (pageNumber) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      page: pageNumber
-    }));
-  };
-
-  const alertLogin = () => {
+  const handleAlertLogin = () => {
     alert('로그인 후 이용가능합니다.');
   };
 
   return (
     <main>
       <div className="breadcrumbs">
-        <div className="page-header d-flex align-items-center" style={{ backgroundImage: "url('/img/page-header1.jpg')" }}>
-          <div className="container position-relative">
-            <div className="row d-flex justify-content-center">
-              <div className="col-lg-6 text-center">
-                <h2>통합검색</h2>
-              </div>
-            </div>
-          </div>
-        </div>
         <nav>
           <div className="container">
             <ol>
-              <li><Link to="/">Home</Link></li>
-              <li>통합검색</li>
+              <li><a href="/">Home</a></li>
+              <li><a href={`/book/search`}>상세검색</a></li>
             </ol>
           </div>
         </nav>
       </div>
 
       <section className="sample-page">
-        <div className="content" style={{ textAlign: 'center' }}>
+        <div className="content centered-content">
           <div className="accordion" id="accordionExample">
             <div className="accordion-item">
-              <h2 className="accordion-header" id="headingOne">
-                <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                  통합검색
-                </button>
-              </h2>
               <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                <div className="accordion-body">
-                  <form onSubmit={handleSubmit} style={{ width: '100%' }}>
-                    <div className="input-group mb-3">
-                      <div className="input-group-text" id="btnGroupAddon2">책이름</div>
-                      <input name="keyword" type="text" className="form-control" aria-label="Input group example" aria-describedby="btnGroupAddon2" onChange={handleChange} />
-                    </div>
-                    <div className="input-group mb-3">
-                      <div className="input-group-text" id="btnGroupAddon2">ISBN</div>
-                      <input name="isbn" type="text" className="form-control" aria-label="Input group example" aria-describedby="btnGroupAddon2" onChange={handleChange} />
-                    </div>
-                    <div className="input-group mb-3">
-                      <div className="input-group-text" id="btnGroupAddon2">저자</div>
-                      <input name="author" type="text" className="form-control" aria-label="Input group example" aria-describedby="btnGroupAddon2" onChange={handleChange} />
-                    </div>
-                    <div className="input-group mb-3">
-                      <div className="input-group-text" id="btnGroupAddon2">출판사</div>
-                      <input name="publisher" type="text" className="form-control" aria-label="Input group example" aria-describedby="btnGroupAddon2" onChange={handleChange} />
-                    </div>
-                    <div className="input-group mb-3">
-                      <div className="input-group-text" id="btnGroupAddon2">출판 날짜</div>
-                      <input name="pub_date" type="text" className="form-control" aria-label="Input group example" aria-describedby="btnGroupAddon2" onChange={handleChange} />
-                    </div>
-                    <div className="input-group mb-3">
-                      <div className="input-group-text" id="btnGroupAddon2">분류 코드</div>
-                      <input name="category_code" type="text" className="form-control" aria-label="Input group example" aria-describedby="btnGroupAddon2" onChange={handleChange} />
-                    </div>
+                <div className="accordion-body bordered">
+                  <form onSubmit={handleSearch} style={{ width: '100%' }}>
+                    {[
+                      { name: 'isbn', label: '책 제목' },
+                      { name: 'title', label: 'ISBN' },
+                      { name: 'author', label: '저자' },
+                      { name: 'publisher', label: '출판사' },
+                      { name: 'pub_date', label: '출판날짜' },
+                      { name: 'category_code', label: '분류코드' }
+                    ].map((field, index) => (
+                      <div className="input-group" key={index}>
+                        <div className="input-group-text" id="btnGroupAddon2">{field.label}</div>
+                        <input
+                          name={field.name}
+                          type="text"
+                          className="form-control"
+                          aria-label="Input group example"
+                          aria-describedby="btnGroupAddon2"
+                          value={formValues[field.name] || ''}
+                          onChange={handleInputChange}
+                        />
+                      </div>
+                    ))}
+                    <br />
                     <button className="btn btn-primary">Search</button>
                   </form>
                 </div>
@@ -122,75 +105,88 @@ const SearchPage = () => {
           <br />
           {errorMessage && <p className="fieldError">{errorMessage}</p>}
           <br />
-          <div className="pagination justify-content-center">
-            <button onClick={() => handlePageChange(pagination.previous)} disabled={!pagination.hasPrev} className="btn btn-lg bi bi-caret-left-square-fill"></button>
-            <button onClick={() => handlePageChange(pagination.next)} disabled={!pagination.hasNext} className="btn btn-lg bi bi-caret-right-square-fill"></button>
+          <div className="pagination justify-content-center bordered">
+            <button
+              onClick={() => handleSearch(null, pagination.previous)}
+              className={`btn btn-lg bi bi-caret-left-square-fill ${!pagination.hasPrev && 'disabled'}`}
+            >
+              이전
+            </button>
+            <button
+              onClick={() => handleSearch(null, pagination.next)}
+              className={`btn btn-lg bi bi-caret-right-square-fill ${!pagination.hasNext && 'disabled'}`}
+            >
+              다음
+            </button>
           </div>
           <br />
-          <div>
-            {searchResults.map((book) => (
-              <div className="card mb-3" style={{ width: '100%' }} key={book.id}>
-                <div className="row g-0">
-                  <div className="col-md-2" style={{ border: '1px solid black' }}>
-                    <img src={book.bookImg?.imgUrl} width="100%" height="100%" alt="..." className="img-fluid" style={{ objectFit: 'cover' }} />
+          {bookList.length > 0 ? bookList.map((book, index) => (
+            <div className="card mb-3 full-width" key={index}>
+              <div className="row g-0">
+                <div className="col-md-2 bordered">
+                  {book.bookImg ? (
+                    <img src={book.bookImg.imgUrl} width="100%" height="100%" alt="..." className="img-fluid cover-img" />
+                  ) : (
+                    <div className="no-image">No Image</div>
+                  )}
+                </div>
+                <div className="col-md-8 bordered">
+                  <div className="card-body left-align">
+                    <a href={`/book/detail/${book.id}`}>
+                      <h5 className="card-title">제목 : 『{book.title}』</h5>
+                    </a>
+                    <p>{`저자 : 『${book.author}』   ||   ISBN : 『${book.isbn}』`}</p>
+                    <p>{`출판사 : 『${book.publisher}』   ||   출판 날짜 : 『${book.pub_date}』   ||   분류 코드 : 『${book.category_code}』`}</p>
+                    <p>위치 : 『{book.location}』</p>
                   </div>
-                  <div className="col-md-8" style={{ border: '1px solid black' }}>
-                    <div className="card-body" style={{ textAlign: 'left' }}>
-                      <Link to={`/book/${book.id}`}>
-                        <h5 className="card-title">{book.title}</h5>
-                      </Link>
-                      <p>{book.author}</p>
-                      <p>{`${book.publisher} | ${book.pub_date} | ${book.category_code}`}</p>
-                      <p>{book.location}</p>
+                </div>
+                <div className="col-md-2 bordered">
+                  <div className="card-body left-align">
+                    <div className="row">
+                      <p>{book.status}</p>
                     </div>
-                  </div>
-                  <div className="col-md-2" style={{ border: '1px solid black' }}>
-                    <div className="card-body" style={{ textAlign: 'left' }}>
-                      <div className="row">
-                        <p>{book.status}</p>
-                      </div>
-                      <div className="row">
-                        <button onClick={alertLogin}>도서예약</button>
-                        <button disabled={book.status !== 'AVAILABLE'} onClick={() => handleReservation(book.id)}>도서예약</button>
-                      </div>
-                      <div className="row">
-                        <button onClick={alertLogin}>관심도서담기</button>
-                        <button onClick={() => handleInterest(book.id)}>관심도서담기</button>
-                      </div>
+                    <div className="row">
+                      {isAnonymous && <button onClick={handleAlertLogin}>도서예약</button>}
+                      {isAuthenticated && (
+                        <button
+                          disabled={book.status !== 'AVAILABLE'}
+                          onClick={() => window.location.href = `/book/reservation/${book.id}`}
+                        >
+                          도서예약
+                        </button>
+                      )}
+                    </div>
+                    <div className="row">
+                      {isAnonymous && <button onClick={handleAlertLogin}>관심도서담기</button>}
+                      {isAuthenticated && (
+                        <button onClick={() => window.location.href = `/book/interest/${book.id}`}>
+                          관심도서담기
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
-          <div className="pagination justify-content-center">
-            <button onClick={() => handlePageChange(pagination.previous)} disabled={!pagination.hasPrev} className="btn btn-lg bi bi-caret-left-square-fill"></button>
-            <button onClick={() => handlePageChange(pagination.next)} disabled={!pagination.hasNext} className="btn btn-lg bi bi-caret-right-square-fill"></button>
+            </div>
+          )) : <p>검색 결과가 없습니다.</p>}
+          <div className="pagination justify-content-center bordered">
+            <button
+              onClick={() => handleSearch(null, pagination.previous)}
+              className={`btn btn-lg bi bi-caret-left-square-fill ${!pagination.hasPrev && 'disabled'}`}
+            >
+              이전
+            </button>
+            <button
+              onClick={() => handleSearch(null, pagination.next)}
+              className={`btn btn-lg bi bi-caret-right-square-fill ${!pagination.hasNext && 'disabled'}`}
+            >
+              다음
+            </button>
           </div>
         </div>
       </section>
     </main>
   );
-
-  function handleReservation(bookId) {
-    axios.post(`/book/reservation/${bookId}`)
-      .then(response => {
-        // 예약 성공 처리
-      })
-      .catch(error => {
-        console.error('예약 중 오류 발생:', error);
-      });
-  }
-
-  function handleInterest(bookId) {
-    axios.post(`/book/interest/${bookId}`)
-      .then(response => {
-        // 관심도서담기 성공 처리
-      })
-      .catch(error => {
-        console.error('관심도서담기 중 오류 발생:', error);
-      });
-  }
 };
 
 export default SearchPage;

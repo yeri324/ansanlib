@@ -2,6 +2,8 @@ package com.ansanlib.book.dto;
 
 import java.util.List;
 
+import com.ansanlib.constant.BookStatus;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,7 +26,7 @@ public class BookDto {
 	private String pub_date; // 출판 날짜
 	private String genre; 			// 장르
 	private String category_code; 	// 분류 코드
-	private String status; 	// 대출 상태
+	private BookStatus status; 	// 대출 상태
 	private String bookDetail;  	// 책 설명
 	private String location;    	// 위치
 	private BookImgSimpleDto bookImg;	// 책이미지

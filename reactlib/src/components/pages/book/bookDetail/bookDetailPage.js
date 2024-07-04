@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import './BookDetailPage.css'; // 스타일 파일을 임포트합니다.
 
 const BookDetailPage = () => {
   const { id } = useParams();
@@ -11,9 +12,10 @@ const BookDetailPage = () => {
   useEffect(() => {
     const fetchBookDetails = async () => {
       try {
-        const response = await axios.get(`/api/books/detail/${id}`);
+        const response = await axios.get(`/api/book/detail/${id}`);
+        console.log(response.data); // API 응답을 콘솔에 출력
         setBook(response.data);
-        setBookList(response.data.relatedBooks);
+        setBookList(response.data.relatedBooks || []);
       } catch (error) {
         setErrorMessage('도서 상세 정보를 가져오는 중 오류가 발생했습니다: ' + error.message);
       }
@@ -49,7 +51,7 @@ const BookDetailPage = () => {
   return (
     <main>
       <div className="breadcrumbs">
-        <div className="page-header d-flex align-items-center" style={{ backgroundImage: "url('/img/page-header1.jpg')" }}>
+        <div className="page-header d-flex align-items-center">
           <div className="container position-relative">
             <div className="row d-flex justify-content-center">
               <div className="col-lg-6 text-center">
@@ -70,25 +72,32 @@ const BookDetailPage = () => {
       </div>
 
       <section className="sample-page">
-        <div className="content" style={{ textAlign: 'center' }}>
+        <div className="content centered-content">
           {errorMessage && <p className="fieldError">{errorMessage}</p>}
 
-          <div className="row g-0">
-            <div className="col-md-2" style={{ border: '1px solid black' }}>
-              <img src={book.bookImg?.imgUrl} alt="..." className="img-fluid" width="100%" height="100px" style={{ objectFit: 'cover' }} />
+          <div className="row g-0 bordered">
+            <div className="col-md-2">
+              {book.bookImg && (
+                <img 
+                  src={`/api/images/${book.bookImg.imgUrl}`} 
+                  alt={book.title} 
+                  className="img-fluid cover-img" 
+                />
+              )}
             </div>
-            <div className="col-md-10" style={{ border: '1px solid black' }}>
-              <div className="card-body" style={{ textAlign: 'left' }}>
-                <h5 className="card-title">{book.title}</h5>
-                <p>{book.author}</p>
-                <p>{`${book.publisher} | ${book.pub_date} | ${book.category_code}`}</p>
-                <p>{book.location}</p>
+            <div className="col-md-10 bordered">
+              <div className="card-body left-align">
+                <h5 className="card-title">제목 : 『{book.title}』</h5>
+                <p>저자 : 『{book.author}』</p>
+                <p>{`출판사 : 『${book.publisher}』 || 출판 날짜 : 『${book.pub_date}』 || 분류 코드 : 『${book.category_code}』`}</p>
+                <p>위치 : 『{book.location}』</p>
+                <p>대출 상태 : 『{book.status}』</p>
               </div>
             </div>
           </div><br />
 
-          <div className="row g-0" style={{ overflowX: 'auto' }}>
-            <table className="table" style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <div className="row g-0 overflow-x-auto">
+            <table className="table full-width">
               <thead className="table-dark">
                 <tr>
                   <th>위치</th>
@@ -102,13 +111,13 @@ const BookDetailPage = () => {
                 {bookList.map((relatedBook) => (
                   <tr key={relatedBook.id}>
                     <td>{relatedBook.location}</td>
-                    <td>{relatedBook.status}</td>
+                    <td>{relatedBook.status ?? '정보 없음'}</td>
                     <td>{relatedBook.isbn}</td>
-                    <td>{relatedBook.return_day}</td>
+                    <td>{relatedBook.returnDay}</td>
                     <td>
-                      <div className="card-body" style={{ textAlign: 'left' }}>
+                      <div className="card-body left-align">
                         <div className="row">
-                          <p>{relatedBook.status}</p>
+                          <p>{relatedBook.status ?? '정보 없음'}</p>
                         </div>
                         <div className="row">
                           <button onClick={alertLogin}>도서예약</button>
@@ -127,7 +136,8 @@ const BookDetailPage = () => {
           </div><br />
 
           <div className="row g-0">
-            <div style={{ textAlign: 'left' }} dangerouslySetInnerHTML={{ __html: book.detail }}></div>
+            <div><h3>책소개</h3></div>
+            <div className="left-align" dangerouslySetInnerHTML={{ __html: book.bookDetail }}></div>
           </div>
         </div>
       </section>

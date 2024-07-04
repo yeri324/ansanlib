@@ -1,5 +1,7 @@
 package com.ansanlib.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -30,6 +32,7 @@ public class BookImg extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
+    @JsonBackReference
     private Book book;
 
     public void updateBookImg(String oriImgName, String imgName, String imgUrl){
