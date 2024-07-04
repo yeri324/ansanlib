@@ -22,7 +22,7 @@ import MyPage from './components/pages/myPage/MyPage';
 import ReservationList from './components/pages/reservation/ReservationList';
 import RequestBookForm from './components/pages/requestBook/RequestBookForm';
 import RequestBookList from './components/pages/requestBook/RequestBookList';
-
+import HolidayDetail from './components/pages/admin/HolidayDetail';
 
 import SearchPage from './components/pages/book/searchBookList/searchPage';
 import BookDetailPage from './components/pages/book/bookDetail/bookDetailPage';
@@ -77,6 +77,7 @@ function App() {
         <Route path="/admin/holiday/new" element={<HolidayNew />} />
 <Route path="/admin/holiday" element={<Holiday/> } />
         <Route path="/admin/holiday/list" element={<HolidayList />} />
+        <Route path="/admin/holiday/detail" element={<HolidayDetail />} />
       </Routes>
 
     </div>

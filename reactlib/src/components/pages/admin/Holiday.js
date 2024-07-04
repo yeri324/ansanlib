@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import HolidayNew from './HolidayNew';
+import HolidayDetail from './HolidayDetail';
 
 const Holiday = () => {
   const [getMoment, setMoment] = useState(moment());
@@ -15,6 +16,8 @@ const Holiday = () => {
   const [schedules, setSchedules] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [showDetail, setShowDetail] = useState(false);
+  const [selectedHolidays, setSelectedHolidays] = useState([]);
   const navigate = useNavigate();
   const districts = {
     '상록구': ['감골도서관', '반월도서관', '부곡도서관', '본오도서관', '상록수도서관', '상록어린이도서관', '성포도서관', '수암도서관'],
@@ -41,8 +44,9 @@ const Holiday = () => {
   };
 
   const handleDateClick = (date) => {
-    setSelectedDate(date);
-    setShowModal(true);
+    const holidays = schedules.filter(schedule => moment(schedule.holiday).isSame(date, 'day'));
+    setSelectedHolidays(holidays);
+    setShowDetail(true);
   };
 
   const renderCalendar = () => {
@@ -85,11 +89,8 @@ const Holiday = () => {
 
   return (
     <div className="Calendar">
-       <div className='holidayTitle'><h2>캘린더</h2></div>
+      <div className='holidayTitle'><h2>캘린더</h2></div>
       <div className="control">
-        
-       
-       
         <div className="date-navigation">
           <Button onClick={() => setMoment(getMoment.clone().subtract(1, 'month'))}>이전달</Button>
           <span>{today.format('YYYY 년 MM 월')}</span>
@@ -130,6 +131,11 @@ const Holiday = () => {
           districts={districts}
         />
       )}
+      <HolidayDetail
+        show={showDetail}
+        handleClose={() => setShowDetail(false)}
+        holidays={selectedHolidays}
+      />
     </div>
   );
 };
