@@ -39,7 +39,7 @@ function FaqList() {
         }))
     }
 
-    // 검색
+    // 검색 및 전체 리스트
     const onSearch = (page) => {
         console.log(searchOption.searchBy, searchOption.searchQuery);
         console.log(currentPage, faqPerPage);

@@ -10,6 +10,7 @@ function FaqItem ({ faq, handleDetail, checkedList, checkHandler, handlePreview}
                 <td>{faq.updateTime.split('T')[0]}</td>
                 {/* <td><img src={imgsrc} /></td> */}
                 {/* {console.log(faq.faqImgs[0].imgUrl)} */}
+                {/* {console.log(faq.faqImgs[0].imgName)} */}
             </tr>
             
         </div>
