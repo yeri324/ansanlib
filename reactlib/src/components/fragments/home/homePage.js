@@ -35,6 +35,7 @@ const HomePage = () => {
                   <TodoCalendar />
                 </div>
                 <div className="login_box">
+                  <div className="new_h2"><h2>신규도서</h2></div>
                   <New />
                 </div>
               </div>

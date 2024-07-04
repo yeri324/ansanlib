@@ -41,7 +41,6 @@ const NewBooks = () => {
 
   return (
     <div className="new-books-container">
-      <h2>신규 도서</h2>
       <div className="new-books-slider">
         <button className="new-books-btn new-books-prev" onClick={goToPrevSlide}>{'<'}</button>
         <div className="new-books-slide-wrapper">

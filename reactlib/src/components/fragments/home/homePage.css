@@ -26,8 +26,9 @@
 /* 기본 레이아웃 */
 body {
     margin: 0 auto;
-    background-color: #fff;
+    /* background-color: #fff; */
     font-family: 'Arial', sans-serif;
+    background-color: #fdfdfd;
 }
 
 .main_content {
@@ -36,7 +37,6 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: var(--bg_03);
 }
 
 .main_grid {
@@ -44,7 +44,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #fff;
 }
 
 .sub_content {
@@ -60,7 +59,6 @@ body {
     flex-direction: column;
     align-items: center;
     max-width: 1200px;
-    /* gap: 2px; */
 }
 
 .top_column {
@@ -68,6 +66,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    /* background-color: #ddd; */
 }
 
 .bottom_column {
@@ -85,20 +84,24 @@ body {
 }
 
 .login_box {
-    display: flex;
-    flex: 1;
+    /* display: flex;
+    flex: 1; */
     min-width: 300px;
     justify-content: center;
     align-items: center;
-    padding: 10px;
-    /* border: 1px solid #ddd;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff; */
+    padding: 5px;
 }
+
+.new_h2 {
+    display: flex;
+    justify-content: center;
+}
+
 
 .sub_content {
     margin: 0 auto;
-    background-color: #fff;
+    /* 밑 부분 배경색 */
+    /* background-color: #ddd; */
 }
 
 .sub_content1,
@@ -106,12 +109,15 @@ body {
     width: 100%;
     max-width: 1200px;
     margin: 10px auto;
+    padding: 40px;
+    border-radius: 20px;
+    background-color: #fdf8f1;
 }
 
 .sub_content1 .trend_list,
 .sub_content2 .lib_guide {
     padding: 20px;
-    background-color: #ffffff;
+    background-color: #fdfdfd;
 }
 
 .trend_h2,
@@ -127,12 +133,12 @@ body {
 .div_border {
     height: 25px;
 }
-.div_border > hr {
+
+.div_border>hr {
     border: 0;
     height: 12px;
     background-color: #ddd;
 }
-
 
 .trend_list,
 .new_list,
@@ -147,3 +153,4 @@ body {
 .lib_guide {
     margin-bottom: 20px;
 }
+

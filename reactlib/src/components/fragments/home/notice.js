@@ -31,24 +31,26 @@ const Notice = () => {
   const categories = ['공지사항', '신간도서', '추천도서'];
 
   return (
-    <div className="notice_board">
-      <ul className="notice_tabs">
-        {categories.map(category => (
-          <li
-            key={category}
-            className={activeCategory === category ? 'active' : ''}
-            onClick={() => setActiveCategory(category)}
-          >
-            {category}
-          </li>
-        ))}
-      </ul>
-      <div className="notice_content">
-        <ul>
-          {noticePosts[activeCategory].slice(0, 5).map(post => (
-            <li key={post.id}>{post.title}</li>
+    <div className="notice_full">
+      <div className="notice_board">
+        <ul className="notice_tabs">
+          {categories.map(category => (
+            <li
+              key={category}
+              className={activeCategory === category ? 'active' : ''}
+              onClick={() => setActiveCategory(category)}
+            >
+              {category}
+            </li>
           ))}
         </ul>
+        <div className="notice_content">
+          <ul>
+            {noticePosts[activeCategory].slice(0, 5).map(post => (
+              <li key={post.id}>{post.title}</li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
