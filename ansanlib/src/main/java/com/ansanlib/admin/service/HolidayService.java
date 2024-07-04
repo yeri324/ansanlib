@@ -9,9 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ansanlib.admin.dto.HolidayDto;
 import com.ansanlib.admin.repository.HolidayRepository;
-import com.ansanlib.admin.repository.LibraryRepository;
 import com.ansanlib.entity.Holiday;
 import com.ansanlib.entity.Library;
+import com.ansanlib.library.LibraryRepository;
 
 
 @Service
@@ -32,6 +32,7 @@ public class HolidayService {
 		return holidayRepository.save(holiday);
         
     }
+    
     
     public List<Holiday> getAllHolidays() {
     	return holidayRepository.findAll();

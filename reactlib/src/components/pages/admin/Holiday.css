@@ -1,0 +1,87 @@
+.Calendar {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.control {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.date-navigation {
+  display: flex;
+  align-items: center;
+}
+
+.date-navigation span {
+  margin: 0 10px;
+}
+
+.button-group {
+  display: flex;
+  align-items: center;
+}
+
+.button-group .regschedule {
+  margin-left: 10px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+th {  /*월화수목금토일*/
+  background-color: #f2f2f2;
+  color: black;
+}
+
+td {  /*달력날짜*/
+  text-align: left;
+  vertical-align: middle;
+  cursor: pointer;
+  position: relative;
+  font-size: 15px;
+}
+
+.day {
+  height: 100px;
+  width: 100px;
+  vertical-align: top;
+}
+
+.not-current {
+  background-color: #f9f9f9;
+  color: #ddd;
+}
+
+.today {
+  background-color: yellow;
+}
+
+.weekend {
+  color: red;
+}
+
+.holiday {
+  color: red;
+  font-weight: bold;
+}
+
+.day:hover {
+  background-color: #eee;
+}
+
+.day span {
+  display: block;
+  margin-bottom: 5px;
+}

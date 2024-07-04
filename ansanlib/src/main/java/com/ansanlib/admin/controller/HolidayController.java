@@ -24,6 +24,7 @@ public class HolidayController {
     @Autowired
     private HolidayService holidayService;
 
+    
     @PostMapping("/holiday/new")
     public Holiday createHoliday(@RequestBody HolidayDto holidayDto) {
     	System.out.println(holidayDto.getLib_num()+"*"+holidayDto.getLib_name()+"*"+holidayDto.getHoliday()+"*");

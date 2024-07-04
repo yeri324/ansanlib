@@ -28,9 +28,9 @@ import SearchPage from './components/pages/book/searchBookList/searchPage';
 import BookDetailPage from './components/pages/book/bookDetail/bookDetailPage';
 
 
-import Calendar from './components/pages/admin/Calender';
+import Holiday from './components/pages/admin/Holiday';
 import HolidayList from './components/pages/admin/HolidayList';
-
+import HolidayNew from './components/pages/admin/HolidayNew';
 
 
 function App() {
@@ -74,9 +74,8 @@ function App() {
         <Route path="/requestbook/new" element={<RequestBookForm/>} />
         <Route path="/requestbook/list/:userId" element={<RequestBookList/>} />
         
-
-
-        <Route path="/admin/calendar" element={<Calendar/> } />
+        <Route path="/admin/holiday/new" element={<HolidayNew />} />
+<Route path="/admin/holiday" element={<Holiday/> } />
         <Route path="/admin/holiday/list" element={<HolidayList />} />
       </Routes>
 

@@ -2,6 +2,8 @@ package com.ansanlib.entity;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,6 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+
 @Entity
 
 
@@ -19,12 +22,13 @@ import jakarta.persistence.Table;
 public class Holiday extends BaseEntity {
 	
 	 @Id
-	    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    @Column(name = "holiday_num")
 	    private Long id;
 	
 	 @ManyToOne
 	    @JoinColumn(name = "lib_num")
+	   @JsonBackReference
 	    private Library library;
 	
 	private LocalDate holiday; //휴관일
@@ -54,7 +58,9 @@ public class Holiday extends BaseEntity {
 	}
 	public void setLib_name(String lib_name) {
 		this.lib_name = lib_name;
+	
 	}
+	
 	
 
 	}
