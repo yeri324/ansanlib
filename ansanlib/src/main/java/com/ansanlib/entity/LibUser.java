@@ -115,7 +115,18 @@ public class LibUser extends BaseEntity {
 		this.setPhone(userDto.getPhone());
 	}
 	
-	
+	public void update(UserDto userDto, PasswordEncoder passwordEncoder) {
+		this.setName(userDto.getName());
+		this.setAddress(userDto.getAddress());
+		this.setAddress2(userDto.getAddress2());
+		this.setEmail(userDto.getEmail());
+		this.setPhone(userDto.getPhone());
+		this.setSms(userDto.getSms());
+		
+		if (userDto.getPassword() != null && !userDto.getPassword().isEmpty()) {
+			this.password = passwordEncoder.encode(userDto.getPassword());
+		}
+	}
 	
 	
 	

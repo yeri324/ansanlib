@@ -239,5 +239,24 @@ public class UserService implements UserDetailsService {
 		message.setText(text);
 		// mailSender.send(message);
 	}
+	
+	public void updateUser(Long userId, UserDto userDto ) {
+		Optional<LibUser> optionalUser = userRepository.findById(userId);
+		if(optionalUser.isPresent()) {
+			LibUser libUser = optionalUser.get();
+			libUser.setName(userDto.getName());
+			if (userDto.getPassword() != null && !userDto.getPassword().isEmpty()) {
+				libUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
+			}
+			libUser.setName(userDto.getName());
+			libUser.setPhone(userDto.getPhone());
+			libUser.setAddress(userDto.getAddress());
+			libUser.setAddress2(userDto.getAddress2());
+			libUser.setEmail(userDto.getEmail());
+			userRepository.save(libUser);
+		} else {
+			throw new RuntimeException("User not found with id : "+ userId);
+		}
+	}
 
 }
