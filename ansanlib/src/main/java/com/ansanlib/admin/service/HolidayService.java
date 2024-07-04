@@ -1,5 +1,6 @@
 package com.ansanlib.admin.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,12 +17,19 @@ import com.ansanlib.library.LibraryRepository;
 
 @Service
 public class HolidayService {
-
     @Autowired
     private HolidayRepository holidayRepository;
     @Autowired
     private LibraryRepository libraryRepository;
 
+    
+    
+    //데이터 중복체크  (도서관, 날짜)
+    public boolean checkHolidayExists(LocalDate date, String libraryName) {
+        return holidayRepository.existsByHolidayAndLibrary_LibName(date, libraryName);
+    }
+    
+    //데이터 저장
     public Holiday saveHoliday(HolidayDto holidayDto) {
     	Library lib =libraryRepository.findByLibNum(holidayDto.getLib_num());
     	
@@ -33,12 +41,15 @@ public class HolidayService {
         
     }
     
+   
     
+    //데이터 조회
     public List<Holiday> getAllHolidays() {
     	return holidayRepository.findAll();
     }
     
     
+    //데이터 삭제
     @Transactional
     public void deleteHolidayById(Long id) {
         Optional<Holiday> holidayOptional = holidayRepository.findById(id);
@@ -49,5 +60,8 @@ public class HolidayService {
             throw new IllegalArgumentException("Holiday not found with id: " + id);
         }
     }
+
+
+
     
 }

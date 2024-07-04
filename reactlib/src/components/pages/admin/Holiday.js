@@ -16,23 +16,29 @@ const Holiday = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const navigate = useNavigate();
-
   const districts = {
     '상록구': ['감골도서관', '반월도서관', '부곡도서관', '본오도서관', '상록수도서관', '상록어린이도서관', '성포도서관', '수암도서관'],
     '단원구': ['관산도서관', '단원어린이도서관', '미디어도서관', '선부도서관', '원고잔도서관',]
   };
 
   useEffect(() => {
-    const fetchHolidays = async () => {
-      try {
-        const response = await axios.get('http://localhost:8090/api/admin/holiday/list');
-        setSchedules(response.data);
-      } catch (error) {
-        console.error('Error fetching holidays:', error);
-      }
-    };
     fetchHolidays();
   }, []);
+
+  const fetchHolidays = () => {
+    axios({
+      url: '/api/admin/holiday/list',
+      method: 'get',
+    }).then((res) => {
+      if (Array.isArray(res.data.result)) {
+        setSchedules(res.data.result);
+      } else {
+        console.error('Fetched data is not an array:', res.data.result);
+      }
+    }).catch((err) => {
+      console.error("Error fetching holidays:", err);
+    });
+  };
 
   const handleDateClick = (date) => {
     setSelectedDate(date);
@@ -51,7 +57,7 @@ const Holiday = () => {
             let isSelectedMonth = current.format('MM') === today.format('MM');
             let isToday = current.isSame(new Date(), 'day');
             let isWeekend = current.day() === 0 || current.day() === 6;
-            let holiday = schedules.find(schedule => moment(schedule.holiday).isSame(current, 'day'));
+            let holidays = schedules.filter(schedule => moment(schedule.holiday).isSame(current, 'day'));
 
             return (
               <td
@@ -60,7 +66,13 @@ const Holiday = () => {
                 onClick={() => handleDateClick(current)}
               >
                 <span>{current.format('D')}</span>
-                {holiday && <div className="holiday">{holiday.library?.name}</div>}
+                {holidays.length > 0 && (
+                  <div className="holidays">
+                    {holidays.map((holiday, index) => (
+                      <div key={index} className="holiday">휴관: {holiday.lib_name}</div>
+                    ))}
+                  </div>
+                )}
               </td>
             );
           })}
@@ -73,7 +85,11 @@ const Holiday = () => {
 
   return (
     <div className="Calendar">
+       <div className='holidayTitle'><h2>캘린더</h2></div>
       <div className="control">
+        
+       
+       
         <div className="date-navigation">
           <Button onClick={() => setMoment(getMoment.clone().subtract(1, 'month'))}>이전달</Button>
           <span>{today.format('YYYY 년 MM 월')}</span>
@@ -84,26 +100,31 @@ const Holiday = () => {
           <Button variant="primary" onClick={() => setShowModal(true)}>등록하기</Button>
         </div>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>일</th>
-            <th>월</th>
-            <th>화</th>
-            <th>수</th>
-            <th>목</th>
-            <th>금</th>
-            <th>토</th>
-          </tr>
-        </thead>
-        <tbody>
-          {renderCalendar()}
-        </tbody>
-      </table>
+      <div className='calBody'>
+        <table>
+          <thead>
+            <tr>
+              <th>일</th>
+              <th>월</th>
+              <th>화</th>
+              <th>수</th>
+              <th>목</th>
+              <th>금</th>
+              <th>토</th>
+            </tr>
+          </thead>
+          <tbody>
+            {renderCalendar()}
+          </tbody>
+        </table>
+      </div>
       {showModal && (
         <HolidayNew
           showModal={showModal}
-          handleCloseModal={() => setShowModal(false)}
+          handleCloseModal={() => {
+            setShowModal(false);
+            fetchHolidays(); // 새로고침
+          }}
           selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}
           districts={districts}

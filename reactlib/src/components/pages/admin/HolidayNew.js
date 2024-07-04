@@ -9,9 +9,28 @@ const HolidayNew = (props) => {
   const [library, setLibrary] = useState('');
   const [libNum, setLibNum] = useState('');
 
+  const checkDuplicate = async (date, library) => {
+    try {
+      console.log(`Checking duplicate for date: ${date}, library: ${library}`); // 로그 추가
+      const response = await fetch(`http://localhost:8090/api/admin/holiday/check?date=${date}&library=${library}`);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error checking duplicate:', error);
+      return false;
+    }
+  };
+  
   const handleAddSchedule = async (e) => {
     e.preventDefault();
-    if (selectedDate && library) {
+    if (selectedDate && library && libNum) {
+      const formattedDate = selectedDate.format('YYYY-MM-DD');
+      const isDuplicate = await checkDuplicate(formattedDate, library);
+      if (isDuplicate) {
+        alert('이미 등록된 날짜와 도서관입니다.');
+        return;
+      }
+
       try {
         const response = await fetch('http://localhost:8090/api/admin/holiday/new', {
           method: 'POST',
@@ -19,9 +38,9 @@ const HolidayNew = (props) => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            holiday: selectedDate.format('YYYY-MM-DD'),
+            holiday: formattedDate,
             lib_name: library,
-            lib_num: libNum
+            lib_num: libNum,
           }),
         });
 

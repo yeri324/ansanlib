@@ -1,14 +1,10 @@
 package com.ansanlib.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,8 +29,7 @@ public class Library extends BaseEntity {
 
     private String web_address;
 
-    @OneToMany(mappedBy = "library")
-    private List<Holiday> holidays = new ArrayList<>();
+
 
 
     

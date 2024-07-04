@@ -1,3 +1,19 @@
+// const libraryData = {
+//   '감골도서관': 1,
+//   '반월도서관': 2,
+//   '부곡도서관': 3,
+//   '본오도서관': 4
+// };
+
+
+// export const getLibraryNum = (libName) => {
+//   return libraryData[libName] || null;
+
+// };
+
+
+
+
 export const getLibraryNum = (selectedLibrary) => {
   return selectedLibrary === '감골도서관' ? '7004' :
     selectedLibrary === '반월도서관' ? '7008' :

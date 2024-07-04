@@ -1,6 +1,6 @@
 .Calendar {
   width: 100%;
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
   text-align: center;
 }
@@ -10,15 +10,19 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
+  /* border: 1px solid blue; */
 }
 
 .date-navigation {
   display: flex;
   align-items: center;
+  /* border: 1px solid saddlebrown; */
 }
+
 
 .date-navigation span {
   margin: 0 10px;
+  
 }
 
 .button-group {
@@ -28,16 +32,26 @@
 
 .button-group .regschedule {
   margin-left: 10px;
+ 
 }
+
+.calBody {
+  width: 100%;
+  height: calc(100vh - 200px); /* 화면 높이에 맞춰 조정 */
+}
+
 
 .table {
   width: 100%;
   border-collapse: collapse;
+ 
+  
 }
 
 th, td {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 4px;
+  
 }
 
 th {  /*월화수목금토일*/
@@ -55,7 +69,7 @@ td {  /*달력날짜*/
 
 .day {
   height: 100px;
-  width: 100px;
+  width: 150px;
   vertical-align: top;
 }
 
@@ -65,16 +79,20 @@ td {  /*달력날짜*/
 }
 
 .today {
-  background-color: yellow;
+  background-color: rgba(255, 255, 0, 0.445);
 }
 
 .weekend {
   color: red;
 }
 
+
+
 .holiday {
-  color: red;
-  font-weight: bold;
+  color: rgb(245, 243, 243);
+  
+  font-size: 12px;
+  background-color: #f7782f ;
 }
 
 .day:hover {
@@ -85,3 +103,5 @@ td {  /*달력날짜*/
   display: block;
   margin-bottom: 5px;
 }
+
+
