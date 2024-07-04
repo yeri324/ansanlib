@@ -31,7 +31,7 @@ function FaqList() {
     }
 
     //상세페이지 이동
-    const handleDetail = (faq) => {
+    const onDetail = (faq) => {
         window.location.reload(navigate(`/faq/detail/${faq.id}`, {
             state: {
                 ...faq
@@ -145,7 +145,7 @@ function FaqList() {
                 </thead>
                 <div className="slide">
                     {searchResult.map((faq) => (
-                        <FaqItem key={faq.id} faq={faq} checkedList={checkedList} checkHandler={checkHandler} handleDetail={handleDetail} handlePreview={handlePreview} />
+                        <FaqItem key={faq.id} faq={faq} checkedList={checkedList} checkHandler={checkHandler} onDetail={onDetail} handlePreview={handlePreview} />
                     ))}
                 </div>
                 <button onClick={onDelete}>삭제하기</button>
