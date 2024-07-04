@@ -40,7 +40,7 @@ function FaqList() {
     }
 
     // 검색
-    const onSearch = () => {
+    const onSearch = (page) => {
         console.log(searchOption.searchBy, searchOption.searchQuery);
         console.log(currentPage, faqPerPage);
         axios(
@@ -50,7 +50,7 @@ function FaqList() {
                 data: {
                     searchBy: searchOption.searchBy,
                     searchQuery: searchOption.searchQuery,
-                    page: currentPage,
+                    page: page-1,
                     size: faqPerPage,
                 },
                 baseURL: 'http://localhost:8090',

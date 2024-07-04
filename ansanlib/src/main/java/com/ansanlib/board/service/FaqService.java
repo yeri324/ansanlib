@@ -82,13 +82,26 @@ public class FaqService {
 		faqRepository.deleteById(id);
 	}
 
+//	// 기준 검색하기 or 전체 리스트 가져오기
+//	public Page<Faq> ListFaq(int page, int size, FaqDto faqDto) {
+//		Pageable pageable = PageRequest.of(page, size, Sort.by(Order.desc("regTime")));
+//
+//		if ("loginid".equals(faqDto.getSearchBy()) && faqDto.getSearchQuery() != null) {
+//			return faqRepository.findByLibUser_LoginidContains(faqDto.getSearchQuery(), pageable);
+//		} else if ("title".equals(faqDto.getSearchBy()) && faqDto.getSearchQuery() != null) {
+//			return faqRepository.findByTitleContains(faqDto.getSearchQuery(), pageable);
+//		} else {
+//			return faqRepository.findAll(pageable);
+//		}
+//	}
+	
 	// 기준 검색하기 or 전체 리스트 가져오기
-	public Page<Faq> ListFaq(int page, int size, FaqDto faqDto) {
-		Pageable pageable = PageRequest.of(page, size, Sort.by(Order.desc("regTime")));
+	public Page<Faq> ListFaq(FaqDto faqDto) {
+		Pageable pageable = PageRequest.of(faqDto.getPage(), faqDto.getSize(), Sort.by(Order.desc("regTime")));
 
-		if ("loginid".equals(faqDto.getSearchBy())) {
+		if ("loginid".equals(faqDto.getSearchBy()) && faqDto.getSearchQuery() != null) {
 			return faqRepository.findByLibUser_LoginidContains(faqDto.getSearchQuery(), pageable);
-		} else if ("title".equals(faqDto.getSearchBy())) {
+		} else if ("title".equals(faqDto.getSearchBy()) && faqDto.getSearchQuery() != null) {
 			return faqRepository.findByTitleContains(faqDto.getSearchQuery(), pageable);
 		} else {
 			return faqRepository.findAll(pageable);

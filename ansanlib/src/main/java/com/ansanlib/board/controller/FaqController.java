@@ -80,14 +80,21 @@ public class FaqController {
 		}
 	}
 
+//	@PostMapping("/search")
+//	public Page<Faq> searchUsers(@RequestParam(value = "page", defaultValue = "0") int page,
+//			@RequestParam(value = "size", defaultValue = "8") int size,
+//			@RequestBody FaqDto faqDto) {
+//		System.out.println(page+"*"+size+"*"+faqDto.getSearchBy()+"*"+faqDto.getSearchQuery());
+//		Page<Faq> faqs= faqService.ListFaq(page, size, faqDto);
+//			System.out.println(faqs.getSize());
+//			return faqs;
+//		}
+	
 	@PostMapping("/search")
-	public Page<Faq> searchUsers(@RequestParam(name = "page", defaultValue = "0") int page,
-			@RequestParam(name = "size", defaultValue = "8") int size,
-			@RequestBody FaqDto faqDto) {
-		System.out.println(page+"*"+size+"*"+faqDto.getSearchBy()+"*"+faqDto.getSearchQuery());
-		Page<Faq> faqs= faqService.ListFaq(page, size, faqDto);
+	public Page<Faq> searchUsers(@RequestBody FaqDto faqDto) {
+		System.out.println(faqDto.getPage()+"*"+faqDto.getSize()+"*"+faqDto.getSearchBy()+"*"+faqDto.getSearchQuery());
+		Page<Faq> faqs= faqService.ListFaq(faqDto);
 			System.out.println(faqs.getSize());
 			return faqs;
-//		}
-	}
+		}
 }
