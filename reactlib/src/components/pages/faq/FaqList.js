@@ -14,10 +14,16 @@ function FaqList() {
         searchQuery: "",
     });
 
+    //페이징용 useState 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [totalFaqCount, setTotalFaqCount] = useState(0);
+    const faqPerPage = 8;
+
     //리스트 읽기
     useEffect(() => {
-        onSearch();
-    }, []);
+        onSearch(currentPage);
+    }, [currentPage, searchOption]);
 
     // 생성페이지 이동
     const onCreate = () => {
@@ -44,12 +50,11 @@ function FaqList() {
                 data: {
                     searchBy: searchOption.searchBy,
                     searchQuery: searchOption.searchQuery,
-                    page : currentPage,
-                    size : faqPerPage,
+                    page: currentPage,
+                    size: faqPerPage,
                 },
                 baseURL: 'http://localhost:8090',
             }
-            
         ).then((response) => {
             console.log(response.data);
             setSerchResult(response.data.content);
@@ -107,26 +112,16 @@ function FaqList() {
         }
     };
 
-    // //이미지 띄우기
+    // //이미지 띄우기 - 아직 못했음
     const [viewImg, setViewImg] = useState('');
-   
     const handlePreview = (e) => {
         const reader = new FileReader();
         reader.readAsDataURL(e.target.files[0]);
         reader.onload = () => {
-           setViewImg = reader.result;
+            setViewImg = reader.result;
         };
-       
+
     };
-
-   //페이징용 useState 
-   const [currentPage, setCurrentPage] = useState(1);
-   const [totalPages, setTotalPages] = useState(1);
-   const [totalFaqCount, setTotalFaqCount] = useState(0);
-   const faqPerPage = 8;
-
-
-   // 전체 리스트 가져오기
 
     return (
         <div>
