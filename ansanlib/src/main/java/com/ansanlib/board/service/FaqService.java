@@ -61,9 +61,6 @@ public class FaqService {
 				fileMap.put(key, faqImgFile.get(faqImgFileId.indexOf(str)));
 			});
 
-			fileMap.forEach((key, value) -> {
-				System.out.println(key + " : " + value);
-			});
 
 			fileMap.forEach((key, value) -> {
 				try {

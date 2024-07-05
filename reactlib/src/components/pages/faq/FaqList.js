@@ -56,6 +56,7 @@ function FaqList() {
                 baseURL: 'http://localhost:8090',
             }
         ).then((response) => {
+            console.log(response.data);
             setSearchResult(response.data.content);
             setTotalPages(response.data.totalPages);
             setTotalFaqCount(response.data.totalElements);
