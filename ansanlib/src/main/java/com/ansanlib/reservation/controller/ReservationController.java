@@ -18,12 +18,18 @@ import com.ansanlib.reservation.dto.CreateReservationDto;
 import com.ansanlib.reservation.dto.ReservationDto;
 import com.ansanlib.reservation.exception.CreateReservationException;
 import com.ansanlib.reservation.service.ReservationService;
+import com.ansanlib.user.service.UserService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/reservations")
 public class ReservationController {
 	@Autowired
 	private ReservationService reservationService;
+	
+	@Autowired
+	private UserService userService;
 	
 	@PostMapping 
 	public ResponseEntity<?> createReservation(@RequestBody CreateReservationDto createReservationDto) {
@@ -40,7 +46,10 @@ public class ReservationController {
     }
 
     @GetMapping("/get/by-user/{userId}")
-    public ResponseEntity<List<ReservationDto>> getReservationsByUser(@PathVariable Long userId) {
+    public ResponseEntity<List<ReservationDto>> getReservationsByUser(@PathVariable Long userId, HttpServletRequest httpRequest) {
+    	if(httpRequest.getSession().getAttribute("userId") == null || !userService.existsById(userId)) {
+    		 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    	}
         List<Reservation> reservations = reservationService.getReservationByUser(userId);
         List<ReservationDto> reservationsDto = reservations.stream().map(ReservationDto::new).toList();
         if(reservationsDto.isEmpty()) {

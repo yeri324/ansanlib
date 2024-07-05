@@ -28,6 +28,7 @@ import SearchPage from './components/pages/book/searchBookList/searchPage';
 import BookDetailPage from './components/pages/book/bookDetail/bookDetailPage';
 import LoanStatusList from './components/pages/loanStatus/LoanStatusList';
 import UpdateUserForm from './components/pages/myPage/UpdateUserForm';
+import DeleteUserForm from './components/pages/myPage/DeleteUserForm';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -100,9 +101,11 @@ function App() {
         <Route path="/reservation/list" element={<ReservationList />} />
         <Route path="/admin/user/search" element={<Admin />} />
         <Route path="/user/authentication" element={<AuthenticationForm />} />
+        
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/update" element={<UpdateUserForm/>} />
-
+        <Route path="/delete" element={<DeleteUserForm/>} />
+        
         <Route path="/admin/user/search" element={<AdminUserList />} />
         <Route path="/admin/user/detail/:id" element={<AdminUserDetail />} />
         <Route path="/admin/faqlist" element={<AdminFaqList />} />

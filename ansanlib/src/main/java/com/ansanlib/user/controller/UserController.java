@@ -156,4 +156,21 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 정보 업데이트 중 오류가 발생했습니다.");
 		}
 	}
+	
+	//회원 탈퇴
+	@PostMapping("/user/delete")
+	public ResponseEntity<String> deleteUser(HttpServletRequest httpRequest){
+		Long userId = (Long) httpRequest.getSession().getAttribute("userId");
+		if (userId == null) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+		} 
+		
+		try {
+			userService.deleteUser(userId);
+			httpRequest.getSession().invalidate();
+			return ResponseEntity.ok("회원 탈퇴가 성공적으로 처리되었습니다.");
+		} catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 탈퇴중 오류가 발생했습니다.");
+		}
+	}
 }

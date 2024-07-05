@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
@@ -17,6 +18,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ansanlib.entity.LibUser;
+import com.ansanlib.loanstatus.service.LoanStatusService;
+import com.ansanlib.requestBook.service.RequestBookService;
+import com.ansanlib.reservation.service.ReservationService;
 import com.ansanlib.user.dto.UserDto;
 import com.ansanlib.user.repository.UserRepository;
 
@@ -30,6 +34,14 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private ReservationService reservationService;
+    
+    @Autowired
+    private RequestBookService requestBookService;
+    
+    @Autowired
+    private LoanStatusService loanStatusService;
 //    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
 //        this.userRepository = userRepository;
 //        this.passwordEncoder = passwordEncoder;
@@ -240,6 +252,7 @@ public class UserService implements UserDetailsService {
 		// mailSender.send(message);
 	}
 	
+	// 회원 정보 수정
 	public void updateUser(Long userId, UserDto userDto ) {
 		Optional<LibUser> optionalUser = userRepository.findById(userId);
 		if(optionalUser.isPresent()) {
@@ -257,6 +270,24 @@ public class UserService implements UserDetailsService {
 		} else {
 			throw new RuntimeException("User not found with id : "+ userId);
 		}
+	}
+	
+	//회원탈퇴
+	@Transactional
+	public void deleteUser(Long userId) {
+		
+		//관련 데이터 삭제
+		reservationService.deleteReservationByUserId(userId);
+		requestBookService.deleteRequestBookByUserId(userId);
+		loanStatusService.deleteLoanStatusByUserId(userId);
+		
+		//사용자 삭제
+		userRepository.deleteById(userId);
+	}
+	
+	//회원 존재 확인
+	public boolean existsById(Long userId) {
+		return userRepository.existsById(userId);
 	}
 
 }

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.ansanlib.admin.repository.LoanStatusRepository;
 import com.ansanlib.entity.LoanStatus;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class LoanStatusService {
 
@@ -17,5 +19,8 @@ public class LoanStatusService {
 	public List<LoanStatus> getLoanStatusByUserId(Long userId) {
 		return loanStatusRepository.findByLibuserId(userId);
 	}
-
+	@Transactional
+    public void deleteLoanStatusByUserId(Long userId) {
+        loanStatusRepository.deleteByLibUserId(userId);
+    }
 }

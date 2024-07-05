@@ -18,12 +18,18 @@ import com.ansanlib.requestBook.dto.CreateRequestBookDto;
 import com.ansanlib.requestBook.dto.RequestBookDto;
 import com.ansanlib.requestBook.exception.CreateRequestBookException;
 import com.ansanlib.requestBook.service.RequestBookService;
+import com.ansanlib.user.service.UserService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/requestbook")
 public class RequestBookController {
 	@Autowired
 	private RequestBookService requestBookService;
+	
+	@Autowired
+	private UserService userService;
 	
 	@PostMapping
 	public ResponseEntity<?> createReqeustBook(@RequestBody CreateRequestBookDto createRequestBookDto){
@@ -39,7 +45,10 @@ public class RequestBookController {
 	}
 
     @GetMapping("get/by-user/{userId}")
-    public ResponseEntity<List<RequestBookDto>> getRequestBooksByUser(@PathVariable Long userId) {
+    public ResponseEntity<List<RequestBookDto>> getRequestBooksByUser(@PathVariable Long userId, HttpServletRequest httpRequest) {
+    	if (httpRequest.getSession().getAttribute("userId") == null || !userService.existsById(userId)) {
+    	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    	    }
         List<RequestBook> requestBooks = requestBookService.getRequestBooksByUser(userId);
         List<RequestBookDto> requestsBooksDto = requestBooks.stream().map(RequestBookDto::new).toList();
         if (requestBooks.isEmpty()) {
