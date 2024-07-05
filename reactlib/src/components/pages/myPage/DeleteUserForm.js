@@ -10,7 +10,7 @@ const DeleteUserForm = () => {
           axios.post('api/user/delete')
           .then(response =>{
             alert('회원 탈퇴가 성공적으로 처리 되었습니다.');
-            sessionStorage.removeItem("user");
+            sessionStorage.removeItem("member");
             navigate('/home');
           })
           .catch(error => {
