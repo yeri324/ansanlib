@@ -31,7 +31,7 @@ import BookDetailPage from './components/pages/book/bookDetail/bookDetailPage';
 import Holiday from './components/pages/admin/Holiday';
 import HolidayList from './components/pages/admin/HolidayList';
 import HolidayNew from './components/pages/admin/HolidayNew';
-// import AddBook from './components/pages/admin/AddBook';
+import AddBook from './components/pages/admin/AddBook';
 
 function App() {
   const [isVerified, setIsVerified] = useState(false);
@@ -78,7 +78,7 @@ function App() {
 <Route path="/admin/holiday" element={<Holiday/> } />
         <Route path="/admin/holiday/list" element={<HolidayList />} />
         <Route path="/admin/holiday/detail" element={<HolidayDetail />} />
-        {/* <Route path="/admin/book/add" element={<AddBook/>} /> */}
+        <Route path="/admin/book/add" element={<AddBook/>} />
       </Routes>
 
     </div>

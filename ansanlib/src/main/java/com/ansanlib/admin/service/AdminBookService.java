@@ -1,39 +1,47 @@
-//package com.ansanlib.admin.service;
-//
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Service;
-//
-//import com.ansanlib.admin.dto.AdminBookDto;
-//import com.ansanlib.book.repository.BookRepository;
-//import com.ansanlib.entity.Book;
-//import com.ansanlib.library.LibraryRepository;
-//
-//@Service
-//public class AdminBookService {
-//
-//    @Autowired
-//    private BookRepository bookRepository;
-//
-//    @Autowired
-//    private LibraryRepository libraryRepository;
-//
-//    public Book saveBook(AdminBookDto adminBookDto) {
-//    //    Library lib = libraryRepository.findByLibNum(adminBookDto.getLib_num());
-//
-//        Book book = new Book();
-//        book.setIsbn(adminBookDto.getIsbn());
-//        book.setTitle(adminBookDto.getTitle());
-//        book.setAuthor(adminBookDto.getAuthor());
-//        book.setPublisher(adminBookDto.getPublisher());
-//        book.setPub_date(adminBookDto.getPub_date());
-//        book.setCategory_code(adminBookDto.getCategory_code());
-//        book.setLocation(adminBookDto.getLocation());
-//        book.setBookDetail(adminBookDto.getBookDetail());
-//      //  book.setLib_name(adminBookDto.getLib_name());
-//        book.setCount(adminBookDto.getCount());
-//        book.setStatus(adminBookDto.getStatus());
-//      //  book.setLibrary(lib); // Assuming a relationship exists
-//
-//        return bookRepository.save(book);
-//    }
-//}
+package com.ansanlib.admin.service;
+
+import java.io.IOException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.ansanlib.book.dto.BookDto;
+import com.ansanlib.book.repository.BookImgRepository;
+import com.ansanlib.book.repository.BookRepository;
+import com.ansanlib.entity.Book;
+import com.ansanlib.entity.BookImg;
+
+@Service
+public class AdminBookService {
+
+    @Autowired
+    private BookRepository bookRepository;
+
+    @Autowired
+    private BookImgRepository bookImgRepository;
+
+    public Book saveBook(BookDto bookDto, MultipartFile file) throws IOException {
+        Book book = new Book();
+        book.setTitle(bookDto.getTitle());
+        book.setAuthor(bookDto.getAuthor());
+        book.setIsbn(bookDto.getIsbn());
+        book.setPublisher(bookDto.getPublisher());
+        book.setPub_date(bookDto.getPub_date());
+        book.setCategory_code(bookDto.getCategory_code());
+        book.setLocation(bookDto.getLocation());
+        book.setBookDetail(bookDto.getBookDetail());
+     // book.library.setLib_name(bookDto.getLib_name());
+        book.setCount(bookDto.getCount());
+       
+
+        if (file != null && !file.isEmpty()) {
+            BookImg bookImg = new BookImg();
+            bookImg.setImgName(file.getOriginalFilename());     
+            bookImgRepository.save(bookImg);
+            book.setBookImg(bookImg);
+        }
+
+        return bookRepository.save(book);
+    }
+}
