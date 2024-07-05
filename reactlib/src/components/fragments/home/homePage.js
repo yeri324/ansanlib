@@ -6,11 +6,14 @@ import BookSearch from './booksearch';
 import Trends from './Trends';
 import Notice from './notice';
 import New from './new';
-// import Calendar from 'react-calendar'
 import TodoCalendar from './calendar';
 import Kakao from '../../map/mapForm';
-// import { styled } from "styled-components";
 import "react-calendar/dist/Calendar.css";
+import LibraryPage from '../../pages/visit/LibraryPage';
+// import StatisticsPage from '../../pages/visit/StatisticsPage';
+// import Calendar from 'react-calendar'
+// import { styled } from "styled-components";
+
 
 const HomePage = () => {
 
@@ -49,9 +52,11 @@ const HomePage = () => {
               <div className="trend_list">
                 <Trends />
               </div>
-              {/* <div className="new_list">
-                <New />
-              </div> */}
+            </div>
+            <div className="visit_content">
+              <div className="total_visit">
+                <LibraryPage />
+              </div>
             </div>
             <div className="sub_content2">
               <div className="lib_h2"><h2>오시는 길</h2></div>

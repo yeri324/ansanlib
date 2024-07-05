@@ -114,6 +114,19 @@ body {
     background-color: #fdf8f1;
 }
 
+.visit_content {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.total_visit {
+    display: flex;
+    justify-content: center;
+    margin: -20px;
+}
+
+
 .sub_content1 .trend_list,
 .sub_content2 .lib_guide {
     padding: 20px;
