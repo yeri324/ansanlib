@@ -38,14 +38,10 @@ public class SecurityConfig {
 	        		.csrf(csrf -> csrf.disable())
 	        		.sessionManagement(sessionManagement -> 
 	                	sessionManagement.maximumSessions(1)
-	                		.expiredUrl("/member/login?expired=true")
+	                		.maxSessionsPreventsLogin(false)
 	        		)
 	                .formLogin(formLogin -> formLogin
-	                        .loginPage("http://localhost:3000/login")  // 커스텀 로그인 페이지 설정
-	                        .loginProcessingUrl("/api/user/login") 
-	                        .usernameParameter("loginid")  // 로그인 시 사용할 아이디 파라미터명
-	                        .passwordParameter("password")  // 로그인 시 사용할 비밀번호 파라미터명
-	                        .defaultSuccessUrl("/")  // 로그인 성공 시 이동할 기본 URL
+	                        .defaultSuccessUrl("/api/user/login")  // 로그인 성공 시 이동할 기본 URL
 	                        .failureUrl("/member/login/error")  // 로그인 실패 시 이동할 URL
 	                        .permitAll())
 	                
@@ -58,13 +54,12 @@ public class SecurityConfig {
 	                .authorizeHttpRequests(request -> request
 //	                        .requestMatchers(new AntPathRequestMatcher("/member/**")).permitAll()  // 회원 관련 모든 URL 허용
 //	                        .requestMatchers(new AntPathRequestMatcher("/teacher/**")).hasAnyRole("ADMIN", "TEACHER")
-	                        .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")  // 관리자 페이지 접근 권한 설정
-	                        .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
-	                        .requestMatchers("/**").permitAll())
-
-	                .exceptionHandling(exceptionHandling -> exceptionHandling
-	                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint()));
-
+//	                        .requestMatchers(new AntPathRequestMatcher("/**")).hasRole("ADMIN")  // 관리자 페이지 접근 권한 설정
+	                        .requestMatchers(new AntPathRequestMatcher("/api/**")).permitAll()
+//	                        .anyRequest().permitAll()
+//	                        .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
+	                        .requestMatchers("/**").authenticated());
+	             
 	        return http.build();
 	    }
 		

@@ -17,12 +17,14 @@ const LoginForm = ({ onLogin }) => {
             {
               url: '/api/user/login',
               method: 'post',
-              data: {
-                loginid: loginForm.loginid,
-            password: loginForm.password
+              data : {
+                loginid : loginForm.loginid,
+                password : loginForm.password,
               },
-              
-            })
+              baseURL: "http://localhost:8090",
+            }
+       
+        )
             .then(response => {
                 if (response.status === 200) {
                     alert("로그인되었습니다.")
@@ -49,6 +51,7 @@ return (
         <div className="line"></div>
         <div id="instructions">안산도서관 AnsanLibrary</div>
         <div className='loginCenter'>
+            <form onSubmit={handleLogin}>
             <div className='inputlogin'>
                 <h3>로그인</h3>
                 <div className='input_login'>
@@ -75,9 +78,11 @@ return (
                             />
                     </div>
                 </div>
-                <button id="login_btn" type="submit" onClick={handleLogin}>로그인</button>
+                <button id="login_btn">로그인</button>
+                
                 {error && <div className='error'>{error}</div>}
             </div>
+            </form>
             <div className='extra_btn'>
                 <button type="button" className='findId_btn' onClick={() => window.location.href = '/findid'}>아이디 찾기</button>
                 <button type="button" className='findPw_btn' onClick={() => window.location.href = '/findpw'}>비밀번호 찾기</button>
