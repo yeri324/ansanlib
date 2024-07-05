@@ -3,10 +3,11 @@ package com.ansanlib.board.controller;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,9 +18,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ansanlib.board.dto.FaqDto;
 import com.ansanlib.board.dto.FaqFormDto;
+import com.ansanlib.board.dto.FaqImgDto;
 import com.ansanlib.board.service.FaqService;
+import com.ansanlib.book.service.FileService;
 import com.ansanlib.entity.Faq;
-import com.ansanlib.response.CommonListResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,9 +31,9 @@ import lombok.RequiredArgsConstructor;
 public class FaqController {
 
 	private final FaqService faqService;
+	private final FileService fileService;
 
 	@PostMapping(value = "/new")
-//	@PostMapping(value = "/new", consumes = { "multipart/form-data" })
 	public ResponseEntity<String> createfaq(@RequestParam(required = false) List<MultipartFile> faqImgFile,
 			FaqFormDto faqFormDto) throws Exception {
 
@@ -92,9 +94,29 @@ public class FaqController {
 	
 	@PostMapping("/search")
 	public Page<Faq> searchUsers(@RequestBody FaqDto faqDto) {
-		System.out.println(faqDto.getPage()+"*"+faqDto.getSize()+"*"+faqDto.getSearchBy()+"*"+faqDto.getSearchQuery());
+		
 		Page<Faq> faqs= faqService.ListFaq(faqDto);
 			System.out.println(faqs.getSize());
 			return faqs;
 		}
+	
+	@PostMapping("/getImg")
+	public ResponseEntity<byte[]> getFaqImage(@RequestBody FaqImgDto faqImgDto){
+		try {
+			byte[] imgBytes = fileService.getImgByte(faqImgDto.getImgUrl());
+			
+			if(imgBytes!=null && imgBytes.length>0) {
+				HttpHeaders headers = new HttpHeaders();
+				headers.setContentType(MediaType.IMAGE_JPEG);
+				return new ResponseEntity<>(imgBytes,headers,HttpStatus.OK);
+			}else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 }

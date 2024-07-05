@@ -1,5 +1,7 @@
 package com.ansanlib.board.service;
 
+import java.io.IOException;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -31,16 +33,17 @@ public class FaqImgService {
 		FaqImg faqImg = new FaqImg();
 		faqImg.setFaq(faq);
 		
-		String oriImgName = faqImgFile.getOriginalFilename();
-		String imgName = "";
-		String imgUrl = "";
-	
-		
 		// 파일업로드
-		if (StringUtils.hasText(oriImgName)) {
-			imgName = fileService.uploadFile(itemImgLocation, oriImgName, faqImgFile.getBytes());
-			imgUrl = "/Faq/" + imgName; //이미지 저장 위치
-		}
+//		if (StringUtils.hasText(oriImgName)) {
+//			imgName = fileService.uploadFile(itemImgLocation, oriImgName, faqImgFile.getBytes());
+//			imgUrl = itemImgLocation + imgName; //이미지 저장 위치
+//		}
+		Map<String,String > map = fileService.fileHandler(faqImgFile,"faq",faq.getId());
+		
+		String oriImgName = map.get("oriImgName");
+		String imgName = map.get("imgName");
+		String imgUrl = map.get("imgUrl");
+
 		faqImg.updateFaqImg(oriImgName, imgName, imgUrl);
 		faqImgRepository.save(faqImg);
 	}
@@ -59,15 +62,20 @@ public class FaqImgService {
 			
 			//기존 파일 삭제
 			if(StringUtils.hasText(faqImg.getImgName())) {
-				fileService.deleteFile(itemImgLocation + "/" + faqImg.getImgName());
+				fileService.deleteFile(faqImg.getImgUrl());
 			}
 			
 			// 새파일 등록
-			String oriImgName = faqImgFile.getOriginalFilename();
-			String imgName = fileService.uploadFile(itemImgLocation, oriImgName, faqImgFile.getBytes());
-			String imgUrl = "/Faq/" + imgName;
+			Map<String,String > map = fileService.fileHandler(faqImgFile,"faq",faq.getId());
+			
+			String oriImgName = map.get("oriImgName");
+			String imgName = map.get("imgName");
+			String imgUrl = map.get("imgUrl");
+
 			faqImg.updateFaqImg(oriImgName, imgName, imgUrl);
+			
 		}
 	}
+	
 	
 }

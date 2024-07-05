@@ -8,7 +8,7 @@ function FaqList() {
     const [checkedList, setCheckedList] = useState([]);
     const [isChecked, setIsChecked] = useState(false);
     const navigate = useNavigate();
-    const [searchResult, setSerchResult] = useState([]);
+    const [searchResult, setSearchResult] = useState([]);
     const [searchOption, setSearchOption] = useState({
         searchBy: "title",
         searchQuery: "",
@@ -56,8 +56,7 @@ function FaqList() {
                 baseURL: 'http://localhost:8090',
             }
         ).then((response) => {
-            console.log(response.data);
-            setSerchResult(response.data.content);
+            setSearchResult(response.data.content);
             setTotalPages(response.data.totalPages);
             setTotalFaqCount(response.data.totalElements);
         });
@@ -112,17 +111,6 @@ function FaqList() {
         }
     };
 
-    // //이미지 띄우기 - 아직 못했음
-    const [viewImg, setViewImg] = useState('');
-    const handlePreview = (e) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(e.target.files[0]);
-        reader.onload = () => {
-            setViewImg = reader.result;
-        };
-
-    };
-
     return (
         <div>
             <div>
@@ -145,13 +133,13 @@ function FaqList() {
                 </thead>
                 <div className="slide">
                     {searchResult.map((faq) => (
-                        <FaqItem key={faq.id} faq={faq} checkedList={checkedList} checkHandler={checkHandler} onDetail={onDetail} handlePreview={handlePreview} />
-                    ))}
+                        <FaqItem key={faq.id} faq={faq} checkedList={checkedList} checkHandler={checkHandler} onDetail={onDetail}/>
+                   ))}
                 </div>
+                
                 <button onClick={onDelete}>삭제하기</button>
                 <button onClick={onCreate}>작성하기</button>
             </table >
-
             {/* 페이징 */}
             <div className="count_item">
                 총 {totalFaqCount}건 / {totalPages} 페이지
