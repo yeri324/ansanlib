@@ -30,7 +30,6 @@ const UpdateUserForm = () => {
             });
         } else {
             alert("로그인이 되어있지 않습니다.");
-            console.log("로그인이 안됨");
             navigate("/login");        
         }
         
