@@ -44,14 +44,17 @@ public class HolidayController {
     }
     
     
-    //데이터 조회
     @GetMapping("/list")
     public ResponseEntity<CommonListResponse<List<Holiday>>> getAllHolidays() {
         List<Holiday> holidays = holidayService.getAllHolidays();
-        for(Holiday h : holidays) {
-           System.out.println(h.getLibrary().getId());
+        for (Holiday h : holidays) {
+            if (h.getLibrary() != null) {
+                System.out.println("Library ID: " + h.getLibrary().getId() + ", Library Number: " + h.getLibrary().getLibNum());
+            } else {
+                System.out.println("Library is null for Holiday with id: " + h.getId());
+            }
         }
-        return ResponseEntity.ok().body(new CommonListResponse<List<Holiday>>(holidays.size(), holidays));
+        return ResponseEntity.ok().body(new CommonListResponse<>(holidays.size(), holidays));
     }
     
     
