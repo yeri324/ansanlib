@@ -71,11 +71,9 @@ public class LibUser extends BaseEntity {
 
 	
 	
-	public LibUser bind(UserDto userDto, PasswordEncoder passwordEncoder) {
+	public LibUser bind(com.ansanlib.userSec.UserDto userDto) {
 		this.setLoginid(userDto.getLoginid());
-
-		  this.password = passwordEncoder.encode(userDto.getPassword());
-		// this.setPassword(userDto.getPassword());
+		 this.setPassword(userDto.getPassword());
 
 		this.setName(userDto.getName());
 
@@ -96,9 +94,10 @@ public class LibUser extends BaseEntity {
 		} else {
 			this.setGender(Gender.MALE);
 		}
+		
 		this.setStatus(UserStatus.OFFPENALTY);
 
-		this.setRole(Role.ADMIN);
+		this.setRole(Role.ROLE_USER);
 
 		return this;
 	}

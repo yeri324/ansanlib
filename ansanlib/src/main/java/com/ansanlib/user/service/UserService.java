@@ -62,33 +62,33 @@ public class UserService implements UserDetailsService {
 
 
    
-   //횐가입
-      @Transactional(rollbackFor = Exception.class)
-   public ResponseEntity<String> join(UserDto userDto) {
-      // 비밀번호 일치 여부 확인
-
-      if (!isPasswordMatch(userDto.getPassword(), userDto.getPassword2())) {
-         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("비밀번호가 일치하지 않습니다.");
-      }
-       userDto.setJoinDate(LocalDateTime.now());
-      LibUser user = new LibUser();
-      user.bind(userDto, passwordEncoder);
-
-      try {
-         // 회원 정보를 데이터베이스에 저장
-         userRepository.save(user);
-
-         return ResponseEntity.status(HttpStatus.CREATED).body("회원가입이 완료되었습니다.");
-      } catch (Exception e) {
-         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원가입 중 오류가 발생했습니다.");
-      }
-   }
-
-   public void join(LibUser user) {
-      userRepository.save(user);
-
-   }
-   
+//   //횐가입
+//      @Transactional(rollbackFor = Exception.class)
+//   public ResponseEntity<String> join(UserDto userDto) {
+//      // 비밀번호 일치 여부 확인
+//
+//      if (!isPasswordMatch(userDto.getPassword(), userDto.getPassword2())) {
+//         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("비밀번호가 일치하지 않습니다.");
+//      }
+//       userDto.setJoinDate(LocalDateTime.now());
+//      LibUser user = new LibUser();
+//      user.bind(userDto);
+//
+//      try {
+//         // 회원 정보를 데이터베이스에 저장
+//         userRepository.save(user);
+//
+//         return ResponseEntity.status(HttpStatus.CREATED).body("회원가입이 완료되었습니다.");
+//      } catch (Exception e) {
+//         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원가입 중 오류가 발생했습니다.");
+//      }
+//   }
+//
+//   public void join(LibUser user) {
+//      userRepository.save(user);
+//
+//   }
+//   
    
    
 

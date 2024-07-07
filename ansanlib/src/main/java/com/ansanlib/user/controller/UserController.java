@@ -41,18 +41,18 @@ public class UserController {
 
 
     
-   // 가입가입
-      @PostMapping("/user/join")
-      public ResponseEntity<String> join(@RequestBody UserDto userDto) {
-         
-         System.out.println("가입완뇨~");
-         try {
-            userService.join(userDto);
-            return new ResponseEntity<>("회원가입이 완료되었습니다.", HttpStatus.CREATED);
-         } catch (Exception e) {
-            return new ResponseEntity<>("회원가입 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
-         }
-      }
+//   // 가입가입
+//      @PostMapping("/user/join")
+//      public ResponseEntity<String> join(@RequestBody UserDto userDto) {
+//         
+//         System.out.println("가입완뇨~");
+//         try {
+//            userService.join(userDto);
+//            return new ResponseEntity<>("회원가입이 완료되었습니다.", HttpStatus.CREATED);
+//         } catch (Exception e) {
+//            return new ResponseEntity<>("회원가입 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+//         }
+//      }
 
    //  로그인
     @PostMapping("/user/login")
