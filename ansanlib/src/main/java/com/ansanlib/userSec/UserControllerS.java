@@ -20,9 +20,9 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
-public class UserController {
+public class UserControllerS {
     
-    private final UserService userService;
+    private final UserServiceS userService;
     
     // 유저 정보 조회
     @Secured("ROLE_USER")           // USER 권한 설정
@@ -42,7 +42,7 @@ public class UserController {
 
      // 회원가입
     @PostMapping("")
-    public ResponseEntity<?> join(@RequestBody UserDto user) throws Exception {
+    public ResponseEntity<?> join(@RequestBody UserDtoS user) throws Exception {
     	
         return userService.join(user);
 

@@ -13,9 +13,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ansanlib.entity.LibUser;
 import com.ansanlib.security.CustomUser;
+import com.ansanlib.user.repository.UserRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,14 +25,14 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class UserService implements UserDetailsService {
+public class UserServiceS {
 
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final AuthenticationManager authenticationManager;
 
 	// 회원가입
-	public ResponseEntity<String> join(UserDto userDto) throws Exception {
+	public ResponseEntity<String> join(UserDtoS userDto) throws Exception {
 		if (!(userDto.getPassword().equals(userDto.getPassword2()))) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("비밀번호가 일치하지 않습니다.");
 		}
@@ -53,7 +55,7 @@ public class UserService implements UserDetailsService {
 	}
 
 	// 로그인
-	public void login(UserDto userDto, HttpServletRequest request) throws Exception {
+	public void login(UserDtoS userDto, HttpServletRequest request) throws Exception {
 		String loginid = userDto.getLoginid();
 		String password = userDto.getPassword();
 
@@ -71,19 +73,7 @@ public class UserService implements UserDetailsService {
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
 
-	@Override
-	public UserDetails loadUserByUsername(String loginid) throws UsernameNotFoundException {
-
-		System.out.println("loadUserByUsername : " + loginid);
-
-		LibUser user = userRepository.findByLoginid(loginid)
-				.orElseThrow(() -> new UsernameNotFoundException("일치하는 사용자가 없습니다."));
-
-		CustomUser customUser = new CustomUser(user);
-
-		return customUser;
-
-	}
+	
 
 //	// 비밀번호 일치 확인 메서드
 //	public boolean isPasswordMatch(String password, String password2) {

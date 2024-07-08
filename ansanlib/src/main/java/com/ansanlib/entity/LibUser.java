@@ -2,12 +2,11 @@ package com.ansanlib.entity;
 
 import java.time.LocalDateTime;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 import com.ansanlib.constant.Gender;
 import com.ansanlib.constant.Role;
 import com.ansanlib.constant.UserStatus;
 import com.ansanlib.user.dto.UserDto;
+import com.ansanlib.userSec.UserDtoS;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -71,7 +70,7 @@ public class LibUser extends BaseEntity {
 
 	
 	
-	public LibUser bind(com.ansanlib.userSec.UserDto userDto) {
+	public LibUser bind(UserDtoS userDto) {
 		this.setLoginid(userDto.getLoginid());
 		 this.setPassword(userDto.getPassword());
 

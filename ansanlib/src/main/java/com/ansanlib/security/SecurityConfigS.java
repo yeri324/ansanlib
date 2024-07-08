@@ -7,15 +7,13 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.ansanlib.security.jwt.JwtAuthenticationFilter;
 import com.ansanlib.security.jwt.JwtRequestFilter;
 import com.ansanlib.security.jwt.JwtTokenProvider;
-import com.ansanlib.userSec.UserService;
+import com.ansanlib.userSec.CustomUserDetailsSevice;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,10 +22,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 //@preAuthorize @postAuthorize @Secured 활성화
 @EnableMethodSecurity(prePostEnabled = true,securedEnabled = true) 
-public class SecurityConfig {
-	private final UserService userService;
+public class SecurityConfigS {
+	
+	private final CustomUserDetailsSevice customUserDetailsService;
     private final JwtTokenProvider jwtTokenProvider;
-
     private AuthenticationManager authenticationManager;
 
     @Bean
@@ -35,11 +33,6 @@ public class SecurityConfig {
         this.authenticationManager = authenticationConfiguration.getAuthenticationManager();
 		return authenticationManager;
 	}
-    
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -63,12 +56,13 @@ public class SecurityConfig {
 //                                            .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                             .requestMatchers("/").permitAll()
                                             .requestMatchers("/login").permitAll()
-                                            .requestMatchers("/user/**").hasAnyRole("USER")
-                                            .requestMatchers("/admin/**").hasRole("ADMIN")
-                                            .anyRequest().authenticated() )
+//                                            .requestMatchers("/user/**").hasAnyRole("USER")
+//                                            .requestMatchers("/admin/**").hasRole("ADMIN")
+                                            .anyRequest().permitAll())
+//                                            .anyRequest().authenticated() )
                                             ;
 									
-        http.userDetailsService(userService);
+        http.userDetailsService(customUserDetailsService);
 
 		return http.build();
 	}
