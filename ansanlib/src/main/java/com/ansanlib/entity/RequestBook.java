@@ -31,6 +31,7 @@ public class RequestBook extends BaseEntity {
 	private String publisher; //출판사
 	private LocalDate pub_date; //출판일
 	private LocalDateTime regist_date; //신청일
+	private String lib_name; // 도서관 이름
 	
 	@ManyToOne
     @JoinColumn(name="user_id")

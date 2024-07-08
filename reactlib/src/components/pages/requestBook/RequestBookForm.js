@@ -12,6 +12,7 @@ const RequestBookForm = () => {
   const [pubDate, setPubDate] = useState('');
   const [userId, setUserId] = useState(null);
   const [userName, setUserName] = useState("");
+  const [libName, setLibName]  =useState('');
 
   useEffect(()=>{
     const memberData = JSON.parse(sessionStorage.getItem("member") ?? "null");
@@ -29,7 +30,7 @@ const RequestBookForm = () => {
 
   const requestBook = {
       isbn, title, author, publisher,
-      pubDate, userId: parseInt(userId)
+      pubDate, userId: parseInt(userId), lib_name: libName
   };
 
     axios.post('/api/requestbook', requestBook, {
@@ -46,6 +47,7 @@ const RequestBookForm = () => {
       setPublisher('');
       setPubDate('');
       setUserId('');
+      setLibName('');
     })
     .catch(error => {
       if(error.response){
@@ -62,7 +64,7 @@ const RequestBookForm = () => {
     <form onSubmit={handleSubmit}>
       <h2> {userName}의 도서신청</h2>
       <div>
-        <label>ISBN:</label>
+        <label>도서 ISBN:</label>
         <input 
           type="text" 
           value={isbn} 
@@ -71,7 +73,7 @@ const RequestBookForm = () => {
         />
       </div>
       <div>
-        <label>Title:</label>
+        <label>책 제목:</label>
         <input 
           type="text" 
           value={title} 
@@ -80,7 +82,7 @@ const RequestBookForm = () => {
         />
       </div>
       <div>
-        <label>Author:</label>
+        <label>저자:</label>
         <input 
           type="text" 
           value={author} 
@@ -89,7 +91,7 @@ const RequestBookForm = () => {
         />
       </div>
       <div>
-        <label>Publisher:</label>
+        <label>출판사:</label>
         <input 
           type="text" 
           value={publisher} 
@@ -98,11 +100,20 @@ const RequestBookForm = () => {
         />
       </div>
       <div>
-        <label>Publication Date:</label>
+        <label>출판일:</label>
         <input 
           type="date" 
           value={pubDate} 
           onChange={(e) => setPubDate(e.target.value)} 
+          required 
+        />
+      </div>
+      <div>
+        <label> 신청 할 도서관 :</label>
+        <input 
+          type="text" 
+          value={libName} 
+          onChange={(e) => setLibName(e.target.value)} 
           required 
         />
       </div>

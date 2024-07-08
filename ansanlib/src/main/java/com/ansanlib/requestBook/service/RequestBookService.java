@@ -35,6 +35,7 @@ public class RequestBookService {
 	    requestBook.setPublisher(createRequestBookDto.getPublisher());
 	    requestBook.setPub_date(createRequestBookDto.getPubDate());
 	    requestBook.setRegist_date(LocalDateTime.now());
+	    requestBook.setLib_name(createRequestBookDto.getLib_name());
 
 	    LibUser libUser = new LibUser();
 	    libUser.setUserId(createRequestBookDto.getUserId());

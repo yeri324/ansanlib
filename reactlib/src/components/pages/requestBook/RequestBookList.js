@@ -78,6 +78,7 @@ const RequestBookList = () => {
             책 제목:{book.title} <br/>
             저자 : {book.author} (ISBN: {book.isbn})<br />
             출판사: {book.publisher}, 출판일: {new Date(book.pub_date).toLocaleDateString()}
+            신청 한 도서관 : {book.lib_name}
           </li>
         ))}
       </ul>
