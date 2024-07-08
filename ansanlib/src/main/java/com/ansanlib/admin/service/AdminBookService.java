@@ -27,28 +27,31 @@ public class AdminBookService {
 	@Autowired
 	private BookImgRepository bookImgRepository;
 
-	public Book saveBook(BookDto bookDto, MultipartFile file) throws IOException {
-		Book book = new Book();
-		book.setTitle(bookDto.getTitle());
-		book.setAuthor(bookDto.getAuthor());
-		book.setIsbn(bookDto.getIsbn());
-		book.setPublisher(bookDto.getPublisher());
-		book.setPub_date(bookDto.getPub_date());
-		book.setCategory_code(bookDto.getCategory_code());
-		book.setLocation(bookDto.getLocation());
-		book.setBookDetail(bookDto.getBookDetail());
-		// book.library.setLib_name(bookDto.getLib_name());
-		book.setCount(bookDto.getCount());
+	 public BookDto saveBook(BookDto bookDto, MultipartFile file) throws IOException {
+	        // Save file and book entity logic here
+	        // Convert BookDto to Book entity
+	     Book book = new Book();
+	        book.setIsbn(bookDto.getIsbn());
+	        book.setTitle(bookDto.getTitle());
+	        book.setAuthor(bookDto.getAuthor());
+	        book.setPublisher(bookDto.getPublisher());
+	        book.setPub_date(bookDto.getPub_date());
+	        book.setCategory_code(bookDto.getCategory_code());
+	        book.setLocation(bookDto.getLocation());
+	        book.setBookDetail(bookDto.getBookDetail());
+	    
+	        book.setCount(bookDto.getCount());
 
-		if (file != null && !file.isEmpty()) {
-			BookImg bookImg = new BookImg();
-			bookImg.setImgName(file.getOriginalFilename());
-			bookImgRepository.save(bookImg);
-			book.setBookImg(bookImg);
-		}
+	        if (file != null && !file.isEmpty()) {
+	            // Handle file saving logic here
+	            // Example: book.setBookImg(file.getOriginalFilename());
+	        }
 
-		return bookRepository.save(book);
-	}
+	        Book savedBook = bookRepository.save(book);
+	        bookDto.setId(savedBook.getId());
+
+	        return bookDto;
+	    }
 
 	
 	

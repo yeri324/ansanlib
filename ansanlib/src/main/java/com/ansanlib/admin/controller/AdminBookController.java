@@ -28,8 +28,8 @@ public class AdminBookController {
  
 
     @PostMapping("/new")
-    public ResponseEntity<Book> addBook(@RequestPart("book") BookDto bookDto, @RequestPart("file") MultipartFile file) throws IOException {
-        Book savedBook = adminBookService.saveBook(bookDto, file);
+    public ResponseEntity<BookDto> addBook(@RequestPart("book") BookDto bookDto, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
+        BookDto savedBook = adminBookService.saveBook(bookDto, file);
         return ResponseEntity.ok(savedBook);
     }
     
