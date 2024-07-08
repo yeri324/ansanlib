@@ -47,6 +47,24 @@ public class UserControllerS {
         return userService.join(user);
 
     }
+    
+//    // 회원탈퇴
+//    @Secured("ROLE_USER")          //  USER 권한 설정
+//    @DeleteMapping("/{userId}")
+//    public ResponseEntity<?> destroy(@PathVariable("userId") String userId) throws Exception {
+//
+//        int result = userService.delete(userId);
+//
+//        if( result > 0 ) {
+//            log.info("회원삭제 성공! - SUCCESS");
+//            return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+//        }
+//        else {
+//            log.info("회원삭제 실패! - FAIL");
+//            return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
+//        }
+//        
+//    }
 
  
 }
