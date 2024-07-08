@@ -4,13 +4,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.ansanlib.entity.Reservation;
 
-import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long>{
@@ -41,6 +42,10 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long>{
     
     List<Reservation> findByLibUser_UserIdOrderByStartDateAsc(Long user_id);
     List<Reservation> findBybookId_Id(Long id);
-
+    
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Reservation r WHERE r.libUser.userId = :userId")
+    void deleteByLibUserId(@Param("userId") Long userId);
 }
 
