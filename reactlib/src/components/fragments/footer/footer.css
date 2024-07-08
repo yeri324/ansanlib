@@ -19,11 +19,11 @@
 }
 
 .footer_menu {
+    margin: 0 auto;
+    padding: 0;
     width: 100%;
     list-style: none;
-    padding: 0;
     text-align: center;
-    margin: 0 auto;
 }
 
 .footer_menu .menu_item {
