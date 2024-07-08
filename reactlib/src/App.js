@@ -27,11 +27,12 @@ import HolidayDetail from './components/pages/admin/HolidayDetail';
 import SearchPage from './components/pages/book/searchBookList/searchPage';
 import BookDetailPage from './components/pages/book/bookDetail/bookDetailPage';
 
-
 import Holiday from './components/pages/admin/Holiday';
 import HolidayList from './components/pages/admin/HolidayList';
 import HolidayNew from './components/pages/admin/HolidayNew';
 import AddBook from './components/pages/admin/AddBook';
+import AdminBook from './components/pages/admin/AdminBookRequest';
+import AdminBookRequest from './components/pages/admin/AdminBookRequest';
 
 function App() {
   const [isVerified, setIsVerified] = useState(false);
@@ -79,6 +80,7 @@ function App() {
         <Route path="/admin/holiday/list" element={<HolidayList />} />
         <Route path="/admin/holiday/detail" element={<HolidayDetail />} />
         <Route path="/admin/book/add" element={<AddBook/>} />
+        <Route path="/admin/book/request" element={<AdminBookRequest/>} />
       </Routes>
 
     </div>

@@ -20,6 +20,8 @@ public class RequestBookDto {
 		this.publisher = entity.getPublisher();
 		this.pub_date = entity.getPub_date();
 		this.regist_date = entity.getRegist_date();
+
+	
 	}
 	
 	private Long id;
@@ -30,5 +32,6 @@ public class RequestBookDto {
 	private String publisher; //출판사
 	private LocalDate pub_date; //출판일
 	private LocalDateTime regist_date; //신청일
+
 	
 }

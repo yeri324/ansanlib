@@ -3,6 +3,8 @@ package com.ansanlib.entity;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import com.ansanlib.constant.BookStatus;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,6 +33,8 @@ public class RequestBook extends BaseEntity {
 	private String publisher; //출판사
 	private LocalDate pub_date; //출판일
 	private LocalDateTime regist_date; //신청일
+
+	
 	
 	@ManyToOne
     @JoinColumn(name="user_id")
