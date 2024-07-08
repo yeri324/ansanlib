@@ -3,6 +3,7 @@ package com.ansanlib.board.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -77,6 +78,11 @@ public class FaqService {
 	// 삭제하기
 	public void deleteFaq(Long id) {
 		faqRepository.deleteById(id);
+	}
+	
+	public Faq getDetail(FaqDto faqDto) {
+		Faq faq = faqRepository.findById(faqDto.getId()).orElseThrow(EntityNotFoundException::new);
+		return 	faq;
 	}
 
 //	// 기준 검색하기 or 전체 리스트 가져오기
