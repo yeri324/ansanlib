@@ -20,7 +20,7 @@ const HomePage = () => {
 
   return (
     <>
-      <Header />
+      <header><Header /></header>
       <section>
         <div className="main_content">
           <div className="main_grid">
@@ -68,8 +68,7 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
+      <footer><Footer /></footer>
     </>
   );
 }

@@ -29,6 +29,7 @@
 body {
   margin: 0;
   padding: 0;
+  width: 100%;
   font-family: 'Noto Sans KR', sans-serif;
 }
 
@@ -36,7 +37,7 @@ header {
   display: flex;
   flex-direction: column;
   width: 100%;
-  background-color: #ffffff;
+  background-color: #fff;
 }
 
 .full_header {
@@ -75,7 +76,6 @@ header {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 1200px;
   padding: 0 40px;
   margin-bottom: 20px;
 }
@@ -83,6 +83,7 @@ header {
 .top_logo img {
   width: 200px;
   height: auto;
+  margin-left: 40px;
 }
 
 .top_menu {

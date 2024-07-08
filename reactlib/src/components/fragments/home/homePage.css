@@ -36,6 +36,10 @@ header {
     width: 100%;
 }
 
+footer {
+    width: 100%;
+}
+
 .main_content {
     width: 100%;
     display: flex;
@@ -63,7 +67,8 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 1200px;
+    max-width: 1600px;
+    width: 100%;
 }
 
 .top_column {
@@ -89,7 +94,7 @@ header {
 }
 
 .login_box {
-    min-width: 300px;
+    width: 300px;
     justify-content: center;
     align-items: center;
 }
@@ -109,7 +114,7 @@ header {
 .sub_content1,
 .sub_content2 {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1500px;
     margin: 10px auto;
     padding: 40px;
     border-radius: 20px;
