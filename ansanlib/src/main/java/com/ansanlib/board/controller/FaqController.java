@@ -129,7 +129,7 @@ public class FaqController {
 	
 	// 이미지 삭제
 	@DeleteMapping("/imgDelete")
-	public ResponseEntity<String> deleteImg(@RequestBody FaqImgDto faqImgDto) {
+	public ResponseEntity<String> deleteImg(@RequestBody FaqImgDto faqImgDto) throws Exception {
 		ResponseEntity resEntity = null;
 		Long id = faqImgDto.getId();
 		System.out.println(id);

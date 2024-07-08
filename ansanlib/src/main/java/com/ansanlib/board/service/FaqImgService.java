@@ -1,6 +1,5 @@
 package com.ansanlib.board.service;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
 
@@ -75,7 +74,12 @@ public class FaqImgService {
 		}
 	}
 
-	public void deleteFaq(Long id) {
-		faqImgRepository.deleteById(id);
+	public void deleteFaq(Long id) throws Exception{
+		FaqImg faqImg = faqImgRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+		if (StringUtils.hasText(faqImg.getImgName())) {
+			fileService.deleteFile(faqImg.getImgUrl());
+			faqImgRepository.deleteById(id);
+		}
+
 	}
 }
