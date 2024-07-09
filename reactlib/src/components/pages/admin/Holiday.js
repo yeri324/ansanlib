@@ -1,12 +1,15 @@
 import './Holiday.css';
 import { useState, useEffect } from 'react';
 import moment from 'moment';
-import { Button } from 'react-bootstrap';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import HolidayNew from './HolidayNew';
 import HolidayDetail from './HolidayDetail';
+import AdminHeader from './AdminHeader';
+import AdminSide from './AdminSide';
+ 
 
 const Holiday = () => {
   const [getMoment, setMoment] = useState(moment());
@@ -64,7 +67,7 @@ const Holiday = () => {
             let holidays = schedules.filter(schedule => moment(schedule.holiday).isSame(current, 'day'));
 
             return (
-              <td
+              <td 
                 key={i}
                 className={`day ${isSelectedMonth ? '' : 'not-current'} ${isToday ? 'today' : ''} ${isWeekend ? 'weekend' : ''}`}
                 onClick={() => handleDateClick(current)}
@@ -88,21 +91,26 @@ const Holiday = () => {
   };
 
   return (
-    <div className="Calendar">
-      <div className='holidayTitle'><h2>캘린더</h2></div>
+    <>
+      <AdminHeader />
+      <div className="main-container">
+
+        <AdminSide />
+        <div className="content">
+   
+      <div className='holidayTitle'><h1>캘린더</h1></div>
       <div className="control">
         <div className="date-navigation">
-          <Button onClick={() => setMoment(getMoment.clone().subtract(1, 'month'))}>이전달</Button>
-          <span>{today.format('YYYY 년 MM 월')}</span>
-          <Button onClick={() => setMoment(getMoment.clone().add(1, 'month'))}>다음달</Button>
+          <button onClick={() => setMoment(getMoment.clone().subtract(1, 'month'))}>이전달</button>
+          <h4><span> {today.format('YYYY 년 MM 월')}</span> </h4>
+          <button onClick={() => setMoment(getMoment.clone().add(1, 'month'))}>다음달</button>
         </div>
-        <div className="button-group">
-          <Button className="regschedule" onClick={() => navigate('/admin/holiday/list')}>목록보기</Button>
-          <Button variant="primary" onClick={() => setShowModal(true)}>등록하기</Button>
-        </div>
+       
       </div>
+      <div className="calendar">
+     
       <div className='calBody'>
-        <table>
+        <table className='tableheader'>
           <thead>
             <tr>
               <th>일</th>
@@ -131,12 +139,23 @@ const Holiday = () => {
           districts={districts}
         />
       )}
-      <HolidayDetail
+
+<div className="button-group">
+          <button className="regschedule" onClick={() => navigate('/admin/holiday/list')}>목록보기</button>
+          <button variant="primary" onClick={() => setShowModal(true)}>등록하기</button>
+        </div>
+        <HolidayDetail
         show={showDetail}
         handleClose={() => setShowDetail(false)}
         holidays={selectedHolidays}
       />
     </div>
+    </div>
+    </div>
+   
+    
+    </>
+    
   );
 };
 

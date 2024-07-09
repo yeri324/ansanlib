@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
 import "./AddBook.css";
-import { Navigation } from 'react-calendar';
+import AdminHeader from './AdminHeader';
+import AdminSide from './AdminSide';
 
 const AddBook = ({ csrf = {} }) => {
     const initialFormData = {
@@ -40,6 +41,8 @@ const AddBook = ({ csrf = {} }) => {
     const [selectedLibrary, setSelectedLibrary] = useState('');
     const [selectedSection, setSelectedSection] = useState('');
     const [imagePreview, setImagePreview] = useState(null); // 이미지 미리보기 상태
+    const fileInputRef = useRef(null); // 파일 입력 요소에 접근하기 위한 ref
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -82,6 +85,28 @@ const AddBook = ({ csrf = {} }) => {
                 setImagePreview(event.target.result);
             };
             reader.readAsDataURL(files[0]);
+        }
+    };
+
+    const handleImageCancel = () => {
+        setFormData((prevData) => ({
+            ...prevData,
+            bookImg: null,
+        }));
+        setImagePreview(null);
+        if (fileInputRef.current) {
+            fileInputRef.current.value = ''; // 파일 입력 필드 초기화
+        }
+    };
+
+    const handleReset = () => {
+        setFormData(initialFormData);
+        setErrors(initialErrors);
+        setSelectedLibrary('');
+        setSelectedSection('');
+        setImagePreview(null);
+        if (fileInputRef.current) {
+            fileInputRef.current.value = ''; // 파일 입력 필드 초기화
         }
     };
 
@@ -137,10 +162,6 @@ const AddBook = ({ csrf = {} }) => {
             tempErrors.bookDetail = '상세 내용을 입력해주세요';
             isValid = false;
         }
-        // if (!formData.lib_name) {
-        //     tempErrors.lib_name = '도서관을 선택해주세요';
-        //     isValid = false;
-        // }
         if (!formData.count || formData.count <= 0) {
             tempErrors.count = '도서 수량을 입력해주세요';
             isValid = false;
@@ -157,7 +178,6 @@ const AddBook = ({ csrf = {} }) => {
           return;
         }
       
-        // 해당 연도를 문자열로 변환하여 포함
         const formDataCopy = {
           ...formData,
           pub_date: formData.pub_date ? formData.pub_date.getFullYear().toString() : '',
@@ -187,13 +207,19 @@ const AddBook = ({ csrf = {} }) => {
       };
 
     return (
+        <>
+      <AdminHeader />
+      <div className="main-container">
+
+        <AdminSide />
+        <div className="content">
         <main>
             <div className="breadcrumbs">
                 <div className="page-header d-flex align-items-center">
                     <div className="container position-relative">
                         <div className="row d-flex justify-content-center">
                             <div className="col-lg-6 text-center">
-                                <h2>책 추가</h2>
+                                <h1>도서 등록</h1>
                             </div>
                         </div>
                     </div>
@@ -206,10 +232,33 @@ const AddBook = ({ csrf = {} }) => {
             <section className="sample-page">
                 <div className="content">
                     <form onSubmit={handleSubmit} encType="multipart/form-data">
-                        <p className="h2">도서 등록</p>
+                        
 
                         <input type="hidden" name="id" value={formData.id} />
                         <input type="hidden" name="status" value="AVAILABLE" />
+                        
+                        <div className="form-group">
+                            
+                            <label className="input-group-text">도서 표지</label>
+                            {imagePreview && (
+                            <div className="form-group">
+                                <img src={imagePreview} alt="미리보기" className="img-thumbnail" />
+                                <button className="btn btn-secondary" onClick={handleImageCancel}>취소</button>
+                            </div>
+                        )}
+
+
+                            <input
+                                type="file"
+                                className="custom-file-input"
+                                name="bookImgFile"
+                                onChange={handleFileChange}
+                                ref={fileInputRef} // 파일 입력 필드에 ref를 연결
+                            />
+                            <label className="custom-file-label">도서 이미지</label>
+                        </div>
+
+                      
 
                         <div className="input-group mb-3">
                             <label className="input-group-text">도서명</label>
@@ -221,7 +270,6 @@ const AddBook = ({ csrf = {} }) => {
                                 value={formData.title}
                                 onChange={handleChange}
                             />
-
                         </div>
                         {errors.title && <p className="text-danger">{errors.title}</p>}
 
@@ -235,9 +283,9 @@ const AddBook = ({ csrf = {} }) => {
                                 value={formData.isbn}
                                 onChange={handleChange}
                             />
-
                         </div>
                         {errors.isbn && <p className="text-danger">{errors.isbn}</p>}
+
                         <div className="input-group mb-3">
                             <label className="input-group-text">저자</label>
                             <input
@@ -248,8 +296,8 @@ const AddBook = ({ csrf = {} }) => {
                                 value={formData.author}
                                 onChange={handleChange}
                             />
-
-                        </div> {errors.author && <p className="text-danger">{errors.author}</p>}
+                        </div> 
+                        {errors.author && <p className="text-danger">{errors.author}</p>}
 
                         <div className="input-group mb-3">
                             <label className="input-group-text">출판사</label>
@@ -261,8 +309,8 @@ const AddBook = ({ csrf = {} }) => {
                                 value={formData.publisher}
                                 onChange={handleChange}
                             />
-
-                        </div>{errors.publisher && <p className="text-danger">{errors.publisher}</p>}
+                        </div>
+                        {errors.publisher && <p className="text-danger">{errors.publisher}</p>}
 
                         <div className="input-group mb-3">
                             <label className="input-group-text">출판년도</label>
@@ -274,8 +322,8 @@ const AddBook = ({ csrf = {} }) => {
                                 className="form-control"
                                 placeholderText="출판년도를 입력해주세요"
                             />
-
-                        </div> {errors.pub_date && <p className="text-danger">{errors.pub_date}</p>}
+                        </div> 
+                        {errors.pub_date && <p className="text-danger">{errors.pub_date}</p>}
 
                         <div className="input-group mb-3">
                             <label className="input-group-text">카테고리코드</label>
@@ -286,9 +334,9 @@ const AddBook = ({ csrf = {} }) => {
                                 value={formData.category_code}
                                 onChange={handleChange}
                             />
-
                         </div>
                         {errors.category_code && <p className="text-danger">{errors.category_code}</p>}
+
                         <div className="input-group mb-3">
                             <label className="input-group-text">상세 내용</label>
                             <textarea
@@ -298,8 +346,8 @@ const AddBook = ({ csrf = {} }) => {
                                 value={formData.bookDetail}
                                 onChange={handleChange}
                             />
-
-                        </div> {errors.bookDetail && <p className="text-danger">{errors.bookDetail}</p>}
+                        </div> 
+                        {errors.bookDetail && <p className="text-danger">{errors.bookDetail}</p>}
 
                         <div className="input-group mb-3">
                             <label className="input-group-text">소장 도서관</label>
@@ -320,8 +368,8 @@ const AddBook = ({ csrf = {} }) => {
                                         </option>
                                     ))}
                             </select>
-
-                        </div> {errors.lib_name && <p className="text-danger">{errors.lib_name}</p>}
+                        </div> 
+                        {errors.lib_name && <p className="text-danger">{errors.lib_name}</p>}
 
                         <div className="input-group mb-3">
                             <label className="input-group-text">소장 위치</label>
@@ -333,9 +381,9 @@ const AddBook = ({ csrf = {} }) => {
                                 value={formData.location}
                                 onChange={handleChange}
                             />
-
                         </div>
                         {errors.location && <p className="text-danger">{errors.location}</p>}
+
                         <div className="input-group mb-3">
                             <label className="input-group-text">도서 수량</label>
                             <input
@@ -346,30 +394,12 @@ const AddBook = ({ csrf = {} }) => {
                                 value={formData.count}
                                 onChange={handleChange}
                             />
-
                         </div>
                         {errors.count && <p className="text-danger">{errors.count}</p>}
-                        <div className="form-group">
-                            <label className="input-group-text">도서 이미지</label>
-                            <input
-                                type="file"
-                                className="custom-file-input"
-                                name="bookImgFile"
-                                onChange={handleFileChange}
-                            />
-                            <label className="custom-file-label">도서 이미지</label>
-                        </div>
-
-                        {imagePreview && (
-                            <div className="form-group">
-                                <img src={imagePreview} alt="미리보기" className="img-thumbnail" />
-                            </div>
-                        )}
-
-                        <div style={{ textAlign: 'center' }}>
-                            <button type="submit" className="btn btn-primary">
-                                저장
-                            </button>
+                        
+                        <div className="form-group text-center">
+                            <button type="submit" >저장</button>
+                            <button type="button"  onClick={handleReset}>리셋</button>
                         </div>
 
                         <input type="hidden" name={csrf.parameterName} value={csrf.token} />
@@ -377,9 +407,9 @@ const AddBook = ({ csrf = {} }) => {
                 </div>
             </section>
         </main>
+        </div></div>
+        </>
     );
 };
 
 export default AddBook;
-
-// 출간년도 

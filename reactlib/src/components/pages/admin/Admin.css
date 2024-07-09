@@ -1,0 +1,13 @@
+.main-container {
+    display: grid;
+    grid-template-columns: 200px 1fr; /* 사이드바와 콘텐츠 영역을 설정 */
+    margin-top: 150px; /* 헤더 높이만큼 위쪽 마진을 줍니다 */
+    margin-bottom: 200px;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  
+ 
+  
+
+    
+   

@@ -106,7 +106,7 @@ function App() {
 
         <Route path="/reservation/new" element={<ReservationForm />} />
         <Route path="/reservation/list" element={<ReservationList />} />
-        <Route path="/admin/user/search" element={<Admin />} />
+        <Route path="/admin" element={<Admin />} />
 
   
         <Route path="/mypage" element={<MyPage/>}/>
@@ -134,7 +134,7 @@ function App() {
 <Route path="/admin/holiday" element={<Holiday/> } />
         <Route path="/admin/holiday/list" element={<HolidayList />} />
         <Route path="/admin/holiday/detail" element={<HolidayDetail />} />
-        <Route path="/admin/book/add" element={<AddBook/>} />
+        <Route path="/admin/book/new" element={<AddBook/>} />
         <Route path="/admin/book/request" element={<AdminBookRequest/>} />
 
         <Route path="/loanstatus" element={<LoanStatusList/>} />
@@ -147,6 +147,5 @@ function App() {
 }
 
 export default App;
-
 
 

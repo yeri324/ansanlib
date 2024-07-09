@@ -1,15 +1,18 @@
 import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
+
+import "./Modal.css";
 
 const HolidayDetailsModal = ({ show, handleClose, holidays }) => {
   return (
-    <Modal show={show} onHide={handleClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>휴관일 정보</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
+    <div className="modal" style={{ display: show ? 'block' : 'none' }}>
+    <div className="modal-content">
+      <div className="modal-header">
+        <span className="close-button" onClick={handleClose}>&times;</span>
+        <h2>휴관일 정보</h2>
+      </div>
+      <div className="modal-body">
         {holidays.length > 0 ? (
-          <table striped bordered hover>
+          <table className='detailTable'>
             <thead>
               <tr>
                 <th>번호</th>
@@ -30,13 +33,12 @@ const HolidayDetailsModal = ({ show, handleClose, holidays }) => {
         ) : (
           <p>해당 날짜에 등록된 휴관일이 없습니다.</p>
         )}
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          닫기
-        </Button>
-      </Modal.Footer>
-    </Modal>
+      </div>
+      <div className="modal-footer">
+        <button onClick={handleClose}>닫기</button>
+      </div>
+    </div>
+  </div>
   );
 };
 

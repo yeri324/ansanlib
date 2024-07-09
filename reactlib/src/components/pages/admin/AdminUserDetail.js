@@ -3,7 +3,7 @@ import UserResItem from './UserResItem';
 import UserLoanItem from './UserLoanItem';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
-
+import "./AdminUserList.css";
 
 
 const AdminUserDetail = () => {
@@ -149,6 +149,7 @@ const AdminUserDetail = () => {
 
 
     return (
+        
         <div>
             <p>userDetail</p>
             {console.log(userDetail)}
@@ -178,7 +179,7 @@ const AdminUserDetail = () => {
             <button onClick={(e) => onClickToPenalty(e)}>penalty</button>
             <button onClick={() => onClickToPay()}>납부완료</button>
         </div>
-    );
+       );
 };
 
 export default AdminUserDetail;

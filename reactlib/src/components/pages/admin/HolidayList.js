@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Button, Modal } from 'react-bootstrap';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import HolidayNew from './HolidayNew';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
+import AdminHeader from "./AdminHeader";
+import AdminSide from "./AdminSide";
+import "./HolidayList.css";
 
 const HolidayList = () => {
   const [searchResult, setSearchResult] = useState([]);
@@ -17,6 +19,10 @@ const HolidayList = () => {
   const [searchMonth, setSearchMonth] = useState(null); // 검색할 날짜 상태 추가
   const [searchCriteria, setSearchCriteria] = useState('library'); // 검색 기준 상태 추가
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
+
+  // 페이지네이션 상태
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
 
   useEffect(() => {
     fetchHolidays();
@@ -51,8 +57,12 @@ const HolidayList = () => {
     } else if (searchCriteria === 'date') {
       filteredResults = originalResult.filter(holiday => searchMonthStr && moment(holiday.holiday).format('YYYY-MM') === searchMonthStr);
     }
+    else { filteredResults = originalResult.filter(holiday => holiday.libNum.includes(searchTerm) );
+
+    }
 
     setSearchResult(filteredResults);
+    setCurrentPage(1); // 검색 결과가 변경되면 첫 페이지로 이동
   };
 
   // 엔터키 누르면
@@ -95,92 +105,134 @@ const HolidayList = () => {
   };
 
   const sortData = (key, direction) => {
-    const sortedData = [...searchResult].sort((a, b) => {
-      if (a[key] < b[key]) {
-        return direction === 'ascending' ? -1 : 1;
-      }
-      if (a[key] > b[key]) {
-        return direction === 'ascending' ? 1 : -1;
-      }
-      return 0;
-    });
-    setSearchResult(sortedData);
-  };
+  const sortedData = [...searchResult].sort((a, b) => {
+    // Adjust if 'libNum' is nested, for example, if it's accessed via a.library.libNum
+    const valA = key === 'libNum' && a.library ? a.library.libNum : a[key];
+    const valB = key === 'libNum' && b.library ? b.library.libNum : b[key];
+    if (valA < valB) {
+      return direction === 'ascending' ? -1 : 1;
+    }
+    if (valA > valB) {
+      return direction === 'ascending' ? 1 : -1;
+    }
+    return 0;
+  });
+  setSearchResult(sortedData);
+};
+
+
+  // 페이지네이션 관련 계산
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = searchResult.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(searchResult.length / itemsPerPage);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className="holidayList">
-      <h2>휴관일 목록</h2>
-      <div className="search-container">
-        <select value={searchCriteria} onChange={(e) => setSearchCriteria(e.target.value)}>
-          <option value="library">도서관 이름</option>
-          <option value="date">날짜 (월)</option>
-        </select>
+    <>
+      <AdminHeader />
+      <div className="main-container">
+        <AdminSide />
+        <div className="content">
+          <h1>휴관일 목록</h1>
+          <div className="search-container">
+            <select value={searchCriteria} onChange={(e) => setSearchCriteria(e.target.value)}>
+              <option value="library">도서관 이름</option>
+              <option value="date">날짜 (월)</option>
+            </select>
 
-        {searchCriteria === 'library' && (
-          <input 
-            type="text" 
-            placeholder="도서관 이름을 입력하세요" 
-            value={searchTerm} 
-            onChange={(e) => setSearchTerm(e.target.value)} 
-            onKeyDown={handleKeyDown} 
-          />
-        )}
+            {searchCriteria === 'library' && (
+              <input 
+                type="text" 
+                placeholder="도서관 이름을 입력하세요" 
+                value={searchTerm} 
+                onChange={(e) => setSearchTerm(e.target.value)} 
+                onKeyDown={handleKeyDown} 
+              />
+            )}
 
-        {searchCriteria === 'date' && (
-          <DatePicker
-            selected={searchMonth}
-            onChange={(date) => setSearchMonth(date)}
-            dateFormat="yyyy-MM"
-            showMonthYearPicker
-            placeholderText="날짜를 선택하세요"
-            onKeyDown={handleKeyDown}
-          />
-        )}
+            {searchCriteria === 'date' && (
+              <DatePicker
+                selected={searchMonth}
+                onChange={(date) => setSearchMonth(date)}
+                dateFormat="yyyy-MM"
+                showMonthYearPicker
+                placeholderText="날짜를 선택하세요"
+                onKeyDown={handleKeyDown}
+              />
+            )}
 
-        <Button variant="primary" onClick={handleSearch}>검색</Button>
+            <button  onClick={handleSearch}>검색</button>
+          </div>
+          <div className="buttons">
+            <button onClick={() => navigate('/admin/holiday')}>돌아가기</button>
+            <button onClick={handleAddHoliday}>등록하기</button>
+            <button  onClick={handleRefresh}>새로고침</button>
+          </div>
+  
+  
+          <table>
+            <thead>
+              <tr className="tableheader">
+                <th className="sortable" onClick={() => handleSort('lib_name')}>도서관 이름</th>
+                <th className="sortable" onClick={() => handleSort('libNum')}>도서관 번호</th>
+                <th className="sortable" onClick={() => handleSort('holiday')}>휴관일</th>
+                <th>삭제</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Array.isArray(currentItems) && currentItems.map((holiday) => (
+                <tr key={holiday.id}>
+                  <td>{holiday.lib_name}</td>
+                  <td>{holiday.library ? holiday.library.libNum : ''}</td>
+                  <td>{holiday.holiday}</td>
+                  <td>
+                    <button onClick={() => handleDelete(holiday.id)}>삭제</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+            
+          </table>
+          <nav aria-label="Page navigation example">
+            <ul className="pagination">
+              <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                <button className="page-link" onClick={() => paginate(currentPage - 1)} aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </button>
+              </li>
+              {Array.from({ length: totalPages }, (_, index) => (
+                <li key={index + 1} className={`page-item ${index + 1 === currentPage ? 'active' : ''}`}>
+                  <button className="page-link" onClick={() => paginate(index + 1)}>
+                    {index + 1}
+                  </button>
+                </li>
+              ))}
+              <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                <button className="page-link" onClick={() => paginate(currentPage + 1)} aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </button>
+              </li>
+            </ul>
+          </nav>
+          
+
+          {showModal && (
+            <HolidayNew
+              showModal={showModal}
+              handleCloseModal={() => {
+                setShowModal(false);
+                fetchHolidays();
+              }}
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+              districts={districts}
+            />
+          )}
+        </div>
       </div>
-      <div className="buttons">
-        <Button variant="primary" onClick={() => navigate('/admin/holiday')}>돌아가기</Button>
-        <Button variant="primary" onClick={handleAddHoliday}>등록하기</Button>
-        <Button variant="success" onClick={handleRefresh}>새로고침</Button> {/* Added refresh button */}
-      </div>
-      <table>
-        <thead>
-          <tr>
-            <th className="sortable"  onClick={() => handleSort('LibNum')}>도서관 번호</th>
-            <th className="sortable" onClick={() => handleSort('lib_name')}>도서관 이름</th>
-            <th className="sortable"onClick={() => handleSort('holiday')}>휴관일</th>
-            <th>삭제</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Array.isArray(searchResult) && searchResult.map((holiday) => (
-            <tr key={holiday.id}>
-              <td>{holiday.library ? holiday.library.libNum:''}</td>
-              <td>{holiday.lib_name}</td>
-              <td>{holiday.holiday}</td>
-              <td>
-                <Button variant="danger" onClick={() => handleDelete(holiday.id)}>삭제</Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      {/* Modal for adding new holiday */}
-      {showModal && (
-        <HolidayNew
-          showModal={showModal}
-          handleCloseModal={() => {
-            setShowModal(false);
-            fetchHolidays(); // 새로고침
-          }}
-          selectedDate={selectedDate}
-          setSelectedDate={setSelectedDate}
-          districts={districts}
-        />
-      )}
-    </div>
+    </>
   );
 };
 

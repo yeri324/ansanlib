@@ -50,7 +50,7 @@ public class SecurityConfig  {
 
 //                        .requestMatchers(new AntPathRequestMatcher("/user/**")).permitAll()  // 회원 관련 모든 URL 허용
 //                      
-                        .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")  // 관리자 페이지 접근 권한 설정
+//                        .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")  // 관리자 페이지 접근 권한 설정
                         .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
                        )
 

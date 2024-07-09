@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import './Modal.css';
 
-const RequestStatusModal = ({ isOpen, onClose, request, onSave }) => {
+
+const AdminBookRequestDetail = ({ isOpen, onClose, request, onSave }) => {
   const [status, setStatus] = useState(request ? request.status : '');
 
+
+  
   useEffect(() => {
     if (request) {
       setStatus(request.status);
@@ -34,7 +38,7 @@ const RequestStatusModal = ({ isOpen, onClose, request, onSave }) => {
             <p><strong>작가:</strong> {request.author}</p>
             <p><strong>출판사:</strong> {request.publisher}</p>
             <p><strong>출판년도:</strong> {request.pub_date}</p>
-            <p><strong>신청 권수:</strong> {request.count}</p>
+            <p><strong>신청도서관</strong> {request.lib_name}</p>
             <p>
               <strong>상태:</strong>
               <select value={status} onChange={handleChange}>
@@ -53,4 +57,4 @@ const RequestStatusModal = ({ isOpen, onClose, request, onSave }) => {
   );
 };
 
-export default RequestStatusModal;
+export default AdminBookRequestDetail;

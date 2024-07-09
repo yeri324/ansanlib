@@ -1,4 +1,5 @@
 import React from 'react';
+import "./AdminUserList.css";
 
 const AdminUserItem = ({ user, handleDetail }) => {
     return (
