@@ -1,10 +1,10 @@
-import './FaqList.css';
+import './BoardList.css';
 import axios from 'axios';
 import React, { useEffect, useState, } from 'react';
 import { useNavigate } from 'react-router-dom';
-import FaqItem from './FaqItem';
+import BoardItem from './BoardItem';
 
-function FaqList() {
+function BoardList() {
     const [checkedList, setCheckedList] = useState([]);
     const [isChecked, setIsChecked] = useState(false);
     const navigate = useNavigate();
@@ -17,8 +17,8 @@ function FaqList() {
     //페이징용 useState 
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const [totalFaqCount, setTotalFaqCount] = useState(0);
-    const faqPerPage = 8;
+    const [totalBoardCount, setTotalBoardCount] = useState(0);
+    const boardPerPage = 8;
 
     //리스트 읽기
     useEffect(() => {
@@ -27,14 +27,14 @@ function FaqList() {
 
     // 생성페이지 이동
     const onCreate = () => {
-        navigate('/faq/new')
+        navigate('/board/new')
     }
 
     //상세페이지 이동
-    const onDetail = (faq) => {
-        window.location.reload(navigate(`/faq/detail/${faq.id}`, {
+    const onDetail = (board) => {
+        window.location.reload(navigate(`/board/detail/${board.id}`, {
             state: {
-                ...faq
+                ...board
             }
         }))
     }
@@ -42,16 +42,16 @@ function FaqList() {
     // 검색 및 전체 리스트
     const onSearch = (page) => {
         console.log(searchOption.searchBy, searchOption.searchQuery);
-        console.log(currentPage, faqPerPage);
+        console.log(currentPage, boardPerPage);
         axios(
             {
-                url: '/faq/search',
+                url: '/board/search',
                 method: 'post',
                 data: {
                     searchBy: searchOption.searchBy,
                     searchQuery: searchOption.searchQuery,
                     page: page - 1,
-                    size: faqPerPage,
+                    size: boardPerPage,
                 },
                 baseURL: 'http://localhost:8090',
             }
@@ -59,7 +59,7 @@ function FaqList() {
             console.log(response.data);
             setSearchResult(response.data.content);
             setTotalPages(response.data.totalPages);
-            setTotalFaqCount(response.data.totalElements);
+            setTotalBoardCount(response.data.totalElements);
         });
 
     }
@@ -89,18 +89,18 @@ function FaqList() {
             return;
         }
         if (!isChecked && checkedList.includes(value)) {
-            setCheckedList(checkedList.filter((faq) => faq !== value));
+            setCheckedList(checkedList.filter((board) => board !== value));
             return;
         }
         return;
     };
 
-    //FAQ 다중삭제하기
+    //BoardList 다중삭제하기
     const onDelete = () => {
         if (window.confirm('삭제 하시겠습니까?')) {
             axios(
                 {
-                    url: '/faq/delete',
+                    url: '/board/delete',
                     method: 'delete',
                     data: {
                         idList: checkedList,
@@ -108,19 +108,19 @@ function FaqList() {
                     baseURL: 'http://localhost:8090',
                 }
             )
-            window.location.reload(navigate("/faq/list", { repalce: true }));
+            window.location.reload(navigate("/board/list", { repalce: true }));
         }
     };
 
     return (
         <div>
-            <section class="faq">
+            <section class="board">
                 <div class="page-title">
                     <div class="container">
-                        <h3>FAQ</h3>
+                        <h3>공지사항</h3>
                     </div>
                 </div>
-                <div id="faq-search">
+                <div id="board-search">
                     <div class="container">
                         <div class="search-wrap">
                             <select name="searchBy" value={searchOption.searchBy} onChange={handleOnChange}>
@@ -131,12 +131,12 @@ function FaqList() {
                             <button class="btn btn-dark" onClick={onSearch}>Search</button>
                         </div>
                         <div className="count_item">
-                            총 {totalFaqCount}건 / {totalPages} 페이지
+                            총 {totalBoardCount}건 / {totalPages} 페이지
                         </div>
                     </div>
                 </div>
-                <div class="faq_list">
-                    <table class="faq_table">
+                <div class="board_list">
+                    <table class="board_table">
                         <thead>
                             <tr>
                                 <th scope="col" class="th-check"> - </th>
@@ -146,11 +146,11 @@ function FaqList() {
                                 <th scope="col" class="th-date">작성일</th>
                             </tr>
                         </thead>
-                        <tbody class="faq_list_content">
-                            {searchResult.map((faq) => (
-                                <FaqItem key={faq.id} faq={faq} checkedList={checkedList} checkHandler={checkHandler} onDetail={onDetail} />
+                        <tbody class="board_list_content">
+                            {searchResult.map((board) => (
+                                <BoardItem key={board.id} board={board} checkedList={checkedList} checkHandler={checkHandler} onDetail={onDetail} />
                             ))}
-                        </tbody>
+                       </tbody>
                     </table>
                     <button onClick={onDelete}>삭제하기</button>
                     <button onClick={onCreate}>작성하기</button>
@@ -196,4 +196,4 @@ function FaqList() {
     );
 };
 
-export default FaqList;
+export default BoardList;

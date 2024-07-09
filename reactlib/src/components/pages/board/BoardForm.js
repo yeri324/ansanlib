@@ -1,23 +1,23 @@
-import './FaqForm.css';
+// import './BoardForm.css';
 import axios from 'axios';
 import React, { useState, } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function FaqForm(){
+function BoardForm() {
   const navigate = useNavigate();
   const [isTitleClicked, setIsTitleClicked] = useState(false);
   const [isContentClicked, setIsContentClicked] = useState(false);
   const [images, setImages] = useState([{ id: 1, file: null }]);
-  const [faqData, setFaqData] = useState({
+  const [boardData, setBoardData] = useState({
     title: '',
     content: ''
   });
-  
+
   // 파일 업로드
   const handleImgChange = (id, file) => {
     setImages(images.map(item => item.id === id ? { ...item, file } : item));
   };
-  
+
   //이미지추가버튼
   const handleAddImg = () => {
     if (images.length < 5) {
@@ -27,7 +27,7 @@ function FaqForm(){
 
   // 제목/내용 저장
   const onInputChange = (e) => {
-    setFaqData({ ...faqData, [e.target.name]: e.target.value });
+    setBoardData({ ...boardData, [e.target.name]: e.target.value });
   };
 
   // 생성 정보 보내기
@@ -35,20 +35,20 @@ function FaqForm(){
     e.preventDefault();
     const formData = new FormData();
 
-    formData.append("title", faqData.title);
-    formData.append("content", faqData.content);
-    images.forEach((image)=>{ if (image.file) formData.append('faqImgFile', image.file);});
+    formData.append("title", boardData.title);
+    formData.append("content", boardData.content);
+    images.forEach((image) => { if (image.file) formData.append('boardImgFile', image.file); });
+
     try {
       axios.post(
-        'http://localhost:8090/faq/new',
+        'http://localhost:8090/board/new',
         formData,
         {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         });
-      window.location.reload(navigate("/faq/list", { replace: true }));
-      // navigate("/faq/list", { replace: true });
+      window.location.reload(navigate("/board/list", { replace: true }));
     } catch (error) {
       console.error("There was an error uploading the data!", error);
     }
@@ -87,4 +87,4 @@ function FaqForm(){
   );
 };
 
-export default FaqForm;
+export default BoardForm;
