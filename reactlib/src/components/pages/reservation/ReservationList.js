@@ -75,7 +75,8 @@ const ReservationList = () => {
                             checked={selectedReservations.includes(reservation.id)}
                             onChange={() => handleSelectReservation(reservation.id)}
                         />
-                        <strong>책 ISBN:</strong> {reservation.bookIsbn} <br />
+                        <strong>책 제목:</strong> {reservation.book.title} <br />
+                        <strong>책 ISBN:</strong> {reservation.book.isbn} <br />
                         <strong>시작 날짜:</strong> {reservation.startDate} <br />
                         <strong>종료 날짜:</strong> {reservation.endDate}
                     </li>

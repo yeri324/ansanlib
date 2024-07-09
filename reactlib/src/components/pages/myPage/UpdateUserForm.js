@@ -41,6 +41,13 @@ const UpdateUserForm = () => {
           [e.target.name]: e.target.value
         });
     };
+
+    //시큐리티 세션 적용되기 전까지 임시조치. 다른 페이지에서 변경된 이름이 올바르게 나오게 하기 위함.
+    const updateSession = () => {
+      let memberData = JSON.parse(sessionStorage.getItem("member") ?? "null");
+      memberData.name = userInfo.name;
+      sessionStorage.setItem("member", JSON.stringify(memberData));
+    };
     
     const handlePhoneNumberChange = (event) => {
         const value = event.target.value;
@@ -72,6 +79,8 @@ const UpdateUserForm = () => {
         e.preventDefault();
         axios.post('/api/user/update', userInfo)
           .then(response => {
+            //시큐리티 세션 적용되기 전까지 임시조치. 다른 페이지에서 변경된 이름이 올바르게 나오게 하기 위함.
+            updateSession();
             alert('회원 정보가 성공적으로 업데이트 되었습니다.');
             console.log(response.data);
             navigate('/home');
