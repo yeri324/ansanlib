@@ -41,41 +41,54 @@ const Join = () => {
     }
   }
 
-  const check = async (form)=>{
-    let response
-    let data
+  //중복 아이디 체크
+  const checkId = async (form)=>{
+  
     try {
-      response = await auth.getData(form)
+      await auth.getData(form).then((response)=>{ 
+        if( response.status == 200 ) { 
+        console.log(`사용 가능한 아이디!`);
+        alert("사용 가능한 아이디입니다.");
+      }})
+       
     } catch (error) {
-      console.error(`${error}`)
-      console.error(`조회 요청 중 에러가 발생하였습니다.`);
-      return
-    }
-
-    data = response.data
-    const status = response.status
-    console.log(`data : ${data}`);
-    console.log(`status : ${status}`);
-
-    if( status == 204 ) { 
-      console.log(`사용 가능한 아이디!`);
-      alert("사용 가능한 아이디입니다.");
-    }
-    else if( status == 200 ){ 
-      console.log(`사용중인 아이디!`);
-      alert("사용 할 수 없는 아이디입니다.")
-    }
-    else {
-      console.log(`오류!`);
-      alert("조회 중 오류가 발생하였습니다.")
+      if(error.response.status == 409 ){ 
+        console.log(`사용중인 아이디!`);
+        alert("사용 할 수 없는 아이디입니다.")
+      }
+      else {
+        console.log(`오류!`);
+        alert("조회 중 오류가 발생하였습니다.")
+      }
     }
   }
 
+  //중복 이메일 체크
+  const checkEmail = async (form)=>{
+  
+    try {
+      await auth.getData(form).then((response)=>{ 
+        if( response.status == 200 ) { 
+        console.log(`사용 가능한 이메일!`);
+        alert("사용 가능한 이메일입니다.");
+      }})
+       
+    } catch (error) {
+      if(error.response.status == 409 ){ 
+        console.log(`사용중인 이메일!`);
+        alert("사용 할 수 없는 이메일입니다.")
+      }
+      else {
+        console.log(`오류!`);
+        alert("조회 중 오류가 발생하였습니다.")
+      }
+    }
+  }
     return (
         <>
             <Header />
             <div className='container'>
-            <FormJoin join={join} check={check} />
+            <FormJoin join={join} checkId={checkId} checkEmail={checkEmail} />
                
             </div>
         </>

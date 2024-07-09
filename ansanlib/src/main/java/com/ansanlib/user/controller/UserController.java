@@ -1,115 +1,66 @@
 package com.ansanlib.user.controller;
 
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ansanlib.entity.LibUser;
+import com.ansanlib.security.user.CustomUser;
 import com.ansanlib.user.dto.UserDto;
 import com.ansanlib.user.service.UserService;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
 
-      @Autowired
-       private UserService userService;
+	private final UserService userService;
 
-       @Autowired // PasswordEncoder를 주입받습니다.
-       private PasswordEncoder passwordEncoder;
+	// 유저 정보 조회
+	@GetMapping("/info")
+	public ResponseEntity<?> userInfo(@AuthenticationPrincipal CustomUser customUser) {
+		LibUser user = customUser.getUser();
 
-   // 아이디 중복체쿠
-   @PostMapping("/user/checkId")
-   public ResponseEntity<String> checkId(@RequestBody Map<String, String> request) {
-	   String loginid = request.get("loginid");
-	   System.out.println(loginid+"***********");
-      return userService.checkId(loginid);
-   }
+		// 인증된 사용자 정보
+		if (user != null)
+			return new ResponseEntity<>(user, HttpStatus.OK);
 
+		// 인증 되지 않음
+		return new ResponseEntity<>("UNAUTHORIZED", HttpStatus.UNAUTHORIZED);
+	}
 
-    
-//   // 가입가입
-//      @PostMapping("/user/join")
-//      public ResponseEntity<String> join(@RequestBody UserDto userDto) {
-//         
-//         System.out.println("가입완뇨~");
-//         try {
-//            userService.join(userDto);
-//            return new ResponseEntity<>("회원가입이 완료되었습니다.", HttpStatus.CREATED);
-//         } catch (Exception e) {
-//            return new ResponseEntity<>("회원가입 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
-//         }
-//      }
+	// 회원가입
+	@PostMapping("")
+	public ResponseEntity<?> join(@RequestBody UserDto user) throws Exception {
+		return userService.join(user);
+	}
 
-   //  로그인
-    @PostMapping("/user/login")
-    public ResponseEntity<LibUser> login(@RequestBody Map<String, String> request) {
-    	System.out.println(request);
-        String loginid = request.get("loginid");
-        String password = request.get("password");
-
-        System.out.println("로그인 요청: 아이디 = " + loginid + ", 비밀번호 = " + password);
-        
-        LibUser authenticatedUser = userService.authenticate(loginid, password);
-
-        if (authenticatedUser != null) {
-            return ResponseEntity.ok(authenticatedUser); // 회원인증 시 정보 반환
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
+    // 회원탈퇴
+    @Secured("ROLE_USER")          //  USER 권한 설정
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<?> destroy(@PathVariable("userId") Long userId) throws Exception {
+        return userService.delete(userId);
     }
+	
+	//중복 아이디 체크
+	@PostMapping("/check/loginid")
+	public ResponseEntity<?> checkId(@RequestBody UserDto user) throws Exception {
+		return userService.checkId(user.getLoginid());
+	}
+	//중복 이메일 체크
+	@PostMapping("/check/email")
+	public ResponseEntity<?> checkEmail(@RequestBody UserDto user) throws Exception {
+		return userService.checkEmail(user.getEmail());
+	}
 
-
-   
-   // 아이디 찾기
-   @PostMapping("/user/findId")
-   public ResponseEntity<String> findId(@RequestBody Map<String, String> request) {
-      String email = request.get("email");
-      String name = request.get("name");
-      
-
-
-        if (email != null && name != null) {
-               String foundId = userService.findIdByEmailAndName(email, name);
-               if (foundId != null) {
-                   return ResponseEntity.ok(foundId);
-               } else {
-                   return ResponseEntity.status(HttpStatus.NOT_FOUND).body("아이디를 찾을 수 없습니다.");
-               }
-           } else {
-               return ResponseEntity.badRequest().body("이메일과 이름이 필요합니다.");
-           }
-       }
-
-   //비번찾기
-   @PostMapping("/user/findPw")
-   public ResponseEntity<String> findPw(@RequestBody UserDto userDto) {
-      
-      
-      try {
-         String foundPw = userService.findPw(userDto);
-         
-         if(foundPw != null) {
-            
-               return ResponseEntity.ok("임시 비밀번호가 이메일로 전송되었습니다.");
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("존재하지 않는 회원이거나 잘못 입력된 정보입니다.");
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류 발생");
-        }
-    }
 }
