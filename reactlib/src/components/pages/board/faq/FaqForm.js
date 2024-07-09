@@ -1,4 +1,4 @@
-import './FaqForm.css';
+import '../../board/Form.css'
 import axios from 'axios';
 import React, { useState, } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -57,9 +57,12 @@ function FaqForm(){
 
   return (
     <div>
-      <p>글 등록하기</p>
+      <div class="create-form">
       <form onSubmit={onCreate}>
+      <h3>글 등록하기</h3>
+      <div class="content-item">
         <input
+          id='title'
           type='text'
           name='title'
           placeholder={isTitleClicked === true ? "" : "제목을 작성해주세요."}
@@ -67,8 +70,8 @@ function FaqForm(){
           onBlur={() => { setIsTitleClicked(false); }}
           onChange={onInputChange} />
 
-        <input
-          type='text'
+        <textarea
+          id='content'
           name='content'
           placeholder={isContentClicked === true ? "" : "내용을 작성해주세요."}
           onFocus={() => { setIsContentClicked(true); }}
@@ -80,9 +83,11 @@ function FaqForm(){
             <input type="file" onChange={(e) => handleImgChange(image.id, e.target.files[0])} />
           </div>
         ))}
+        </div>
         {images.length < 5 && <button type="button" onClick={handleAddImg}>이미지추가</button>}
         <button type='submit'>저장</button>
       </form>
+      </div>
     </div>
   );
 };

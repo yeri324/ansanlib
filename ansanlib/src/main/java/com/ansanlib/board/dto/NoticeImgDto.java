@@ -2,13 +2,13 @@ package com.ansanlib.board.dto;
 
 import org.modelmapper.ModelMapper;
 
-import com.ansanlib.entity.BoardImg;
+import com.ansanlib.entity.NoticeImg;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class BoardImgDto {
+public class NoticeImgDto {
 
 	private Long id; 
 	private String imgName; 
@@ -17,7 +17,7 @@ public class BoardImgDto {
 
 	private static ModelMapper modelMapper = new ModelMapper();
 
-	public static BoardImgDto of(BoardImg boardImg) {
-		return modelMapper.map(boardImg, BoardImgDto.class);
+	public static NoticeImgDto of(NoticeImg noticeImg) {
+		return modelMapper.map(noticeImg, NoticeImgDto.class);
 	}
 }

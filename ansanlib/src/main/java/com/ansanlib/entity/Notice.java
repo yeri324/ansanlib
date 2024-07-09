@@ -3,7 +3,7 @@ package com.ansanlib.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ansanlib.board.dto.BoardFormDto;
+import com.ansanlib.board.dto.NoticeFormDto;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -22,30 +22,28 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-@Table(name="board")
-public class Board extends BaseEntity{
+@Table(name="notice")
+public class Notice extends BaseEntity{
 
     @Id
-    @Column(name="board_num")
+    @Column(name="notice_num")
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     
-    @Column(name="board_title") 
     private String title; // 제목
     
-    @Column(name="board_content")
     private String content; //내용
     
     @JsonManagedReference
-    @OneToMany(mappedBy = "board", fetch=FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
-    private List<BoardImg> boardImgs = new ArrayList<>();
+    @OneToMany(mappedBy = "notice", fetch=FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private List<NoticeImg> noticeImgs = new ArrayList<>();
     
     @ManyToOne
     @JoinColumn(name="user_id")
     private LibUser libUser;
     
-    public void updateBoard(BoardFormDto boardFormDto) {
-    	this.title = boardFormDto.getTitle();
-    	this.content = boardFormDto.getContent();
+    public void updateNotice(NoticeFormDto noticeFormDto) {
+    	this.title = noticeFormDto.getTitle();
+    	this.content = noticeFormDto.getContent();
     }
 }

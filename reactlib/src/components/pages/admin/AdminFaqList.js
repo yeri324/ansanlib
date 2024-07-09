@@ -1,8 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState, } from 'react';
 import { useNavigate } from 'react-router-dom';
-import FaqDetailForm from '../faq/FaqDetailForm';
-import FaqItem from '../faq/FaqItem';
 
 function AdminFaqList() {
     const [checkedList, setCheckedList] = useState([]);

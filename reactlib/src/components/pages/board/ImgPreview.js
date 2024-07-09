@@ -1,22 +1,22 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-function ImgPreview({ board }) {
+function ImgPreview({ putImage, board }) {
 
     useEffect(() => {
-        getBoardImage();
+        getNoticeImage();
     }, []);
 
-    // 이미지 미리보기
+    // 모든 이미지 미리보기
     const [viewImg, setViewImg] = useState('');
-    const getBoardImage = () => {
-        console.log(board.imgUrl);
+    const getNoticeImage = () => {
+        console.log(putImage.imgUrl);
         axios(
             {
-                url: '/board/getImg',
+                url: `/${board}/getImg`,
                 method: 'post',
                 data: {
-                    imgUrl: board.imgUrl
+                    imgUrl: putImage.imgUrl
                 },
                 baseURL: 'http://localhost:8090',
                 responseType: 'arraybuffer',
@@ -29,9 +29,7 @@ function ImgPreview({ board }) {
     }
 
     return (
-        <div>
-            <img src={viewImg} style={{ width: '100px', height: '100px' }} />
-        </div>
+            <img src={viewImg} style={{ width: '100px', height: '100px' }} class='img-preview'/>
     );
 }
 

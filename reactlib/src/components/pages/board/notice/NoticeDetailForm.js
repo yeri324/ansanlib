@@ -1,11 +1,11 @@
-import './FaqDetailForm.css';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, } from 'react-router-dom';
-import ImgPreview from './ImgPreview';
-import FaqFileLabel from './FaqFileLabel';
+import ImgPreview from '../ImgPreview';
+import BoardFileLabel from '../BoardFileLabel';
+import '../../board/DetailForm.css'
 
-function FaqDetailForm() {
+function NoticeDetailForm() {
     const navigate = useNavigate();
     const { id } = useParams();
     const [title, setTitle] = useState("");
@@ -24,7 +24,7 @@ function FaqDetailForm() {
     const getDataset = async () => {
         axios(
             {
-                url: '/faq/detail',
+                url: '/notice/detail',
                 method: 'post',
                 data: {
                     id: id,
@@ -35,7 +35,7 @@ function FaqDetailForm() {
             console.log(res.data);
             setTitle(res.data.title);
             setContent(res.data.content);
-            setImages(res.data.faqImgs);
+            setImages(res.data.boardImgs);
         }
         )
     }
@@ -61,17 +61,17 @@ function FaqDetailForm() {
             formData.append("content", content);
             images.forEach((image) => {
                 if (image.file) {
-                    formData.append('faqImgFileId', image.id)
-                    formData.append('faqImgFile', image.file);
+                    formData.append('noticeImgFileId', image.id)
+                    formData.append('noticeImgFile', image.file);
                 }
             });
-            if (formData.get("faqImgFile") === null) console.log("널!");
+            if (formData.get("noticeImgFile") === null) console.log("널!");
             for (let key of formData.keys()) {
                 console.log(key, ":", formData.get(key));
             }
             try {
                 axios.put(
-                    'http://localhost:8090/faq/update',
+                    'http://localhost:8090/notice/update',
                     formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
@@ -80,7 +80,7 @@ function FaqDetailForm() {
                 ).then(function (response) {
                     console.log(response.data);
                 });
-                window.location.reload(navigate("/faq/list", { replace: true }));
+                window.location.reload(navigate("/notice/list", { replace: true }));
             } catch (error) {
                 console.error("There was an error uploading the data!", error);
             }
@@ -92,7 +92,7 @@ function FaqDetailForm() {
         if (window.confirm('삭제 하시겠습니까?')) {
             axios(
                 {
-                    url: '/faq/delete',
+                    url: '/notice/delete',
                     method: 'delete',
                     data: {
                         id: id,
@@ -100,7 +100,7 @@ function FaqDetailForm() {
                     baseURL: 'http://localhost:8090',
                 }
             )
-            window.location.reload(navigate("/faq/list", { repalce: true },));
+            window.location.reload(navigate("/notice/list", { repalce: true },));
         }
     }
 
@@ -109,7 +109,7 @@ function FaqDetailForm() {
         console.log(e);
         axios(
             {
-                url: '/faq/imgDelete',
+                url: '/notice/imgDelete',
                 method: 'delete',
                 data: {
                     id: e.id,
@@ -117,38 +117,38 @@ function FaqDetailForm() {
                 baseURL: 'http://localhost:8090',
             }
         )
-        window.location.reload(navigate(`/faq/detail/${id}`, { repalce: true }));
+        window.location.reload(navigate(`/notice/detail/${id}`, { repalce: true }));
     }
 
     //목록으로가기
     const onGoBack = () => {
-        navigate('/faq/list', { replace: true });
-      };
+        navigate('/notice/list', { replace: true });
+    };
 
     return (
         <div>
-            <p>수정하기</p>
-            <form>
-                <input type='text' name='title' value={title} onChange={updateTitle} />
-                <input type='text' name='content' value={content} onChange={updateContent} />
+            <div class='update-form'>
+                <form>
+                    <h3>수정하기</h3>
+                    <div class='content-item'>
+                        <input type='text' name='title' value={title} onChange={updateTitle} />
+                        <textarea type='text' name='content' value={content} onChange={updateContent} />
 
-                {images.map(putImage => (
-                    <div>
-                        {
-                            <FaqFileLabel putImage={putImage} handleImgChange={handleImgChange} onImgDelete={onImgDelete} />
-                        }
+                        {images.map(putImage => (
+                            <ImgPreview key={putImage.id} putImage={putImage} board='notice' />
+                        ))}
+                        {images.map(putImage => (
+                            <BoardFileLabel putImage={putImage} handleImgChange={handleImgChange} onImgDelete={onImgDelete} />
+                        ))}
                     </div>
-                ))}
-                {images.map(putImage => (
-                    <ImgPreview key={putImage.id} faq={putImage} />
-                ))}
-                {images.length < 5 && <button type="button" onClick={handleAddImg}>이미지추가</button>}
-                <button type='submit' onClick={() => onUpdate()} >수정</button>
-                <button onClick={() => onDelete()}>삭제</button>
-                <button onClick={() => onGoBack()}>돌아가기</button>
-            </form>
+                    {images.length < 5 && <button type="button" onClick={handleAddImg}>이미지추가</button>}
+                    <button type='submit' onClick={() => onUpdate()} >수정</button>
+                    <button onClick={() => onDelete()}>삭제</button>
+                    <button onClick={() => onGoBack()}>돌아가기</button>
+                </form>
+            </div>
         </div>
     );
 };
 
-export default FaqDetailForm;
+export default NoticeDetailForm;

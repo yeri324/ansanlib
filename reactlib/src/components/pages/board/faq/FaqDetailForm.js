@@ -1,11 +1,11 @@
-// import './BoardDetailForm.css';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, } from 'react-router-dom';
-import ImgPreview from './ImgPreview';
-import BoardFileLabel from './BoardFileLabel';
+import BoardFileLabel from '../../board/BoardFileLabel';
+import ImgPreview from '../../board/BoardFileLabel';
+import '../../board/DetailForm.css'
 
-function BoardDetailForm() {
+function FaqDetailForm() {
     const navigate = useNavigate();
     const { id } = useParams();
     const [title, setTitle] = useState("");
@@ -24,7 +24,7 @@ function BoardDetailForm() {
     const getDataset = async () => {
         axios(
             {
-                url: '/board/detail',
+                url: '/faq/detail',
                 method: 'post',
                 data: {
                     id: id,
@@ -35,7 +35,7 @@ function BoardDetailForm() {
             console.log(res.data);
             setTitle(res.data.title);
             setContent(res.data.content);
-            setImages(res.data.BoardImgs);
+            setImages(res.data.faqImgs);
         }
         )
     }
@@ -61,17 +61,17 @@ function BoardDetailForm() {
             formData.append("content", content);
             images.forEach((image) => {
                 if (image.file) {
-                    formData.append('boardImgFileId', image.id)
-                    formData.append('boardImgFile', image.file);
+                    formData.append('faqImgFileId', image.id)
+                    formData.append('faqImgFile', image.file);
                 }
             });
-            if (formData.get("boardImgFile") === null) console.log("널!");
+            if (formData.get("faqImgFile") === null) console.log("널!");
             for (let key of formData.keys()) {
                 console.log(key, ":", formData.get(key));
             }
             try {
                 axios.put(
-                    'http://localhost:8090/board/update',
+                    'http://localhost:8090/faq/update',
                     formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
@@ -80,7 +80,7 @@ function BoardDetailForm() {
                 ).then(function (response) {
                     console.log(response.data);
                 });
-                window.location.reload(navigate("/board/list", { replace: true }));
+                window.location.reload(navigate("/faq/list", { replace: true }));
             } catch (error) {
                 console.error("There was an error uploading the data!", error);
             }
@@ -92,7 +92,7 @@ function BoardDetailForm() {
         if (window.confirm('삭제 하시겠습니까?')) {
             axios(
                 {
-                    url: '/board/delete',
+                    url: '/faq/delete',
                     method: 'delete',
                     data: {
                         id: id,
@@ -100,7 +100,7 @@ function BoardDetailForm() {
                     baseURL: 'http://localhost:8090',
                 }
             )
-            window.location.reload(navigate("/board/list", { repalce: true },));
+            window.location.reload(navigate("/faq/list", { repalce: true },));
         }
     }
 
@@ -109,7 +109,7 @@ function BoardDetailForm() {
         console.log(e);
         axios(
             {
-                url: '/board/imgDelete',
+                url: '/faq/imgDelete',
                 method: 'delete',
                 data: {
                     id: e.id,
@@ -117,38 +117,38 @@ function BoardDetailForm() {
                 baseURL: 'http://localhost:8090',
             }
         )
-        window.location.reload(navigate(`/board/detail/${id}`, { repalce: true }));
+        window.location.reload(navigate(`/faq/detail/${id}`, { repalce: true }));
     }
 
     //목록으로가기
     const onGoBack = () => {
-        navigate('/board/list', { replace: true });
+        navigate('/faq/list', { replace: true });
     };
 
     return (
         <div>
-            <p>수정하기</p>
+            <div class='update-form'>
             <form>
+            <h3>수정하기</h3>
                 <input type='text' name='title' value={title} onChange={updateTitle} />
                 <input type='text' name='content' value={content} onChange={updateContent} />
 
                 {images.map(putImage => (
-                    <div>
-                        {
-                            <BoardFileLabel putImage={putImage} handleImgChange={handleImgChange} onImgDelete={onImgDelete} />
-                        }
-                    </div>
+                    <ImgPreview key={putImage.id} putImage={putImage} board="faq"/>
                 ))}
+
                 {images.map(putImage => (
-                    <ImgPreview key={putImage.id} Board={putImage} />
+                    <BoardFileLabel putImage={putImage} handleImgChange={handleImgChange} onImgDelete={onImgDelete} />
                 ))}
+                
                 {images.length < 5 && <button type="button" onClick={handleAddImg}>이미지추가</button>}
                 <button type='submit' onClick={() => onUpdate()} >수정</button>
                 <button onClick={() => onDelete()}>삭제</button>
                 <button onClick={() => onGoBack()}>돌아가기</button>
             </form>
         </div>
+        </div>
     );
 };
 
-export default BoardDetailForm;
+export default FaqDetailForm;

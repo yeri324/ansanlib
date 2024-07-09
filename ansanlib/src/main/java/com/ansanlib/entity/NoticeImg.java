@@ -16,11 +16,11 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-@Table(name="board_img")
-public class BoardImg extends BaseEntity{
+@Table(name="notice_img")
+public class NoticeImg extends BaseEntity{
 	
 	@Id
-	@Column(name = "board_img_id")
+	@Column(name = "notice_img_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
@@ -30,10 +30,10 @@ public class BoardImg extends BaseEntity{
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonBackReference
-	@JoinColumn(name = "board_num")
-	private Board board;
+	@JoinColumn(name = "notice_num")
+	private Notice notice;
 
-	public void updateBoardImg(String oriImgName, String imgName, String imgUrl) {
+	public void updateNoticeImg(String oriImgName, String imgName, String imgUrl) {
 		this.oriImgName = oriImgName;
 		this.imgName = imgName;
 		this.imgUrl = imgUrl;

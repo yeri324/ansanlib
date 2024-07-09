@@ -1,10 +1,10 @@
-import './BoardList.css';
 import axios from 'axios';
 import React, { useEffect, useState, } from 'react';
 import { useNavigate } from 'react-router-dom';
-import BoardItem from './BoardItem';
+import BoardItem from '../BoardItem';
+import '../../board/List.css'
 
-function BoardList() {
+function NoticeList() {
     const [checkedList, setCheckedList] = useState([]);
     const [isChecked, setIsChecked] = useState(false);
     const navigate = useNavigate();
@@ -17,8 +17,8 @@ function BoardList() {
     //페이징용 useState 
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const [totalBoardCount, setTotalBoardCount] = useState(0);
-    const boardPerPage = 8;
+    const [totalNoticeCount, setTotalNoticeCount] = useState(0);
+    const noticePerPage = 8;
 
     //리스트 읽기
     useEffect(() => {
@@ -27,14 +27,14 @@ function BoardList() {
 
     // 생성페이지 이동
     const onCreate = () => {
-        navigate('/board/new')
+        navigate('/notice/new')
     }
 
     //상세페이지 이동
-    const onDetail = (board) => {
-        window.location.reload(navigate(`/board/detail/${board.id}`, {
+    const onDetail = (notice) => {
+        window.location.reload(navigate(`/notice/detail/${notice.id}`, {
             state: {
-                ...board
+                ...notice
             }
         }))
     }
@@ -42,16 +42,16 @@ function BoardList() {
     // 검색 및 전체 리스트
     const onSearch = (page) => {
         console.log(searchOption.searchBy, searchOption.searchQuery);
-        console.log(currentPage, boardPerPage);
+        console.log(currentPage, noticePerPage);
         axios(
             {
-                url: '/board/search',
+                url: '/notice/search',
                 method: 'post',
                 data: {
                     searchBy: searchOption.searchBy,
                     searchQuery: searchOption.searchQuery,
                     page: page - 1,
-                    size: boardPerPage,
+                    size: noticePerPage,
                 },
                 baseURL: 'http://localhost:8090',
             }
@@ -59,7 +59,7 @@ function BoardList() {
             console.log(response.data);
             setSearchResult(response.data.content);
             setTotalPages(response.data.totalPages);
-            setTotalBoardCount(response.data.totalElements);
+            setTotalNoticeCount(response.data.totalElements);
         });
 
     }
@@ -89,18 +89,18 @@ function BoardList() {
             return;
         }
         if (!isChecked && checkedList.includes(value)) {
-            setCheckedList(checkedList.filter((board) => board !== value));
+            setCheckedList(checkedList.filter((notice) => notice !== value));
             return;
         }
         return;
     };
 
-    //BoardList 다중삭제하기
+    //NoticeList 다중삭제하기
     const onDelete = () => {
         if (window.confirm('삭제 하시겠습니까?')) {
             axios(
                 {
-                    url: '/board/delete',
+                    url: '/notice/delete',
                     method: 'delete',
                     data: {
                         idList: checkedList,
@@ -108,35 +108,33 @@ function BoardList() {
                     baseURL: 'http://localhost:8090',
                 }
             )
-            window.location.reload(navigate("/board/list", { repalce: true }));
+            window.location.reload(navigate("/notice/list", { repalce: true }));
         }
     };
 
     return (
         <div>
             <section class="board">
-                <div class="page-title">
+                <div id="search">
                     <div class="container">
-                        <h3>공지사항</h3>
-                    </div>
-                </div>
-                <div id="board-search">
-                    <div class="container">
+                        <div class="page-title">
+                            <h3>공지사항</h3>
+                        </div>
                         <div class="search-wrap">
                             <select name="searchBy" value={searchOption.searchBy} onChange={handleOnChange}>
                                 <option value="loginid">작성자</option>
                                 <option value="title">제목</option>
                             </select>
                             <input type="text" id="search" name="searchQuery" value={searchOption.searchQuery} onChange={handleOnChange} />
-                            <button class="btn btn-dark" onClick={onSearch}>Search</button>
+                            <button class="btn btn-dark" onClick={onSearch}>검색</button>
                         </div>
-                        <div className="count_item">
-                            총 {totalBoardCount}건 / {totalPages} 페이지
+                        <div className="count_content">
+                            총 {totalNoticeCount}건 / {totalPages} 페이지
                         </div>
                     </div>
                 </div>
-                <div class="board_list">
-                    <table class="board_table">
+                <div class="list">
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th scope="col" class="th-check"> - </th>
@@ -146,11 +144,11 @@ function BoardList() {
                                 <th scope="col" class="th-date">작성일</th>
                             </tr>
                         </thead>
-                        <tbody class="board_list_content">
-                            {searchResult.map((board) => (
-                                <BoardItem key={board.id} board={board} checkedList={checkedList} checkHandler={checkHandler} onDetail={onDetail} />
+                        <tbody class="list_content">
+                            {searchResult.map((notice) => (
+                                <BoardItem key={notice.id} item={notice} board='notice' checkedList={checkedList} checkHandler={checkHandler} onDetail={onDetail} />
                             ))}
-                       </tbody>
+                        </tbody>
                     </table>
                     <button onClick={onDelete}>삭제하기</button>
                     <button onClick={onCreate}>작성하기</button>
@@ -196,4 +194,4 @@ function BoardList() {
     );
 };
 
-export default BoardList;
+export default NoticeList;

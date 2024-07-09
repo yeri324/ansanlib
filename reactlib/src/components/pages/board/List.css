@@ -60,73 +60,73 @@ body {
     background-color: #495057;
 }
 
-/* Board Table */
-.board_list {
+/* FAQ Table */
+.list {
     width: 70%;
     margin: 0 auto;
 }
 
-.board_table {
+.table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
 }
 
 /* 리스트 내부 비율 */
-.board_table th:nth-child(1),
-.board_table td:nth-child(1) {
+.table th:nth-child(1),
+.table td:nth-child(1) {
     width: 5%;
 }
 
-.board_table th:nth-child(2),
-.board_table td:nth-child(2) {
+.table th:nth-child(2),
+.table td:nth-child(2) {
     width: 8%;
 }
 
-.board_table th:nth-child(3),
-.board_table td:nth-child(3) {
-    width: 42%;
+.table th:nth-child(3),
+.table td:nth-child(3) {
+    width: 47%;
 }
 
-.board_table th:nth-child(4),
-.board_table td:nth-child(4) {
-    width: 25%;
-}
-
-.board_table th:nth-child(5),
-.board_table td:nth-child(5) {
+.table th:nth-child(4),
+.table td:nth-child(4) {
     width: 20%;
 }
 
-.board_table th,
-.board_table td {
+.table th:nth-child(5),
+.table td:nth-child(5) {
+    width: 20%;
+}
+
+.table th,
+.table td {
     border: 1px solid #ddd;
     padding: 12px;
     text-align: center;
 }
 
-.board_table th {
+.table th {
     background-color: #f1f1f1;
     font-weight: bold;
 }
 
-.board_table tr:nth-child(even) {
+.table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
 /* Buttons */
-.board_list button {
+.list button {
     margin: 10px 5px;
     padding: 10px 15px;
-    background-color: #495057;
+    background-color: #343a40;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
 }
 
-.board_list button:hover {
-    background-color: #495057;
+.list button:hover {
+    background-color: #343a40;
 }
 
 /* Pagination */
@@ -157,7 +157,7 @@ body {
 }
 
 /* Total Count */
-.count_item {
+.count_content {
     width: 75%;
     text-align: right;
     margin: 0 auto;
@@ -178,8 +178,8 @@ body {
         width: 100%;
     }
 
-    .board_table th,
-    .board_table td {
+    .table th,
+    .table td {
         font-size: 14px;
         padding: 8px;
     }

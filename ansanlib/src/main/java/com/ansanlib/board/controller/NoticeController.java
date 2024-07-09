@@ -16,35 +16,35 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ansanlib.board.dto.BoardDto;
-import com.ansanlib.board.dto.BoardFormDto;
-import com.ansanlib.board.dto.BoardImgDto;
-import com.ansanlib.board.service.BoardImgService;
-import com.ansanlib.board.service.BoardService;
+import com.ansanlib.board.dto.NoticeDto;
+import com.ansanlib.board.dto.NoticeFormDto;
+import com.ansanlib.board.dto.NoticeImgDto;
+import com.ansanlib.board.service.NoticeImgService;
+import com.ansanlib.board.service.NoticeService;
 import com.ansanlib.book.service.FileService;
-import com.ansanlib.entity.Board;
+import com.ansanlib.entity.Notice;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/board")
+@RequestMapping("/notice")
 @RequiredArgsConstructor
-public class BoardController {
+public class NoticeController {
 
-	private final BoardService boardService;
+	private final NoticeService noticeService;
 	private final FileService fileService;
-	private final BoardImgService boardImgService;
+	private final NoticeImgService noticeImgService;
 
 	//생성
 	@PostMapping(value = "/new")
-	public ResponseEntity<String> createBoard(@RequestParam(required = false) List<MultipartFile> boardImgFile,
-			BoardFormDto boardFormDto) throws Exception {
+	public ResponseEntity<String> createNotice(@RequestParam(required = false) List<MultipartFile> noticeImgFile,
+			NoticeFormDto noticeFormDto) throws Exception {
 
 		ResponseEntity<String> resEntity = null;
-		Board board = boardFormDto.createBoard();
+		Notice notice = noticeFormDto.createNotice();
 
 		try {
-			boardService.createBoard(board, boardImgFile);
+			noticeService.createNotice(notice, noticeImgFile);
 			resEntity = new ResponseEntity("Save_OK", HttpStatus.OK);
 		} catch (Exception e) {
 			resEntity = new ResponseEntity("글 등록 중 에러가 발생하였습니다.", HttpStatus.BAD_REQUEST);
@@ -54,13 +54,13 @@ public class BoardController {
 
 	//수정
 	@PutMapping(value = "/update")
-	public ResponseEntity<String> updateBoard(BoardFormDto boardFormDto,
-			@RequestParam(required = false) List<MultipartFile> boardImgFile,
-			@RequestParam(required = false) List<String> boardImgFileId) throws Exception {
+	public ResponseEntity<String> updatenotice(NoticeFormDto noticeFormDto,
+			@RequestParam(required = false) List<MultipartFile> noticeImgFile,
+			@RequestParam(required = false) List<String> noticeImgFileId) throws Exception {
 		ResponseEntity<String> resEntity = null;
 
 		try {
-			boardService.updateBoard(boardFormDto, boardImgFile, boardImgFileId);
+			noticeService.updatenotice(noticeFormDto, noticeImgFile, noticeImgFileId);
 			resEntity = new ResponseEntity("UPDATE_OK", HttpStatus.OK);
 		} catch (Exception e) {
 			resEntity = new ResponseEntity("글 등록 중 에러가 발생하였습니다.", HttpStatus.BAD_REQUEST);
@@ -70,15 +70,15 @@ public class BoardController {
 
 	//글 삭제
 	@DeleteMapping("/delete")
-	public void deleteBoard(@RequestBody BoardFormDto boardFormDto) {
+	public void deleteNotice(@RequestBody NoticeFormDto noticeFormDto) {
 		ResponseEntity resEntity = null;
-		List<Long> idList = boardFormDto.getIdList();
+		List<Long> idList = noticeFormDto.getIdList();
 		if (idList == null) {
-			boardService.deleteBoard(boardFormDto.getId());
+			noticeService.deleteNotice(noticeFormDto.getId());
 		} else {
 			try {
 				for (Long id : idList) {
-					boardService.deleteBoard(id);
+					noticeService.deleteNotice(id);
 				}
 				resEntity = new ResponseEntity("DELETE_OK", HttpStatus.OK);
 			} catch (Exception e) {
@@ -89,28 +89,28 @@ public class BoardController {
 	
 	// 검색
 	@PostMapping("/search")
-	public Page<Board> searchUsers(@RequestBody BoardDto boardDto) {
+	public Page<Notice> searchUsers(@RequestBody NoticeDto noticeDto) {
 		
-		Page<Board> boards= boardService.ListBoard(boardDto);
-			System.out.println(boards.getSize());
-			return boards;
+		Page<Notice> notices= noticeService.ListNotice(noticeDto);
+			System.out.println(notices.getSize());
+			return notices;
 		}
 	
 	//디테일 정보 가져오기
 	@PostMapping("/detail")
-	public ResponseEntity<String> detailBoard(@RequestBody BoardDto boardDto){
+	public ResponseEntity<String> detailnotice(@RequestBody NoticeDto noticeDto){
 		ResponseEntity resEntity = null;
-		Board board = boardService.getDetail(boardDto);
-		resEntity = new ResponseEntity(board, HttpStatus.OK);
+		Notice notice = noticeService.getDetail(noticeDto);
+		resEntity = new ResponseEntity(notice, HttpStatus.OK);
 		return resEntity;
 		
 	}
 	
 	//이미지 미리보기
 	@PostMapping("/getImg")
-	public ResponseEntity<byte[]> getBoardImage(@RequestBody BoardImgDto boardImgDto){
+	public ResponseEntity<byte[]> getnoticeImage(@RequestBody NoticeImgDto noticeImgDto){
 		try {
-			byte[] imgBytes = fileService.getImgByte(boardImgDto.getImgUrl());
+			byte[] imgBytes = fileService.getImgByte(noticeImgDto.getImgUrl());
 			
 			if(imgBytes!=null && imgBytes.length>0) {
 				HttpHeaders headers = new HttpHeaders();
@@ -129,11 +129,11 @@ public class BoardController {
 	
 	// 이미지 삭제
 	@DeleteMapping("/imgDelete")
-	public ResponseEntity<String> deleteImg(@RequestBody BoardImgDto boardImgDto) throws Exception {
+	public ResponseEntity<String> deleteImg(@RequestBody NoticeImgDto noticeImgDto) throws Exception {
 		ResponseEntity resEntity = null;
-		Long id = boardImgDto.getId();
+		Long id = noticeImgDto.getId();
 		System.out.println(id);
-		boardImgService.deleteBoard(id);
+		noticeImgService.deleteNotice(id);
 		resEntity = new ResponseEntity("IMG DELETE_OK", HttpStatus.OK);
 		return resEntity;
 	}

@@ -5,15 +5,14 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 
-import com.ansanlib.entity.Board;
-import com.ansanlib.entity.Faq;
+import com.ansanlib.entity.Notice;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class BoardFormDto {
+public class NoticeFormDto {
 
 private Long id;
     
@@ -24,22 +23,22 @@ private Long id;
 
     private List<Long> idList;
     
-    private List<BoardImgDto> boardImgDtoList = new ArrayList<>();
-    
-    private List<Long> boardImgIdList = new ArrayList<>();
+//    private List<NoticeImgDto> noticeImgDtoList = new ArrayList<>();
+//    
+//    private List<Long> noticeImgIdList = new ArrayList<>();
     
     private static ModelMapper modelMapper = new ModelMapper();
     
-    public static BoardFormDto of(Board board) {
-        return modelMapper.map(board, BoardFormDto.class);
+    public static NoticeFormDto of(Notice notice) {
+        return modelMapper.map(notice, NoticeFormDto.class);
     }
 
-    public Board createBoard() {
-        return modelMapper.map(this, Board.class);
+    public Notice createNotice() {
+        return modelMapper.map(this, Notice.class);
     }
     
-    public void updateBoard(BoardFormDto boardFormDto) {
-    	this.title = boardFormDto.getTitle();
-    	this.content = boardFormDto.getContent();
+    public void updateNotice(NoticeFormDto noticeFormDto) {
+    	this.title = noticeFormDto.getTitle();
+    	this.content = noticeFormDto.getContent();
     }
 }
