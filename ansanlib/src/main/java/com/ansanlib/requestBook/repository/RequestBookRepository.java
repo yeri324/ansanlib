@@ -17,11 +17,10 @@ public interface RequestBookRepository extends JpaRepository<RequestBook, Long>{
 	@Query("SELECT r FROM RequestBook r WHERE r.libUser.userId = :userId")
 	List<RequestBook> findByUserId(Long userId);
 	
-	@Query("SELECT CASE WHEN COUNT(r) > 0 THEN true ELSE false END FROM RequestBook r WHERE r.isbn = :isbn AND r.title = :title AND r.author = :author")	
-	boolean checkIfOverlappingReqeustBooksExists(
+	@Query("SELECT CASE WHEN COUNT(r) > 0 THEN true ELSE false END FROM RequestBook r WHERE r.isbn = :isbn AND r.libUser.userId = :userId")
+	boolean checkIfOverlappingReqeustBookExists(
 			@Param("isbn") String isbn,
-			@Param("title") String title,
-			@Param("author") String author);
+			@Param("userId") Long userId);
 	
 	 @Modifying
 	 @Transactional
