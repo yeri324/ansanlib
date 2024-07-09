@@ -5,7 +5,7 @@ import { LoginContext } from '../../contexts/LoginContextProvider';
 const Header = () => {
 
   // const { isLogin, logout, userInfo } = useContext(LoginContext);
-  const { isLogin, logout } = useContext(LoginContext);
+  const { isLogin, login, logout } = useContext(LoginContext);
 
   return (
     <header>

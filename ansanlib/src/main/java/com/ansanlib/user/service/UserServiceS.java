@@ -1,4 +1,7 @@
-package com.ansanlib.userSec;
+package com.ansanlib.user.service;
+
+import java.util.Optional;
+import java.util.regex.Pattern;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +19,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ansanlib.entity.LibUser;
-import com.ansanlib.security.CustomUser;
+import com.ansanlib.security.user.CustomUser;
+import com.ansanlib.user.dto.UserDto;
 import com.ansanlib.user.repository.UserRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -32,7 +36,7 @@ public class UserServiceS {
 	private final AuthenticationManager authenticationManager;
 
 	// 회원가입
-	public ResponseEntity<String> join(UserDtoS userDto) throws Exception {
+	public ResponseEntity<String> join(UserDto userDto) throws Exception {
 		if (!(userDto.getPassword().equals(userDto.getPassword2()))) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("비밀번호가 일치하지 않습니다.");
 		}
@@ -55,7 +59,7 @@ public class UserServiceS {
 	}
 
 	// 로그인
-	public void login(UserDtoS userDto, HttpServletRequest request) throws Exception {
+	public void login(UserDto userDto, HttpServletRequest request) throws Exception {
 		String loginid = userDto.getLoginid();
 		String password = userDto.getPassword();
 
@@ -72,6 +76,17 @@ public class UserServiceS {
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
+	
+	//id 중복검사
+	  public ResponseEntity<String> checkId(String loginid) {
+
+	      Optional<LibUser> user = userRepository.findByLoginid(loginid);
+	      if (user.isPresent()) {
+	         return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 존재하는 아이디 입니다.");
+	      } else {
+	         return new ResponseEntity<>("사용 가능한 아이디 입니다.", HttpStatus.OK);
+	      }
+	   }
 
 	
 

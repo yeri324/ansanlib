@@ -1,4 +1,4 @@
-package com.ansanlib.security;
+package com.ansanlib.security.user;
 
 import java.util.ArrayList;
 import java.util.Collection;

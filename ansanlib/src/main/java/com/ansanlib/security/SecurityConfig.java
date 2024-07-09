@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.ansanlib.security.jwt.JwtAuthenticationFilter;
 import com.ansanlib.security.jwt.JwtRequestFilter;
 import com.ansanlib.security.jwt.JwtTokenProvider;
-import com.ansanlib.userSec.CustomUserDetailsService;
+import com.ansanlib.security.user.CustomUserDetailsService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 //@preAuthorize @postAuthorize @Secured 활성화
 @EnableMethodSecurity(prePostEnabled = true,securedEnabled = true) 
-public class SecurityConfigS {
+public class SecurityConfig {
 
 	private final CustomUserDetailsService customUserDetailsService;
     private final JwtTokenProvider jwtTokenProvider;
@@ -66,10 +66,11 @@ public class SecurityConfigS {
         http.authorizeHttpRequests( authorizeRequests ->
                                         authorizeRequests
 //                                            .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                                            .requestMatchers("/").permitAll()
-                                            .requestMatchers("/login").permitAll()
-//                                            .requestMatchers("/user/**").hasAnyRole("USER")
-//                                            .requestMatchers("/admin/**").hasRole("ADMIN")
+//                                            .requestMatchers("/").permitAll()
+//                                            .requestMatchers("/login").permitAll()
+//                                            .requestMatchers("/users/**").permitAll()
+//                                            .requestMatchers("/faq/**").hasRole("USER")
+////                                            .requestMatchers("/admin/**").hasRole("ADMIN")
                                             .anyRequest().permitAll())
 //                                            .anyRequest().authenticated() )
                                             ;

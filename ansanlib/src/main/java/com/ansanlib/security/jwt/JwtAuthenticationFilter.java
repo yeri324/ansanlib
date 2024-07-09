@@ -11,7 +11,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.ansanlib.security.CustomUser;
+import com.ansanlib.security.user.CustomUser;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

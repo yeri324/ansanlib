@@ -37,22 +37,7 @@ public class UserService implements UserDetailsService {
    
    
    // checkId 중복검사
-   public ResponseEntity<String> checkId(String loginid) {
-      if (loginid.length() < 5) {
-         return ResponseEntity.status(HttpStatus.CONFLICT).body("아이디는 5글자 이상만 가능합니다.");
-      }
-
-      if (!Pattern.matches("[a-zA-Z0-9]+", loginid)) {
-         return ResponseEntity.status(HttpStatus.CONFLICT).body("아이디는 영문과 숫자만 가능합니다.");
-      }
-
-      Optional<LibUser> user = userRepository.findByLoginid(loginid);
-      if (user.isPresent()) {
-         return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 존재하는 아이디 입니다.");
-      } else {
-         return new ResponseEntity<>("사용 가능한 아이디 입니다.", HttpStatus.OK);
-      }
-   }
+ 
 
    // 비밀번호 일치 확인 메서드
    public boolean isPasswordMatch(String password, String password2) {

@@ -55,7 +55,6 @@ const LoginContextProvider = ({ children }) => {
 
         data = response.data
         console.log(`data : ${data}`);
-        console.log(data)
 
         // 인증 실패
         if( data == 'UNAUTHRIZED' || response.status == 401 ) {
@@ -69,6 +68,7 @@ const LoginContextProvider = ({ children }) => {
         // 로그인 세팅
         loginSetting(data, accessToken)
     }
+
 
     // 로그인 
     const login = async (loginid, password) => {
@@ -97,53 +97,42 @@ const LoginContextProvider = ({ children }) => {
                 // 로그인 체크
                 loginCheck()
                 
-                alert(`로그인 성공 메인 화면으로 갑니다. success`, () => { navigate("/")})
+                alert("로그인 성공 메인 화면으로 갑니다.", () => { navigate("/")})
 
                 // 메인 페이지로 이동
                 navigate("/")
             }
         } catch (error) {
             // 로그인 실패
-            alert("로그인 실패", "아이디 또는 비밀번호가 일치하지 않습니다.", "error" )
+            alert("로그인 실패 아이디 또는 비밀번호가 일치하지 않습니다." )
         }
 
     }
 
-    // // 로그아웃
-    // const logout = (force=false) => {
+    // 로그아웃
+    const logout = (force=false) => {
 
-    //     if( force ) {
-    //         // 로그아웃 세팅
-    //         logoutSetting()
+        if( force ) {
+            // 로그아웃 세팅
+            logoutSetting()
         
-    //         // 페이지 이동 ➡ "/" (메인)
-    //         navigate("/")
-    //         return
-    //     }        
+            // 페이지 이동 ➡ "/" (메인)
+            navigate("/")
+            return
+        }        
 
-    //     // const check = window.confirm(`로그아웃하시겠습니까?`)
+        const check = window.confirm(`로그아웃하시겠습니까?`)
 
-    //     Swal.confirm("로그아웃하시겠습니까?", "로그아웃을 진행합니다.", "warning",
-    //             (result) => {
-    //                 if( result.isConfirmed ) {
-    //                     // 로그아웃 세팅
-    //                     logoutSetting()
+        if( check ) {
+            // 로그아웃 세팅
+            logoutSetting()
 
-    //                     // 메인 페이지로 이동
-    //                     navigate("/")
-    //                 }
-    //             }
-    //         )
+            // 메인 페이지로 이동
+            navigate("/")
+        }
 
-    //     // if( check ) {
-    //     //     // 로그아웃 세팅
-    //     //     logoutSetting()
+    }
 
-    //     //     // 메인 페이지로 이동
-    //     //     navigate("/")
-    //     // }
-
-    // }
 
     // 로그인 세팅
     const loginSetting = (userData, accessToken) => {
@@ -166,8 +155,8 @@ const LoginContextProvider = ({ children }) => {
         // 권한정보 세팅
         const updatedRoles = { isUser : false, isAmdin : false }
 
-        if( role == 'ROLE_USER' ) updatedRoles.isUser = true
-        if( role == 'ROLE_ADMIN' ) updatedRoles.isAdmin = true
+        if( role == 'USER' ) updatedRoles.isUser = true
+        if( role == 'ADMIN' ) updatedRoles.isAdmin = true
         setRoles(updatedRoles)
     }
 
@@ -189,21 +178,16 @@ const LoginContextProvider = ({ children }) => {
         setRoles(null)
     }
 
-    const logout =()=>{
-        setLogin(false);
-    }
-
     
     useEffect( () => {
         // 로그인 체크
-        // loginCheck()
+        loginCheck()
     }, [])
 
 
 
     return ( 
-        // <LoginContext.Provider value={ {isLogin, userInfo, roles, loginCheck, logout} }>
-             <LoginContext.Provider value={ {isLogin, userInfo, roles, login, logout} }>
+        <LoginContext.Provider value={ {isLogin, userInfo, roles, loginCheck, login,logout} }>
             {children}
         </LoginContext.Provider>
     )

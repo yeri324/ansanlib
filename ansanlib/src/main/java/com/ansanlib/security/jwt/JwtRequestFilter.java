@@ -26,10 +26,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+    	
+
         try {
     	// HTTP 헤더에서 토큰을 가져옴
         String header = request.getHeader(JwtConstants.TOKEN_HEADER);
-        
+    	System.out.println(header);
+    	
         // Bearer + {jwt} 체크
         if (header == null || header.length() == 0 || !header.startsWith(JwtConstants.TOKEN_PREFIX)) {
             filterChain.doFilter(request, response);
@@ -38,10 +41,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         // "Bearer " 제거
         String jwt = header.replace(JwtConstants.TOKEN_PREFIX, "");
-        
+
         
         // 토큰을 사용하여 Authentication 객체 생성
         Authentication authentication = jwtTokenProvider.getAuthentication(jwt);
+       
+        System.out.println(authentication);
 
         // 토큰 유효 검사 (토큰이 만료되지 않았으면)
         if( jwtTokenProvider.validateToken(jwt) ) {

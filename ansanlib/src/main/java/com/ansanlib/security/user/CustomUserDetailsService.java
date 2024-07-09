@@ -1,4 +1,4 @@
-package com.ansanlib.userSec;
+package com.ansanlib.security.user;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.ansanlib.entity.LibUser;
-import com.ansanlib.security.CustomUser;
 import com.ansanlib.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;

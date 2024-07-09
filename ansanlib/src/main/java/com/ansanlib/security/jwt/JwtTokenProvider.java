@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 import com.ansanlib.constant.Role;
 import com.ansanlib.constant.UserStatus;
 import com.ansanlib.entity.LibUser;
-import com.ansanlib.security.CustomUser;
+import com.ansanlib.security.user.CustomUser;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -90,13 +90,13 @@ public class JwtTokenProvider {
             user.setUserId(userid);
             user.setLoginid(loginid);
             ArrayList role=(ArrayList)roles;
+
             if(role.get(0).equals("ROLE_USER")) user.setRole(Role.ROLE_USER);
             else if(role.get(0).equals("ROLE_ADMIN")) user.setRole(Role.ROLE_ADMIN);
             else new Exception("권한이 없습니다.");
             
             List<SimpleGrantedAuthority> authorities = new ArrayList<>();
             authorities.add(new SimpleGrantedAuthority(user.getRole().toString()));
-
 
             UserDetails userDetails = new CustomUser(user);
 

@@ -27,8 +27,5 @@ private LocalDateTime joinDate; //가입일
 
    private LocalDateTime regTime;
    private LocalDateTime loginDate; //최근접속일
-
-
-
     
 }

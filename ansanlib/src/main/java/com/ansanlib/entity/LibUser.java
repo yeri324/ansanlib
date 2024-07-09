@@ -6,7 +6,7 @@ import com.ansanlib.constant.Gender;
 import com.ansanlib.constant.Role;
 import com.ansanlib.constant.UserStatus;
 import com.ansanlib.user.dto.UserDto;
-import com.ansanlib.userSec.UserDtoS;
+import com.ansanlib.user.dto.UserDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -38,6 +38,7 @@ public class LibUser extends BaseEntity {
 	@Column(unique = true)
 	private String email; // 이메일
 
+	@Column(unique = true)
 	private String loginid; // 사용자아이디
 
 	private String password; // 비밀번호
@@ -70,7 +71,7 @@ public class LibUser extends BaseEntity {
 
 	
 	
-	public LibUser bind(UserDtoS userDto) {
+	public LibUser bind(UserDto userDto) {
 		this.setLoginid(userDto.getLoginid());
 		 this.setPassword(userDto.getPassword());
 
