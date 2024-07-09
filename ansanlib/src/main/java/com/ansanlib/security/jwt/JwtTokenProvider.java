@@ -8,12 +8,14 @@ import java.util.List;
 
 import javax.crypto.SecretKey;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import com.ansanlib.constant.Role;
+import com.ansanlib.constant.UserStatus;
 import com.ansanlib.entity.LibUser;
 import com.ansanlib.security.CustomUser;
 
@@ -29,10 +31,11 @@ import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtTokenProvider {
+	
+	private String secretKey="|+<T%0h;[G97|I$5Lr?h]}`8rUX.7;0gw@bFr<R/|-U0n:_6j={'.T'GHs~<AxU9";
 
 
-    @Autowired
-    private JwtProps jwtProps;
+   
 
     // 토큰 생성
     public String createToken(Long userid, String loginid, List<String> roles) {
@@ -86,6 +89,11 @@ public class JwtTokenProvider {
             LibUser user = new LibUser();
             user.setUserId(userid);
             user.setLoginid(loginid);
+            ArrayList role=(ArrayList)roles;
+            if(role.get(0).equals("ROLE_USER")) user.setRole(Role.ROLE_USER);
+            else if(role.get(0).equals("ROLE_ADMIN")) user.setRole(Role.ROLE_ADMIN);
+            else new Exception("권한이 없습니다.");
+            
             List<SimpleGrantedAuthority> authorities = new ArrayList<>();
             authorities.add(new SimpleGrantedAuthority(user.getRole().toString()));
 
@@ -137,7 +145,7 @@ public class JwtTokenProvider {
 
     // secretKey > signingKey
     private byte[] getSigningKey() {
-		return jwtProps.getSecretKey().getBytes();
+		return secretKey.getBytes();
 	}
 
     // secretKey > (HMAC-SHA algorithms) > signingKey

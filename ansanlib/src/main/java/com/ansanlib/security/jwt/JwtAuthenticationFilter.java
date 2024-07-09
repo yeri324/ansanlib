@@ -46,9 +46,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         // 사용자 인증 (로그인)
         authentication = authenticationManager.authenticate(authentication);
-      
+
         // 인증 실패
         if( !authentication.isAuthenticated()) response.setStatus(401);
+
    
         return authentication;
     }

@@ -13,16 +13,20 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 
-@RequiredArgsConstructor
+
 public class JwtRequestFilter extends OncePerRequestFilter {
    
     private final JwtTokenProvider jwtTokenProvider;
+    
+    public JwtRequestFilter( JwtTokenProvider jwtTokenProvider ) {
+        this.jwtTokenProvider = jwtTokenProvider;
+    }
     
         
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        
+        try {
     	// HTTP 헤더에서 토큰을 가져옴
         String header = request.getHeader(JwtConstants.TOKEN_HEADER);
         
@@ -45,7 +49,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             //로그인
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
-        
+        }catch(Exception e) {request.setAttribute("exception", e); e.printStackTrace();}
         // 다음 필터로 진행
         filterChain.doFilter(request, response);
     }

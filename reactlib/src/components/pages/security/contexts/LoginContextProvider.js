@@ -55,6 +55,7 @@ const LoginContextProvider = ({ children }) => {
 
         data = response.data
         console.log(`data : ${data}`);
+        console.log(data)
 
         // 인증 실패
         if( data == 'UNAUTHRIZED' || response.status == 401 ) {
@@ -96,7 +97,7 @@ const LoginContextProvider = ({ children }) => {
                 // 로그인 체크
                 loginCheck()
                 
-                alert(`로그인 성공`, `메인 화면으로 갑니다.`, "success", () => { navigate("/")})
+                alert(`로그인 성공 메인 화면으로 갑니다. success`, () => { navigate("/")})
 
                 // 메인 페이지로 이동
                 navigate("/")
@@ -147,13 +148,10 @@ const LoginContextProvider = ({ children }) => {
     // 로그인 세팅
     const loginSetting = (userData, accessToken) => {
 
-        const { no, userId, authList } = userData
-        const roleList = authList.map((auth) => auth.auth)
-
-        console.log(`no : ${no}`);
-        console.log(`userId : ${userId}`);
-        console.log(`authList : ${authList}`);
-        console.log(`roleList : ${roleList}`);
+        const { userId, loginid, role } = userData
+        console.log(`no : ${userId}`);
+        console.log(`userId : ${loginid}`);
+        console.log(`authList : ${role}`);
 
         // axios 객체의 header(Authorization : `Bearer ${accessToken}`)
         api.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
@@ -162,16 +160,14 @@ const LoginContextProvider = ({ children }) => {
         setLogin(true)
         
         // 유저정보 세팅
-        const updatedUserInfo = {no, userId, roleList}
+        const updatedUserInfo = {userId, loginid, role}
         setUserInfo(updatedUserInfo)
 
         // 권한정보 세팅
         const updatedRoles = { isUser : false, isAmdin : false }
 
-        roleList.forEach( (role) => { 
-            if( role == 'ROLE_USER' ) updatedRoles.isUser = true
-            if( role == 'ROLE_ADMIN' ) updatedRoles.isAdmin = true
-        })
+        if( role == 'ROLE_USER' ) updatedRoles.isUser = true
+        if( role == 'ROLE_ADMIN' ) updatedRoles.isAdmin = true
         setRoles(updatedRoles)
     }
 

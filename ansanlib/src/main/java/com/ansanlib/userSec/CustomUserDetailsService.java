@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class CustomUserDetailsSevice implements UserDetailsService {
+public class CustomUserDetailsService implements UserDetailsService {
 	
 	private final UserRepository userRepository;
 	
@@ -25,9 +25,14 @@ public class CustomUserDetailsSevice implements UserDetailsService {
 		LibUser user = userRepository.findByLoginid(loginid)
 				.orElseThrow(() -> new UsernameNotFoundException("일치하는 사용자가 없습니다."));
 
+
+		
 		CustomUser customUser = new CustomUser(user);
 
+
+		
 		return customUser;
+		
 
 	}
 }

@@ -28,7 +28,6 @@ public class UserControllerS {
     @Secured("ROLE_USER")           // USER 권한 설정
     @GetMapping("/info")
     public ResponseEntity<?> userInfo(@AuthenticationPrincipal CustomUser customUser) {
-
         LibUser user = customUser.getUser();
         
         // 인증된 사용자 정보 

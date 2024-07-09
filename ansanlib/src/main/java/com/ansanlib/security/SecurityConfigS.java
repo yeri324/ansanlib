@@ -3,17 +3,22 @@ package com.ansanlib.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.ansanlib.security.jwt.JwtAuthenticationFilter;
 import com.ansanlib.security.jwt.JwtRequestFilter;
 import com.ansanlib.security.jwt.JwtTokenProvider;
-import com.ansanlib.userSec.CustomUserDetailsSevice;
+import com.ansanlib.userSec.CustomUserDetailsService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,16 +28,23 @@ import lombok.RequiredArgsConstructor;
 //@preAuthorize @postAuthorize @Secured 활성화
 @EnableMethodSecurity(prePostEnabled = true,securedEnabled = true) 
 public class SecurityConfigS {
-	
-	private final CustomUserDetailsSevice customUserDetailsService;
+
+	private final CustomUserDetailsService customUserDetailsService;
     private final JwtTokenProvider jwtTokenProvider;
     private AuthenticationManager authenticationManager;
 
+//    @Bean
+//    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+//        this.authenticationManager = authenticationConfiguration.getAuthenticationManager();
+//		return authenticationManager;
+//	}
     @Bean
-	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        this.authenticationManager = authenticationConfiguration.getAuthenticationManager();
-		return authenticationManager;
-	}
+    public AuthenticationManager authenticationManager() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(customUserDetailsService);
+        provider.setPasswordEncoder(passwordEncoder());
+        return new ProviderManager(provider);
+    }
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -47,7 +59,7 @@ public class SecurityConfigS {
 		http.csrf(csrf -> csrf.disable());
 
         // 필터 설정
-        http.addFilterAt(new JwtAuthenticationFilter(authenticationManager, jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+        http.addFilterAt(new JwtAuthenticationFilter(authenticationManager(), jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
             .addFilterBefore(new JwtRequestFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
             ;
 
@@ -62,9 +74,16 @@ public class SecurityConfigS {
 //                                            .anyRequest().authenticated() )
                                             ;
 									
-        http.userDetailsService(customUserDetailsService);
 
 		return http.build();
 	}
+	
+	 @Bean
+	    public PasswordEncoder passwordEncoder() {
+	        return new BCryptPasswordEncoder();
+	    }
+	 
+	
+	 
 
 }
