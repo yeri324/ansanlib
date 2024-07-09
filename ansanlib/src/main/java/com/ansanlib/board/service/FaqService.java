@@ -84,19 +84,6 @@ public class FaqService {
 		Faq faq = faqRepository.findById(faqDto.getId()).orElseThrow(EntityNotFoundException::new);
 		return 	faq;
 	}
-
-//	// 기준 검색하기 or 전체 리스트 가져오기
-//	public Page<Faq> ListFaq(int page, int size, FaqDto faqDto) {
-//		Pageable pageable = PageRequest.of(page, size, Sort.by(Order.desc("regTime")));
-//
-//		if ("loginid".equals(faqDto.getSearchBy()) && faqDto.getSearchQuery() != null) {
-//			return faqRepository.findByLibUser_LoginidContains(faqDto.getSearchQuery(), pageable);
-//		} else if ("title".equals(faqDto.getSearchBy()) && faqDto.getSearchQuery() != null) {
-//			return faqRepository.findByTitleContains(faqDto.getSearchQuery(), pageable);
-//		} else {
-//			return faqRepository.findAll(pageable);
-//		}
-//	}
 	
 	// 기준 검색하기 or 전체 리스트 가져오기
 	public Page<Faq> ListFaq(FaqDto faqDto) {

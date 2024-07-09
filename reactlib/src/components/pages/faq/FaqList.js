@@ -23,7 +23,7 @@ function FaqList() {
     //리스트 읽기
     useEffect(() => {
         onSearch(currentPage);
-    }, [currentPage, searchOption]);
+    }, [currentPage]);
 
     // 생성페이지 이동
     const onCreate = () => {

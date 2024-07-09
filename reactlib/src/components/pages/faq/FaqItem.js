@@ -7,7 +7,6 @@ function FaqItem({ faq, onDetail, checkedList, checkHandler }) {
     const [viewImg, setViewImg] = useState('');
     const getFaqImage = async () => {
         console.log(faq.faqImgs[0].imgUrl);
-
         axios(
             {
                 url: '/faq/getImg',
@@ -25,6 +24,11 @@ function FaqItem({ faq, onDetail, checkedList, checkHandler }) {
         });
     }
 
+    //페이지 로드될때 미리보기 나오게하기
+    useEffect(() => {
+        getFaqImage()
+    }, [])
+
     return (
         <div>
             <div>
@@ -33,8 +37,7 @@ function FaqItem({ faq, onDetail, checkedList, checkHandler }) {
                 <td onClick={() => onDetail(faq)}>{faq.title}</td>
                 <td>{faq.updateTime.split('T')[0]}</td>
                 <td>
-                    <img key={faq.faqImgs} src={viewImg} />
-                    <button onClick={getFaqImage}>버튼!</button>
+                    <img key={faq.faqImgs} src={viewImg} style={{ width: '100px', height: '100px' }} />
                 </td>
             </div>
 

@@ -1,7 +1,7 @@
 import './FaqDetailForm.css';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useNavigate, useParams, } from 'react-router-dom';
 import ImgPreview from './ImgPreview';
 import FaqFileLabel from './FaqFileLabel';
 
@@ -31,14 +31,14 @@ function FaqDetailForm() {
                 },
                 baseURL: 'http://localhost:8090',
             }
-        ).then((res)=>{
+        ).then((res) => {
             console.log(res.data);
             setTitle(res.data.title);
             setContent(res.data.content);
             setImages(res.data.faqImgs);
         }
-    )}
-       
+        )
+    }
 
     // 파일 수정
     const handleImgChange = (id, file) => {
@@ -100,7 +100,7 @@ function FaqDetailForm() {
                     baseURL: 'http://localhost:8090',
                 }
             )
-            window.location.reload(navigate("/faq/list", { repalce: true }, ));
+            window.location.reload(navigate("/faq/list", { repalce: true },));
         }
     }
 
@@ -120,6 +120,11 @@ function FaqDetailForm() {
         window.location.reload(navigate(`/faq/detail/${id}`, { repalce: true }));
     }
 
+    //목록으로가기
+    const onGoBack = () => {
+        navigate('/faq/list', { replace: true });
+      };
+
     return (
         <div>
             <p>수정하기</p>
@@ -130,25 +135,18 @@ function FaqDetailForm() {
                 {images.map(putImage => (
                     <div>
                         {
-                             <FaqFileLabel putImage={putImage} handleImgChange={handleImgChange} onImgDelete={onImgDelete}/>
-                            // <div key={putImage.id}>
-                            //     <input type="file" onChange={(e) => handleImgChange(putImage.id, e.target.files[0])} />
-                            //     <input type='hidden' value={putImage.id} />
-                            //     <label>{putImage.file == null ? putImage.oriImgName : putImage.file.name}</label>
-                            //     <button value={putImage.id} onClick={(e) => onImgDelete()}>이미지 삭제</button>
-                            // </div>
+                            <FaqFileLabel putImage={putImage} handleImgChange={handleImgChange} onImgDelete={onImgDelete} />
                         }
-                    </div>          
-                ))} 
-                
+                    </div>
+                ))}
                 {images.map(putImage => (
                     <ImgPreview key={putImage.id} faq={putImage} />
                 ))}
                 {images.length < 5 && <button type="button" onClick={handleAddImg}>이미지추가</button>}
                 <button type='submit' onClick={() => onUpdate()} >수정</button>
                 <button onClick={() => onDelete()}>삭제</button>
+                <button onClick={() => onGoBack()}>돌아가기</button>
             </form>
-
         </div>
     );
 };

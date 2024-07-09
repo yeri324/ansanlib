@@ -3,6 +3,7 @@ package com.ansanlib.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ansanlib.board.dto.BoardFormDto;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -42,4 +43,9 @@ public class Board extends BaseEntity{
     @ManyToOne
     @JoinColumn(name="user_id")
     private LibUser libUser;
+    
+    public void updateBoard(BoardFormDto boardFormDto) {
+    	this.title = boardFormDto.getTitle();
+    	this.content = boardFormDto.getContent();
+    }
 }
