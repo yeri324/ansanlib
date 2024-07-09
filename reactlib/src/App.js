@@ -5,6 +5,9 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import FaqList from './components/pages/faq/FaqList';
 import FaqForm from './components/pages/faq/FaqForm';
 import FaqDetailForm from './components/pages/faq/FaqDetailForm';
+import BoardList from './components/pages/board/BoardList';
+import BoardForm from './components/pages/board/BoardForm';
+import BoardDetailForm from './components/pages/board/BoardDetailForm';
 import Header from './components/fragments/header/header';
 import Footer from './components/fragments/footer/footer';
 import HomePage from './components/fragments/home/homePage';
@@ -46,6 +49,10 @@ function App() {
         <Route path="/faq/list" element={<FaqList />} />
         <Route path="/faq/new" element={<FaqForm />} />
         <Route path="/faq/detail/:id" element={<FaqDetailForm />} />
+
+        <Route path="/board/list" element={<BoardList />} />
+        <Route path="/board/new" element={<BoardForm />} />
+        <Route path="/board/detail/:id" element={<BoardDetailForm />} />
 
         <Route path="/reservation/new" element={<ReservationForm/>} />
         <Route path="/reservation/list/:userId" element={<ReservationList/>} />

@@ -22,9 +22,6 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 public class FaqImgService {
 
-	@Value("${itemImgLocation}")
-	private String itemImgLocation;
-
 	private final FaqImgRepository faqImgRepository;
 	private final FileService fileService;
 
@@ -33,10 +30,6 @@ public class FaqImgService {
 		faqImg.setFaq(faq);
 
 		// 파일업로드
-//		if (StringUtils.hasText(oriImgName)) {
-//			imgName = fileService.uploadFile(itemImgLocation, oriImgName, faqImgFile.getBytes());
-//			imgUrl = itemImgLocation + imgName; //이미지 저장 위치
-//		}
 		Map<String, String> map = fileService.fileHandler(faqImgFile, "faq", faq.getId());
 
 		String oriImgName = map.get("oriImgName");

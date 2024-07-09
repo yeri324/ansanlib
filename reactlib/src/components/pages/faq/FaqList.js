@@ -50,7 +50,7 @@ function FaqList() {
                 data: {
                     searchBy: searchOption.searchBy,
                     searchQuery: searchOption.searchQuery,
-                    page: page-1,
+                    page: page - 1,
                     size: faqPerPage,
                 },
                 baseURL: 'http://localhost:8090',
@@ -134,10 +134,10 @@ function FaqList() {
                 </thead>
                 <div className="slide">
                     {searchResult.map((faq) => (
-                        <FaqItem key={faq.id} faq={faq} checkedList={checkedList} checkHandler={checkHandler} onDetail={onDetail}/>
-                   ))}
+                        <FaqItem key={faq.id} faq={faq} checkedList={checkedList} checkHandler={checkHandler} onDetail={onDetail} />
+                    ))}
                 </div>
-                
+
                 <button onClick={onDelete}>삭제하기</button>
                 <button onClick={onCreate}>작성하기</button>
             </table >

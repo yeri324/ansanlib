@@ -30,7 +30,7 @@ function ImgPreview({ faq }) {
 
     return (
         <div>
-            <img src={viewImg} />
+            <img src={viewImg} style={{ width: '100px', height: '100px' }} />
         </div>
     );
 }

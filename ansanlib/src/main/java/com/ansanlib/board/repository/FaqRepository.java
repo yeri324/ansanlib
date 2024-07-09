@@ -11,8 +11,6 @@ public interface FaqRepository extends JpaRepository<Faq, Long> {
 	// 전부 가져오기
 	Page<Faq> findAll(Pageable pageable);
 
-//	Page<Faq> findAll(Specification<Faq> spec, Pageable pageable);
-
 	// 제목으로 검색
 	Page<Faq> findByTitleContains(String title, Pageable pageable);
 
