@@ -87,6 +87,8 @@ public class ReservationService {
 	            .orElseThrow(() -> new Exception("예약을 찾을 수 없습니다."));
 	        reservationRepository.delete(reservation);
 	    }
+	
+    //회원 탈퇴 관련
 	@Transactional
 	public void deleteReservationByUserId (Long userId) {
 		reservationRepository.deleteByLibUserId(userId);
