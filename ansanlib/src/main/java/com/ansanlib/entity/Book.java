@@ -44,6 +44,8 @@ public class Book extends BaseEntity {
 	private String pub_date; // 출판일
 	private String genre; // 장르
 	private String category_code; // 분류코드
+	
+	private int sales; // 대출량
 
 	private String location; // 위치
 
