@@ -26,10 +26,7 @@ public class ReservationService {
 	private AdminUserService adminUserService;
 	
 	@Transactional
-	public Reservation createReservation(CreateReservationDto createReservationDto) throws CreateReservationException {
-		//예약 시작 날짜
-		LocalDateTime startDate = createReservationDto.getReservationDate();
-		
+	public Reservation createReservation(long userId, long bookId, LocalDateTime startDate) throws CreateReservationException {
 		//예약 시작 날짜가 오늘 이후인지 확인
 		if (!startDate.isAfter(LocalDateTime.now())) {
 			throw new CreateReservationException("오늘 이전 날짜에 예약할 수 없습니다");
@@ -40,7 +37,7 @@ public class ReservationService {
 
 		//예약 entity 생성
 		Book book = new Book();
-		book.setId(createReservationDto.getBookId());
+		book.setId(bookId);
 		
 		//책 존재여부 확인
 		//TODO: 책 서비스 개발완료되면 작성하기.
@@ -49,7 +46,7 @@ public class ReservationService {
 		//TODO: 사용자 서비스 개발완료되면 대체.
 		LibUser user;
 		try {
-			user = adminUserService.getUserById(createReservationDto.getUserId());
+			user = adminUserService.getUserById(userId);
 		} catch (EntityNotFoundException exception) {
 			throw new CreateReservationException("해당 사용자를 찾을수 없습니다.");
 		}
@@ -74,7 +71,7 @@ public class ReservationService {
 		return reservationRepository.save(reservation);
 	}
 	
-	public List<Reservation> getReservationByUser(Long userId){
+	public List<Reservation> getReservationByUser(long userId){
 		return reservationRepository.findByUserId(userId);
 	}
 	
@@ -87,4 +84,16 @@ public class ReservationService {
 	            .orElseThrow(() -> new Exception("예약을 찾을 수 없습니다."));
 	        reservationRepository.delete(reservation);
 	    }
+	
+	public void deleteReservationBelongsTo(Long reservationId, Long userId) throws Exception {
+		if(reservationRepository.deleteBookBelongsTo(reservationId, userId) == 0) {
+			throw new EntityNotFoundException();
+		}
+    }
+	
+    //회원 탈퇴 관련
+	@Transactional
+	public void deleteReservationByUserId (long userId) {
+		reservationRepository.deleteByLibUserId(userId);
+	}
 }

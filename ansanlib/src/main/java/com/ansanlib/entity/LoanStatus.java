@@ -21,13 +21,13 @@ public class LoanStatus extends BaseEntity {
 
 	@Id
 	@Column(name = "Loan_num")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable = false)
+	@Column(name = "loan_start", nullable = false)
 	private LocalDateTime loanStart; //대출시작일
 
-	@Column(nullable = false)
+	@Column(name = "loan_end", nullable = false)
 	private LocalDateTime loanEnd; //대출만료일
 
 	@ManyToOne
