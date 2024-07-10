@@ -37,25 +37,25 @@ import User from './components/pages/security/pages/User';
 
 function App() {
 
-  const Layout = ({ children }) => {
-    const location = useLocation();
-    const isManagePath = location.pathname.startsWith('/admin');
+  // const Layout = ({ children }) => {
+  //   const location = useLocation();
+  //   const isManagePath = location.pathname.startsWith('/admin');
 
-    return (
-      <>
-        {!isManagePath && <Header isLoggedIn={isLoggedIn} onLogout={handleLogout} userId={userId} />}
-        <main>{children}</main>
-        {!isManagePath && <Footer />}
-      </>
-    );
-  };
+  //   return (
+  //     <>
+  //       {!isManagePath && <Header isLoggedIn={isLoggedIn} onLogout={handleLogout} userId={userId} />}
+  //       <main>{children}</main>
+  //       {!isManagePath && <Footer />}
+  //     </>
+  //   );
+  // };
 
   return (
 
     <div>
   
         <Routes>
-          <Route path="/home" element={<HomePage isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
+          <Route path="/home" />
           <Route path="/fragments/header" element={<Header />} />
           <Route path="/fragments/footer" element={<Footer />} />
 
