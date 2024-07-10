@@ -8,14 +8,13 @@ import Notice from './notice';
 import New from './new';
 import TodoCalendar from './calendar';
 import Kakao from '../../map/mapForm';
-// import BookCloud from './bookCloud';
 import Bestseller from './Bestseller';
 import "react-calendar/dist/Calendar.css";
 import LibraryPage from '../../pages/visit/LibraryPage';
+// import BookCloud from './bookCloud';
 // import StatisticsPage from '../../pages/visit/StatisticsPage';
 // import Calendar from 'react-calendar'
 // import { styled } from "styled-components";
-
 
 const HomePage = () => {
 
@@ -28,6 +27,7 @@ const HomePage = () => {
           <div className="main_grid">
             <div className="content_grid">
               <div className="top_column">
+                <div className="hr_div"><hr></hr></div>
                 <div className="book_search">
                   <BookSearch />
                 </div>
@@ -65,8 +65,6 @@ const HomePage = () => {
                 <LibraryPage />
               </div>
             </div>
-            {/* <div className="visit_content"></div> */}
-            
             <div className="sub_content2">
               <div className="lib_h2"><h2>오시는 길</h2></div>
               <div className="div_border"><hr></hr></div>

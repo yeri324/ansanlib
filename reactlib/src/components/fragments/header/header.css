@@ -46,14 +46,14 @@ header {
   align-items: center;
   width: 100%;
   padding: 10px 0;
-  border-bottom: 1px solid #e0e0e0;
+  /* border-bottom: 1px solid #e0e0e0; */
 }
 
 .top_login {
   width: 100%;
   text-align: right;
   padding-right: 40px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   font-size: 15px;
   font-weight: 600;
   color: var(--text-color);
@@ -61,7 +61,8 @@ header {
 
 .top_login .enter,
 .top_login .join {
-  margin: 0 12px;
+  margin: 12px;
+  padding: 12px;
   cursor: pointer;
   transition: color 0.3s ease;
 }
@@ -139,3 +140,4 @@ a {
   text-decoration: none;
   color: inherit;
 }
+

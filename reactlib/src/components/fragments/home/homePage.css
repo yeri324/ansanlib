@@ -29,28 +29,28 @@ body {
     padding: 0;
     width: 100%;
     font-family: 'Arial', sans-serif;
-    background-color: #fdfdfd;
+    background-color: #fff;
 }
 
-header {
-    width: 100%;
-}
-
-footer {
+header, footer {
     width: 100%;
 }
 
 .main_content {
     width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-.main_grid {
+.main_grid, content_grid {
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -58,17 +58,10 @@ footer {
 .sub_content {
     width: 100%;
     display: flex;
-    position: relative;
+    /* position: relative; */
     flex-direction: column;
     align-items: center;
-}
-
-.content_grid {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 1600px;
-    width: 100%;
+    gap: 20px;
 }
 
 .top_column {
@@ -85,7 +78,6 @@ footer {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-top: -40px;
 }
 
 .notice_board {
@@ -104,20 +96,21 @@ footer {
     justify-content: center;
 }
 
-
 .sub_content {
-    margin: 0 auto;
-    /* 밑 부분 배경색 */
-    /* background-color: #ddd; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
 }
 
 .sub_content1,
 .sub_content2 {
     width: 100%;
-    max-width: 1500px;
+    max-width: 1200px;
     margin: 10px auto;
-    padding: 40px;
-    border-radius: 20px;
+    padding: 20px;
+    border-radius: 10px;
     background-color: #fdf8f1;
 }
 
@@ -135,7 +128,6 @@ footer {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-
 .sub_content1 .trend_list,
 .sub_content2 .lib_guide {
     padding: 20px;
@@ -150,6 +142,16 @@ footer {
     margin-bottom: -20px;
     font-size: 18px;
     font-weight: 600;
+}
+
+.hr_div {
+    height: 20px;
+}
+
+.hr_div>hr {
+    border: 0;
+    height: 12px;
+    background-color: #ccc;
 }
 
 .div_border {
@@ -175,4 +177,3 @@ footer {
 .lib_guide {
     margin-bottom: 20px;
 }
-
