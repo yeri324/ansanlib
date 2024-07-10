@@ -29,6 +29,7 @@ public class UserController {
 	// 유저 정보 조회
 	@GetMapping("/info")
 	public ResponseEntity<?> userInfo(@AuthenticationPrincipal CustomUser customUser) {
+		System.out.println("***");
 		LibUser user = customUser.getUser();
 
 		// 인증된 사용자 정보

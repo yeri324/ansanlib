@@ -26,15 +26,15 @@ public class UserServiceTest {
     @Test
     public void testSaveUser() {
         LibUser user = new LibUser();
-        user.setLoginid("test");
+        user.setLoginid("test123");
         user.setPassword(passwordEncoder.encode("1234"));
         user.setName("테스트");
         user.setAddress("123 Main St");
         user.setAddress2("Apt 4B");
-        user.setEmail("tes@example.com");
+        user.setEmail("test@example.com");
         user.setPhone("555-555-5555");
         user.setGender(Gender.MALE);
-        user.setRole(Role.ROLE_USER);
+        user.setRole(Role.ROLE_ADMIN);
         user.setJoinDate(LocalDateTime.now());
         user.setLoginDate(LocalDateTime.now());
         user.setSms("yes");
