@@ -147,12 +147,12 @@ function AdminFaqList() {
                 <div class="list">
                     <table class="table">
                         <thead>
-                            <tr>
-                                <th scope="col" class="th-check"> - </th>
+                            <tr>     
                                 <th scope="col" class="th-num">번호</th>
                                 <th scope="col" class="th-title">제목</th>
                                 <th scope="col" class="th-loginid">작성자</th>
                                 <th scope="col" class="th-date">작성일</th>
+                                <th scope="col" class="th-check"> - </th>
                             </tr>
                         </thead>
                         <tbody class="list_content">

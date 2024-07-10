@@ -37,11 +37,11 @@ function BoardItem({ item, onDetail, checkedList, checkHandler, }) {
 
     return (
             <tr>
-                {roles.isAdmin &&<td><input type='checkbox' id={item.id} checkedList={checkedList.includes(item.id)} onChange={(e) => checkHandler(e, item.id)} /></td>}
                 <td>{item.id}</td>
                 <td onClick={() => onDetail(item)}>{item.title}</td>
                 <td>{item.createdBy}</td>
                 <td>{item.updateTime.split('T')[0]}</td>
+                {roles.isAdmin &&<td><input type='checkbox' id={item.id} checkedList={checkedList.includes(item.id)} onChange={(e) => checkHandler(e, item.id)} /></td>}
             </tr>
     );
 }
