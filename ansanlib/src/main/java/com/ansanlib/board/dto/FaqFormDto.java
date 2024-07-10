@@ -23,10 +23,6 @@ public class FaqFormDto {
 
     private List<Long> idList;
     
-    private List<FaqImgDto> faqImgDtoList = new ArrayList<>();
-    
-    private List<Long> faqImgIdList = new ArrayList<>();
-    
     private static ModelMapper modelMapper = new ModelMapper();
     
     public static FaqFormDto of(Faq faq) {

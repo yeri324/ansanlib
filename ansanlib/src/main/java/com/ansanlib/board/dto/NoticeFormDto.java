@@ -22,11 +22,7 @@ private Long id;
     private String content;
 
     private List<Long> idList;
-    
-//    private List<NoticeImgDto> noticeImgDtoList = new ArrayList<>();
-//    
-//    private List<Long> noticeImgIdList = new ArrayList<>();
-    
+
     private static ModelMapper modelMapper = new ModelMapper();
     
     public static NoticeFormDto of(Notice notice) {

@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, } from 'react-router-dom';
-import BoardFileLabel from '../../board/BoardFileLabel';
-import ImgPreview from '../../board/BoardFileLabel';
+import BoardFileLabel from '../BoardFileLabel';
+import ImgPreview from '../ImgPreview';
 import '../../board/DetailForm.css'
 
 function FaqDetailForm() {
@@ -53,7 +53,7 @@ function FaqDetailForm() {
     };
 
     // 수정한 데이터 보내기
-    const onUpdate = (e) => {
+    const onUpdate = () => {
         if (window.confirm('수정 하시겠습니까?')) {
             const formData = new FormData();
             formData.append("id", id);
@@ -128,26 +128,30 @@ function FaqDetailForm() {
     return (
         <div>
             <div class='update-form'>
-            <form>
-            <h3>수정하기</h3>
-                <input type='text' name='title' value={title} onChange={updateTitle} />
-                <input type='text' name='content' value={content} onChange={updateContent} />
+                <form>
+                    <h3>수정하기</h3>
+                    <div class='content-container'>
+                        <div class='input-container'>
+                            <input type='text' name='title' value={title} onChange={updateTitle} />
+                            <textarea type='text' name='content' value={content} onChange={updateContent} />
+                        </div>
+                        <div class='img-container'>
+                            {images.map(putImage => (
+                                <ImgPreview key={putImage.id} putImage={putImage} board="faq" />
+                            ))}
 
-                {images.map(putImage => (
-                    <ImgPreview key={putImage.id} putImage={putImage} board="faq"/>
-                ))}
-
-                {images.map(putImage => (
-                    <BoardFileLabel putImage={putImage} handleImgChange={handleImgChange} onImgDelete={onImgDelete} />
-                ))}
-                
-                {images.length < 5 && <button type="button" onClick={handleAddImg}>이미지추가</button>}
-                <button type='submit' onClick={() => onUpdate()} >수정</button>
-                <button onClick={() => onDelete()}>삭제</button>
-                <button onClick={() => onGoBack()}>돌아가기</button>
-            </form>
-        </div>
-        </div>
+                            {images.map(putImage => (
+                                <BoardFileLabel putImage={putImage} handleImgChange={handleImgChange} onImgDelete={onImgDelete} />
+                            ))}
+                        </div>
+                        {images.length < 5 && <button type="button" onClick={handleAddImg}>이미지추가</button>}
+                        <button type='submit' onClick={() => onUpdate()} >수정</button>
+                        <button type="button" onClick={() => onDelete()}>삭제</button>
+                        <button type="button" onClick={() => onGoBack()}>돌아가기</button>
+                    </div>
+                </form>
+            </div >
+        </div >
     );
 };
 

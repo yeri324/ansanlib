@@ -31,7 +31,7 @@ public class NoticeService {
 	private final NoticeImgRepository noticeImgRepository;
 	private final NoticeImgService noticeImgService;
 
-	// faq추가
+	// notice 추가
 	public Long createNotice(Notice notice, List<MultipartFile> noticeImgFile) throws Exception {
 
 		noticeRepository.save(notice);
@@ -45,7 +45,7 @@ public class NoticeService {
 	}
 
 	// 수정하기
-	public Long updatenotice(NoticeFormDto noticeFormDto, List<MultipartFile> noticeImgFile, List<String> noticeImgFileId)
+	public Long updateNotice(NoticeFormDto noticeFormDto, List<MultipartFile> noticeImgFile, List<String> noticeImgFileId)
 			throws Exception {
 		// 제목/내용수정
 		Notice notice = noticeRepository.findById(noticeFormDto.getId()).orElseThrow(EntityNotFoundException::new);

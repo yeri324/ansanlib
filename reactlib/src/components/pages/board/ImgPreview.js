@@ -29,7 +29,9 @@ function ImgPreview({ putImage, board }) {
     }
 
     return (
-            <img src={viewImg} style={{ width: '100px', height: '100px' }} class='img-preview'/>
+        <div class='img-preview-container'>
+            <img src={viewImg} class='img-preview' />
+        </div>
     );
 }
 

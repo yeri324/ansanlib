@@ -60,7 +60,7 @@ public class NoticeController {
 		ResponseEntity<String> resEntity = null;
 
 		try {
-			noticeService.updatenotice(noticeFormDto, noticeImgFile, noticeImgFileId);
+			noticeService.updateNotice(noticeFormDto, noticeImgFile, noticeImgFileId);
 			resEntity = new ResponseEntity("UPDATE_OK", HttpStatus.OK);
 		} catch (Exception e) {
 			resEntity = new ResponseEntity("글 등록 중 에러가 발생하였습니다.", HttpStatus.BAD_REQUEST);

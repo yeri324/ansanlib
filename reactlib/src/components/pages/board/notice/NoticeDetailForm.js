@@ -35,7 +35,7 @@ function NoticeDetailForm() {
             console.log(res.data);
             setTitle(res.data.title);
             setContent(res.data.content);
-            setImages(res.data.boardImgs);
+            setImages(res.data.noticeImgs);
         }
         )
     }
@@ -53,7 +53,7 @@ function NoticeDetailForm() {
     };
 
     // 수정한 데이터 보내기
-    const onUpdate = (e) => {
+    const onUpdate = () => {
         if (window.confirm('수정 하시겠습니까?')) {
             const formData = new FormData();
             formData.append("id", id);
@@ -130,21 +130,24 @@ function NoticeDetailForm() {
             <div class='update-form'>
                 <form>
                     <h3>수정하기</h3>
-                    <div class='content-item'>
-                        <input type='text' name='title' value={title} onChange={updateTitle} />
-                        <textarea type='text' name='content' value={content} onChange={updateContent} />
-
-                        {images.map(putImage => (
-                            <ImgPreview key={putImage.id} putImage={putImage} board='notice' />
-                        ))}
-                        {images.map(putImage => (
-                            <BoardFileLabel putImage={putImage} handleImgChange={handleImgChange} onImgDelete={onImgDelete} />
-                        ))}
+                    <div class='content-container'>
+                        <div class='input-container'>
+                            <input type='text' name='title' value={title} onChange={updateTitle} />
+                            <textarea type='text' name='content' value={content} onChange={updateContent} />
+                        </div>
+                        <div class='img-container'>
+                            {images.map(putImage => (
+                                <ImgPreview key={putImage.id} putImage={putImage} board='notice' />
+                            ))}
+                            {images.map(putImage => (
+                                <BoardFileLabel putImage={putImage} handleImgChange={handleImgChange} onImgDelete={onImgDelete} />
+                            ))}
+                        </div>
+                        {images.length < 5 && <button type="button" onClick={handleAddImg}>이미지추가</button>}
+                        <button type='submit' onClick={() => onUpdate()} >수정</button>
+                        <button type="button" onClick={() => onDelete()}>삭제</button>
+                        <button type="button" onClick={() => onGoBack()}>돌아가기</button>
                     </div>
-                    {images.length < 5 && <button type="button" onClick={handleAddImg}>이미지추가</button>}
-                    <button type='submit' onClick={() => onUpdate()} >수정</button>
-                    <button onClick={() => onDelete()}>삭제</button>
-                    <button onClick={() => onGoBack()}>돌아가기</button>
                 </form>
             </div>
         </div>

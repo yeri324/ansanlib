@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 // import axios from "axios";
 
-function BoardItem({ item, onDetail, checkedList, checkHandler, board }) {
+function BoardItem({ item, onDetail, checkedList, checkHandler, }) {
 
     // // 이미지 미리보기 (필요할때 주석 해제하기)
     // const [viewImg, setViewImg] = useState('');
