@@ -20,5 +20,5 @@ public interface BookRepository extends JpaRepository<Book, Long>, BookRepositor
 	@EntityGraph(attributePaths = { "bookImg" })
 	List<Book> findByIsbn(String isbn);
 
-	
+	List<Book> findByTitleContainingIgnoreCase(String title);
 }

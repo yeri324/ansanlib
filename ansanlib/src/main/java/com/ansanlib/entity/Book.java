@@ -38,6 +38,7 @@ public class Book extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    
     private String isbn; // 바코드
 
     private String title; // 제목
@@ -52,10 +53,10 @@ public class Book extends BaseEntity {
     @Lob
     @Column(columnDefinition = "TEXT")
     private String bookDetail; // 책 설명
-    private int count;
+    private int count;		// 도서 권 수
 
     @Enumerated(EnumType.STRING)
-    private BookStatus status;
+    private BookStatus status;	// 도서 상태
     
     @OneToOne(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference

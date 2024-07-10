@@ -37,6 +37,7 @@ public class BookController {
 	private final BookService bookService;
 	private static final Logger logger = LoggerFactory.getLogger(BookController.class);
 	
+	// 검색
 	@GetMapping("/api/book/search")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> searchBookList(
@@ -82,6 +83,18 @@ public class BookController {
 
 		return ResponseEntity.ok(book);
 	}
+	
+	// 책 자동 완성 기능
+	@GetMapping("/api/book/autocomplete")
+    public List<String> autocomplete(@RequestParam String query) {
+        // BookService에서 자동 완성 결과를 가져오는 메서드 호출
+        List<Book> books = bookService.findBooksByTitle(query);
+        // 책 제목 목록을 반환
+        return books.stream()
+                .map(Book::getTitle)
+                .collect(Collectors.toList());
+    }
+	
 }
 //	// 새로운 책 등록 폼 (이 부분은 필요에 따라 수정)
 //	@GetMapping("/admin/book/new")

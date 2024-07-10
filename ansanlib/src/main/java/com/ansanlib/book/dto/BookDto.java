@@ -3,6 +3,7 @@ package com.ansanlib.book.dto;
 import java.util.List;
 
 import com.ansanlib.constant.BookStatus;
+import com.ansanlib.entity.BookImg;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,9 +30,7 @@ public class BookDto {
 	private BookStatus status; 	// 대출 상태
 	private String bookDetail;  	// 책 설명
 	private String location;    	// 위치
-	private BookImgSimpleDto bookImg;	// 책이미지
+	private BookImg bookImg;	// 책이미지
+	private List<BookListDto> relatedBooks;
 	
-	public void setRelatedBooks(List<BookListDto> bookList) {
-		
-	}
 }
