@@ -1,18 +1,27 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams, } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import {LoginContext} from "../../security/contexts/LoginContextProvider";
 import ImgPreview from '../ImgPreview';
 import BoardFileLabel from '../BoardFileLabel';
 import '../../board/DetailForm.css'
 
-function NoticeDetailForm() {
+function AdminNoticeDetailForm() {
     const navigate = useNavigate();
     const { id } = useParams();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [images, setImages] = useState([]);
 
+    // 로그인/인증 여부
+    const { isLogin, roles } = useContext(LoginContext);
+
+
     useEffect(() => {
+        if( !isLogin && !roles.isAdmin ) {
+            alert("관리자로 로그인 해주세요.", () => { navigate("/login") })
+                       return
+                }
         getDataset();
     }, []);
 
@@ -71,7 +80,7 @@ function NoticeDetailForm() {
             }
             try {
                 axios.put(
-                    'http://localhost:8090/notice/update',
+                    'http://localhost:8090/admin/notice/update',
                     formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
@@ -80,7 +89,7 @@ function NoticeDetailForm() {
                 ).then(function (response) {
                     console.log(response.data);
                 });
-                window.location.reload(navigate("/notice/list", { replace: true }));
+                window.location.reload(navigate("/admin/notice/list", { replace: true }));
             } catch (error) {
                 console.error("There was an error uploading the data!", error);
             }
@@ -92,7 +101,7 @@ function NoticeDetailForm() {
         if (window.confirm('삭제 하시겠습니까?')) {
             axios(
                 {
-                    url: '/notice/delete',
+                    url: '/admin/notice/delete',
                     method: 'delete',
                     data: {
                         id: id,
@@ -100,7 +109,7 @@ function NoticeDetailForm() {
                     baseURL: 'http://localhost:8090',
                 }
             )
-            window.location.reload(navigate("/notice/list", { repalce: true },));
+            window.location.reload(navigate("/admin/notice/list", { repalce: true },));
         }
     }
 
@@ -109,7 +118,7 @@ function NoticeDetailForm() {
         console.log(e);
         axios(
             {
-                url: '/notice/imgDelete',
+                url: '/admin/notice/imgDelete',
                 method: 'delete',
                 data: {
                     id: e.id,
@@ -117,12 +126,12 @@ function NoticeDetailForm() {
                 baseURL: 'http://localhost:8090',
             }
         )
-        window.location.reload(navigate(`/notice/detail/${id}`, { repalce: true }));
+        window.location.reload(navigate(`/admin/notice/detail/${id}`, { repalce: true }));
     }
 
     //목록으로가기
     const onGoBack = () => {
-        navigate('/notice/list', { replace: true });
+        navigate('/admin/notice/list', { replace: true });
     };
 
     return (
@@ -154,4 +163,4 @@ function NoticeDetailForm() {
     );
 };
 
-export default NoticeDetailForm;
+export default AdminNoticeDetailForm;

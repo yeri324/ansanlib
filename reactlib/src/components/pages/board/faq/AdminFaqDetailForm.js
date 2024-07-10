@@ -1,18 +1,26 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams, } from 'react-router-dom';
 import BoardFileLabel from '../BoardFileLabel';
 import ImgPreview from '../ImgPreview';
+import {LoginContext} from "../../security/contexts/LoginContextProvider";
 import '../../board/DetailForm.css'
 
-function FaqDetailForm() {
+function AdminFaqDetailForm() {
     const navigate = useNavigate();
     const { id } = useParams();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [images, setImages] = useState([]);
 
+    const { isLogin, roles } = useContext(LoginContext);
+
     useEffect(() => {
+        if (!isLogin && !roles.isAdmin) {
+            alert("관리자로 로그인 해주세요.")
+            navigate("/login")
+            return
+          }
         getDataset();
     }, []);
 
@@ -71,7 +79,7 @@ function FaqDetailForm() {
             }
             try {
                 axios.put(
-                    'http://localhost:8090/faq/update',
+                    'http://localhost:8090/admin/faq/update',
                     formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
@@ -80,7 +88,7 @@ function FaqDetailForm() {
                 ).then(function (response) {
                     console.log(response.data);
                 });
-                window.location.reload(navigate("/faq/list", { replace: true }));
+                window.location.reload(navigate("/admin/faq/list", { replace: true }));
             } catch (error) {
                 console.error("There was an error uploading the data!", error);
             }
@@ -92,7 +100,7 @@ function FaqDetailForm() {
         if (window.confirm('삭제 하시겠습니까?')) {
             axios(
                 {
-                    url: '/faq/delete',
+                    url: '/admin/faq/delete',
                     method: 'delete',
                     data: {
                         id: id,
@@ -100,7 +108,7 @@ function FaqDetailForm() {
                     baseURL: 'http://localhost:8090',
                 }
             )
-            window.location.reload(navigate("/faq/list", { repalce: true },));
+            window.location.reload(navigate("/admin/faq/list", { repalce: true },));
         }
     }
 
@@ -109,7 +117,7 @@ function FaqDetailForm() {
         console.log(e);
         axios(
             {
-                url: '/faq/imgDelete',
+                url: '/admin/faq/imgDelete',
                 method: 'delete',
                 data: {
                     id: e.id,
@@ -117,12 +125,12 @@ function FaqDetailForm() {
                 baseURL: 'http://localhost:8090',
             }
         )
-        window.location.reload(navigate(`/faq/detail/${id}`, { repalce: true }));
+        window.location.reload(navigate(`/admin/faq/detail/${id}`, { repalce: true }));
     }
 
     //목록으로가기
     const onGoBack = () => {
-        navigate('/faq/list', { replace: true });
+        navigate('/admin/faq/list', { replace: true });
     };
 
     return (
@@ -155,4 +163,4 @@ function FaqDetailForm() {
     );
 };
 
-export default FaqDetailForm;
+export default AdminFaqDetailForm;

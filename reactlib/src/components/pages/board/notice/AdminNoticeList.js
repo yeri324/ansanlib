@@ -1,10 +1,11 @@
 import axios from 'axios';
-import React, { useEffect, useState, } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BoardItem from '../BoardItem';
+import {LoginContext} from "../../security/contexts/LoginContextProvider";
 import '../../board/List.css'
 
-function NoticeList() {
+function AdminNoticeList() {
     const [checkedList, setCheckedList] = useState([]);
     const [isChecked, setIsChecked] = useState(false);
     const navigate = useNavigate();
@@ -14,6 +15,10 @@ function NoticeList() {
         searchQuery: "",
     });
 
+    // 로그인/인증 여부
+    const { isLogin, roles } = useContext(LoginContext);
+
+
     //페이징용 useState 
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -22,17 +27,22 @@ function NoticeList() {
 
     //리스트 읽기
     useEffect(() => {
+        if (!isLogin && !roles.isAdmin) {
+            alert("관리자로 로그인 해주세요.")
+            navigate("/login")
+            return
+        } 
         onSearch(currentPage);
     }, [currentPage]);
 
     // 생성페이지 이동
     const onCreate = () => {
-        navigate('/notice/new')
+        navigate('/admin/notice/new')
     }
 
     //상세페이지 이동
     const onDetail = (notice) => {
-        window.location.reload(navigate(`/notice/detail/${notice.id}`, {
+        window.location.reload(navigate(`/admin/notice/detail/${notice.id}`, {
             state: {
                 ...notice
             }
@@ -100,7 +110,7 @@ function NoticeList() {
         if (window.confirm('삭제 하시겠습니까?')) {
             axios(
                 {
-                    url: '/notice/delete',
+                    url: '/admin/notice/delete',
                     method: 'delete',
                     data: {
                         idList: checkedList,
@@ -108,7 +118,7 @@ function NoticeList() {
                     baseURL: 'http://localhost:8090',
                 }
             )
-            window.location.reload(navigate("/notice/list", { repalce: true }));
+            window.location.reload(navigate("/admin/notice/list", { repalce: true }));
         }
     };
 
@@ -119,6 +129,7 @@ function NoticeList() {
                     <div class="container">
                         <div class="page-title">
                             <h3>공지사항</h3>
+                            {console.log(roles)}
                         </div>
                         <div class="search-wrap">
                             <select name="searchBy" value={searchOption.searchBy} onChange={handleOnChange}>
@@ -194,4 +205,4 @@ function NoticeList() {
     );
 };
 
-export default NoticeList;
+export default AdminNoticeList;

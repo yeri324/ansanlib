@@ -1,10 +1,11 @@
 import '../../board/List.css'
 import axios from 'axios';
-import React, { useEffect, useState, } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BoardItem from '../BoardItem';
+import { LoginContext } from "../../security/contexts/LoginContextProvider";
 
-function FaqList() {
+function AdminFaqList() {
     const [checkedList, setCheckedList] = useState([]);
     const [isChecked, setIsChecked] = useState(false);
     const navigate = useNavigate();
@@ -14,6 +15,8 @@ function FaqList() {
         searchQuery: "",
     });
 
+    const { isLogin, roles,loginCheck } = useContext(LoginContext);
+
     //페이징용 useState 
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -22,17 +25,25 @@ function FaqList() {
 
     //리스트 읽기
     useEffect(() => {
+        loginCheck();
+        console.log(isLogin,"**",!isLogin)
+        console.log(roles.isAdmin,"**",!roles.isAdmin)
+
+        // if (!isLogin && !roles.isAdmin) {
+        //     alert("관리자로 로그인 해주세요.", () => { navigate("/login") })
+        //     return
+        // }
         onSearch(currentPage);
     }, [currentPage]);
 
     // 생성페이지 이동
     const onCreate = () => {
-        navigate('/faq/new')
+        navigate('/admin/faq/new')
     }
 
     //상세페이지 이동
     const onDetail = (faq) => {
-        window.location.reload(navigate(`/faq/detail/${faq.id}`, {
+        window.location.reload(navigate(`/admin/faq/detail/${faq.id}`, {
             state: {
                 ...faq
             }
@@ -100,7 +111,7 @@ function FaqList() {
         if (window.confirm('삭제 하시겠습니까?')) {
             axios(
                 {
-                    url: '/faq/delete',
+                    url: '/admin/faq/delete',
                     method: 'delete',
                     data: {
                         idList: checkedList,
@@ -108,7 +119,7 @@ function FaqList() {
                     baseURL: 'http://localhost:8090',
                 }
             )
-            window.location.reload(navigate("/faq/list", { repalce: true }));
+            window.location.reload(navigate("/admin/faq/list", { repalce: true }));
         }
     };
 
@@ -194,4 +205,4 @@ function FaqList() {
     );
 };
 
-export default FaqList;
+export default AdminFaqList;

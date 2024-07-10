@@ -1,9 +1,10 @@
 import axios from 'axios';
-import React, { useState, } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {LoginContext} from "../../security/contexts/LoginContextProvider";
 import '../../board/Form.css'
 
-function NoticeForm() {
+function AdminNoticeForm() {
   const navigate = useNavigate();
   const [isTitleClicked, setIsTitleClicked] = useState(false);
   const [isContentClicked, setIsContentClicked] = useState(false);
@@ -12,6 +13,18 @@ function NoticeForm() {
     title: '',
     content: ''
   });
+
+  // 로그인/인증 여부
+  const { isLogin, roles } = useContext(LoginContext);
+
+  useEffect(() => {
+    if (!isLogin && !roles.isAdmin) {
+      alert("관리자로 로그인 해주세요.")
+      navigate("/login") 
+      return
+    }
+  }, [])
+
 
   // 파일 업로드
   const handleImgChange = (id, file) => {
@@ -41,14 +54,14 @@ function NoticeForm() {
 
     try {
       axios.post(
-        'http://localhost:8090/notice/new',
+        'http://localhost:8090/admin/notice/new',
         formData,
         {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         });
-      window.location.reload(navigate("/notice/list", { replace: true }));
+      window.location.reload(navigate("/admin/notice/list", { replace: true }));
     } catch (error) {
       console.error("There was an error uploading the data!", error);
     }
@@ -92,4 +105,4 @@ function NoticeForm() {
   );
 };
 
-export default NoticeForm;
+export default AdminNoticeForm;

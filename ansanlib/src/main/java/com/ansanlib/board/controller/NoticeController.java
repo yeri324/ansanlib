@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -27,7 +28,7 @@ import com.ansanlib.entity.Notice;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/notice")
+@RequestMapping
 @RequiredArgsConstructor
 public class NoticeController {
 
@@ -35,8 +36,9 @@ public class NoticeController {
 	private final FileService fileService;
 	private final NoticeImgService noticeImgService;
 
-	//생성
-	@PostMapping(value = "/new")
+	// 생성
+	@Secured("ROLE_ADMIN")
+	@PostMapping(value = "/admin/notice/new")
 	public ResponseEntity<String> createNotice(@RequestParam(required = false) List<MultipartFile> noticeImgFile,
 			NoticeFormDto noticeFormDto) throws Exception {
 
@@ -52,8 +54,9 @@ public class NoticeController {
 		return resEntity;
 	}
 
-	//수정
-	@PutMapping(value = "/update")
+	// 수정
+	@Secured("ROLE_ADMIN")
+	@PutMapping(value = "/admin/notice/update")
 	public ResponseEntity<String> updatenotice(NoticeFormDto noticeFormDto,
 			@RequestParam(required = false) List<MultipartFile> noticeImgFile,
 			@RequestParam(required = false) List<String> noticeImgFileId) throws Exception {
@@ -68,8 +71,9 @@ public class NoticeController {
 		return resEntity;
 	}
 
-	//글 삭제
-	@DeleteMapping("/delete")
+	// 글 삭제
+	@Secured("ROLE_ADMIN")
+	@DeleteMapping("/admin/notice/delete")
 	public void deleteNotice(@RequestBody NoticeFormDto noticeFormDto) {
 		ResponseEntity resEntity = null;
 		List<Long> idList = noticeFormDto.getIdList();
@@ -86,49 +90,10 @@ public class NoticeController {
 			}
 		}
 	}
-	
-	// 검색
-	@PostMapping("/search")
-	public Page<Notice> searchUsers(@RequestBody NoticeDto noticeDto) {
-		
-		Page<Notice> notices= noticeService.ListNotice(noticeDto);
-			System.out.println(notices.getSize());
-			return notices;
-		}
-	
-	//디테일 정보 가져오기
-	@PostMapping("/detail")
-	public ResponseEntity<String> detailnotice(@RequestBody NoticeDto noticeDto){
-		ResponseEntity resEntity = null;
-		Notice notice = noticeService.getDetail(noticeDto);
-		resEntity = new ResponseEntity(notice, HttpStatus.OK);
-		return resEntity;
-		
-	}
-	
-	//이미지 미리보기
-	@PostMapping("/getImg")
-	public ResponseEntity<byte[]> getnoticeImage(@RequestBody NoticeImgDto noticeImgDto){
-		try {
-			byte[] imgBytes = fileService.getImgByte(noticeImgDto.getImgUrl());
-			
-			if(imgBytes!=null && imgBytes.length>0) {
-				HttpHeaders headers = new HttpHeaders();
-				headers.setContentType(MediaType.IMAGE_JPEG);
-				return new ResponseEntity<>(imgBytes,headers,HttpStatus.OK);
-			}else {
-				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-			}
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		return null;
-	}
-	
+
 	// 이미지 삭제
-	@DeleteMapping("/imgDelete")
+	@Secured("ROLE_ADMIN")
+	@DeleteMapping("/admin/notice/imgDelete")
 	public ResponseEntity<String> deleteImg(@RequestBody NoticeImgDto noticeImgDto) throws Exception {
 		ResponseEntity resEntity = null;
 		Long id = noticeImgDto.getId();
@@ -136,5 +101,43 @@ public class NoticeController {
 		noticeImgService.deleteNotice(id);
 		resEntity = new ResponseEntity("IMG DELETE_OK", HttpStatus.OK);
 		return resEntity;
+	}
+
+	// 검색
+	@PostMapping("/notice/search")
+	public Page<Notice> searchUsers(@RequestBody NoticeDto noticeDto) {
+
+		Page<Notice> notices = noticeService.ListNotice(noticeDto);
+		System.out.println(notices.getSize());
+		return notices;
+	}
+
+	// 디테일 정보 가져오기
+	@PostMapping("/notice/detail")
+	public ResponseEntity<String> detailnotice(@RequestBody NoticeDto noticeDto) {
+		ResponseEntity resEntity = null;
+		Notice notice = noticeService.getDetail(noticeDto);
+		resEntity = new ResponseEntity(notice, HttpStatus.OK);
+		return resEntity;
+	}
+
+	// 이미지 미리보기
+	@PostMapping("/notice/getImg")
+	public ResponseEntity<byte[]> getnoticeImage(@RequestBody NoticeImgDto noticeImgDto) {
+		try {
+			byte[] imgBytes = fileService.getImgByte(noticeImgDto.getImgUrl());
+
+			if (imgBytes != null && imgBytes.length > 0) {
+				HttpHeaders headers = new HttpHeaders();
+				headers.setContentType(MediaType.IMAGE_JPEG);
+				return new ResponseEntity<>(imgBytes, headers, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 }

@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { LoginContext } from './LoginContextProvider'
 
 const LoginContextConsumer = () => {
-    const { isLogin,isUserId} = useContext(LoginContext)
+    const { isLogin,isUserId, roles} = useContext(LoginContext)
 
   return (
     <div>

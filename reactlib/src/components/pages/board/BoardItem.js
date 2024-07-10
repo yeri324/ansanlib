@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
+import {LoginContext} from "../security/contexts/LoginContextProvider";
 // import axios from "axios";
 
 function BoardItem({ item, onDetail, checkedList, checkHandler, }) {
+    
+    const { isLogin, roles } = useContext(LoginContext);
 
     // // 이미지 미리보기 (필요할때 주석 해제하기)
     // const [viewImg, setViewImg] = useState('');
@@ -34,7 +37,7 @@ function BoardItem({ item, onDetail, checkedList, checkHandler, }) {
 
     return (
             <tr>
-                <td><input type='checkbox' id={item.id} checkedList={checkedList.includes(item.id)} onChange={(e) => checkHandler(e, item.id)} /></td>
+                {roles.isAdmin &&<td><input type='checkbox' id={item.id} checkedList={checkedList.includes(item.id)} onChange={(e) => checkHandler(e, item.id)} /></td>}
                 <td>{item.id}</td>
                 <td onClick={() => onDetail(item)}>{item.title}</td>
                 <td>{item.createdBy}</td>

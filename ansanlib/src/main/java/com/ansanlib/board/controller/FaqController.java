@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -27,7 +28,7 @@ import com.ansanlib.entity.Faq;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/faq")
+@RequestMapping
 @RequiredArgsConstructor
 public class FaqController {
 
@@ -36,7 +37,8 @@ public class FaqController {
 	private final FaqImgService faqImgService;
 
 	//생성
-	@PostMapping(value = "/new")
+	@Secured("ROLE_ADMIN")
+	@PostMapping(value = "/admin/faq/new")
 	public ResponseEntity<String> createfaq(@RequestParam(required = false) List<MultipartFile> faqImgFile,
 			FaqFormDto faqFormDto) throws Exception {
 
@@ -53,7 +55,8 @@ public class FaqController {
 	}
 
 	//수정
-	@PutMapping(value = "/update")
+	@Secured("ROLE_ADMIN")
+	@PutMapping(value = "/admin/faq/update")
 	public ResponseEntity<String> updateFaq(FaqFormDto faqFormDto,
 			@RequestParam(required = false) List<MultipartFile> faqImgFile,
 			@RequestParam(required = false) List<String> faqImgFileId) throws Exception {
@@ -69,7 +72,8 @@ public class FaqController {
 	}
 
 	//글 삭제
-	@DeleteMapping("/delete")
+	@Secured("ROLE_ADMIN")
+	@DeleteMapping("/admin/faq/delete")
 	public void deleteFaq(@RequestBody FaqFormDto faqFormDto) {
 		ResponseEntity resEntity = null;
 		List<Long> idList = faqFormDto.getIdList();
@@ -88,7 +92,7 @@ public class FaqController {
 	}
 	
 	// 검색
-	@PostMapping("/search")
+	@PostMapping("/faq/search")
 	public Page<Faq> searchUsers(@RequestBody FaqDto faqDto) {
 		
 		Page<Faq> faqs= faqService.ListFaq(faqDto);
@@ -97,7 +101,7 @@ public class FaqController {
 		}
 	
 	//디테일 정보 가져오기
-	@PostMapping("/detail")
+	@PostMapping("/faq/detail")
 	public ResponseEntity<String> detailFaq(@RequestBody FaqDto faqDto){
 		ResponseEntity resEntity = null;
 		Faq faq = faqService.getDetail(faqDto);
@@ -107,7 +111,7 @@ public class FaqController {
 	}
 	
 	//이미지 미리보기
-	@PostMapping("/getImg")
+	@PostMapping("/faq/getImg")
 	public ResponseEntity<byte[]> getFaqImage(@RequestBody FaqImgDto faqImgDto){
 		try {
 			byte[] imgBytes = fileService.getImgByte(faqImgDto.getImgUrl());
@@ -128,7 +132,8 @@ public class FaqController {
 	}
 	
 	// 이미지 삭제
-	@DeleteMapping("/imgDelete")
+	@Secured("ROLE_ADMIN")
+	@DeleteMapping("/admin/faq/imgDelete")
 	public ResponseEntity<String> deleteImg(@RequestBody FaqImgDto faqImgDto) throws Exception {
 		ResponseEntity resEntity = null;
 		Long id = faqImgDto.getId();
