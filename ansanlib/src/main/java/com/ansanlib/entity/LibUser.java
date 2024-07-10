@@ -2,11 +2,10 @@ package com.ansanlib.entity;
 
 import java.time.LocalDateTime;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 import com.ansanlib.constant.Gender;
 import com.ansanlib.constant.Role;
 import com.ansanlib.constant.UserStatus;
+import com.ansanlib.user.dto.UserDto;
 import com.ansanlib.user.dto.UserDto;
 
 import jakarta.persistence.Column;
@@ -30,7 +29,7 @@ public class LibUser extends BaseEntity {
 
 	@Id
 	@Column(name = "user_id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long userId;
 
 	@Column(name = "user_name")
@@ -39,6 +38,7 @@ public class LibUser extends BaseEntity {
 	@Column(unique = true)
 	private String email; // 이메일
 
+	@Column(unique = true)
 	private String loginid; // 사용자아이디
 
 	private String password; // 비밀번호
@@ -71,11 +71,9 @@ public class LibUser extends BaseEntity {
 
 	
 	
-	public LibUser bind(UserDto userDto, PasswordEncoder passwordEncoder) {
+	public LibUser bind(UserDto userDto) {
 		this.setLoginid(userDto.getLoginid());
-
-		  this.password = passwordEncoder.encode(userDto.getPassword());
-		// this.setPassword(userDto.getPassword());
+		 this.setPassword(userDto.getPassword());
 
 		this.setName(userDto.getName());
 
@@ -96,16 +94,13 @@ public class LibUser extends BaseEntity {
 		} else {
 			this.setGender(Gender.MALE);
 		}
+		
 		this.setStatus(UserStatus.OFFPENALTY);
 
-		this.setRole(Role.USER);
+		this.setRole(Role.ROLE_USER);
 
 		return this;
 	}
-	
-	
-	
-	
 	
 	public void bindExceptLoginidAndPassword(UserDto userDto) {
 		this.setName(userDto.getName());
@@ -114,25 +109,4 @@ public class LibUser extends BaseEntity {
 		this.setEmail(userDto.getEmail());
 		this.setPhone(userDto.getPhone());
 	}
-	
-	public void update(UserDto userDto, PasswordEncoder passwordEncoder) {
-		this.setName(userDto.getName());
-		this.setAddress(userDto.getAddress());
-		this.setAddress2(userDto.getAddress2());
-		this.setEmail(userDto.getEmail());
-		this.setPhone(userDto.getPhone());
-		this.setSms(userDto.getSms());
-		
-		if (userDto.getPassword() != null && !userDto.getPassword().isEmpty()) {
-			this.password = passwordEncoder.encode(userDto.getPassword());
-		}
-	}
-	
-	
-	
-	
-	
-	
-	
-	
 }
