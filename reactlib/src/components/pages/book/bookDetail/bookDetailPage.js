@@ -8,12 +8,13 @@ const BookDetailPage = () => {
   const [book, setBook] = useState({});
   const [bookList, setBookList] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false); // 사용자 로그인 상태 관리
 
   useEffect(() => {
     const fetchBookDetails = async () => {
       try {
-        const response = await axios.get(`/api/book/detail/${id}`);
-        console.log(response.data); // API 응답을 콘솔에 출력
+        const response = await axios.get(`http://localhost:8090/api/book/detail/${id}`);
+        console.log('Book Data:', response.data); // API 응답을 콘솔에 출력
         setBook(response.data);
         setBookList(response.data.relatedBooks || []);
       } catch (error) {
@@ -22,6 +23,11 @@ const BookDetailPage = () => {
     };
 
     fetchBookDetails();
+
+    // 여기에 사용자 로그인 상태를 확인하는 로직을 추가합니다.
+    // 예를 들어, 토큰이 로컬 스토리지에 있는지 확인합니다.
+    const token = localStorage.getItem('token');
+    setIsUserLoggedIn(!!token);
   }, [id]);
 
   const alertLogin = () => {
@@ -29,7 +35,7 @@ const BookDetailPage = () => {
   };
 
   const handleReservation = (bookId) => {
-    axios.post(`/book/reservation/${bookId}`)
+    axios.post(`http://localhost:8090/book/reservation/${bookId}`)
       .then(response => {
         // 예약 성공 처리
       })
@@ -39,13 +45,24 @@ const BookDetailPage = () => {
   };
 
   const handleInterest = (bookId) => {
-    axios.post(`/book/interest/${bookId}`)
+    axios.post(`http://localhost:8090/book/interest/${bookId}`)
       .then(response => {
         // 관심도서담기 성공 처리
       })
       .catch(error => {
         console.error('관심도서담기 중 오류 발생:', error);
       });
+  };
+
+  // 줄바꿈 문자를 <br /> 태그로 변환하는 함수
+  const formatText = (text) => {
+    if (!text) return null;
+    return text.split('\n').map((str, index) => (
+      <React.Fragment key={index}>
+        {str}
+        <br />
+      </React.Fragment>
+    ));
   };
 
   return (
@@ -65,7 +82,6 @@ const BookDetailPage = () => {
             <ol>
               <li><a href="/">Home</a></li>
               <li><a href="/book/search">통합검색</a></li>
-              <li>{book.title}</li>
             </ol>
           </div>
         </nav>
@@ -75,23 +91,25 @@ const BookDetailPage = () => {
         <div className="content centered-content">
           {errorMessage && <p className="fieldError">{errorMessage}</p>}
 
-          <div className="row g-0 bordered">
-            <div className="col-md-2">
-              {book.bookImg && (
+          <div className="row g-0 book-detail-container">
+            <div className="col-md-4 img-container">
+              {book.bookImg ? (
                 <img 
-                  src={`/api/images/${book.bookImg.imgUrl}`} 
+                  src={`http://localhost:8090/api/images/${book.bookImg.imgName}`} 
                   alt={book.title} 
                   className="img-fluid cover-img" 
                 />
+              ) : (
+                <div className="no-image">No Image</div>
               )}
             </div>
-            <div className="col-md-10 bordered">
+            <div className="col-md-8 text-container">
               <div className="card-body left-align">
                 <h5 className="card-title">제목 : 『{book.title}』</h5>
                 <p>저자 : 『{book.author}』</p>
-                <p>{`출판사 : 『${book.publisher}』 || 출판 날짜 : 『${book.pub_date}』 || 분류 코드 : 『${book.category_code}』`}</p>
+                <p>ISBN : 『{book.isbn}』</p>
+                <p>출판사 : 『{book.publisher}』 || 출판 날짜 : 『{book.pub_date}』 || 분류 코드 : 『{book.category_code}』</p>
                 <p>위치 : 『{book.location}』</p>
-                <p>대출 상태 : 『{book.status}』</p>
               </div>
             </div>
           </div><br />
@@ -102,7 +120,6 @@ const BookDetailPage = () => {
                 <tr>
                   <th>위치</th>
                   <th>대출상태</th>
-                  <th>ISBN</th>
                   <th>반납예정일</th>
                   <th>서비스신청</th>
                 </tr>
@@ -112,20 +129,19 @@ const BookDetailPage = () => {
                   <tr key={relatedBook.id}>
                     <td>{relatedBook.location}</td>
                     <td>{relatedBook.status ?? '정보 없음'}</td>
-                    <td>{relatedBook.isbn}</td>
                     <td>{relatedBook.returnDay}</td>
                     <td>
-                      <div className="card-body left-align">
+                      <div className="card-body">
                         <div className="row">
                           <p>{relatedBook.status ?? '정보 없음'}</p>
                         </div>
                         <div className="row">
-                          <button onClick={alertLogin}>도서예약</button>
-                          <button disabled={relatedBook.status !== 'AVAILABLE'} onClick={() => handleReservation(relatedBook.id)}>도서예약</button>
-                        </div>
-                        <div className="row">
-                          <button onClick={alertLogin}>관심도서담기</button>
-                          <button onClick={() => handleInterest(relatedBook.id)}>관심도서담기</button>
+                          <button onClick={() => isUserLoggedIn ? handleReservation(relatedBook.id) : alertLogin()} disabled={relatedBook.status !== 'AVAILABLE'}>
+                            도서예약
+                          </button>
+                          <button onClick={() => isUserLoggedIn ? handleInterest(relatedBook.id) : alertLogin()}>
+                            관심도서담기
+                          </button>
                         </div>
                       </div>
                     </td>
@@ -135,9 +151,9 @@ const BookDetailPage = () => {
             </table>
           </div><br />
 
-          <div className="row g-0">
+          <div className="row bookD">
             <div><h3>책소개</h3></div>
-            <div className="left-align" dangerouslySetInnerHTML={{ __html: book.bookDetail }}></div>
+            <div className="left-align">{formatText(book.bookDetail)}</div>
           </div>
         </div>
       </section>

@@ -1,28 +1,54 @@
-/* BookDetailPage.css */
 .centered-content {
-    text-align: center;
-  }
-  
-  .bordered {
-    border: 1px solid black;
-  }
-  
-  .full-width {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .left-align {
-    text-align: left;
-  }
-  
-  .cover-img {
-    object-fit: cover;
-    width: 100%;
-    height: 100px;
-  }
-  
-  .overflow-x-auto {
-    overflow-x: auto;
-  }
-  
+  text-align: center;
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+.bordered {
+  border: 1px solid black;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.left-align {
+  text-align: left;
+}
+
+.cover-img {
+  object-fit: cover;
+  max-width: 150px; /* 원하는 이미지 크기로 설정 */
+  margin: 0 auto; /* 이미지 중앙 정렬 */
+}
+
+.no-image {
+  width: 100%;
+  height: 100%;
+  background-color: #eaeaea;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.book-detail-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto; /* 전체 컨테이너 중앙 정렬 */
+}
+
+.img-container {
+  flex: 1;
+}
+
+.text-container {
+  flex: 2;
+  padding-left: 20px; /* 이미지와 텍스트 사이에 여백 추가 */
+  font-size: 15px;
+}
+
+.bookD{
+  border-top: 1px solid black;
+  padding-bottom: 50px;
+}
