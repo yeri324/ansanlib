@@ -47,9 +47,9 @@ public class ReservationController {
 
     @GetMapping("/get/by-user/{userId}")
     public ResponseEntity<List<ReservationDto>> getReservationsByUser(@PathVariable Long userId, HttpServletRequest httpRequest) {
-    	if(httpRequest.getSession().getAttribute("userId") == null || !userService.existsById(userId)) {
-    		 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-    	}
+//    	if(httpRequest.getSession().getAttribute("userId") == null || !userService.existsById(userId)) {
+//    		 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+//    	}
         List<Reservation> reservations = reservationService.getReservationByUser(userId);
         List<ReservationDto> reservationsDto = reservations.stream().map(ReservationDto::new).toList();
         if(reservationsDto.isEmpty()) {

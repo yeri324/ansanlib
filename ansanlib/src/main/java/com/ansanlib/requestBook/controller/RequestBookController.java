@@ -46,9 +46,9 @@ public class RequestBookController {
 
     @GetMapping("get/by-user/{userId}")
     public ResponseEntity<List<RequestBookDto>> getRequestBooksByUser(@PathVariable Long userId, HttpServletRequest httpRequest) {
-    	if (httpRequest.getSession().getAttribute("userId") == null || !userService.existsById(userId)) {
-    	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-    	    }
+//    	if (httpRequest.getSession().getAttribute("userId") == null || !userService.existsById(userId)) {
+//    	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+//    	    }
         List<RequestBook> requestBooks = requestBookService.getRequestBooksByUser(userId);
         List<RequestBookDto> requestsBooksDto = requestBooks.stream().map(RequestBookDto::new).toList();
         if (requestBooks.isEmpty()) {

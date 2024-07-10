@@ -30,9 +30,9 @@ public class LoanStatusController {
 	
 	@GetMapping("get/by-user/{userId}")
 	public ResponseEntity<List<LoanStatusDto>> getLoanStatusByUserId(@PathVariable Long userId, HttpServletRequest httpRequest) {
-	    if (httpRequest.getSession().getAttribute("userId") == null || !userService.existsById(userId)) {
-	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-	    }
+//	    if (httpRequest.getSession().getAttribute("userId") == null || !userService.existsById(userId)) {
+//	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+//	    }
 		List<LoanStatus> loanStatusList = loanStatusService.getLoanStatusByUserId(userId);
 		List<LoanStatusDto> loanStatusDtoList = loanStatusList.stream().map(LoanStatusDto::new).toList();
 		return ResponseEntity.ok(loanStatusDtoList);
