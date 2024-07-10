@@ -135,7 +135,7 @@ const HolidayList = () => {
       <AdminHeader />
       <div className="main-container">
         <AdminSide />
-        <div className="content">
+        <div className="admin-content">
           <h1>휴관일 목록</h1>
           <div className="search-container">
             <select value={searchCriteria} onChange={(e) => setSearchCriteria(e.target.value)}>
@@ -166,6 +166,7 @@ const HolidayList = () => {
 
             <button type="button"  class="btn btn-outline-dark"   onClick={handleSearch}>검색</button>
           </div>
+          
           <div className="buttons">
             <button type="button"  class="btn btn-outline-dark"  onClick={() => navigate('/admin/holiday')}>돌아가기</button>
             <button type="button" class="btn btn-outline-dark"   onClick={handleAddHoliday}>등록하기</button>
@@ -173,9 +174,10 @@ const HolidayList = () => {
           </div>
   
   
-          <table className='adminTable'>
+          <table className='adminTable' >
             <thead>
               <tr className="admintr">
+                <th>No</th>
                 <th className="sortable" onClick={() => handleSort('lib_name')} style={{width:'20%'}}>도서관 이름</th>
                 <th className="sortable" onClick={() => handleSort('libNum')} style={{width:'30%'}}>도서관 번호</th>
                 <th className="sortable" onClick={() => handleSort('holiday')}>휴관일</th>
@@ -185,6 +187,7 @@ const HolidayList = () => {
             <tbody>
               {Array.isArray(currentItems) && currentItems.map((holiday) => (
                 <tr key={holiday.id}>
+                  <td>{holiday.id}</td>
                   <td>{holiday.lib_name}</td>
                   <td>{holiday.library ? holiday.library.libNum : ''}</td>
                   <td>{holiday.holiday}</td>

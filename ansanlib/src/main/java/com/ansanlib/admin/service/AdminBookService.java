@@ -1,7 +1,10 @@
 package com.ansanlib.admin.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +14,6 @@ import com.ansanlib.book.dto.BookDto;
 import com.ansanlib.book.repository.BookImgRepository;
 import com.ansanlib.book.repository.BookRepository;
 import com.ansanlib.entity.Book;
-import com.ansanlib.entity.BookImg;
 import com.ansanlib.entity.RequestBook;
 import com.ansanlib.requestBook.repository.RequestBookRepository;
 
@@ -28,8 +30,9 @@ public class AdminBookService {
 	private BookImgRepository bookImgRepository;
 
 	 public BookDto saveBook(BookDto bookDto, MultipartFile file) throws IOException {
-	        // Save file and book entity logic here
-	        // Convert BookDto to Book entity
+	       
+		 
+		 //도서등록
 	     Book book = new Book();
 	        book.setIsbn(bookDto.getIsbn());
 	        book.setTitle(bookDto.getTitle());
@@ -59,4 +62,8 @@ public class AdminBookService {
 	 public List<RequestBook> getAllRequestBooks() {
 	        return requestBookRepository.findAll();
 	    }
+
+
+
+
 }

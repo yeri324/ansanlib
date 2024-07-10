@@ -16,7 +16,7 @@ const HolidayDetail = ({ show, handleClose, holidays }) => {
             <thead>
               <tr>
                 <th>번호</th>
-                <th>도서관</th>
+                <th style={{width:"30%"}}>도서관</th>
                 <th>날짜</th>
               </tr>
             </thead>
@@ -26,6 +26,7 @@ const HolidayDetail = ({ show, handleClose, holidays }) => {
                   <td>{index + 1}</td>
                   <td>{holiday.lib_name}</td>
                   <td>{holiday.holiday}</td>
+     
                 </tr>
               ))}
             </tbody>
@@ -35,7 +36,7 @@ const HolidayDetail = ({ show, handleClose, holidays }) => {
         )}
       </div>
       <div className="modal-footer">
-        <button onClick={handleClose}>닫기</button>
+        <button onClick={handleClose}  className="btn btn-outline-dark">닫기</button>
       </div>
     </div>
   </div>

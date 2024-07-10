@@ -14,7 +14,7 @@ import LoginForm from './components/pages/user/LoginForm';
 import JoinForm from './components/pages/user/JoinForm';
 import FindIdForm from './components/pages/user/FindIdForm';
 import FindPwForm from './components/pages/user/FindPwForm';
-import AdminFaqList from './components/pages/admin/AdminFaqList';
+
 import ReservationForm from './components/pages/reservation/ReservationForm';
 import Admin from './components/pages/admin/Admin';
 
@@ -121,7 +121,7 @@ function App() {
 
         <Route path="/admin/user/search" element={<AdminUserList />} />
         <Route path="/admin/user/detail/:id" element={<AdminUserDetail />} />
-        <Route path="/admin/faqlist" element={<AdminFaqList />} />
+        
 
         <Route path="/book/search" element={<SearchPage />} />
         <Route path="/book/detail/:id" element={<BookDetailPage />} />

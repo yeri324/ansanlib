@@ -1,18 +1,18 @@
-.content {
+.Holidaycontent {
   
   grid-column: 2 / 3;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top:20px;
+
 }
 
  .calendar {
-  
+  table-layout: fixed;
   width: 100%;
   margin-top: 20px;
   text-align: center;
- 
  
 }
 
@@ -22,6 +22,7 @@
   justify-content: space-between;
   padding: 0 15px;
   align-items: center;
+  
 }
 
 .date-navigation span {
@@ -43,66 +44,64 @@
 
   margin: 0 auto;
   width: 70%;
- 
+  font-family: "Nanum Gothic", sans-serif;
   border-collapse: collapse;
 }
 
-
-/*캘린더 행, 열 고정 */
-.tableheader td {
-  
-  table-layout: fixed;
-  height: 90px; /* 높이를 100px로 고정 */
-  vertical-align: top; /* 내용을 상단에 정렬 */
-  /* padding: 8px; 내부 패딩 */
-  overflow: hidden; /* 내용이 넘칠 경우 숨김 */
-}
-
-
-th, td {
-  font-family: "Nanum Gothic", sans-serif;
-  border: 1px solid #ddd;
+/*캘린더 요일 */
+.tableheader th {
+  border: 1px solid #eee;
+  background-color: #93a8ce;
   padding: 5px;
-  width: 20px;
   text-align: center;
-  word-wrap: break-word; /* 내용이 너무 길면 줄바꿈 */
-  height: 40px; /* 셀의 높이를 40px로 고정 */
+  font-size: 18px;
+  font-weight: bold;
 }
+/*캘린더 셀 */
+.tableheader td {
+  border: 1px solid #eee;
+  table-layout: fixed;
+  height: 130px; /* 높이를 100px로 고정 */
+  vertical-align: top; /* 내용을 상단에 정렬 */
 
-
-
-th {
-  background-color: #dfe0e4;
   
 }
 
+
+/*날짜 */
 .day {
   vertical-align: top;
   text-align: left;
   padding: 5px;
+  
 }
-
+/*해당 월이 아닌 날짜 */
 .not-current {
   background-color: #f9f9f9;
+  color:#061125ab;
 }
 
+/*오늘!*/
 .today {
   background-color: rgba(117, 152, 216, 0.4);
   font-weight: bold;
-  font-size: 20px;
-  color:  #2354b1;
-  text-shadow: 1px 1px 3px rgb(248, 248, 248);
+  color:  #061a3d;
+  text-shadow: 1px 1px 3px rgb(151, 184, 228);
 }
 
+/*주말*/
 .weekend {
   color: red;
 }
 
+/*휴관일 목록 */
 .holiday {
-  background-color: #889cc0;
+  background-color: #355e94bb;
   color: white;
+  font-size: 1em;
 }
 
+/*셀에 마우스 갖다대면 */
 .day:hover {
   background-color: #eee;
 }

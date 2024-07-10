@@ -46,11 +46,13 @@ li {
   font-size: 18px;
 }
 
+/*클릭하면 서브메뉴 고정 */
 .submenu.open {
   max-height: 200px; /* 충분히 큰 값으로 설정하여 모든 하위 항목이 보이도록 함 */
   transition: max-height 0.3s ease-in;
 }
 
+/*hover -> 서브메뉴 촤라락~ */
 .has-submenu:hover .submenu {
   max-height: 200px;
   transition: max-height 0.3s ease-in;

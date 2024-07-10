@@ -57,7 +57,7 @@ const AdminUserList = () => {
       <AdminHeader />
       <div className="main-container">
         <AdminSide />
-        <div className="content">
+        <div className="admin-content">
           <h1>회원 관리</h1>
 
           <div className="search-container" style={{ textAlign: "center" }}>
@@ -77,7 +77,7 @@ const AdminUserList = () => {
           </div>
 
           <div>
-            <table className='adminTable' style={{ width: '1000px' }}>
+          <table className='adminTable' style={{ width: '1000px' }}>
               <thead>
                 <tr className="admintr">
                   <th style={{ width: '10%' }}>no</th>

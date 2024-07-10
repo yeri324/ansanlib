@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 import Calendar from 'react-calendar'; 
 import './UserResItem.css';
 import moment from 'moment';
+import './Table.css';
 
 const UserResItem = ({ res, onClickToCancelRes }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -87,24 +88,24 @@ const UserResItem = ({ res, onClickToCancelRes }) => {
             console.log(error);
         });
     };
-
+    Modal.setAppElement('#root'); // 접근성 설정
     return (
         <>
 
         <tr key={res.id}>
-            <td>id : {res.id}</td>
-            <td> || bookId : {res.bookId.id}</td>
-            <td> || {res.startDate.split('T')[0]}</td>
-            <td> || {res.endDate.split('T')[0]}</td>
+            <td>{res.id}</td>
+            <td>{res.bookId.title}</td>
+            <td>{res.startDate.split('T')[0]}</td>
+            <td>{res.endDate.split('T')[0]}</td>
             <td><button  type="button" class="btn btn-outline-dark" value={res.id} onClick={onClickToCancelRes}>삭제</button></td>
             <td><button type="button" class="btn btn-outline-dark" value={res.id} onClick={openModal}>기간연장</button></td>
             <Modal
                 isOpen={isOpen}
                 onRequestClose={closeModal}
                 contentLabel="연장할 기간을 선택하세요"
-                className="modal"
+                className="Res-modal"
             >
-                <div className="modal-content">
+                <div className="Res-modal-content">
                     <span className="close" onClick={closeModal}>&times;</span>
                     <h2>예약 연장</h2>
                     <div className='calendar'>

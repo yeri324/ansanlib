@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './Modal.css';
 
-
 const AdminBookRequestDetail = ({ isOpen, onClose, request, onSave }) => {
   const [status, setStatus] = useState(request ? request.status : '');
 
-
-  
   useEffect(() => {
     if (request) {
       setStatus(request.status);
@@ -22,9 +19,7 @@ const AdminBookRequestDetail = ({ isOpen, onClose, request, onSave }) => {
     onSave(updatedRequest);
   };
 
-  const handleChange = (e) => {
-    setStatus(e.target.value);
-  };
+  const uniqueLibraries = request.lib_names ? [...new Set(request.lib_names)] : [];
 
   return (
     <div className="modal" style={{ display: 'block' }}>
@@ -38,13 +33,22 @@ const AdminBookRequestDetail = ({ isOpen, onClose, request, onSave }) => {
             <p><strong>작가:</strong> {request.author}</p>
             <p><strong>출판사:</strong> {request.publisher}</p>
             <p><strong>출판년도:</strong> {request.pub_date}</p>
-            <p><strong>신청도서관</strong> {request.lib_name}</p>
-           
+            <p><strong>신청 권수:</strong> {request.count}</p>
+            <p><strong>신청도서관:</strong></p>
+            {request.count > 1 ? (
+              <ul>
+                {uniqueLibraries.map((lib, index) => (
+                  <li key={index}>{lib}</li>
+                ))}
+              </ul>
+            ) : (
+              <p>{request.lib_name}</p>
+            )}
           </div>
         ) : (
           <p>No data available</p>
         )}
-        <button  type="button" class="btn btn-outline-dark" onClick={handleSave}>확인</button>
+        <button type="button" className="btn btn-outline-dark" onClick={handleSave}>확인</button>
       </div>
     </div>
   );

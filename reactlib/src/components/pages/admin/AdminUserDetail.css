@@ -1,0 +1,87 @@
+.content {
+    font-family: 'Noto Sans KR', sans-serif;
+    grid-column: 2 / 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    
+}
+
+/*회원상세 */
+.userdetail {
+    width: 80%; /* 테이블 너비를 80%로 설정 */
+    border-collapse: collapse; /* 테이블 테두리를 병합 */
+    margin-top: 40px;
+}
+
+.usertbody {
+    padding: 1px; /* 셀 여백 설정 */
+    text-align: center;
+    white-space: nowrap;
+}
+
+.userdetail th {
+    background-color: #B0C4DE; /* 헤더 배경색 설정 */
+    font-size: 20px; /* 폰트 크기 설정 */
+    width: 20%;
+    text-align: center;
+    padding: 10px;
+}
+
+.userdetail td {
+    font-size: 17px; /* 폰트 크기 설정 */
+    text-align: center;
+    padding: 10px;
+
+}
+
+.userdetail tr {
+    border-bottom: 1px solid #ddd; /* 행 하단에 줄 긋기 */
+
+}
+
+
+
+
+/*하단테이블 */
+.detailbottom {
+    width: 80%; /* 테이블 너비를 80%로 설정 */
+   padding-top: 100px;
+    
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 47% 6% 47%;
+    font-size: 20px;
+}
+
+.bottomtable {
+   
+    padding: 0;
+    margin: 0;
+}
+
+.buttons {
+    padding-top: 30px;
+    
+}
+.UserDetailTable {
+    width: 100%;
+
+    
+    
+    text-align: center;
+    white-space: nowrap;
+}
+
+.UserDetailTable th {
+background-color:  #B0C4DE;
+padding: 10px;
+
+}
+
+.UserDetailTable  tr >td {
+    font-size: 17px;
+    padding:15px;
+
+} 

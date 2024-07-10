@@ -9,8 +9,11 @@ const AdminSide = () => {
   };
 
   return (
+ 
     <div className="sidebar">
+          <div style={{paddingBottom:"10px"}}> <ul><a href="/admin" className="no-underline">홈페이지</a></ul></div> 
       <ul>
+
         <li><a href="/admin/user/search" className="no-underline">회원관리</a></li>
         <li className="has-submenu">
           <a href="#" className="no-underline" onClick={() => toggleMenu('board')}>게시판관리</a>
@@ -27,7 +30,7 @@ const AdminSide = () => {
             <li><a href="/admin/holiday/list" className="no-underline">휴관일</a></li>
           </ul>
         </li>
-        <li><a href="#" className="no-underline">통계관리</a></li>
+      
         <li className="has-submenu">
           <a href="#" className="no-underline" onClick={() => toggleMenu('book')}>도서관리</a>
           <ul className={`submenu ${openMenu === 'book' ? 'open' : ''}`}>
@@ -37,6 +40,7 @@ const AdminSide = () => {
           
           </ul>
         </li>
+        <li><a href="#" className="no-underline">통계관리</a></li>
       </ul>
     </div>
   );

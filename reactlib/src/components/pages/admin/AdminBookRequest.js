@@ -40,6 +40,7 @@ const AdminBookRequest = () => {
       const key = `${curr.isbn}-${curr.title}-${curr.author}-${curr.publisher}-${pubYear}`;
       acc[key] = acc[key] || { ...curr, count: 0, pub_year: pubYear };
       acc[key].count += 1;
+  
       return acc;
     }, {});
     setGroupedRequests(Object.values(grouped));
@@ -90,6 +91,7 @@ const AdminBookRequest = () => {
 
   const changePage = (number) => {
     setCurrentPage(number);
+    setSearchResult(requests.slice((number - 1) * itemsPerPage, number * itemsPerPage));
   };
 
   if (error) {
@@ -101,9 +103,9 @@ const AdminBookRequest = () => {
     <AdminHeader />
     <AdminSide />
     <div className="main-container">
-      <div className="content">
+      <div className="admin-content">
         <h1>희망도서신청 현황</h1>
-        <table className='adminTable'>
+        <table className='adminTable table-hover'>
           <thead>
             <tr class='admintr'>
               <th>No</th>
