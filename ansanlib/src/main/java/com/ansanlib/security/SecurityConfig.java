@@ -33,11 +33,7 @@ public class SecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
     private AuthenticationManager authenticationManager;
 
-//    @Bean
-//    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-//        this.authenticationManager = authenticationConfiguration.getAuthenticationManager();
-//		return authenticationManager;
-//	}
+
     @Bean
     public AuthenticationManager authenticationManager() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();

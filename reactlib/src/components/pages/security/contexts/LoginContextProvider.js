@@ -2,7 +2,7 @@ import React, { createContext, useEffect, useState } from 'react';
 import api from '../apis/api';
 import Cookies from 'js-cookie';
 import * as auth from '../apis/auth';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useResolvedPath } from 'react-router-dom';
 // import * as Swal from '../apis/alert';
 
 
@@ -12,14 +12,13 @@ LoginContext.displayName = 'LoginContextName'
 
 const LoginContextProvider = ({ children }) => {
 
+    const navigate = useNavigate() // 페이지 이동
     const [isLogin, setLogin] = useState(false); // 로그인 여부
-    const [userInfo, setUserInfo] = useState(null) // 유저 정보
+    const [isUserId,setIsUserId] = useState(null) // 유저 아이디 정보
     const [roles, setRoles] = useState({isUser : false, isAmdin : false}) // 권한 정보
     const [remberUserId, setRemberUserId] = useState() // 아이디 저장
 
-    const navigate = useNavigate() // 페이지 이동
-
-
+  
 
     //  로그인 체크
     const loginCheck = async () => {
@@ -148,15 +147,14 @@ const LoginContextProvider = ({ children }) => {
         // 로그인 여부 : true
         setLogin(true)
         
-        // 유저정보 세팅
-        const updatedUserInfo = {userId, loginid, role}
-        setUserInfo(updatedUserInfo)
+        // 유저아이디 세팅
+        setIsUserId(userId)
 
         // 권한정보 세팅
         const updatedRoles = { isUser : false, isAmdin : false }
 
-        if( role == 'USER' ) updatedRoles.isUser = true
-        if( role == 'ADMIN' ) updatedRoles.isAdmin = true
+        if( role == 'ROLE_USER' ) updatedRoles.isUser = true
+        if( role == 'ROLE_ADMIN' ) updatedRoles.isAdmin = true
         setRoles(updatedRoles)
     }
 
@@ -172,10 +170,10 @@ const LoginContextProvider = ({ children }) => {
         setLogin(false)
 
         // 유저 정보 초기화
-        setUserInfo(null)
+        setIsUserId(null)
 
         // 권한 정보 초기화
-        setRoles(null)
+        setRoles({isUser : false, isAmdin : false})
     }
 
     
@@ -187,7 +185,7 @@ const LoginContextProvider = ({ children }) => {
 
 
     return ( 
-        <LoginContext.Provider value={ {isLogin, userInfo, roles, loginCheck, login,logout} }>
+        <LoginContext.Provider value={ {isLogin, isUserId, roles, loginCheck, login,logout} }>
             {children}
         </LoginContext.Provider>
     )

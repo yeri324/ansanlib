@@ -35,42 +35,6 @@ import User from './components/pages/security/pages/User';
 function App() {
 
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userId, setUserId] = useState("");
-
-  useEffect(() => {
-    const storedUser = sessionStorage.getItem("member");
-    if (storedUser) {
-      const { userId, loginTime } = JSON.parse(storedUser);
-      const currentTime = new Date().getTime();
-      const sessionTime = 1800000; // 30분 후 자동 로그아웃
-      if (currentTime - loginTime < sessionTime) {
-        setIsLoggedIn(true);
-        setUserId(userId);
-      } else {
-        handleLogout();
-      }
-    } else {
-      setIsLoggedIn(false);
-      setUserId("");
-    }
-  }, []);
-
-  const handleLogout = () => {
-    sessionStorage.removeItem("member");
-    setIsLoggedIn(false);
-    setUserId("");
-    window.location.href = "/";
-  };
-
-  const handleLogin = (loginForm) => {
-    const loginTime = new Date().getTime();
-    sessionStorage.setItem("member", JSON.stringify({ ...loginForm, loginTime }));
-    setIsLoggedIn(true);
-    setUserId(loginForm.userId);
-    window.location.href = "/home";
-  };
-
   const Layout = ({ children }) => {
     const location = useLocation();
     const isManagePath = location.pathname.startsWith('/admin');

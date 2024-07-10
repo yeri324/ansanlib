@@ -4,7 +4,6 @@ import LoginContextConsumer from '../../contexts/LoginContextConsumer';
 import { getData } from '../../apis/auth';
 
 const FormJoin = ({ join,}) => {
-    const { login } = useContext(LoginContext);
     const [errors, setErrors] = useState({});
     const [formData, setFormData] = useState({
         loginid: '',

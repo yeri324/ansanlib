@@ -56,7 +56,7 @@ public class JwtTokenProvider {
         return jwt;
     }
 
-
+    //토큰 해석 (Bearer헤더(authHeader) 속 토큰 읽기 > 인증객체 반환)
     public UsernamePasswordAuthenticationToken getAuthentication(String authHeader) {
         if(authHeader == null || authHeader.length() == 0 ) 
             return null;
