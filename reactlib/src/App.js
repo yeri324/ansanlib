@@ -17,7 +17,6 @@ import FindPwForm from './components/pages/user/FindPwForm';
 import AdminFaqList from './components/pages/admin/AdminFaqList';
 import ReservationForm from './components/pages/reservation/ReservationForm';
 import Admin from './components/pages/admin/Admin';
-import AuthenticationForm from './components/pages/userAuthentication/AuthenticationForm';
 import MyPage from './components/pages/myPage/MyPage';
 import ReservationList from './components/pages/reservation/ReservationList';
 import RequestBookForm from './components/pages/requestBook/RequestBookForm';
@@ -77,7 +76,6 @@ function App() {
         <Route path="/delete" element={<DeleteUserForm/>} />
 
         <Route path="/admin/user/search" element={<Admin />} />
-        <Route path="/user/authentication" element={<AuthenticationForm />} />
 
         <Route path="/admin/user/search" element={<AdminUserList />} />
         <Route path="/admin/user/detail/:id" element={<AdminUserDetail />} />
