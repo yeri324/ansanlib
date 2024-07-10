@@ -1,0 +1,25 @@
+.base_info {
+    display: flex;
+    flex-direction: row;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+ul {
+    list-style: none;
+}
+
+.base_info > div > ul:first-child {
+    height: 80%;
+}
+
+.base_left > ul > li {
+    text-align: right;
+    height: 40px;
+}
+
+.base_right > ul > li {
+    height: 40px;
+}

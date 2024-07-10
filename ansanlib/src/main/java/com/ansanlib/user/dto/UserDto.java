@@ -25,12 +25,7 @@ public class UserDto {
     private String sms;
 private LocalDateTime joinDate; //가입일
 
-	private LocalDateTime regTime;
-	private LocalDateTime loginDate; //최근접속일
-
-	
-
-    // Getters and setters (omitted for brevity)
-
+   private LocalDateTime regTime;
+   private LocalDateTime loginDate; //최근접속일
     
 }
