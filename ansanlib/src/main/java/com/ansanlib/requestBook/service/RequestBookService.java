@@ -15,6 +15,7 @@ import com.ansanlib.requestBook.repository.RequestBookRepository;
 import com.ansanlib.reservation.exception.CreateReservationException;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 
 @Service
 public class RequestBookService {
@@ -34,28 +35,26 @@ public class RequestBookService {
 	    requestBook.setPublisher(createRequestBookDto.getPublisher());
 	    requestBook.setPub_date(createRequestBookDto.getPubDate());
 	    requestBook.setRegist_date(LocalDateTime.now());
+	    requestBook.setLib_name(createRequestBookDto.getLib_name());
 
 	    LibUser libUser = new LibUser();
 	    libUser.setUserId(createRequestBookDto.getUserId());
 	    requestBook.setLibUser(libUser);
 	    
-	    
-	    //사용자 존재여부 확인
-	    try {
-	    	libUser = adminUserService.getUserById(createRequestBookDto.getUserId());
-	    } catch (EntityNotFoundException exception) {
-	    	throw new CreateReservationException("해당 사용자를 찾을 수 없습니다.");
-	    }
-	    	    
-	    if (requestBookRepository.checkIfOverlappingReqeustBooksExists(
-	    		requestBook.getIsbn(),
-	    		requestBook.getTitle(),
-	    		requestBook.getAuthor()
-	    		)) {
-	    	throw new CreateRequestBookException("이미 신청된 책입니다.");
-	    }
-	    
-	    
+        //사용자 존재여부 확인
+        try {
+            libUser = adminUserService.getUserById(createRequestBookDto.getUserId());
+        } catch (EntityNotFoundException exception) {
+            throw new CreateReservationException("해당 사용자를 찾을 수 없습니다.");
+        }
+                
+        if (requestBookRepository.checkIfOverlappingReqeustBookExists(
+                requestBook.getIsbn(),
+                requestBook.getLibUser().getUserId()
+                )) {
+            throw new CreateRequestBookException("이미 신청된 책입니다.");
+        }
+	      
 	    //희망 도서 정보 저장
 	    return requestBookRepository.save(requestBook);
 	}
@@ -72,5 +71,11 @@ public class RequestBookService {
         RequestBook requestBook = requestBookRepository.findById(id)
             .orElseThrow(() -> new Exception("신청된 도서를 찾을 수 없습니다."));
         requestBookRepository.delete(requestBook);
+    }
+    
+    //회원 탈퇴 관련
+    @Transactional
+    public void deleteRequestBookByUserId(Long userId) {
+        requestBookRepository.deleteByLibUserId(userId);
     }
 }

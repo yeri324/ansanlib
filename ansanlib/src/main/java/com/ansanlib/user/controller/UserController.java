@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ansanlib.entity.LibUser;
 import com.ansanlib.security.user.CustomUser;
 import com.ansanlib.user.dto.UserDto;
+import com.ansanlib.user.repository.UserRepository;
 import com.ansanlib.user.service.UserService;
 
 import lombok.RequiredArgsConstructor;

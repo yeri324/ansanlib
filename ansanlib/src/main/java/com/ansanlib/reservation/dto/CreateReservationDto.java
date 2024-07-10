@@ -9,6 +9,5 @@ import lombok.Setter;
 @Setter
 public class CreateReservationDto {
 	private Long bookId;
-	private Long userId;
 	private LocalDateTime reservationDate;
 }

@@ -109,7 +109,4 @@ public class LibUser extends BaseEntity {
 		this.setEmail(userDto.getEmail());
 		this.setPhone(userDto.getPhone());
 	}
-
-
-	
 }
