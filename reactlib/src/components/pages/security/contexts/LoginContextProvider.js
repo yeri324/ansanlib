@@ -14,6 +14,7 @@ const LoginContextProvider = ({ children }) => {
 
     const navigate = useNavigate() // 페이지 이동
     const [isLogin, setLogin] = useState(false); // 로그인 여부
+    const [isLoginInProgress, setLoginInProgress] = useState(true) //로그인 진행중 여부. 처음 페이지가 로드됬을때는 로그인 진행중이라고 가정함.
     const [isUserId,setIsUserId] = useState(null) // 유저 아이디 정보
     const [roles, setRoles] = useState({isUser : false, isAmdin : false}) // 권한 정보
     const [remberUserId, setRemberUserId] = useState() // 아이디 저장
@@ -179,13 +180,14 @@ const LoginContextProvider = ({ children }) => {
     
     useEffect( () => {
         // 로그인 체크
-        loginCheck()
+        setLoginInProgress(true); //로그인 진행중 설정
+        loginCheck().then(() => setLoginInProgress(false), () => setLoginInProgress(false)); //로그인 체크가 성공하거나 실패시 로그인 진행중 false로 변경
     }, [])
 
 
 
     return ( 
-        <LoginContext.Provider value={ {isLogin, isUserId, roles, loginCheck, login,logout} }>
+        <LoginContext.Provider value={ {isLogin, isLoginInProgress, isUserId, roles, loginCheck, login,logout} }>
             {children}
         </LoginContext.Provider>
     )

@@ -10,19 +10,20 @@ const ReservationForm = () => {
 
   const name = useRealName();
 
-  //const { isLogin, roles } = useContext(LoginContext);
+  const { isLogin, roles, isLoginInProgress } = useContext(LoginContext);
 
-  // useEffect(() => {
-  //   console.log({isLogin, roles})
-  //   if(!isLogin) {
-  //     alert("로그인이 필요합니다.");
-  //     //navigate("/login");
-  //     return;
-  //   } else if(!roles.isUser) {
-  //    // alert("권한이 없습니다.");
-  //     navigate(-1);
-  //   }
-  // }, [isLogin, roles]);
+  useEffect(() => {
+    //현재 로그인이 진행중인 경우 아무것도 실행하지 않음.
+    if(isLoginInProgress) return;
+    if(!isLogin) {
+      alert("로그인이 필요합니다.");
+      navigate("/login");
+      return;
+    } else if(!roles.isUser) {
+      alert("권한이 없습니다.");
+      navigate(-1);
+    }
+  }, [isLogin, roles]);
 
   const [bookId, setBookId] = useState('');
   const [reservationDate, setReservationDate] = useState('');
