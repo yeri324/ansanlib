@@ -96,8 +96,8 @@ const UserResItem = ({ res, onClickToCancelRes }) => {
             <td> || bookId : {res.bookId.id}</td>
             <td> || {res.startDate.split('T')[0]}</td>
             <td> || {res.endDate.split('T')[0]}</td>
-            <td><button value={res.id} onClick={onClickToCancelRes}>삭제</button></td>
-            <td><button value={res.id} onClick={openModal}>기간연장</button></td>
+            <td><button  type="button" class="btn btn-outline-dark" value={res.id} onClick={onClickToCancelRes}>삭제</button></td>
+            <td><button type="button" class="btn btn-outline-dark" value={res.id} onClick={openModal}>기간연장</button></td>
             <Modal
                 isOpen={isOpen}
                 onRequestClose={closeModal}
@@ -122,7 +122,7 @@ const UserResItem = ({ res, onClickToCancelRes }) => {
                        prevLabel={showPrevButton ? '<' : null} 
                     />
                     </div>
-                    <button onClick={extendRes}>연장하기</button>
+                    <button type="button" class="btn btn-outline-dark" onClick={extendRes}>연장하기</button>
 
                 </div>
             </Modal>

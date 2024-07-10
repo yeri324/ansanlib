@@ -3,6 +3,7 @@ import React, { useEffect, useState, } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FaqDetailForm from '../faq/FaqDetailForm';
 import FaqItem from '../faq/FaqItem';
+import "./Table.css";
 
 function AdminFaqList() {
     const [checkedList, setCheckedList] = useState([]);
@@ -112,11 +113,11 @@ function AdminFaqList() {
                             <option value="title">Title</option>
                         </select>
                         <input type="text" name="searchQuery" value={searchOption.searchQuery} onChange={handleOnChange} />
-                        <button onClick={onSearch}>Search</button>
+                        <button  type="button" class="btn btn-light" onClick={onSearch}>Search</button>
                     </div>
-                    <table>
+                    <table className='.adminTable'>
                         <thead>
-                            <tr>
+                            <tr className='admintr'>
                                 <th> - </th>
                                 <th>번호</th>
                                 <th>제목</th>
@@ -138,8 +139,8 @@ function AdminFaqList() {
                             ))}
 
                       
-                        <button onClick={onDelete}>삭제하기</button>
-                        <button onClick={onCreate}>작성하기</button>
+                        <button type="button" class="btn btn-light" onClick={onDelete}>삭제하기</button>
+                        <button type="button" class="btn btn-light"  onClick={onCreate}>작성하기</button>
                     </table >
                 </div >
         //     </FaqDispatchContext.Provider>

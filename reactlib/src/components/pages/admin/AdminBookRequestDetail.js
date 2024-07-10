@@ -30,7 +30,7 @@ const AdminBookRequestDetail = ({ isOpen, onClose, request, onSave }) => {
     <div className="modal" style={{ display: 'block' }}>
       <div className="modal-content">
         <span className="close" onClick={onClose}>&times;</span>
-        <h2>희망도서 신청 상태</h2>
+        <h2>희망도서 신청</h2>
         {request ? (
           <div>
             <p><strong>ISBN:</strong> {request.isbn}</p>
@@ -39,19 +39,12 @@ const AdminBookRequestDetail = ({ isOpen, onClose, request, onSave }) => {
             <p><strong>출판사:</strong> {request.publisher}</p>
             <p><strong>출판년도:</strong> {request.pub_date}</p>
             <p><strong>신청도서관</strong> {request.lib_name}</p>
-            <p>
-              <strong>상태:</strong>
-              <select value={status} onChange={handleChange}>
-                <option value="대기중">대기중</option>
-                <option value="승인">승인</option>
-                <option value="거절">거절</option>
-              </select>
-            </p>
+           
           </div>
         ) : (
           <p>No data available</p>
         )}
-        <button onClick={handleSave}>저장</button>
+        <button  type="button" class="btn btn-outline-dark" onClick={handleSave}>확인</button>
       </div>
     </div>
   );

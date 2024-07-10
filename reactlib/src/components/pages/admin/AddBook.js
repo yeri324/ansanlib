@@ -243,12 +243,13 @@ const AddBook = ({ csrf = {} }) => {
                             {imagePreview && (
                             <div className="form-group">
                                 <img src={imagePreview} alt="미리보기" className="img-thumbnail" />
-                                <button className="btn btn-secondary" onClick={handleImageCancel}>취소</button>
+                                <button  class="btn btn-outline-dark"  onClick={handleImageCancel}>취소</button>
                             </div>
                         )}
 
 
                             <input
+                            
                                 type="file"
                                 className="custom-file-input"
                                 name="bookImgFile"
@@ -398,8 +399,8 @@ const AddBook = ({ csrf = {} }) => {
                         {errors.count && <p className="text-danger">{errors.count}</p>}
                         
                         <div className="form-group text-center">
-                            <button type="submit" >저장</button>
-                            <button type="button"  onClick={handleReset}>리셋</button>
+                            <button type="submit"  class="btn btn-outline-dark"  >저장</button>
+                            <button type="button"class="btn btn-outline-dark"  onClick={handleReset}>리셋</button>
                         </div>
 
                         <input type="hidden" name={csrf.parameterName} value={csrf.token} />

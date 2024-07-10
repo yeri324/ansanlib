@@ -2,7 +2,7 @@ import React from 'react';
 
 import "./Modal.css";
 
-const HolidayDetailsModal = ({ show, handleClose, holidays }) => {
+const HolidayDetail = ({ show, handleClose, holidays }) => {
   return (
     <div className="modal" style={{ display: show ? 'block' : 'none' }}>
     <div className="modal-content">
@@ -42,4 +42,4 @@ const HolidayDetailsModal = ({ show, handleClose, holidays }) => {
   );
 };
 
-export default HolidayDetailsModal;
+export default HolidayDetail;

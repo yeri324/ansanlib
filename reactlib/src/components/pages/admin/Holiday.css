@@ -39,10 +39,10 @@
   overflow-x: auto;
 }  
 
-table {
+.tableheader {
 
   margin: 0 auto;
-  width: 100%;
+  width: 70%;
  
   border-collapse: collapse;
 }
@@ -52,7 +52,7 @@ table {
 .tableheader td {
   
   table-layout: fixed;
-  height: 100px; /* 높이를 100px로 고정 */
+  height: 90px; /* 높이를 100px로 고정 */
   vertical-align: top; /* 내용을 상단에 정렬 */
   /* padding: 8px; 내부 패딩 */
   overflow: hidden; /* 내용이 넘칠 경우 숨김 */

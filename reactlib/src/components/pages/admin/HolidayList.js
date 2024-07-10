@@ -7,7 +7,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import AdminHeader from "./AdminHeader";
 import AdminSide from "./AdminSide";
-import "./HolidayList.css";
+import "./Table.css";
+
 
 const HolidayList = () => {
   const [searchResult, setSearchResult] = useState([]);
@@ -163,22 +164,22 @@ const HolidayList = () => {
               />
             )}
 
-            <button  onClick={handleSearch}>검색</button>
+            <button type="button"  class="btn btn-outline-dark"   onClick={handleSearch}>검색</button>
           </div>
           <div className="buttons">
-            <button onClick={() => navigate('/admin/holiday')}>돌아가기</button>
-            <button onClick={handleAddHoliday}>등록하기</button>
-            <button  onClick={handleRefresh}>새로고침</button>
+            <button type="button"  class="btn btn-outline-dark"  onClick={() => navigate('/admin/holiday')}>돌아가기</button>
+            <button type="button" class="btn btn-outline-dark"   onClick={handleAddHoliday}>등록하기</button>
+            <button type="button" class="btn btn-outline-dark"   onClick={handleRefresh}>새로고침</button>
           </div>
   
   
-          <table>
+          <table className='adminTable'>
             <thead>
-              <tr className="tableheader">
-                <th className="sortable" onClick={() => handleSort('lib_name')}>도서관 이름</th>
-                <th className="sortable" onClick={() => handleSort('libNum')}>도서관 번호</th>
+              <tr className="admintr">
+                <th className="sortable" onClick={() => handleSort('lib_name')} style={{width:'20%'}}>도서관 이름</th>
+                <th className="sortable" onClick={() => handleSort('libNum')} style={{width:'30%'}}>도서관 번호</th>
                 <th className="sortable" onClick={() => handleSort('holiday')}>휴관일</th>
-                <th>삭제</th>
+                <th className="delete" style={{width: '20%'}}>삭제</th>
               </tr>
             </thead>
             <tbody>
@@ -188,7 +189,7 @@ const HolidayList = () => {
                   <td>{holiday.library ? holiday.library.libNum : ''}</td>
                   <td>{holiday.holiday}</td>
                   <td>
-                    <button onClick={() => handleDelete(holiday.id)}>삭제</button>
+                    <button type="button" class="btn btn-light"  onClick={() => handleDelete(holiday.id)}>삭제</button>
                   </td>
                 </tr>
               ))}
@@ -198,19 +199,19 @@ const HolidayList = () => {
           <nav aria-label="Page navigation example">
             <ul className="pagination">
               <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-                <button className="page-link" onClick={() => paginate(currentPage - 1)} aria-label="Previous">
+                <button type="button"class="btn btn-outline-dark" className="page-link" onClick={() => paginate(currentPage - 1)} aria-label="Previous">
                   <span aria-hidden="true">&laquo;</span>
                 </button>
               </li>
               {Array.from({ length: totalPages }, (_, index) => (
                 <li key={index + 1} className={`page-item ${index + 1 === currentPage ? 'active' : ''}`}>
-                  <button className="page-link" onClick={() => paginate(index + 1)}>
+                  <button type="button" class="btn btn-outline-dark" className="page-link" onClick={() => paginate(index + 1)}>
                     {index + 1}
                   </button>
                 </li>
               ))}
               <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-                <button className="page-link" onClick={() => paginate(currentPage + 1)} aria-label="Next">
+                <button type="button" class="btn btn-outline-dark" className="page-link" onClick={() => paginate(currentPage + 1)} aria-label="Next">
                   <span aria-hidden="true">&raquo;</span>
                 </button>
               </li>

@@ -101,9 +101,9 @@ const Holiday = () => {
       <div className='holidayTitle'><h1>캘린더</h1></div>
       <div className="control">
         <div className="date-navigation">
-          <button onClick={() => setMoment(getMoment.clone().subtract(1, 'month'))}>이전달</button>
+          <button type="button" class="btn btn-outline-dark" onClick={() => setMoment(getMoment.clone().subtract(1, 'month'))}>이전달</button>
           <h4><span> {today.format('YYYY 년 MM 월')}</span> </h4>
-          <button onClick={() => setMoment(getMoment.clone().add(1, 'month'))}>다음달</button>
+          <button  type="button" class="btn btn-outline-dark" onClick={() => setMoment(getMoment.clone().add(1, 'month'))}>다음달</button>
         </div>
        
       </div>
@@ -141,8 +141,8 @@ const Holiday = () => {
       )}
 
 <div className="button-group">
-          <button className="regschedule" onClick={() => navigate('/admin/holiday/list')}>목록보기</button>
-          <button variant="primary" onClick={() => setShowModal(true)}>등록하기</button>
+          <button  type="button" class="btn btn-outline-dark"  onClick={() => navigate('/admin/holiday/list')}>목록보기</button>
+          <button type="button" class="btn btn-outline-dark" onClick={() => setShowModal(true)}>등록하기</button>
         </div>
         <HolidayDetail
         show={showDetail}

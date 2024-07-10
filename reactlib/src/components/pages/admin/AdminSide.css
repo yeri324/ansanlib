@@ -1,6 +1,6 @@
 .sidebar {
   position: fixed;
-  top: 120px; /* 헤더 높이만큼 위쪽 위치를 설정 */
+  top: 80px; /* 헤더 높이만큼 위쪽 위치를 설정 */
   left: 0;
   height: calc(100vh - 80px); /* 헤더 높이를 뺀 만큼의 높이를 설정 */
   width: 220px; /* 사이드바 너비를 120px로 설정 */
@@ -23,7 +23,7 @@ li {
   color: #ffffff;
   display: block;
   padding: 5px 5px;
-  font-size: 22px;
+  font-size: 20px;
 }
 
 .no-underline:hover {

@@ -76,7 +76,7 @@ const HolidayNew = ({ showModal, handleCloseModal, selectedDate, setSelectedDate
     <div className="modal-content">
       <span className="close" onClick={handleCloseModal}>&times;</span>
       <h3>도서관 휴관일 등록 - {selectedDate && selectedDate.format('YYYY-MM-DD')}</h3>
-      <form onSubmit={handleAddSchedule} className='form'>
+      <form onSubmit={handleAddSchedule} className='holidaynew'>
         <div className="form-group">
           <label>지역 선택</label>
           <select value={district} onChange={(e) => setDistrict(e.target.value)}>
@@ -101,8 +101,8 @@ const HolidayNew = ({ showModal, handleCloseModal, selectedDate, setSelectedDate
           <label>날짜 선택</label>
           <input type="date" onChange={(e) => setSelectedDate(moment(e.target.value))} />
         </div>
-        <button   onClick={handleCloseModal}>취소</button>
-        <button type="submit">저장</button>
+        <button  class="btn btn-outline-dark" onClick={handleCloseModal}>취소</button>
+        <button  class="btn btn-outline-dark" type="submit">저장</button>
       </form>
     </div>
   </div>
