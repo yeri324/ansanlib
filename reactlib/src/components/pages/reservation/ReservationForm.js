@@ -1,34 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react';
+import axios from "../security/apis/api";
 import { useNavigate } from 'react-router-dom';
+import { LoginContext } from '../security/contexts/LoginContextProvider';
+import LoginContextConsumer from '../security/contexts/LoginContextConsumer';
+import useRealName from '../../hooks/useRealName';
 
 const ReservationForm = () => {
   const navigate = useNavigate();
 
-  const [userId, setUserId] = useState(null);
-  const [userName, setUserName] = useState("");
+  const name = useRealName();
+
+  //const { isLogin, roles } = useContext(LoginContext);
+
+  // useEffect(() => {
+  //   console.log({isLogin, roles})
+  //   if(!isLogin) {
+  //     alert("로그인이 필요합니다.");
+  //     //navigate("/login");
+  //     return;
+  //   } else if(!roles.isUser) {
+  //    // alert("권한이 없습니다.");
+  //     navigate(-1);
+  //   }
+  // }, [isLogin, roles]);
+
   const [bookId, setBookId] = useState('');
   const [reservationDate, setReservationDate] = useState('');
-
-  useEffect(() => {
-    const memberData = JSON.parse(sessionStorage.getItem("member") ?? "null");
-    if(memberData?.userId) {
-        setUserId(memberData?.userId);
-        setUserName(memberData?.name);
-    } else {
-        alert("로그인이 되어있지 않습니다.");
-        navigate("/login");
-    }
-  }, []);
-
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const reservation = { userId, bookId, reservationDate };
+    const reservation = { bookId, reservationDate };
     
     try {
-      const response = await axios.post('/api/reservations', reservation);
+      const response = await axios.post('/api/reservations/create', reservation);
       alert("예약 성공");
       console.log('Reservation created:', response.data);
     } catch (error) {
@@ -44,7 +49,7 @@ const ReservationForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>{userName}의 도서예약</h2>
+      <h2>{name}의 도서예약</h2>
       {/* <label>
         User Id:
         <input type="text" value={userId ?? ""} readOnly />
