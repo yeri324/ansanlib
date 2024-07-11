@@ -1,0 +1,23 @@
+.join-radio [type='radio'] {
+position: absolute;
+width: 1px;
+height: 1px;
+padding: 0;
+margin: -1px;
+overflow: hidden;
+clip: rect(0, 0, 0, 0);
+white-space: nowrap;
+border: 0;
+}
+
+.join-radio input[type='radio']:checked + .check-label {
+    border-radius: 10px 10px 10px 10px;
+    background-color: rgba(35, 55, 142, 0.568);
+    color: white;
+}
+
+.join-radio label {
+    margin: 5px 10px;
+    width: 70px;
+    height: 30px;
+}
