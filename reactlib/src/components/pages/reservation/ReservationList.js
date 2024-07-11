@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from "../security/apis/api";
 import { useNavigate } from 'react-router-dom';
-import { LoginContext } from '../security/contexts/LoginContextProvider';
 import useRealName from '../../hooks/useRealName';
+import useAuth, { LOGIN_STATUS } from '../../hooks/useAuth';
 
 const ReservationList = () => {
     const navigate = useNavigate();
@@ -13,31 +13,24 @@ const ReservationList = () => {
     const [selectedReservations, setSelectedReservations] = useState([]); 
     const [isErrored, setErrored] = useState(false);
 
-    const { isLogin, roles, isLoginInProgress } = useContext(LoginContext);
+    const { loginStatus } = useAuth();
 
     useEffect(() => {
-        setErrored(!isLogin);
-    }, [isLogin]);
-
-    useEffect(() => {
-      //현재 로그인이 진행중인 경우 아무것도 실행하지 않음.
-      if(isLoginInProgress) return;
-      if(!isLogin) {
-        alert("로그인이 필요합니다.");
-        navigate("/login");
-        return;
-      } else if(!roles.isUser) {
-         alert("권한이 없습니다.");
-        navigate(-1);
+      //로그아웃됨.
+      if(loginStatus === LOGIN_STATUS.LOGGED_OUT) {
+          alert("로그인이 필요합니다.");
+          navigate("/login");
+          return;
       }
-    }, [isLogin, roles]);
+    }, [loginStatus]); //로그인 상태 변경시 useEffect 실행
 
     const fetchReservations = async () => {
-        if(isLogin) {
+        if(loginStatus === LOGIN_STATUS.LOGGED_IN) {
             try {
                 const response = await axios.get(`/api/reservations/get`); 
                 //예약 정보를 셋팅한다.
                 setReservations(response.data);
+                setErrored(false);
             } catch (error) { //오류 발생시(서버에서 NOT_FOUND(404) 요청 받거나 기타 오류 등등..)
                 //오류 발생 플래그 true로 설정
                 setErrored(true);
@@ -49,7 +42,7 @@ const ReservationList = () => {
         }
     };
 
-    useEffect(() => { fetchReservations(); }, [isLogin]); //이부분은 의존성 배열인데, login 값이 변경될 때 마다 useEffect를 새로 실행하여 예약목록을 업데이트 하도록 함.
+    useEffect(() => { fetchReservations(); }, [loginStatus]); //이부분은 의존성 배열인데, login 값이 변경될 때 마다 useEffect를 새로 실행하여 예약목록을 업데이트 하도록 함.
 
     const handleSelectReservation = (reservationId) => {
         setSelectedReservations(prevSelected =>
