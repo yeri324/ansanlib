@@ -1,26 +1,47 @@
+import React, { useEffect, useState } from 'react';
+import './homePage.css';
 import Header from '../header/header';
 import Footer from '../footer/footer';
-import './homePage.css';
-import React from 'react';
 import BookSearch from './booksearch';
 import Trends from './Trends';
 import Notice from './notice';
 import New from './new';
 import TodoCalendar from './calendar';
+import "react-calendar/dist/Calendar.css";
 import Kakao from '../../map/mapForm';
 import Bestseller from './Bestseller';
-import "react-calendar/dist/Calendar.css";
 import LibraryPage from '../../pages/visit/LibraryPage';
+import Popup from './popup';
 // import BookCloud from './bookCloud';
 // import StatisticsPage from '../../pages/visit/StatisticsPage';
 // import Calendar from 'react-calendar'
 // import { styled } from "styled-components";
 
 const HomePage = () => {
+
+  const [showPopup, setShowPopup] = useState(false);
+
+  useEffect(() => {
+    const lastClosed = localStorage.getItem('popupLastClosed');
+    const now = new Date().getTime();
+// 24 * 60 * 60 * 1000
+    if (!lastClosed || now - lastClosed > 10) {
+      setShowPopup(true);
+    }
+  }, []);
+  
+  const closePopup = () => {
+    localStorage.setItem('popupLastClosed', new Date().getTime());
+    setShowPopup(false);
+  };
+
   return (
     <>
       <header><Header /></header>
       <section>
+        <div id="home_popup">
+          {showPopup && <Popup onClose={closePopup} />}
+        </div>
         <div id="home-main-content" className="main_content">
           <div id="home-main-grid" className="main_grid">
             <div id="home-content-grid" className="content_grid">
@@ -77,5 +98,6 @@ const HomePage = () => {
     </>
   );
 }
+
 
 export default HomePage;
