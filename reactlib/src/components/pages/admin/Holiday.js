@@ -97,7 +97,7 @@ const Holiday = () => {
   return (
     <>
       <AdminHeader />
-      <div className="main-container">
+      <div className="admin-main-container">
         <AdminSide />
         <div className="Holidaycontent">
           <div className='holidayTitle'><h1>캘린더</h1></div>
@@ -108,6 +108,13 @@ const Holiday = () => {
               <button  type="button" class="btn btn-outline-dark" onClick={() => setMoment(getMoment.clone().add(1, 'month'))}>다음달</button>
             </div>
           </div>
+
+          <div className="tablebuttons">
+              <button type="button" class="btn btn-outline-dark" onClick={() => navigate('/admin/holiday/list')}>목록보기</button>
+              <button type="button" class="btn btn-outline-dark" onClick={() => setShowModal(true)}>등록하기</button>
+            </div>
+
+
           <div className="calendar">
             <div className='calBody'>
               <table className='tableheader'>
@@ -139,10 +146,7 @@ const Holiday = () => {
                 districts={districts}
               />
             )}
-            <div className="button-group">
-              <button type="button" class="btn btn-outline-dark" onClick={() => navigate('/admin/holiday/list')}>목록보기</button>
-              <button type="button" class="btn btn-outline-dark" onClick={() => setShowModal(true)}>등록하기</button>
-            </div>
+           
             <HolidayDetail
               show={showDetail}
               handleClose={() => setShowDetail(false)}

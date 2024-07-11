@@ -1,34 +1,95 @@
-.content form {
-    width:800px;
-    /* max-width: 1000px; 폼의 최대 너비를 설정 */
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
+.admin-AddBook-container {
+  padding-top: 100px;
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: hsla(45, 6%, 87%, 0.459);
+  display:grid;
+  grid-template-columns:  15% 85%;
+  height:auto;
+
+}
 
 
+.admin-AddBook-content {
+  font-family: 'Noto Sans KR', sans-serif;
+  align-items: center;
+  background-color: white;
+  border-radius: 20px;
+ margin: 0 auto;
+ margin-top: 10px;
+ margin-bottom: 40px;
+ width: 95%;
+
+/* height: calc(100vh - 80px); 헤더 높이를 뺀 만큼의 높이를 설정 */
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-top: 30px;
+
+}
+
+.sample-page {
+  width: 100vh;
+  padding: 40px 40px;
+}
 
 
-  .input-group.mb-3 {
-    margin-bottom: 20px;
-  }
-  
-  .input-group-text {
-    width: 150px; /* 레이블 너비를 설정 */
-  }
-  
-  .form-control, .custom-file-input, .custom-file-label {
-    width: 100%; /* 입력 필드의 너비를 100%로 설정 */
-  }
-  
-  .img-thumbnail {
-    max-width: 200px;
-    margin-top: 10px;
-  }
-  
-  .btn-primary {
-    width: 150px;
-    margin-top: 20px;
-  }
+.inputForm {
+  border: 1px solid #eee;
+  border-radius: 20px;
+  padding: 40px;
+
+}
+
+
+.input-group.mb-3 {
+  margin-bottom: 20px;
+
+}
+
+.input-group-text {
+  width: 150px;
+  /* 레이블 너비를 설정 */
+
+}
+
+.form-control,
+.custom-file-input,
+.custom-file-label {
+  width: 100%;
+  /* 입력 필드의 너비를 100%로 설정 */
+}
+
+.img-thumbnail {
+  max-width: 200px;
+  margin-top: 10px;
+}
+
+.btn-primary {
+  width: 150px;
+  margin-top: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group select,
+.form-group input {
+  width: 90%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+
+.form-group.text-center{
+  padding: 20px;
+}

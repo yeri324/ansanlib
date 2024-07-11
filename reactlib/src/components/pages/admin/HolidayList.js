@@ -58,7 +58,8 @@ const HolidayList = () => {
     } else if (searchCriteria === 'date') {
       filteredResults = originalResult.filter(holiday => searchMonthStr && moment(holiday.holiday).format('YYYY-MM') === searchMonthStr);
     }
-    else { filteredResults = originalResult.filter(holiday => holiday.libNum.includes(searchTerm) );
+    else {
+      filteredResults = originalResult.filter(holiday => holiday.libNum.includes(searchTerm));
 
     }
 
@@ -106,20 +107,20 @@ const HolidayList = () => {
   };
 
   const sortData = (key, direction) => {
-  const sortedData = [...searchResult].sort((a, b) => {
-    // Adjust if 'libNum' is nested, for example, if it's accessed via a.library.libNum
-    const valA = key === 'libNum' && a.library ? a.library.libNum : a[key];
-    const valB = key === 'libNum' && b.library ? b.library.libNum : b[key];
-    if (valA < valB) {
-      return direction === 'ascending' ? -1 : 1;
-    }
-    if (valA > valB) {
-      return direction === 'ascending' ? 1 : -1;
-    }
-    return 0;
-  });
-  setSearchResult(sortedData);
-};
+    const sortedData = [...searchResult].sort((a, b) => {
+      // Adjust if 'libNum' is nested, for example, if it's accessed via a.library.libNum
+      const valA = key === 'libNum' && a.library ? a.library.libNum : a[key];
+      const valB = key === 'libNum' && b.library ? b.library.libNum : b[key];
+      if (valA < valB) {
+        return direction === 'ascending' ? -1 : 1;
+      }
+      if (valA > valB) {
+        return direction === 'ascending' ? 1 : -1;
+      }
+      return 0;
+    });
+    setSearchResult(sortedData);
+  };
 
 
   // 페이지네이션 관련 계산
@@ -133,10 +134,17 @@ const HolidayList = () => {
   return (
     <>
       <AdminHeader />
-      <div className="main-container">
-        <AdminSide />
+      <div className="admin-main-container">
+
+        <div className="adminside">
+          <AdminSide />
+        </div>
+
         <div className="admin-content">
+          <form className="admin-con">
           <h1>휴관일 목록</h1>
+
+
           <div className="search-container">
             <select value={searchCriteria} onChange={(e) => setSearchCriteria(e.target.value)}>
               <option value="library">도서관 이름</option>
@@ -144,12 +152,12 @@ const HolidayList = () => {
             </select>
 
             {searchCriteria === 'library' && (
-              <input 
-                type="text" 
-                placeholder="도서관 이름을 입력하세요" 
-                value={searchTerm} 
-                onChange={(e) => setSearchTerm(e.target.value)} 
-                onKeyDown={handleKeyDown} 
+              <input
+                type="text"
+                placeholder="도서관 이름을 입력하세요"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyDown={handleKeyDown}
               />
             )}
 
@@ -164,45 +172,45 @@ const HolidayList = () => {
               />
             )}
 
-            <button type="button"  class="btn btn-outline-dark"   onClick={handleSearch}>검색</button>
+            <button type="button" class="btn btn-outline-dark" onClick={handleSearch}>검색</button>
           </div>
-          
-          <div className="buttons">
-            <button type="button"  class="btn btn-outline-dark"  onClick={() => navigate('/admin/holiday')}>돌아가기</button>
-            <button type="button" class="btn btn-outline-dark"   onClick={handleAddHoliday}>등록하기</button>
-            <button type="button" class="btn btn-outline-dark"   onClick={handleRefresh}>새로고침</button>
+
+          <div className="admin-buttons">
+            <button type="button" class="btn btn-outline-dark" onClick={() => navigate('/admin/holiday')}>돌아가기</button>
+            <button type="button" class="btn btn-outline-dark" onClick={handleAddHoliday}>등록하기</button>
           </div>
-  
-  
+
+
           <table className='adminTable' >
             <thead>
               <tr className="admintr">
                 <th>No</th>
-                <th className="sortable" onClick={() => handleSort('lib_name')} style={{width:'20%'}}>도서관 이름</th>
-                <th className="sortable" onClick={() => handleSort('libNum')} style={{width:'30%'}}>도서관 번호</th>
+                <th className="sortable" onClick={() => handleSort('lib_name')} style={{ width: '20%' }}>도서관 이름</th>
+                <th className="sortable" onClick={() => handleSort('libNum')} style={{ width: '30%' }}>도서관 번호</th>
                 <th className="sortable" onClick={() => handleSort('holiday')}>휴관일</th>
-                <th className="delete" style={{width: '20%'}}>삭제</th>
+                <th className="delete" style={{ width: '20%' }}>삭제</th>
               </tr>
             </thead>
             <tbody>
               {Array.isArray(currentItems) && currentItems.map((holiday) => (
-                <tr key={holiday.id}>
+                <tr key={holiday.id} className="admintr">
                   <td>{holiday.id}</td>
                   <td>{holiday.lib_name}</td>
                   <td>{holiday.library ? holiday.library.libNum : ''}</td>
                   <td>{holiday.holiday}</td>
                   <td>
-                    <button type="button" class="btn btn-light"  onClick={() => handleDelete(holiday.id)}>삭제</button>
+                    <button type="button" class="btn btn-light" onClick={() => handleDelete(holiday.id)}>삭제</button>
                   </td>
                 </tr>
               ))}
             </tbody>
-            
+
           </table>
+          </form>
           <nav aria-label="Page navigation example">
             <ul className="pagination">
               <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-                <button type="button"class="btn btn-outline-dark" className="page-link" onClick={() => paginate(currentPage - 1)} aria-label="Previous">
+                <button type="button" class="btn btn-outline-dark" className="page-link" onClick={() => paginate(currentPage - 1)} aria-label="Previous">
                   <span aria-hidden="true">&laquo;</span>
                 </button>
               </li>
@@ -220,7 +228,7 @@ const HolidayList = () => {
               </li>
             </ul>
           </nav>
-          
+
 
           {showModal && (
             <HolidayNew

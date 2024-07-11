@@ -208,207 +208,181 @@ const AddBook = ({ csrf = {} }) => {
 
     return (
         <>
-      <AdminHeader />
-      <div className="main-container">
-
-        <AdminSide />
-        <div className="content">
-        <main>
-            <div className="breadcrumbs">
-                <div className="page-header d-flex align-items-center">
-                    <div className="container position-relative">
-                        <div className="row d-flex justify-content-center">
-                            <div className="col-lg-6 text-center">
-                                <h1>도서 등록</h1>
-                            </div>
-                        </div>
-                    </div>
+            <AdminHeader />
+            <div className="admin-main-container">
+                <div className="adminside">
+                    <AdminSide />
                 </div>
-                <nav>
-                    <div className="container"></div>
-                </nav>
-            </div>
-
-            <section className="sample-page">
-                <div className="content">
-                    <form onSubmit={handleSubmit} encType="multipart/form-data">
-                        
-
-                        <input type="hidden" name="id" value={formData.id} />
-                        <input type="hidden" name="status" value="AVAILABLE" />
-                        
-                        <div className="form-group">
+                <div className="admin-content">
+                    <form className="admin-con" onSubmit={handleSubmit} encType="multipart/form-data">
+                        <h1>도서 등록</h1>
+                        <div className='inputForm'>
+                            <input type="hidden" name="id" value={formData.id} />
+                            <input type="hidden" name="status" value="AVAILABLE" />
                             
-                            <label className="input-group-text">도서 표지</label>
-                            {imagePreview && (
                             <div className="form-group">
-                                <img src={imagePreview} alt="미리보기" className="img-thumbnail" />
-                                <button  class="btn btn-outline-dark"  onClick={handleImageCancel}>취소</button>
+                                <label className="input-group-text">도서 표지</label>
+                                {imagePreview && (
+                                    <div className="form-group">
+                                        <img src={imagePreview} alt="미리보기" className="img-thumbnail" />
+                                        <button type="button" className="btn btn-outline-dark" onClick={handleImageCancel}>취소</button>
+                                    </div>
+                                )}
+                                <input
+                                    type="file"
+                                    className="custom-file-input"
+                                    name="bookImgFile"
+                                    onChange={handleFileChange}
+                                    ref={fileInputRef}
+                                />
+                                <label className="custom-file-label">도서 이미지</label>
                             </div>
-                        )}
 
+                            <div className="input-group mb-3">
+                                <label className="input-group-text">도서명</label>
+                                <input
+                                    type="text"
+                                    name="title"
+                                    className="form-control"
+                                    placeholder="도서명을 입력해주세요"
+                                    value={formData.title}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            {errors.title && <p className="text-danger">{errors.title}</p>}
 
-                            <input
-                            
-                                type="file"
-                                className="custom-file-input"
-                                name="bookImgFile"
-                                onChange={handleFileChange}
-                                ref={fileInputRef} // 파일 입력 필드에 ref를 연결
-                            />
-                            <label className="custom-file-label">도서 이미지</label>
-                        </div>
+                            <div className="input-group mb-3">
+                                <label className="input-group-text">ISBN</label>
+                                <input
+                                    type="text"
+                                    name="isbn"
+                                    className="form-control"
+                                    placeholder="ISBN을 입력해주세요"
+                                    value={formData.isbn}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            {errors.isbn && <p className="text-danger">{errors.isbn}</p>}
 
-                      
+                            <div className="input-group mb-3">
+                                <label className="input-group-text">저자</label>
+                                <input
+                                    type="text"
+                                    name="author"
+                                    className="form-control"
+                                    placeholder="저자를 입력해주세요"
+                                    value={formData.author}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            {errors.author && <p className="text-danger">{errors.author}</p>}
 
-                        <div className="input-group mb-3">
-                            <label className="input-group-text">도서명</label>
-                            <input
-                                type="text"
-                                name="title"
-                                className="form-control"
-                                placeholder="도서명을 입력해주세요"
-                                value={formData.title}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        {errors.title && <p className="text-danger">{errors.title}</p>}
+                            <div className="input-group mb-3">
+                                <label className="input-group-text">출판사</label>
+                                <input
+                                    type="text"
+                                    name="publisher"
+                                    className="form-control"
+                                    placeholder="출판사를 입력해주세요"
+                                    value={formData.publisher}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            {errors.publisher && <p className="text-danger">{errors.publisher}</p>}
 
-                        <div className="input-group mb-3">
-                            <label className="input-group-text">ISBN</label>
-                            <input
-                                type="text"
-                                name="isbn"
-                                className="form-control"
-                                placeholder="ISBN을 입력해주세요"
-                                value={formData.isbn}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        {errors.isbn && <p className="text-danger">{errors.isbn}</p>}
+                            <div className="input-group mb-3">
+                                <label className="input-group-text">출판년도</label>
+                                <DatePicker
+                                    selected={formData.pub_date}
+                                    onChange={handleDateChange}
+                                    dateFormat="yyyy"
+                                    showYearPicker
+                                    className="form-control"
+                                    placeholderText="출판년도를 입력해주세요"
+                                />
+                            </div>
+                            {errors.pub_date && <p className="text-danger">{errors.pub_date}</p>}
 
-                        <div className="input-group mb-3">
-                            <label className="input-group-text">저자</label>
-                            <input
-                                type="text"
-                                name="author"
-                                className="form-control"
-                                placeholder="저자를 입력해주세요"
-                                value={formData.author}
-                                onChange={handleChange}
-                            />
-                        </div> 
-                        {errors.author && <p className="text-danger">{errors.author}</p>}
+                            <div className="input-group mb-3">
+                                <label className="input-group-text">카테고리코드</label>
+                                <input
+                                    className="form-control"
+                                    name="category_code"
+                                    placeholder="카테고리 코드를 입력하세요."
+                                    value={formData.category_code}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            {errors.category_code && <p className="text-danger">{errors.category_code}</p>}
 
-                        <div className="input-group mb-3">
-                            <label className="input-group-text">출판사</label>
-                            <input
-                                type="text"
-                                name="publisher"
-                                className="form-control"
-                                placeholder="출판사를 입력해주세요"
-                                value={formData.publisher}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        {errors.publisher && <p className="text-danger">{errors.publisher}</p>}
+                            <div className="input-group mb-3">
+                                <label className="input-group-text">상세 내용</label>
+                                <textarea
+                                    className="form-control"
+                                    name="bookDetail"
+                                    placeholder="도서 상세 내용을 입력하세요."
+                                    value={formData.bookDetail}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            {errors.bookDetail && <p className="text-danger">{errors.bookDetail}</p>}
 
-                        <div className="input-group mb-3">
-                            <label className="input-group-text">출판년도</label>
-                            <DatePicker
-                                selected={formData.pub_date}
-                                onChange={handleDateChange}
-                                dateFormat="yyyy"
-                                showYearPicker
-                                className="form-control"
-                                placeholderText="출판년도를 입력해주세요"
-                            />
-                        </div> 
-                        {errors.pub_date && <p className="text-danger">{errors.pub_date}</p>}
-
-                        <div className="input-group mb-3">
-                            <label className="input-group-text">카테고리코드</label>
-                            <input
-                                className="form-control"
-                                name="category_code"
-                                placeholder="카테고리 코드를 입력하세요."
-                                value={formData.category_code}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        {errors.category_code && <p className="text-danger">{errors.category_code}</p>}
-
-                        <div className="input-group mb-3">
-                            <label className="input-group-text">상세 내용</label>
-                            <textarea
-                                className="form-control"
-                                name="bookDetail"
-                                placeholder="도서 상세 내용을 입력하세요."
-                                value={formData.bookDetail}
-                                onChange={handleChange}
-                            />
-                        </div> 
-                        {errors.bookDetail && <p className="text-danger">{errors.bookDetail}</p>}
-
-                        <div className="input-group mb-3">
-                            <label className="input-group-text">소장 도서관</label>
-                            <select className="form-control" value={selectedLibrary} onChange={handleLibraryChange}>
-                                <option value="">도서관 선택</option>
-                                {Object.keys(libraries).map((library) => (
-                                    <option key={library} value={library}>
-                                        {library}
-                                    </option>
-                                ))}
-                            </select>
-                            <select className="form-control" value={selectedSection} onChange={handleSectionChange} disabled={!selectedLibrary}>
-                                <option value="">도서관선택</option>
-                                {selectedLibrary &&
-                                    libraries[selectedLibrary].map((section) => (
-                                        <option key={section} value={section}>
-                                            {section}
+                            <div className="input-group mb-3">
+                                <label className="input-group-text">소장 도서관</label>
+                                <select className="form-control" value={selectedLibrary} onChange={handleLibraryChange}>
+                                    <option value="">도서관 선택</option>
+                                    {Object.keys(libraries).map((library) => (
+                                        <option key={library} value={library}>
+                                            {library}
                                         </option>
                                     ))}
-                            </select>
-                        </div> 
-                        {errors.lib_name && <p className="text-danger">{errors.lib_name}</p>}
+                                </select>
+                                <select className="form-control" value={selectedSection} onChange={handleSectionChange} disabled={!selectedLibrary}>
+                                    <option value="">도서관선택</option>
+                                    {selectedLibrary &&
+                                        libraries[selectedLibrary].map((section) => (
+                                            <option key={section} value={section}>
+                                                {section}
+                                            </option>
+                                        ))}
+                                </select>
+                            </div>
+                            {errors.lib_name && <p className="text-danger">{errors.lib_name}</p>}
 
-                        <div className="input-group mb-3">
-                            <label className="input-group-text">소장 위치</label>
-                            <input
-                                type="text"
-                                name="location"
-                                className="form-control"
-                                placeholder="소장위치를 입력해주세요"
-                                value={formData.location}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        {errors.location && <p className="text-danger">{errors.location}</p>}
+                            <div className="input-group mb-3">
+                                <label className="input-group-text">소장 위치</label>
+                                <input
+                                    type="text"
+                                    name="location"
+                                    className="form-control"
+                                    placeholder="소장위치를 입력해주세요"
+                                    value={formData.location}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            {errors.location && <p className="text-danger">{errors.location}</p>}
 
-                        <div className="input-group mb-3">
-                            <label className="input-group-text">도서 수량</label>
-                            <input
-                                type="number"
-                                name="count"
-                                className="form-control"
-                                placeholder="해당 도서관 도서수량을 입력해주세요"
-                                value={formData.count}
-                                onChange={handleChange}
-                            />
+                            <div className="input-group mb-3">
+                                <label className="input-group-text">도서 수량</label>
+                                <input
+                                    type="number"
+                                    name="count"
+                                    className="form-control"
+                                    placeholder="해당 도서관 도서수량을 입력해주세요"
+                                    value={formData.count}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            {errors.count && <p className="text-danger">{errors.count}</p>}
                         </div>
-                        {errors.count && <p className="text-danger">{errors.count}</p>}
-                        
                         <div className="form-group text-center">
-                            <button type="submit"  class="btn btn-outline-dark"  >저장</button>
-                            <button type="button"class="btn btn-outline-dark"  onClick={handleReset}>리셋</button>
+                            <button type="submit" className="btn btn-outline-dark">저장</button>
+                            <button type="button" className="btn btn-outline-dark" onClick={handleReset}>리셋</button>
                         </div>
-
                         <input type="hidden" name={csrf.parameterName} value={csrf.token} />
                     </form>
                 </div>
-            </section>
-        </main>
-        </div></div>
+            </div>
         </>
     );
 };

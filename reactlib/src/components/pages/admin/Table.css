@@ -1,125 +1,111 @@
+/* 사이드, 본문영역 나눔 */
+.admin-main-container {
+padding-top: 100px;
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: hsla(45, 6%, 87%, 0.459);
+  display:grid;
+  grid-template-columns:  15% 85%;
+  height:auto;
+
+}
+
+/*본문 */
 .admin-content {
-    font-family: 'Noto Sans KR', sans-serif;
-    grid-column: 2 / 3;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top:20px;
-  }
-  
-  
-  .adminTable {
-      width: 70%; /* 테이블 너비를 70%로 설정 */
-      border-collapse: collapse; /* 테이블 테두리를 병합 */
-      margin-top: 40px;
-      padding: 10px;
-    }
-    
-    .adminTable th, .adminTable td {
-      /* border: 1px solid #ddd; 테두리 설정 */
-      padding: 1px; /* 셀 여백 설정 */
-      text-align: center;
+  font-family: 'Noto Sans KR', sans-serif;
+  align-items: center;
+  background-color: white;
+  border-radius: 20px;
+ margin: 0 auto;
+ margin-top: 10px;
+ margin-bottom: 40px;
+ width: 95%;
+
+/* height: calc(100vh - 80px); 헤더 높이를 뺀 만큼의 높이를 설정 */
+
  
-    }
-    
-    .adminTable th {
-      background-color: #B0C4DE; /* 헤더 배경색 설정 */
-      font-size:20px;
-      padding:10px;
-      font-weight: bold;
-      
-    
-    }
+.admin-con {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-top: 30px;
 
-  
-    .adminTable td {
-      font-size: 17px; /* 폰트 크기 설정 */
-      padding: 5px;
-  
-    }
+}
 
-    .adminTable tr {
-      border-bottom: 1px solid #ddd; /* 행 하단에 줄 긋기 */
-    
-    }
-    
-    /* .admintr th {
-      cursor: pointer;
-      text-align: center;
-    } */
-    
-    /*정렬할 때 사용 */
-    .adminTable tr:hover {
-      background-color: #ebe5e5;
-      cursor: pointer;
-    }
+}
 
-    .list {
-      cursor: pointer;
-    }
-    
-    .sortable:hover {
-   background-color: rgb(29, 31, 32);
-      color: #faf7f7;
-      text-shadow: 1px 1px 5px rgb(131, 154, 218);
-    }
-     
-    
-    
-    .no-data {
-      text-align: center;
-      font-size: 18px;
-      padding: 20px;
-    }
-    
-  
-   
-  
-    .form-group {
-      margin-bottom: 20px;
-    }
-    
-    .form-group label {
-      display: block;
-      margin-bottom: 5px;
-    }
-    
-    .form-group select,
-    .form-group input {
-      width: 90%;
-      padding: 8px;
-      box-sizing: border-box;
-    }
-    
-    
-
-
-    /*페이지네이션 */
-    .pagination {
-      display: flex;
-      justify-content: center;
-      margin-top: 20px;
-      color:#222930
-    }
-    
-.pagenagion > .page-item > .page-link {
-  color:#222930
+/*테이블 위쪽 버튼 - holidaylist 등록하기, 돌아가기*/
+.admin-buttons {
+  margin-left: 70%;
+  margin-bottom: 10px;
 }
 
 
-    .pagination .page-item.disabled .page-link {
-      color: #31383f;
-   
-      
-    }
-    
-    .pagination .page-item.active .page-link {
-      background-color: #ffffffb2;
-      border-color: #2a313a;
-      color:#181717
-    }
-    
+/*검색 영역 */
+.search-container {
+  margin: 0;
+  padding: 40px 0px 20px 0px;
+}
 
+/*테이블*/
+.adminTable {
+  width: 90%;
+  border-collapse: collapse;
+  /* 테이블 테두리를 병합 */
 
+}
 
-   
+/*테이블 th*/
+.adminTable th {
+  text-align: center;
+  padding: 1px;
+  background-color: #fdc92c81;
+  /* 헤더 배경색 설정 */
+  font-size: 20px;
+  padding: 10px;
+  font-weight: bold;
+}
+
+/*테이블 td*/
+.adminTable td {
+  padding: 1px;
+  text-align: center;
+  font-size: 17px;
+  padding: 9px;
+  border-bottom: 1px solid #ddd;   /* 행 하단에 줄 긋기 */
+  height: 55px;
+}
+
+/*tr호버  행 설정*/
+.adminTable tr:hover {
+  background-color: hsla(45, 6%, 87%, 0.459);
+  cursor: pointer;
+}
+
+/*정렬 호버- 헤더 호버하면 색상 변경*/
+.sortable:hover {
+  background-color: #333330;
+  color: #faf9f7;
+}
+
+/*페이지네이션 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  color: #222930;
+}
+
+.pagination > .page-item > .page-link {
+  color: #222930;
+}
+
+.pagination .page-item.disabled .page-link {
+  color: #31383f;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #ffffffb2;
+  border-color: #2a313a;
+  color: #181717;
+}

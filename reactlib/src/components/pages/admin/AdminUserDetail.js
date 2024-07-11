@@ -126,9 +126,10 @@ const AdminUserDetail = () => {
     return (
         <>
             <AdminHeader />
-            <div className="main-container">
+            <div className="admin-main-container">
                 <AdminSide />
-                <div className="content">
+                <div className="admin-content">
+                   
                     <h1> {userDetail.name} 님 상세 정보</h1>
 
 
@@ -207,8 +208,8 @@ const AdminUserDetail = () => {
                         <button type="button" class="btn btn-outline-dark" onClick={() => navigate('/admin/user/search')}>목록보기</button>
                     </div> </div>
 
-
-            </div>
+                    </div>
+            
         </>
     );
 };

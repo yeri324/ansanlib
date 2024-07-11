@@ -19,9 +19,10 @@ const AdminBookRequestDetail = ({ isOpen, onClose, request, onSave }) => {
     onSave(updatedRequest);
   };
 
-  const uniqueLibraries = request.lib_names ? [...new Set(request.lib_names)] : [];
+ 
 
   return (
+    
     <div className="modal" style={{ display: 'block' }}>
       <div className="modal-content">
         <span className="close" onClick={onClose}>&times;</span>
@@ -34,16 +35,10 @@ const AdminBookRequestDetail = ({ isOpen, onClose, request, onSave }) => {
             <p><strong>출판사:</strong> {request.publisher}</p>
             <p><strong>출판년도:</strong> {request.pub_date}</p>
             <p><strong>신청 권수:</strong> {request.count}</p>
-            <p><strong>신청도서관:</strong></p>
-            {request.count > 1 ? (
-              <ul>
-                {uniqueLibraries.map((lib, index) => (
-                  <li key={index}>{lib}</li>
-                ))}
-              </ul>
-            ) : (
-              <p>{request.lib_name}</p>
-            )}
+            <p><strong>신청도서관:</strong> {request.lib_names.join(', ')}</p>
+        
+          
+          
           </div>
         ) : (
           <p>No data available</p>

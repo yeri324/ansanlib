@@ -54,13 +54,18 @@ const AdminUserList = () => {
 
   return (
     <>
-      <AdminHeader />
-      <div className="main-container">
-        <AdminSide />
+             <AdminHeader />
+      <div className="admin-main-container">
+
+        <div className="adminside">
+          <AdminSide />
+        </div>
+
         <div className="admin-content">
+          <form className="admin-con">
           <h1>회원 관리</h1>
 
-          <div className="search-container" style={{ textAlign: "center" }}>
+          <div className="search-container">
             <select name="searchBy" value={searchOption.searchBy} onChange={handleOnChange}>
               <option value="userId">ID</option>
               <option value="userName">이름</option>
@@ -76,8 +81,8 @@ const AdminUserList = () => {
             <button type="button" class="btn btn-outline-dark" onClick={onSearch}>Search</button>
           </div>
 
-          <div>
-          <table className='adminTable' style={{ width: '1000px' }}>
+       
+          <table className='adminTable'>
               <thead>
                 <tr className="admintr">
                   <th style={{ width: '10%' }}>no</th>
@@ -92,7 +97,8 @@ const AdminUserList = () => {
                   <AdminUserItem key={user.userId} user={user} handleDetail={handleDetail} />
                 ))}
               </tbody>
-            </table>
+              </table>
+              </form>
 
             <nav aria-label="Page navigation example">
               <ul className="pagination">
@@ -113,7 +119,7 @@ const AdminUserList = () => {
             </nav>
           </div>
         </div>
-      </div>
+
     </>
   );
 };

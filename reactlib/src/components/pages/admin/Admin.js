@@ -7,9 +7,10 @@ const Admin = () => {
     return (
         <div>
             <AdminHeader />
-            <div className="main-container">
+            
                 <AdminSide />
-                <div className="content">
+                <div className="admin-main-container">
+                <div className="admin-content">
                     <h1>메인 콘텐츠</h1>
                     <p>여기에 메인 콘텐츠가 표시됩니다.</p>
                 </div>
