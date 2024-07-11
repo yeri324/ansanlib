@@ -1,22 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import AdminBookRequestDetail from './AdminBookRequestDetail';
-import AdminHeader from './AdminHeader';
-import AdminSide from './AdminSide';
-import "./Table.css";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useNavigate } from 'react-router-dom';
-import moment from "moment";
+import HolidayNew from './HolidayNew';
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import moment from "moment";
+import AdminHeader from "./AdminHeader";
+import AdminSide from "./AdminSide";
+import "./Modal.css";
 
-const AdminBookRequest = () => {
-  const [requests, setRequests] = useState([]);
-  const [groupedRequests, setGroupedRequests] = useState([]);
-  const [error, setError] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const [selectedRequest, setSelectedRequest] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
+const HolidayList = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [originalResult, setOriginalResult] = useState([]); // 원본 데이터 저장
   const [showModal, setShowModal] = useState(false);
@@ -27,13 +20,17 @@ const AdminBookRequest = () => {
   const [searchCriteria, setSearchCriteria] = useState('library'); // 검색 기준 상태 추가
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
 
+  // 페이지네이션 상태
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
+
   useEffect(() => {
-    fetchRequests();
+    fetchHolidays();
   }, []);
 
   const fetchHolidays = async () => {
     try {
-      const response = await axios.get('/api/admin/book/request');
+      const response = await axios.get('/api/admin/holiday/list');
       if (Array.isArray(response.data.result)) {
         setSearchResult(response.data.result);
         setOriginalResult(response.data.result); // 원본 데이터 저장
@@ -45,46 +42,53 @@ const AdminBookRequest = () => {
     }
   };
 
-  const fetchRequests = async () => {
-    try {
-      const response = await axios.get('/api/admin/book/request');
-      if (Array.isArray(response.data.result)) {
-        setRequests(response.data.result);
-        groupData(response.data.result);
-      } else {
-        setError('Data format is not an array');
-      }
-    } catch (error) {
-      setError('Error fetching book requests');
+  const districts = {
+    '상록구': ['감골도서관', '반월도서관', '부곡도서관', '본오도서관', '상록수도서관', '상록어린이도서관', '성포도서관', '수암도서관'],
+    '단원구': ['관산도서관', '단원어린이도서관', '미디어도서관', '선부도서관', '원고잔도서관',]
+  };
+
+  const handleSearch = async () => {
+    const searchMonthStr = searchMonth ? moment(searchMonth).format('YYYY-MM') : '';
+    let filteredResults = [];
+
+    if (searchCriteria === 'library') {
+      filteredResults = originalResult.filter(holiday => holiday.lib_name.includes(searchTerm));
+    } else if (searchCriteria === 'date') {
+      filteredResults = originalResult.filter(holiday => searchMonthStr && moment(holiday.holiday).format('YYYY-MM') === searchMonthStr);
+    }
+
+    setSearchResult(filteredResults);
+    setCurrentPage(1); // 검색 결과가 변경되면 첫 페이지로 이동
+  };
+
+  // 엔터키 누르면
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
     }
   };
 
-  const groupData = (data) => {
-    const grouped = data.reduce((acc, curr) => {
-      const pubYear = new Date(curr.pub_date).getFullYear().toString();
-      const key = `${curr.isbn}-${curr.title}-${curr.author}-${curr.publisher}-${pubYear}`;
-      acc[key] = acc[key] || { ...curr, count: 0, pub_year: pubYear };
-      acc[key].count += 1;
-
-      return acc;
-    }, {});
-    setGroupedRequests(Object.values(grouped));
+  const handleDelete = async (id) => {
+    try {
+      const response = await axios.delete(`/api/admin/holiday/${id}`);
+      console.log("Delete response:", response.data);
+      // After deletion, fetch holidays again to update the list
+      fetchHolidays();
+    } catch (error) {
+      console.error("Error deleting holiday:", error);
+    }
   };
 
-  useEffect(() => {
-    setSearchResult(groupedRequests.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage));
-  }, [groupedRequests, currentPage, itemsPerPage]);
-
-  const totalPages = Math.ceil(groupedRequests.length / itemsPerPage);
-
-  const handleOpenModal = (request) => {
-    setSelectedRequest(request);
-    setIsModalOpen(true);
+  const handleAddHoliday = () => {
+    setShowModal(true);
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedRequest(null);
+    setShowModal(false);
+  };
+
+  const handleRefresh = () => {
+    fetchHolidays();
   };
 
   const handleSort = (key) => {
@@ -97,81 +101,46 @@ const AdminBookRequest = () => {
   };
 
   const sortData = (key, direction) => {
-    const sortedData = [...groupedRequests].sort((a, b) => {
-      if (a[key] < b[key]) return direction === 'ascending' ? -1 : 1;
-      if (a[key] > b[key]) return direction === 'ascending' ? 1 : -1;
+    const sortedData = [...searchResult].sort((a, b) => {
+      // Adjust if 'libNum' is nested, for example, if it's accessed via a.library.libNum
+      const valA = key === 'libNum' && a.library ? a.library.libNum : a[key];
+      const valB = key === 'libNum' && b.library ? b.library.libNum : b[key];
+      if (valA < valB) {
+        return direction === 'ascending' ? -1 : 1;
+      }
+      if (valA > valB) {
+        return direction === 'ascending' ? 1 : -1;
+      }
       return 0;
     });
     setSearchResult(sortedData);
   };
-  // 엔터키 누르면
-  const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      handleSearch();
-    }
-  };
 
-  const handleSearch = async () => {
-    await fetchHolidays(); // 새로 고침 (목록 새로 고침)
-    const searchMonthStr = searchMonth ? moment(searchMonth).format('YYYY-MM') : '';
-    let filteredResults = [];
+  // 페이지네이션 관련 계산
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = searchResult.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(searchResult.length / itemsPerPage);
 
-    if (searchCriteria === 'library') {
-      filteredResults = originalResult.filter(holiday => holiday.lib_name.includes(searchTerm));
-    } else if (searchCriteria === 'date') {
-      filteredResults = originalResult.filter(holiday => searchMonthStr && moment(holiday.holiday).format('YYYY-MM') === searchMonthStr);
-    }
-    else { filteredResults = originalResult.filter(holiday => holiday.libNum.includes(searchTerm) );
-
-    }
-
-    setSearchResult(filteredResults);
-    setCurrentPage(1); // 검색 결과가 변경되면 첫 페이지로 이동
-  };
-
-  const handleSave = (updatedRequest) => {
-    const updatedRequests = requests.map((request) =>
-      request.isbn === updatedRequest.isbn ? updatedRequest : request
-    );
-    setRequests(updatedRequests);
-    groupData(updatedRequests);
-    setIsModalOpen(false);
-  };
-
-  const changePage = (number) => {
-    setCurrentPage(number);
-    setSearchResult(requests.slice((number - 1) * itemsPerPage, number * itemsPerPage));
-  };
-
-  if (error) {
-    return <div>{error}</div>;
-  }
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <>
-     <AdminHeader />
-      <div className="admin-main-container">
-
-        <div className="adminside">
-          <AdminSide />
-        </div>
-
+      <AdminHeader />
+      <div className="admin-page-container">
+        <AdminSide />
         <div className="admin-content">
-          <form className="admin-con">
-          <h1>희망도서신청</h1>
-
-
+          <h1>휴관일 목록</h1>
           <div className="search-container">
             <select value={searchCriteria} onChange={(e) => setSearchCriteria(e.target.value)}>
-              <option value="title">도서명</option>
-              <option value="author">저자</option>
-              <option value="date">출판년도</option>
+              <option value="library">도서관 이름</option>
+              <option value="date">날짜 (월)</option>
             </select>
 
-            {searchCriteria === 'title' && (
+            {searchCriteria === 'library' && (
               <input 
                 type="text" 
-                placeholder="도서 제목을 입력하세요" 
+                placeholder="도서관 이름을 입력하세요" 
                 value={searchTerm} 
                 onChange={(e) => setSearchTerm(e.target.value)} 
                 onKeyDown={handleKeyDown} 
@@ -182,69 +151,75 @@ const AdminBookRequest = () => {
               <DatePicker
                 selected={searchMonth}
                 onChange={(date) => setSearchMonth(date)}
-                dateFormat="yyyy"
+                dateFormat="yyyy-MM"
                 showMonthYearPicker
                 placeholderText="날짜를 선택하세요"
                 onKeyDown={handleKeyDown}
               />
             )}
 
-            <button type="button"  class="btn btn-outline-dark"   onClick={handleSearch}>검색</button>
+            <button onClick={handleSearch}>검색</button>
           </div>
-          
-
-
-
-          <table className='adminTable'>
+          <div className="buttons">
+            <button onClick={() => navigate('/admin/holiday')}>돌아가기</button>
+            <button onClick={handleAddHoliday}>등록하기</button>
+            <button onClick={handleRefresh}>새로고침</button>
+          </div>
+  
+          <table>
             <thead>
-              <tr class='admintr'>
-                <th>No</th>
-                <th className='sortable' onClick={() => handleSort('isbn')}>ISBN</th>
-                <th className='sortable' onClick={() => handleSort('title')}>도서 제목</th>
-                <th className='sortable' onClick={() => handleSort('author')}>저자</th>
-                <th className='sortable' onClick={() => handleSort('publisher')}>출판사</th>
-                <th className='sortable' onClick={() => handleSort('pub_year')}>출판년도</th>
-                <th className='sortable' onClick={() => handleSort('count')}>신청 권수</th>
+              <tr className="tableheader">
+                <th className="sortable" onClick={() => handleSort('lib_name')}>도서관 이름</th>
+                <th className="sortable" onClick={() => handleSort('libNum')}>도서관 번호</th>
+                <th className="sortable" onClick={() => handleSort('holiday')}>휴관일</th>
+                <th>삭제</th>
               </tr>
             </thead>
             <tbody>
-              {searchResult.map((request, index) => (
-                <tr key={index} onClick={() => handleOpenModal(request)} class='admintr'>
-                  <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
-                  <td>{request.isbn}</td>
-                  <td>{request.title}</td>
-                  <td>{request.author}</td>
-                  <td>{request.publisher}</td>
-                  <td>{request.pub_year}</td>
-                  <td>{request.count}</td>
+              {Array.isArray(currentItems) && currentItems.map((holiday) => (
+                <tr key={holiday.id}>
+                  <td>{holiday.lib_name}</td>
+                  <td>{holiday.library ? holiday.library.libNum : ''}</td>
+                  <td>{holiday.holiday}</td>
+                  <td>
+                    <button onClick={() => handleDelete(holiday.id)}>삭제</button>
+                  </td>
                 </tr>
               ))}
             </tbody>
-            </table>
-            </form>
+          </table>
           <nav aria-label="Page navigation example">
             <ul className="pagination">
               <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-                <button type="button" class="btn btn-outline-dark" className="page-link" onClick={() => changePage(currentPage - 1)}>&laquo;</button>
+                <button className="page-link" onClick={() => paginate(currentPage - 1)} aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </button>
               </li>
-              {Array.from({ length: totalPages }, (_, i) => (
-                <li key={i + 1} className={`page-item ${i + 1 === currentPage ? 'active' : ''}`}>
-                  <button type="button" class="btn btn-outline-dark" className="page-link" onClick={() => changePage(i + 1)}>
-                    {i + 1}
+              {Array.from({ length: totalPages }, (_, index) => (
+                <li key={index + 1} className={`page-item ${index + 1 === currentPage ? 'active' : ''}`}>
+                  <button className="page-link" onClick={() => paginate(index + 1)}>
+                    {index + 1}
                   </button>
                 </li>
               ))}
               <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-                <button type="button" class="btn btn-outline-dark" className="page-link" onClick={() => changePage(currentPage + 1)}>&raquo;</button>
+                <button className="page-link" onClick={() => paginate(currentPage + 1)} aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </button>
               </li>
             </ul>
           </nav>
-          {isModalOpen && (
-            <AdminBookRequestDetail
-              isOpen={isModalOpen}
-              onClose={handleCloseModal}
-              request={selectedRequest}
-              onSave={handleSave}
+          
+          {showModal && (
+            <HolidayNew
+              showModal={showModal}
+              handleCloseModal={() => {
+                setShowModal(false);
+                fetchHolidays();
+              }}
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+              districts={districts}
             />
           )}
         </div>
@@ -253,4 +228,4 @@ const AdminBookRequest = () => {
   );
 };
 
-export default AdminBookRequest;
+export default HolidayList;

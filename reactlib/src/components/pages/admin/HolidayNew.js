@@ -72,8 +72,8 @@ const HolidayNew = ({ showModal, handleCloseModal, selectedDate, setSelectedDate
   }
 
   return (
-    <div className="modal" style={{ display: showModal ? 'block' : 'none' }}>
-    <div className="modal-content">
+    <div className="admin-modal" style={{ display:'block' }}>
+    <div className="admin-modal-content">
       <span className="close" onClick={handleCloseModal}>&times;</span>
       <h3>도서관 휴관일 등록 - {selectedDate && selectedDate.format('YYYY-MM-DD')}</h3>
       <form onSubmit={handleAddSchedule} className='holidaynew'>

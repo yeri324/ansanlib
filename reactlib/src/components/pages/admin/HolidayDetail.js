@@ -4,13 +4,13 @@ import "./Modal.css";
 
 const HolidayDetail = ({ show, handleClose, holidays }) => {
   return (
-    <div className="modal" style={{ display: show ? 'block' : 'none' }}>
-    <div className="modal-content">
-      <div className="modal-header">
+    <div className="admin-modal" style={{ display: show ? 'block' : 'none' }}>
+    <div className="admin-modal-content">
+      <div className="admin-modal-header">
         <span className="close-button" onClick={handleClose}>&times;</span>
         <h2>휴관일 정보</h2>
       </div>
-      <div className="modal-body">
+      <div className="admin-modal-body">
         {holidays.length > 0 ? (
           <table className='detailTable'>
             <thead>

@@ -55,7 +55,7 @@ const AdminUserList = () => {
   return (
     <>
              <AdminHeader />
-      <div className="admin-main-container">
+      <div className="admin-page-container">
 
         <div className="adminside">
           <AdminSide />

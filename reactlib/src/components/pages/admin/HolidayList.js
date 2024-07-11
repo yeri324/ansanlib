@@ -131,10 +131,12 @@ const HolidayList = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+
+
   return (
     <>
       <AdminHeader />
-      <div className="admin-main-container">
+      <div className="admin-page-container">
 
         <div className="adminside">
           <AdminSide />
@@ -173,6 +175,7 @@ const HolidayList = () => {
             )}
 
             <button type="button" class="btn btn-outline-dark" onClick={handleSearch}>검색</button>
+            <button type="button" class="btn btn-outline-dark" onClick={handleRefresh}>새로고침</button>
           </div>
 
           <div className="admin-buttons">
@@ -228,23 +231,25 @@ const HolidayList = () => {
               </li>
             </ul>
           </nav>
-
-
           {showModal && (
-            <HolidayNew
-              showModal={showModal}
-              handleCloseModal={() => {
-                setShowModal(false);
-                fetchHolidays();
-              }}
-              selectedDate={selectedDate}
-              setSelectedDate={setSelectedDate}
-              districts={districts}
-            />
-          )}
+    <HolidayNew
+      showModal={showModal}
+      handleCloseModal={() => {
+        setShowModal(false);
+        fetchHolidays();
+      }}
+      selectedDate={selectedDate}
+      setSelectedDate={setSelectedDate}
+      districts={districts}
+    />
+  )}
+
+         
         </div>
       </div>
+     
     </>
+  
   );
 };
 

@@ -1,29 +1,29 @@
 /* 모달 오버레이 */
-.modal {
-  margin: 0 auto; /* 모달창 가운데 */
+.admin-modal {
   position: fixed;
-  z-index: 1;
-  padding-top: 30px; /* 모달창 높이 위치 */
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 100%;
-  overflow: auto;
+  height: 100vh;
   background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-top: 20px;
 }
 
 /* 모달 창 */
-.modal-content {
+.admin-modal-content {
+
   margin: 0 auto; /* 모달창 가운데 */
   background-color: #fff;
   border-radius: 8px;
   width: 600px; /* 모달 너비 조절 */
   max-width: 600px; /* 최대 너비 설정 */
-
-  z-index: 1000; /* 내용이 오버레이 위에 있도록 설정 */
   position: relative; /* 닫기 버튼이 모달 내에 위치하도록 설정 */
   padding: 30px; /* 내용과 경계 사이 여백 설정 */
+  z-index: 1000;
 }
 
 .detailTable {

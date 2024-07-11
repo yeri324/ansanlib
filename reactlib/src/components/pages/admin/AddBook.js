@@ -200,7 +200,7 @@ const AddBook = ({ csrf = {} }) => {
 
             console.log(response.data);
             alert('도서가 성공적으로 등록되었습니다!');
-            window.location.href = '/admin/mypage';
+            window.location.href = '/admin/booklist';
         } catch (error) {
           console.error(error);
         }
@@ -209,7 +209,7 @@ const AddBook = ({ csrf = {} }) => {
     return (
         <>
             <AdminHeader />
-            <div className="admin-main-container">
+            <div className="admin-page-container">
                 <div className="adminside">
                     <AdminSide />
                 </div>

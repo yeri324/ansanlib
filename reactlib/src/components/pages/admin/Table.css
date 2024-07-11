@@ -1,11 +1,12 @@
 /* 사이드, 본문영역 나눔 */
-.admin-main-container {
+.admin-page-container {
 padding-top: 100px;
   font-family: 'Noto Sans KR', sans-serif;
   background-color: hsla(45, 6%, 87%, 0.459);
   display:grid;
-  grid-template-columns:  15% 85%;
-  height:auto;
+  grid-template-columns:  13% 82%;
+  height: auto; 
+  overflow: hidden; /* 내용이 넘칠 때 스크롤바 표시 */
 
 }
 
@@ -16,12 +17,12 @@ padding-top: 100px;
   background-color: white;
   border-radius: 20px;
  margin: 0 auto;
- margin-top: 10px;
+
  margin-bottom: 40px;
  width: 95%;
 
 /* height: calc(100vh - 80px); 헤더 높이를 뺀 만큼의 높이를 설정 */
-
+}
  
 .admin-con {
   display: flex;
@@ -32,7 +33,7 @@ padding-top: 100px;
 
 }
 
-}
+
 
 /*테이블 위쪽 버튼 - holidaylist 등록하기, 돌아가기*/
 .admin-buttons {
