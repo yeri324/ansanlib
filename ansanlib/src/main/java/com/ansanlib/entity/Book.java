@@ -33,10 +33,11 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Book extends BaseEntity {
 
-    @Id
-    @JoinColumn(name = "book_num")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+
+	@Id
+	@JoinColumn(name = "book_num")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
     
     private String isbn; // 바코드

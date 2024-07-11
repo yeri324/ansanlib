@@ -42,4 +42,10 @@ public class BookImg extends BaseEntity {
         this.imgName = imgName;
         this.imgUrl = imgUrl;
     }
+
+
+
+
+
+	
 }

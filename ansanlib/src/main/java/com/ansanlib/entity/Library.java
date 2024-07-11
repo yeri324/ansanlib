@@ -5,17 +5,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
-@Table(name="Library")
-@ToString
 public class Library extends BaseEntity {
+
 	@Id
 	@Column(name="library_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,4 +31,3 @@ public class Library extends BaseEntity {
 	private String web_address; // 도서관 웹주소
 	
 }
-

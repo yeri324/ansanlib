@@ -18,8 +18,8 @@ public class SearchList extends BaseEntity {
 	 @Id
      @Column(name="search_id")
      @GeneratedValue(strategy= GenerationType.IDENTITY)
-     private Long id;
-	 
+	 private long id;
+
 	 private String searchContent;
 	 
 	 private LocalDateTime search_date;

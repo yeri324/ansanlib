@@ -25,12 +25,13 @@ public class BookDto {
 	private String author; 			// 저자
 	private String publisher; 		// 출판사
 	private String pub_date; // 출판 날짜
-	private String genre; 			// 장르
 	private String category_code; 	// 분류 코드
 	private BookStatus status; 	// 대출 상태
 	private String bookDetail;  	// 책 설명
 	private String location;    	// 위치
 	private BookImg bookImg;	// 책이미지
 	private List<BookListDto> relatedBooks;
+	private int count;
+
 	
 }

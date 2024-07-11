@@ -56,4 +56,3 @@ public class BookFormDto {
         return modelMapper.map(book, BookFormDto.class);
     }
 }
-
