@@ -1,4 +1,4 @@
-import React, { useState,useContext,useRef } from 'react';
+import React, { useState,useContext, useEffect } from 'react';
 import { LoginContext } from '../../contexts/LoginContextProvider';
 import LoginContextConsumer from '../../contexts/LoginContextConsumer';
 import { getData } from '../../apis/auth';
@@ -22,6 +22,8 @@ const FormJoin = ({ join,}) => {
         isEmail : false,
     })
 
+
+    //setFormData
     const handleChange = (e) => {
         const { name, value } = e.target;
 
@@ -41,8 +43,15 @@ const FormJoin = ({ join,}) => {
     //회원가입 메소드로 데이터 전송
     const onJoin = (e) => {
         e.preventDefault();
+         onValidate();
             join(formData);
     };
+
+ 
+    //비밀번호 확인
+    useEffect(()=>{
+        if(password===password2){}
+    },[formData.password,formData.password2])
 
     //아이디 중복 체크
     const onCheckId = async ()=>{
@@ -121,6 +130,10 @@ const FormJoin = ({ join,}) => {
             return tmp;
         }
     };
+
+    useEffect(()=>{
+
+    },[formData])
 
    
     return (

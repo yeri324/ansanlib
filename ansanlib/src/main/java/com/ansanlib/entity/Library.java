@@ -20,9 +20,9 @@ public class Library extends BaseEntity {
 	
 	
 	@Column(unique = true)
-	private String lib_num; //도서관 코드
+	private String libNum; //도서관 코드
 	
-	private String lib_name; // 도서관 이름
+	private String libName; // 도서관 이름
 	
 	private String address; // 도서관 주소
 	
