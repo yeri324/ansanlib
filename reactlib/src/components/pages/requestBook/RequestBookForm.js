@@ -1,9 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../security/apis/api';
 import { useNavigate } from 'react-router-dom';
+import useRealName from '../../hooks/useRealName';
+import useAuth,{ LOGIN_STATUS } from '../../hooks/useAuth';
 
 const RequestBookForm = () => {
   const navigate = useNavigate();
+
+  const name = useRealName();
+
+  const { loginStatus }= useAuth();
+  
+  useEffect(()=>{
+    //로그아웃 됨.
+    if(loginStatus === LOGIN_STATUS.LOGGED_OUT){
+      alert("로그인이 필요합니다.");
+      navigate("/login");
+      return;
+    }
+  },[loginStatus]); //로그인 상태 변경시 useEffect 실행
+
 
   const [isbn, setIsbn] = useState('');
   const [title, setTitle] = useState('');
@@ -14,55 +30,58 @@ const RequestBookForm = () => {
   const [userName, setUserName] = useState("");
   const [libName, setLibName]  =useState('');
 
-  useEffect(()=>{
-    const memberData = JSON.parse(sessionStorage.getItem("member") ?? "null");
-    if(memberData?.userId){
-      setUserId(memberData?.userId);
-      setUserName(memberData?.name);
-    } else{
-        alert("로그인이 되어있지 않습니다.");
-        navigate("/login");
-    }
-  },[]);
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-  const requestBook = {
+    const requestBook = {
       isbn, title, author, publisher,
       pubDate, userId: parseInt(userId), lib_name: libName
-  };
+    };
 
-    axios.post('/api/requestbook', requestBook, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(response => {
-      console.log('Book request created:', response.data);
-      alert('신청되었습니다.');
-      setIsbn('');
-      setTitle('');
-      setAuthor('');
-      setPublisher('');
-      setPubDate('');
-      setUserId('');
-      setLibName('');
-    })
-    .catch(error => {
-      if(error.response){
+    try{
+      const response = await axios.post('/api/requestbook/create', requestBook);
+      alert("신청되었습니다.");
+      console.log('RequestBook created:', response.data);
+    } catch (error){
+      if(typeof error.response.data === "string"){
         alert(`에러 : ${error.response.data}`);
-      } else if(error.request){
-        alert('서버에 요청을 보내는 중 오류가 발생했습니다.');
-      } else{
+      } else {
         alert(`에러 : ${error.message}`);
       }
-    });
-  };
+
+      console.error('There was an error creating the requestBook!', error.response.data);
+    }
+  }
+  //   axios.post('/api/requestbook', requestBook, {
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   })
+  //   .then(response => {
+  //     console.log('Book request created:', response.data);
+  //     alert('신청되었습니다.');
+  //     setIsbn('');
+  //     setTitle('');
+  //     setAuthor('');
+  //     setPublisher('');
+  //     setPubDate('');
+  //     setUserId('');
+  //     setLibName('');
+  //   })
+  //   .catch(error => {
+  //     if(error.response){
+  //       alert(`에러 : ${error.response.data}`);
+  //     } else if(error.request){
+  //       alert('서버에 요청을 보내는 중 오류가 발생했습니다.');
+  //     } else{
+  //       alert(`에러 : ${error.message}`);
+  //     }
+  //   });
+  // };
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2> {userName}의 도서신청</h2>
+      <h2> {name}의 도서신청</h2>
       <div>
         <label>도서 ISBN:</label>
         <input 
