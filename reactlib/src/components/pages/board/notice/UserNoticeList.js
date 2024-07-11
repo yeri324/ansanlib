@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState, } from 'react';
 import { useNavigate } from 'react-router-dom';
-import BoardItem from '../BoardItem';
-import '../../board/List.css'
+import BoardItem from '../common/BoardItem';
+import Pagination from '../common/Pagination';
+import '../../board/common/List.css'
 
 function UserNoticeList() {
     const navigate = useNavigate();
@@ -105,42 +106,7 @@ function UserNoticeList() {
                     </table>
                 </div>
             </section>
-            {/* 페이징 */}
-            <ul className="pagination">
-                <li className="page-item">
-                    <button onClick={() => setCurrentPage(1)} className="page-link">
-                        {'<<'}
-                    </button>
-                </li>
-                <li className="page-item">
-                    <button
-                        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                        className="page-link">
-                        {'<'}
-                    </button>
-                </li>
-                {[...Array(totalPages)].map((_, i) => (
-                    <li key={i} className="page-item">
-                        <button
-                            onClick={() => setCurrentPage(i + 1)}
-                            className="page-link">
-                            {i + 1}
-                        </button>
-                    </li>
-                ))}
-                <li className="page-item">
-                    <button
-                        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                        className="page-link">
-                        {'>'}
-                    </button>
-                </li>
-                <li className="page-item">
-                    <button onClick={() => setCurrentPage(totalPages)} className="page-link">
-                        {'>>'}
-                    </button>
-                </li>
-            </ul>
+            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
         </div >
     );
 };

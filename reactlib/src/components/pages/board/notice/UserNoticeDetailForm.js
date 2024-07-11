@@ -1,9 +1,9 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, } from 'react-router-dom';
-import ImgPreview from '../ImgPreview';
-import BoardFileLabel from '../BoardFileLabel';
-import '../../board/DetailForm.css'
+import ImgPreview from '../common/ImgPreview';
+import BoardFileLabel from '../common/BoardFileLabel';
+import '../../board/common/DetailForm.css'
 
 function UserNoticeDetailForm() {
     const navigate = useNavigate();

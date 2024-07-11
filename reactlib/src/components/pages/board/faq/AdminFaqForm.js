@@ -1,4 +1,4 @@
-import '../../board/Form.css'
+import '../../board/common/Form.css'
 import axios from 'axios';
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -17,11 +17,11 @@ function AdminFaqForm() {
   const { isLogin, roles } = useContext(LoginContext);
 
   useEffect(() => {
-    if (!isLogin && !roles.isAdmin) {
-      alert("관리자로 로그인 해주세요.", () => { navigate("/login") })
-      return
-    }
-  })
+    // if (!isLogin && !roles.isAdmin) {
+    //   alert("관리자로 로그인 해주세요.", () => { navigate("/login") })
+    //   return
+    // }
+  }, [])
 
   // 파일 업로드
   const handleImgChange = (id, file) => {

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import {LoginContext} from "../security/contexts/LoginContextProvider";
+import {LoginContext} from "../../security/contexts/LoginContextProvider";
 
 function BoardFileLabel({ putImage, handleImgChange, onImgDelete, }) {
 
@@ -12,6 +12,7 @@ function BoardFileLabel({ putImage, handleImgChange, onImgDelete, }) {
             {/* <label>{putImage.file == null ? putImage.oriImgName : putImage.file.name}</label> */}
             {roles.isAdmin && <button type="button" onClick={() => onImgDelete(putImage)}>이미지 삭제</button>}
         </div>
+        
     )
 }
 export default BoardFileLabel;

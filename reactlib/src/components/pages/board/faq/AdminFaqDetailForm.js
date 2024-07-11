@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams, } from 'react-router-dom';
-import BoardFileLabel from '../BoardFileLabel';
-import ImgPreview from '../ImgPreview';
+import BoardFileLabel from '../common/BoardFileLabel';
+import ImgPreview from '../common/ImgPreview';
 import {LoginContext} from "../../security/contexts/LoginContextProvider";
-import '../../board/DetailForm.css'
+import '../../board/common/DetailForm.css'
 
 function AdminFaqDetailForm() {
     const navigate = useNavigate();
@@ -16,11 +16,11 @@ function AdminFaqDetailForm() {
     const { isLogin, roles } = useContext(LoginContext);
 
     useEffect(() => {
-        if (!isLogin && !roles.isAdmin) {
-            alert("관리자로 로그인 해주세요.")
-            navigate("/login")
-            return
-          }
+        // if (!isLogin && !roles.isAdmin) {
+        //     alert("관리자로 로그인 해주세요.")
+        //     navigate("/login")
+        //     return
+        //   }
         getDataset();
     }, []);
 

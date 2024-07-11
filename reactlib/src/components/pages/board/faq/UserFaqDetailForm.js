@@ -1,9 +1,9 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, } from 'react-router-dom';
-import BoardFileLabel from '../BoardFileLabel';
-import ImgPreview from '../ImgPreview';
-import '../../board/DetailForm.css'
+import BoardFileLabel from '../common/BoardFileLabel';
+import ImgPreview from '../common/ImgPreview';
+import '../../board/common/DetailForm.css'
 
 function UserFaqDetailForm() {
     const navigate = useNavigate();

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import {LoginContext} from "../security/contexts/LoginContextProvider";
+import {LoginContext} from "../../security/contexts/LoginContextProvider";
 // import axios from "axios";
 
 function BoardItem({ item, onDetail, checkedList, checkHandler, }) {
@@ -37,11 +37,12 @@ function BoardItem({ item, onDetail, checkedList, checkHandler, }) {
 
     return (
             <tr>
+                {console.log(roles)}
                 <td>{item.id}</td>
                 <td onClick={() => onDetail(item)}>{item.title}</td>
                 <td>{item.createdBy}</td>
                 <td>{item.updateTime.split('T')[0]}</td>
-                {roles.isAdmin &&<td><input type='checkbox' id={item.id} checkedList={checkedList.includes(item.id)} onChange={(e) => checkHandler(e, item.id)} /></td>}
+                {roles.isAdmin && (<td><input type='checkbox' id={item.id} checkedList={checkedList.includes(item.id)} onChange={(e) => checkHandler(e, item.id)} /></td>)}
             </tr>
     );
 }

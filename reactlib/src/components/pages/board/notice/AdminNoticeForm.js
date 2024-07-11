@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {LoginContext} from "../../security/contexts/LoginContextProvider";
-import '../../board/Form.css'
+import '../../board/common/Form.css'
 
 function AdminNoticeForm() {
   const navigate = useNavigate();
@@ -18,11 +18,11 @@ function AdminNoticeForm() {
   const { isLogin, roles } = useContext(LoginContext);
 
   useEffect(() => {
-    if (!isLogin && !roles.isAdmin) {
-      alert("관리자로 로그인 해주세요.")
-      navigate("/login") 
-      return
-    }
+    // if (!isLogin && !roles.isAdmin) {
+    //   alert("관리자로 로그인 해주세요.")
+    //   navigate("/login") 
+    //   return
+    // }
   }, [])
 
 

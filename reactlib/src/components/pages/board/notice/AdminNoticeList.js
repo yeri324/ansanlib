@@ -1,9 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import BoardItem from '../BoardItem';
+import BoardItem from '../common/BoardItem';
+import Pagination from '../common/Pagination';
 import {LoginContext} from "../../security/contexts/LoginContextProvider";
-import '../../board/List.css'
+import '../../board/common/List.css'
 
 function AdminNoticeList() {
     const [checkedList, setCheckedList] = useState([]);
@@ -27,11 +28,11 @@ function AdminNoticeList() {
 
     //리스트 읽기
     useEffect(() => {
-        if (!isLogin && !roles.isAdmin) {
-            alert("관리자로 로그인 해주세요.")
-            navigate("/login")
-            return
-        } 
+        // if (!isLogin && !roles.isAdmin) {
+        //     alert("관리자로 로그인 해주세요.")
+        //     navigate("/login")
+        //     return
+        // } 
         onSearch(currentPage);
     }, [currentPage]);
 
@@ -165,42 +166,7 @@ function AdminNoticeList() {
                     <button onClick={onCreate}>작성하기</button>
                 </div>
             </section>
-            {/* 페이징 */}
-            <ul className="pagination">
-                <li className="page-item">
-                    <button onClick={() => setCurrentPage(1)} className="page-link">
-                        {'<<'}
-                    </button>
-                </li>
-                <li className="page-item">
-                    <button
-                        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                        className="page-link">
-                        {'<'}
-                    </button>
-                </li>
-                {[...Array(totalPages)].map((_, i) => (
-                    <li key={i} className="page-item">
-                        <button
-                            onClick={() => setCurrentPage(i + 1)}
-                            className="page-link">
-                            {i + 1}
-                        </button>
-                    </li>
-                ))}
-                <li className="page-item">
-                    <button
-                        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                        className="page-link">
-                        {'>'}
-                    </button>
-                </li>
-                <li className="page-item">
-                    <button onClick={() => setCurrentPage(totalPages)} className="page-link">
-                        {'>>'}
-                    </button>
-                </li>
-            </ul>
+            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
         </div >
     );
 };

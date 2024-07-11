@@ -2,9 +2,9 @@ import axios from 'axios';
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {LoginContext} from "../../security/contexts/LoginContextProvider";
-import ImgPreview from '../ImgPreview';
-import BoardFileLabel from '../BoardFileLabel';
-import '../../board/DetailForm.css'
+import ImgPreview from '../common/ImgPreview';
+import BoardFileLabel from '../common/BoardFileLabel';
+import '../../board/common/DetailForm.css'
 
 function AdminNoticeDetailForm() {
     const navigate = useNavigate();
@@ -18,10 +18,10 @@ function AdminNoticeDetailForm() {
 
 
     useEffect(() => {
-        if( !isLogin && !roles.isAdmin ) {
-            alert("관리자로 로그인 해주세요.", () => { navigate("/login") })
-                       return
-                }
+        // if( !isLogin && !roles.isAdmin ) {
+        //     alert("관리자로 로그인 해주세요.", () => { navigate("/login") })
+        //                return
+        //         }
         getDataset();
     }, []);
 
@@ -146,10 +146,10 @@ function AdminNoticeDetailForm() {
                         </div>
                         <div class='img-container'>
                             {images.map(putImage => (
-                                <ImgPreview key={putImage.id} putImage={putImage} board='notice' />
+                                <BoardFileLabel putImage={putImage} handleImgChange={handleImgChange} onImgDelete={onImgDelete} board='notice'/>
                             ))}
                             {images.map(putImage => (
-                                <BoardFileLabel putImage={putImage} handleImgChange={handleImgChange} onImgDelete={onImgDelete} />
+                                <ImgPreview key={putImage.id} putImage={putImage}  />
                             ))}
                         </div>
                         {images.length < 5 && <button type="button" onClick={handleAddImg}>이미지추가</button>}
