@@ -1,12 +1,12 @@
 /* General Styles */
-body {
+.board{
+    width: 100%;
     font-family: Arial, sans-serif;
     background-color: #f8f9fa;
     margin: 0;
     padding: 0;
 }
-
-.container {
+.board .container {
     width: 70%;
     max-width: 1200px;
     margin: 0 auto;
@@ -14,41 +14,41 @@ body {
 }
 
 /* Page Title */
-.page-title {
+.board_page-title {
     text-align: center;
     margin-bottom: 20px;
 }
 
-.page-title h3 {
+.board_page-title h3 {
     font-size: 24px;
     color: #333;
 }
 
 /* Search Wrap */
-.search-wrap {
+.board .search-wrap {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
-    width: 70%;
+    width: 85%;
     margin: 0 auto;
 }
 
-.search-wrap select,
-.search-wrap input[type="text"],
-.search-wrap button {
+.board .search-wrap select,
+.board .search-wrap input[type="text"],
+.board .search-wrap .btn {
     margin: 0 5px;
     padding: 10px;
     font-size: 16px;
 }
 
-.search-wrap input[type="text"] {
+.board .search-wrap input[type="text"] {
     border: 1px solid #ccc;
     border-radius: 4px;
     flex: 1;
 }
 
-.search-wrap button {
+.board .search-wrap .btn[type='button'] {
     background-color: #343a40;
     color: white;
     border: none;
@@ -56,17 +56,17 @@ body {
     cursor: pointer;
 }
 
-.search-wrap button:hover {
+.board .search-wrap .btn:hover {
     background-color: #495057;
 }
 
 /* FAQ Table */
-.list {
-    width: 50%;
+.board .list {
+    width: 70%;
     margin: 0 auto;
 }
 
-.table {
+.board .table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
@@ -74,49 +74,49 @@ body {
 
 /* 리스트 내부 비율 */
 
-.table th:nth-child(1),
-.table td:nth-child(1) {
-    width: 5%;
+.board .table th:nth-child(1),
+.board .table td:nth-child(1) {
+    width: 7%;
 }
 
-.table th:nth-child(2),
-.table td:nth-child(2) {
+.board .table th:nth-child(2),
+.board .table td:nth-child(2) {
     width: 30%;
 }
 
-.table th:nth-child(3),
-.table td:nth-child(3) {
-    width: 12%;
+.board .table th:nth-child(3),
+.board .table td:nth-child(3) {
+    width: 15%;
 }
 
-.table th:nth-child(4),
-.table td:nth-child(4) {
+.board .table th:nth-child(4),
+.board .table td:nth-child(4) {
     width: 10%;
 }
 
-.table th:nth-child(5),
-.table td:nth-child(5) {
+.board .table th:nth-child(5),
+.board .table td:nth-child(5) {
     width: 5%;
 }
 
-.table th,
-.table td {
+.board .table th,
+.board .table td {
     border: 1px solid #ddd;
     padding: 12px;
     text-align: center;
 }
 
-.table th {
+.board .table th {
     background-color: #f1f1f1;
     font-weight: bold;
 }
 
-.table tr:nth-child(even) {
+.board .table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
 /* Buttons */
-.list button {
+.board .list button {
     margin: 10px 5px;
     padding: 10px 15px;
     background-color: #343a40;
@@ -126,12 +126,12 @@ body {
     cursor: pointer;
 }
 
-.list button:hover {
+.board .list button:hover {
     background-color: #343a40;
 }
 
 /* Pagination */
-.pagination {
+.board_pagination {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -140,11 +140,11 @@ body {
     margin: 20px 0;
 }
 
-.pagination .page-item {
+.board_pagination .page-item {
     margin: 0 5px;
 }
 
-.pagination .page-link {
+.board_pagination .page-link {
     padding: 10px 15px;
     background-color: #495057;
     color: white;
@@ -153,12 +153,12 @@ body {
     cursor: pointer;
 }
 
-.pagination .page-link:hover {
+.board_pagination .page-link:hover {
     background-color: #495057;
 }
 
 /* Total Count */
-.count_content {
+.board .count_content {
     width: 75%;
     text-align: right;
     margin: 0 auto;
@@ -168,24 +168,24 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .search-wrap {
+    .board .search-wrap {
         flex-direction: column;
     }
 
-    .search-wrap select,
-    .search-wrap input[type="text"],
-    .search-wrap button {
+    .board .search-wrap select,
+    .board .search-wrap input[type="text"],
+    .board .search-wrap button {
         margin: 5px 0;
         width: 100%;
     }
 
-    .table th,
-    .table td {
+    .board .table th,
+    .board .table td {
         font-size: 14px;
         padding: 8px;
     }
 
-    .pagination .page-link {
+    .board_pagination .page-link {
         padding: 8px 12px;
     }
 }

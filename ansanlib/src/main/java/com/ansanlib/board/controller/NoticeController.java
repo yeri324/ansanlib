@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ansanlib.board.dto.FaqFormDto;
 import com.ansanlib.board.dto.NoticeDto;
 import com.ansanlib.board.dto.NoticeFormDto;
 import com.ansanlib.board.dto.NoticeImgDto;
@@ -59,17 +60,23 @@ public class NoticeController {
 	@PutMapping(value = "/admin/notice/update")
 	public ResponseEntity<String> updatenotice(NoticeFormDto noticeFormDto,
 			@RequestParam(required = false) List<MultipartFile> noticeImgFile,
-			@RequestParam(required = false) List<String> noticeImgFileId) throws Exception {
+			@RequestParam(required = false) List<String> noticeImgFileId,
+			@RequestParam(required = false) List<String> delImg) throws Exception {
 		ResponseEntity<String> resEntity = null;
-
+		System.out.println(noticeImgFile);
+		System.out.println(noticeImgFileId);
+		System.out.println(delImg);
+		System.out.println(noticeFormDto.getTitle());
 		try {
-			noticeService.updateNotice(noticeFormDto, noticeImgFile, noticeImgFileId);
+			noticeService.updateNotice(noticeFormDto, noticeImgFile, noticeImgFileId, delImg);
 			resEntity = new ResponseEntity("UPDATE_OK", HttpStatus.OK);
 		} catch (Exception e) {
 			resEntity = new ResponseEntity("글 등록 중 에러가 발생하였습니다.", HttpStatus.BAD_REQUEST);
 		}
 		return resEntity;
 	}
+	
+
 
 	// 글 삭제
 //	@Secured("ROLE_ADMIN")

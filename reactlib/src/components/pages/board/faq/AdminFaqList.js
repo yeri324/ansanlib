@@ -138,7 +138,7 @@ function AdminFaqList() {
                                 <option value="title">제목</option>
                             </select>
                             <input type="text" id="search" name="searchQuery" value={searchOption.searchQuery} onChange={handleOnChange} />
-                            <button class="btn btn-dark" onClick={onSearch}>검색</button>
+                            <button type='button' class="btn btn-dark" onClick={onSearch}>검색</button>
                         </div>
                         <div className="count_content">
                             총 {totalFaqCount}건 / {totalPages} 페이지

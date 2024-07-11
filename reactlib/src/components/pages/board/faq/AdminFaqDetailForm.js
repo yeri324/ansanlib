@@ -5,6 +5,8 @@ import BoardFileLabel from '../common/BoardFileLabel';
 import ImgPreview from '../common/ImgPreview';
 import {LoginContext} from "../../security/contexts/LoginContextProvider";
 import '../../board/common/DetailForm.css'
+import BoardImgList from '../common/BoardImgList';
+import { drawerClasses } from '@mui/material';
 
 function AdminFaqDetailForm() {
     const navigate = useNavigate();
@@ -12,8 +14,12 @@ function AdminFaqDetailForm() {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [images, setImages] = useState([]);
+    const [count, setCount] = useState(1);
+    const [deleteImg,setDeleteImg] = useState([])
 
     const { isLogin, roles } = useContext(LoginContext);
+
+
 
     useEffect(() => {
         // if (!isLogin && !roles.isAdmin) {
@@ -56,7 +62,9 @@ function AdminFaqDetailForm() {
     // 파일 추가
     const handleAddImg = () => {
         if (images.length < 5) {
-            setImages([...images, { id: images.length + 1, file: null }]);
+            setImages([...images, { id: 'a'+count, file: null }]);
+            console.log('a'+count);
+            setCount(count+1)
         }
     };
 
@@ -72,12 +80,13 @@ function AdminFaqDetailForm() {
                     formData.append('faqImgFileId', image.id)
                     formData.append('faqImgFile', image.file);
                 }
+                
             });
-            if (formData.get("faqImgFile") === null) console.log("널!");
-            for (let key of formData.keys()) {
-                console.log(key, ":", formData.get(key));
-            }
-            try {
+  
+            deleteImg.forEach((item) => {
+                    formData.append('delImg', item);
+            });
+           try{
                 axios.put(
                     'http://localhost:8090/admin/faq/update',
                     formData, {
@@ -114,19 +123,12 @@ function AdminFaqDetailForm() {
 
     // 이미지 삭제
     const onImgDelete = (e) => {
-        console.log(e);
-        axios(
-            {
-                url: '/admin/faq/imgDelete',
-                method: 'delete',
-                data: {
-                    id: e.id,
-                },
-                baseURL: 'http://localhost:8090',
-            }
-        )
-        window.location.reload(navigate(`/admin/faq/detail/${id}`, { repalce: true }));
+        const filteredItems = images.filter(item => item !== e);
+        setImages(filteredItems)
+        if(typeof(e.id)==='number'){
+        setDeleteImg([...deleteImg,e.id])
     }
+        }
 
     //목록으로가기
     const onGoBack = () => {
@@ -143,17 +145,9 @@ function AdminFaqDetailForm() {
                             <input type='text' name='title' value={title} onChange={updateTitle} />
                             <textarea type='text' name='content' value={content} onChange={updateContent} />
                         </div>
-                        <div class='img-container'>
-                            {images.map(putImage => (
-                                <ImgPreview key={putImage.id} putImage={putImage} board="faq" />
-                            ))}
-
-                            {images.map(putImage => (
-                                <BoardFileLabel putImage={putImage} handleImgChange={handleImgChange} onImgDelete={onImgDelete} />
-                            ))}
-                        </div>
+                        <BoardImgList images = {images} ImgPreview={ImgPreview} handleImgChange={handleImgChange} onImgDelete={onImgDelete} />
                         {images.length < 5 && <button type="button" onClick={handleAddImg}>이미지추가</button>}
-                        <button type='submit' onClick={() => onUpdate()} >수정</button>
+                        <button type='button' onClick={() => onUpdate()} >수정</button>
                         <button type="button" onClick={() => onDelete()}>삭제</button>
                         <button type="button" onClick={() => onGoBack()}>돌아가기</button>
                     </div>

@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ansanlib.board.repository.NoticeImgRepository;
 import com.ansanlib.book.service.FileService;
+import com.ansanlib.entity.NoticeImg;
 import com.ansanlib.entity.Notice;
 import com.ansanlib.entity.NoticeImg;
 
@@ -39,15 +40,12 @@ public class NoticeImgService {
 		noticeImgRepository.save(noticeImg);
 	}
 
-	public void updateNoticeImg(Long id, MultipartFile noticeImgFile, Notice notice) throws Exception {
-
-		Optional<NoticeImg> checkImg = noticeImgRepository.findByNotice_IdAndId(notice.getId(), id);
-
-		if (checkImg.isEmpty()) {
-			saveNoticeImg(notice, noticeImgFile);
-		} else {
+	public void updateNoticeImg(String id, MultipartFile noticeImgFile, Notice notice) throws Exception {
+		try {
+			Long imgId = Long.parseLong(id);
+			
 			// 기존 파일 조회
-			NoticeImg noticeImg = noticeImgRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+			NoticeImg noticeImg = noticeImgRepository.findById(imgId).orElseThrow(EntityNotFoundException::new);
 
 			// 기존 파일 삭제
 			if (StringUtils.hasText(noticeImg.getImgName())) {
@@ -56,14 +54,17 @@ public class NoticeImgService {
 
 			// 새파일 등록
 			Map<String, String> map = fileService.fileHandler(noticeImgFile, "notice", notice.getId());
-
+			
 			String oriImgName = map.get("oriImgName");
 			String imgName = map.get("imgName");
 			String imgUrl = map.get("imgUrl");
 
 			noticeImg.updateNoticeImg(oriImgName, imgName, imgUrl);
+			
+			}catch(NumberFormatException e) {
+				saveNoticeImg(notice, noticeImgFile);
+			}		
 
-		}
 	}
 
 	public void deleteNotice(Long id) throws Exception{

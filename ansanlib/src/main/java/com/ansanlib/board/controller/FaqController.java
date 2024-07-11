@@ -59,11 +59,12 @@ public class FaqController {
 	@PutMapping(value = "/admin/faq/update")
 	public ResponseEntity<String> updateFaq(FaqFormDto faqFormDto,
 			@RequestParam(required = false) List<MultipartFile> faqImgFile,
-			@RequestParam(required = false) List<String> faqImgFileId) throws Exception {
+			@RequestParam(required = false) List<String> faqImgFileId,
+			@RequestParam(required = false) List<String> delImg) throws Exception {
 		ResponseEntity<String> resEntity = null;
 
 		try {
-			faqService.updateFaq(faqFormDto, faqImgFile, faqImgFileId);
+			faqService.updateFaq(faqFormDto, faqImgFile, faqImgFileId, delImg);
 			resEntity = new ResponseEntity("UPDATE_OK", HttpStatus.OK);
 		} catch (Exception e) {
 			resEntity = new ResponseEntity("글 등록 중 에러가 발생하였습니다.", HttpStatus.BAD_REQUEST);
@@ -131,15 +132,5 @@ public class FaqController {
 		return null;
 	}
 	
-	// 이미지 삭제
-//	@Secured("ROLE_ADMIN")
-	@DeleteMapping("/admin/faq/imgDelete")
-	public ResponseEntity<String> deleteImg(@RequestBody FaqImgDto faqImgDto) throws Exception {
-		ResponseEntity resEntity = null;
-		Long id = faqImgDto.getId();
-		System.out.println(id);
-		faqImgService.deleteFaq(id);
-		resEntity = new ResponseEntity("IMG DELETE_OK", HttpStatus.OK);
-		return resEntity;
-	}
+	
 }
