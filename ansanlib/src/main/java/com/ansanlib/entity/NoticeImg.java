@@ -1,5 +1,7 @@
 package com.ansanlib.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -14,11 +16,11 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-@Table(name="board_img")
-public class BoardImg extends BaseEntity{
+@Table(name="notice_img")
+public class NoticeImg extends BaseEntity{
 	
 	@Id
-	@Column(name = "board_img_id")
+	@Column(name = "notice_img_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
@@ -27,10 +29,11 @@ public class BoardImg extends BaseEntity{
 	private String imgUrl; // 이미지 조회 경로
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "board_num")
-	private Board board;
+	@JsonBackReference
+	@JoinColumn(name = "notice_num")
+	private Notice notice;
 
-	public void updateFaqImg(String oriImgName, String imgName, String imgUrl) {
+	public void updateNoticeImg(String oriImgName, String imgName, String imgUrl) {
 		this.oriImgName = oriImgName;
 		this.imgName = imgName;
 		this.imgUrl = imgUrl;

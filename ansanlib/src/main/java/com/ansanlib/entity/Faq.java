@@ -42,7 +42,6 @@ public class Faq extends BaseEntity {
    private List<FaqImg> faqImgs = new ArrayList<>();
    
    public void updateFaq(FaqFormDto faqFormDto) {
-	   this.id = faqFormDto.getId();
 	   this.title = faqFormDto.getTitle();
 	   this.content = faqFormDto.getContent();
 	}

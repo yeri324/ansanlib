@@ -5,16 +5,16 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 
-import com.ansanlib.entity.Faq;
+import com.ansanlib.entity.Notice;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class FaqFormDto {
-    
-    private Long id;
+public class NoticeFormDto {
+
+private Long id;
     
     @NotBlank(message="제목은 필수 입력 값입니다.")
     private String title;
@@ -22,20 +22,19 @@ public class FaqFormDto {
     private String content;
 
     private List<Long> idList;
-    
+
     private static ModelMapper modelMapper = new ModelMapper();
     
-    public static FaqFormDto of(Faq faq) {
-        return modelMapper.map(faq, FaqFormDto.class);
+    public static NoticeFormDto of(Notice notice) {
+        return modelMapper.map(notice, NoticeFormDto.class);
     }
 
-    public Faq createFaq() {
-        return modelMapper.map(this, Faq.class);
+    public Notice createNotice() {
+        return modelMapper.map(this, Notice.class);
     }
     
-    public void updateFaq(FaqFormDto faqFormDto) {
-    	this.title = faqFormDto.getTitle();
-    	this.content = faqFormDto.getContent();
+    public void updateNotice(NoticeFormDto noticeFormDto) {
+    	this.title = noticeFormDto.getTitle();
+    	this.content = noticeFormDto.getContent();
     }
-    
 }
