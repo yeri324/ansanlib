@@ -52,3 +52,8 @@
   border-top: 1px solid black;
   padding-bottom: 50px;
 }
+
+.card-body{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}

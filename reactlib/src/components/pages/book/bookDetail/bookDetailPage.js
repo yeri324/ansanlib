@@ -133,9 +133,6 @@ const BookDetailPage = () => {
                     <td>
                       <div className="card-body">
                         <div className="row">
-                          <p>{relatedBook.status ?? '정보 없음'}</p>
-                        </div>
-                        <div className="row">
                           <button onClick={() => isUserLoggedIn ? handleReservation(relatedBook.id) : alertLogin()} disabled={relatedBook.status !== 'AVAILABLE'}>
                             도서예약
                           </button>
