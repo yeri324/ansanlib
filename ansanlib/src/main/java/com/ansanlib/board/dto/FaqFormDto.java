@@ -23,18 +23,19 @@ public class FaqFormDto {
 
     private List<Long> idList;
     
-    private List<FaqImgDto> faqImgDtoList = new ArrayList<>();
-    
-    private List<Long> faqImgIdList = new ArrayList<>();
-    
     private static ModelMapper modelMapper = new ModelMapper();
-    
-    public Faq createFaq() {
-        return modelMapper.map(this, Faq.class);
-    }
     
     public static FaqFormDto of(Faq faq) {
         return modelMapper.map(faq, FaqFormDto.class);
     }
 
+    public Faq createFaq() {
+        return modelMapper.map(this, Faq.class);
+    }
+    
+    public void updateFaq(FaqFormDto faqFormDto) {
+    	this.title = faqFormDto.getTitle();
+    	this.content = faqFormDto.getContent();
+    }
+    
 }

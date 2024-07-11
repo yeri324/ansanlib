@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 
 import com.ansanlib.book.dto.BookDto;
 import com.ansanlib.book.dto.BookDto.BookDtoBuilder;
-import com.ansanlib.book.dto.BookImgSimpleDto;
 import com.ansanlib.entity.Book;
+import com.ansanlib.entity.BookImg;
 import com.ansanlib.entity.LoanStatus;
 
 import lombok.Getter;
@@ -26,7 +26,7 @@ public class LoanStatusDto {
 			.publisher(book.getPublisher())
 			.pub_date(book.getPub_date())
 			.isbn(book.getIsbn())
-			.status(book.getStatus().toString())
+			.status(book.getStatus())
 			.location(book.getLocation());
 		
 		if(book.getBookDetail() != null) {
@@ -35,7 +35,7 @@ public class LoanStatusDto {
 		}
 		
 		if(book.getBookImg() != null && book.getBookImg().getImgUrl() != null) {
-			bookDtoBuilder = bookDtoBuilder.bookImg(new BookImgSimpleDto(book.getBookImg().getImgUrl()));
+			bookDtoBuilder = bookDtoBuilder.bookImg(book.getBookImg());
 		}
 		
 		BookDto bookDto = bookDtoBuilder.build();

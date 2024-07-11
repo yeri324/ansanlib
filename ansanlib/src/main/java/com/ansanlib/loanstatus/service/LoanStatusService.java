@@ -19,6 +19,8 @@ public class LoanStatusService {
 	public List<LoanStatus> getLoanStatusByUserId(Long userId) {
 		return loanStatusRepository.findByLibuserId(userId);
 	}
+	
+    //회원 탈퇴 관련
 	@Transactional
     public void deleteLoanStatusByUserId(Long userId) {
         loanStatusRepository.deleteByLibUserId(userId);

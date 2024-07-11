@@ -45,23 +45,24 @@ const JoinForm = () => {
 
     //아이디체크
     const checkUserId = () => {
-        
+        console.log(formData.loginid);
         axios(
             {
-                url: `/api/user/checkId?loginid=${formData.loginid}`,
-                method: 'get',
-                
+                url: '/api/user/checkId',
+                method: 'post',
+                data : {loginid : formData.loginid},
                 baseURL: 'http://localhost:8090',
             }
         ).then(response => {
             alert(response.data);
+            console.log(response.data);
             if (response.status === 200) {
                 setIdAvailable(true);
             }
         })
             .catch(error => {
-                alert(error.response.data);
                 console.log(formData.loginid + "*****************************");
+                alert(error.response.data);
                 console.error(error);
             });
     };
@@ -197,7 +198,7 @@ const JoinForm = () => {
                                 <ul className="base_right1">
                                     <li><input name="name" id="name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} /></li>
                                     <li>
-                                        <input name="loginid" id="loginid" value={formData.loginid} onChange={(e) => { setFormData({ ...formData, loginid: e.target.value });  }} />
+                                        <input name="loginid" id="loginid" value={formData.loginid} onChange={(e) => { setFormData({ ...formData, loginid: e.target.value }); setIdAvailable(false); }} />
                                         <button type="button" className="check_btn" id="id_check" onClick={checkUserId}> 중복확인</button>
                                         {/* {idAvailable && <span className="complete"> 중복 확인 완료</span>} */}
                                     </li>

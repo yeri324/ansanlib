@@ -3,7 +3,9 @@ package com.ansanlib.entity;
 import com.ansanlib.book.dto.BookFormDto;
 import com.ansanlib.constant.BookStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -31,42 +33,46 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Book extends BaseEntity {
 
+
 	@Id
 	@JoinColumn(name = "book_num")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String isbn; // 바코드
+    
+    private String isbn; // 바코드
 
-	private String title; // 제목
-	private String author; // 저자
-	private String publisher; // 출판사
-	private String pub_date; // 출판일
-	private String genre; // 장르
-	private String category_code; // 분류코드
+    private String title; // 제목
+    private String author; // 저자
+    private String publisher; // 출판사
+    private String pub_date; // 출판일
+    private String genre; // 장르
+    private String category_code; // 분류코드
 
-	private String location; // 위치
+    private String location; // 위치
 
-	@Lob
-	private String bookDetail; // 책 설명
-	private int count;
+    @Lob
+    @Column(columnDefinition = "TEXT")
+    private String bookDetail; // 책 설명
+    private int count;		// 도서 권 수
 
-	@Enumerated(EnumType.STRING)
-	private BookStatus status;
-	
-	@OneToOne(mappedBy = "book")
+    @Enumerated(EnumType.STRING)
+    private BookStatus status;	// 도서 상태
+    
+    @OneToOne(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private BookImg bookImg;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
+    
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private LibUser libUser;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="lib_num")
-	@JsonIgnore
-	private Library library;
-	
-	public void updateBook(BookFormDto itemFormDto){
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="lib_num")
+    @JsonIgnore
+    private Library library;
+    
+    public void updateBook(BookFormDto itemFormDto){
 
     }
 }

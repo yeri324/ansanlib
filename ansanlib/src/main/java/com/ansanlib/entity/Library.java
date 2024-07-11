@@ -12,25 +12,22 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Library extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "library_id")
-    private Long id;
 
-
-    @Column(unique = true)
-    private String libNum;
-    
-    private String libName;
-
-    private String address;
-
-    private String phone;
-
-    private String web_address;
-
-
-
-
-    
+	@Id
+	@Column(name="library_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	
+	@Column(unique = true)
+	private String libNum; //도서관 코드
+	
+	private String libName; // 도서관 이름
+	
+	private String address; // 도서관 주소
+	
+	private String phone; // 도서관 번호
+	
+	private String web_address; // 도서관 웹주소
+	
 }

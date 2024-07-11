@@ -18,6 +18,9 @@ public class FaqDto {
     private String title;
     private String content;
     
+    private int page;
+    private int size;
+    
     private String searchBy;
     private String searchQuery="";
     

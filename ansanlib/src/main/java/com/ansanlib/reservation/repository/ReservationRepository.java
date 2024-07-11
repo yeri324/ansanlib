@@ -38,6 +38,11 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long>{
          @Param("bookId") Long bookId, 
             @Param("startDate") LocalDateTime startDate, 
             @Param("endDate") LocalDateTime endDate);
+	   
+	@Transactional
+	@Modifying
+	@Query("DELETE FROM Reservation r WHERE r.libUser.userId = :userId AND r.id = :reservationId")
+	int deleteBookBelongsTo(@Param("reservationId") Long reservationId, @Param("userId") Long userId);
 
     
     List<Reservation> findByLibUser_UserIdOrderByStartDateAsc(Long user_id);
