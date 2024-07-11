@@ -28,6 +28,7 @@ public class BookDto {
 	private String bookDetail;  	// 책 설명
 	private String location;    	// 위치
 	private BookImgSimpleDto bookImg;	// 책이미지
+	private int sales; // 대출량
 	
 	public void setRelatedBooks(List<BookListDto> bookList) {
 		

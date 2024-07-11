@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.ansanlib.entity.Book;
 
@@ -32,4 +33,9 @@ public interface BookRepository extends JpaRepository<Book, Long>, BookRepositor
 
 	// 주어진 ISBN을 가진 책의 개수를 반환합니다.
 	int countByIsbn(String isbn);
+	
+	@EntityGraph(attributePaths = { "bookImg" })
+	@Query("SELECT b FROM Book b ORDER BY b.sales DESC")
+    List<Book> findTopBestsellers();  // 판매량 기준으로 베스트셀러 조회
+    
 }

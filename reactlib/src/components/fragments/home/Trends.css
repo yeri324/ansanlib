@@ -1,23 +1,28 @@
 .trends-container {
   display: flex;
   flex-wrap: wrap;
+  /* overflow-x: auto; */
+  position: relative;
+  width: 100%;
   gap: 40px;
   padding: 20px;
   justify-content: center;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
 }
 
 .book-item {
   display: flex;
+  flex: 0 0 auto;
   flex-direction: column;
   align-items: center;
 }
 
 .book-cover {
-  width: 150px;
-  height: 200px;
+  width: 170px;
+  height: 220px;
   object-fit: cover;
-  margin-bottom: 10px;
+  align-items: center;
+  margin-bottom: 5px;
   border-radius: 10px;
 }
 
@@ -26,3 +31,26 @@
   font-size: 1.1em;
   color: #333;
 }
+
+.btn {  
+  position: absolute;
+  transform: translate(0, -50%);
+  top: 50%;
+  width: 30px; 
+  height: 50px;
+  padding: 10px;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+}
+.prev {
+  left: 10px;
+}
+.next {
+  right: 10px;
+}
+.prev:hover, .next:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+

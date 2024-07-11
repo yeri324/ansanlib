@@ -147,4 +147,13 @@ public class BookController {
 
 		return ResponseEntity.ok(book);
 	}
+	
+	// 도서 베스트셀러 
+	@GetMapping("/api/books/bestsellers")
+	public List<BookDto> getAllBestsellers() {
+		return bookService.getAllBestsellers();
+	}
+	
+	
+	
 }

@@ -22,7 +22,7 @@
     padding: 15px;
     font-size: 18px;
     border: 1px solid #ccc;
-    border-radius: 4px 0 0 4px;
+    border-radius: 40px 0 0 40px;
     border-right: none;
     max-width: 600px;
     box-sizing: border-box;
@@ -31,18 +31,17 @@
 .search_btn {
     cursor: pointer;
     /* 크기 */
-    padding: 15px 25px; 
-    border: 1px solid #ccc;
-    border-radius: 0 4px 4px 0;
-    background-color: #cec7bb;
+    padding: 15px 35px; 
+    border: 1px solid var(--sub_bg_03);
+    border-radius: 0 40px 40px 0;
+    /* background-color: #bbb5aa; */
+    background-color: var(--sub_bg_03);
     color: white;
     font-size: 18px;
     transition: background-color 0.3s;
 }
 
 .search_btn:hover {
-    background-color: #aab699;
+    /* background-color: #aab699; */
+    background-color: #cec7bb;
 }
-
-/* #cec7bb */
-/* #aab699 */

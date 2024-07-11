@@ -1,6 +1,7 @@
 package com.ansanlib.book.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -164,4 +165,23 @@ public class BookService {
     public int getCountByIsbn(String isbn){
         return bookRepository.countByIsbn(isbn);
     }
+    
+    // 대출량으로 도서 검색
+    public List<BookDto> getAllBestsellers() {
+    	return bookRepository.findTopBestsellers().stream()
+    			.map(book -> {
+    				BookDto dto = new BookDto();
+    				dto.setId(book.getId());
+    				dto.setTitle(book.getTitle());
+    				dto.setAuthor(book.getAuthor());
+    				dto.setGenre(book.getGenre());
+    				dto.setSales(book.getSales());
+    				dto.setPub_date(book.getPub_date());
+    				return dto;
+    			})
+    			.collect(Collectors.toList());
+    }
+    
+    
+    
 }
