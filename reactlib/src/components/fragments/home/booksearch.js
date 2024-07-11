@@ -1,4 +1,3 @@
-// BookSearch.js
 import React, { useState } from 'react';
 import BookCloud from './bookCloud';
 import './booksearch.css';
@@ -14,7 +13,7 @@ function BookSearch() {
     };
 
     return (
-        <div className="search">
+        <div id="book-search-container" className="search">
             <nav className="search_navbar">
                 <div className="navbar_container">
                     <form className="search" role="search" onSubmit={handleSearch}>

@@ -17,29 +17,27 @@ import LibraryPage from '../../pages/visit/LibraryPage';
 // import { styled } from "styled-components";
 
 const HomePage = () => {
-
-
   return (
     <>
       <header><Header /></header>
       <section>
-        <div className="main_content">
-          <div className="main_grid">
-            <div className="content_grid">
-              <div className="top_column">
-                <div className="hr_div"><hr></hr></div>
-                <div className="book_search">
+        <div id="home-main-content" className="main_content">
+          <div id="home-main-grid" className="main_grid">
+            <div id="home-content-grid" className="content_grid">
+              <div id="home-top-column" className="top_column">
+                <div id="home-hr-div" className="hr_div"><hr></hr></div>
+                <div id="home-book-search" className="book_search">
                   <BookSearch />
                 </div>
               </div>
-              <div className="bottom_column">
-                <div className="notice_board">
+              <div id="home-bottom-column" className="bottom_column">
+                <div id="home-notice-board" className="notice_board">
                   <Notice />
                 </div>
-                <div className="monthly_plan">
+                <div id="home-monthly-plan" className="monthly_plan">
                   <TodoCalendar />
                 </div>
-                <div className="login_box">
+                <div id="home-login-box" className="login_box">
                   <div className="new_h2"><h2>신규도서</h2></div>
                   <New />
                 </div>
@@ -47,8 +45,8 @@ const HomePage = () => {
             </div>
           </div>
 
-          <div className="sub_content">
-            <div className="sub_content1">
+          <div id="home-sub-content" className="sub_content">
+            <div id="home-sub-content1" className="sub_content1">
               <div className="trend_h2"><h2>인기도서</h2></div>
               <div className="div_border"><hr></hr></div>              
               <div className="trend_list">
@@ -65,7 +63,7 @@ const HomePage = () => {
                 <LibraryPage />
               </div>
             </div>
-            <div className="sub_content2">
+            <div id="home-sub-content2" className="sub_content2">
               <div className="lib_h2"><h2>오시는 길</h2></div>
               <div className="div_border"><hr></hr></div>
               <div className="lib_guide">
@@ -79,6 +77,5 @@ const HomePage = () => {
     </>
   );
 }
-
 
 export default HomePage;
