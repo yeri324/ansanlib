@@ -94,9 +94,7 @@ function AdminFaqDetailForm() {
                         'Content-Type': 'multipart/form-data'
                     }
                 }
-                ).then(function (response) {
-                    console.log(response.data);
-                });
+                )
                 window.location.reload(navigate("/admin/faq/list", { replace: true }));
             } catch (error) {
                 console.error("There was an error uploading the data!", error);
@@ -145,7 +143,7 @@ function AdminFaqDetailForm() {
                             <input type='text' name='title' value={title} onChange={updateTitle} />
                             <textarea type='text' name='content' value={content} onChange={updateContent} />
                         </div>
-                        <BoardImgList images = {images} ImgPreview={ImgPreview} handleImgChange={handleImgChange} onImgDelete={onImgDelete} />
+                        <BoardImgList images = {images}  handleImgChange={handleImgChange} onImgDelete={onImgDelete} />
                         {images.length < 5 && <button type="button" onClick={handleAddImg}>이미지추가</button>}
                         <button type='button' onClick={() => onUpdate()} >수정</button>
                         <button type="button" onClick={() => onDelete()}>삭제</button>

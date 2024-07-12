@@ -128,23 +128,5 @@ public class NoticeController {
 		return resEntity;
 	}
 
-	// 이미지 미리보기
-	@PostMapping("/notice/getImg")
-	public ResponseEntity<byte[]> getnoticeImage(@RequestBody NoticeImgDto noticeImgDto) {
-		try {
-			byte[] imgBytes = fileService.getImgByte(noticeImgDto.getImgUrl());
 
-			if (imgBytes != null && imgBytes.length > 0) {
-				HttpHeaders headers = new HttpHeaders();
-				headers.setContentType(MediaType.IMAGE_JPEG);
-				return new ResponseEntity<>(imgBytes, headers, HttpStatus.OK);
-			} else {
-				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return null;
-	}
 }
