@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 import { getLibraryNum } from '../../../utils/libraryUtils';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "./Modal.css";
 
 const HolidayNew = ({ showModal, handleCloseModal, selectedDate, setSelectedDate, districts }) => {
@@ -10,7 +11,6 @@ const HolidayNew = ({ showModal, handleCloseModal, selectedDate, setSelectedDate
 
   const checkDuplicate = async (date, library) => {
     try {
-      console.log(`Checking duplicate for date: ${date}, library: ${library}`);
       const response = await fetch(`http://localhost:8090/api/admin/holiday/check?date=${date}&library=${library}`);
       const data = await response.json();
       return data;
@@ -64,7 +64,6 @@ const HolidayNew = ({ showModal, handleCloseModal, selectedDate, setSelectedDate
     const num = getLibraryNum(selectedLibrary);
     setLibrary(selectedLibrary);
     setLibNum(num);
-    console.log('Library Changed:', selectedLibrary, 'Lib_num:', num);
   };
 
   if (!districts) {
@@ -72,41 +71,51 @@ const HolidayNew = ({ showModal, handleCloseModal, selectedDate, setSelectedDate
   }
 
   return (
-    <div className="admin-modal" style={{ display:'block' }}>
-    <div className="admin-modal-content">
-      <span className="close" onClick={handleCloseModal}>&times;</span>
-      <h3>도서관 휴관일 등록 - {selectedDate && selectedDate.format('YYYY-MM-DD')}</h3>
-      <form onSubmit={handleAddSchedule} className='holidaynew'>
-        <div className="form-group">
-          <label>지역 선택</label>
-          <select value={district} onChange={(e) => setDistrict(e.target.value)}>
-            <option value="">지역 선택</option>
-            {Object.keys(districts).map((dist, index) => (
-              <option key={index} value={dist}>{dist}</option>
-            ))}
-          </select>
-        </div>
-        {district && (
-          <div className="form-group">
-            <label>도서관 선택</label>
-            <select value={library} onChange={(e) => handleLibraryChange(e.target.value)}>
-              <option value="">도서관 선택</option>
-              {districts[district].map((lib, index) => (
-                <option key={index} value={lib}>{lib}</option>
-              ))}
-            </select>
+    <div className={`modal fade ${showModal ? 'show d-block' : 'd-none'}`} id="admin-modal" tabIndex="-1" aria-labelledby="admin-modal-title" aria-hidden="true">
+      <div className="modal-dialog" id="admin-modal-dialog">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title" id="admin-modal-title">
+              도서관 휴관일 등록 - {selectedDate && selectedDate.format('YYYY-MM-DD')}
+            </h5>
+            <button type="button" className="btn-close" aria-label="Close" onClick={handleCloseModal}></button>
           </div>
-        )}
-        <div className="form-group">
-          <label>날짜 선택</label>
-          <input type="date" onChange={(e) => setSelectedDate(moment(e.target.value))} />
+          <div className="modal-body">
+            <form onSubmit={handleAddSchedule} className='holidaynew'>
+              <div className="form-group" id="admin-form-group">
+                <label>지역 선택</label>
+                <select value={district} className="form-control" onChange={(e) => setDistrict(e.target.value)}>
+                  <option value="">지역 선택</option>
+                  {Object.keys(districts).map((dist, index) => (
+                    <option key={index} value={dist}>{dist}</option>
+                  ))}
+                </select>
+              </div>
+              {district && (
+                <div className="form-group" id="admin-form-group">
+                  <label>도서관 선택</label>
+                  <select value={library} className="form-control" onChange={(e) => handleLibraryChange(e.target.value)}>
+                    <option value="">도서관 선택</option>
+                    {districts[district].map((lib, index) => (
+                      <option key={index} value={lib}>{lib}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
+              <div className="form-group" id="admin-form-group">
+                <label>날짜 선택</label>
+                <input type="date" className="form-control" value={selectedDate ? selectedDate.format('YYYY-MM-DD') : ''} onChange={(e) => setSelectedDate(moment(e.target.value))} />
+              </div>
+              <div className="modal-footer" id="admin-modal-footer">
+                <button type="button" id="admin-modal-btn" class="btn btn-outline-dark" onClick={handleCloseModal}>취소</button>
+                <button type="submit"  id="admin-modal-btn" class="btn btn-outline-dark">저장</button>
+              </div>
+            </form>
+          </div>
         </div>
-        <button id="adminbtn" class="btn btn-outline-dark"  onClick={handleCloseModal}>취소</button>
-        <button id="adminbtn" class="btn btn-outline-dark"  type="submit">저장</button>
-      </form>
+      </div>
     </div>
-  </div>
-);
+  );
 };
 
 export default HolidayNew;

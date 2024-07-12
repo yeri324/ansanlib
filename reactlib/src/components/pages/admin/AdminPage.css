@@ -1,6 +1,5 @@
 .admin-page {
-
-
+  padding-top:7px;
   width: 100%;
   font-family: 'Noto Sans KR', sans-serif;
   padding-bottom: 30px;
@@ -39,6 +38,21 @@
 
 }
 
+
+
+.admin-page-search input,
+.admin-page-search .react-datepicker-wrapper {
+  flex: 1;
+}
+
+.admin-page-search .react-datepicker-wrapper {
+  width: 100%;
+}
+
+
+
+
+
 /*오른쪽 위치할 버튼*/
 .admin-page-button {
     text-align: right;
@@ -46,7 +60,7 @@
    
     display: flex;
     justify-content: flex-end;
-    gap: 10px;
+ 
     
   }
 
@@ -78,7 +92,7 @@
 
 /*정렬 호버- 헤더 호버하면 색상 변경*/
 .sortable:hover {
-  background-color: #f88400ab;
+  background-color: #201406ab;
   color: #faf9f7;
 }
 

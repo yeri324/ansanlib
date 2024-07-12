@@ -62,15 +62,24 @@ const AdminBookRequest = () => {
 
   const groupData = (data) => {
     const grouped = data.reduce((acc, curr) => {
-      const pubYear = new Date(curr.pub_date).getFullYear().toString();
-      const key = `${curr.isbn}-${curr.title}-${curr.author}-${curr.publisher}-${pubYear}`;
-      acc[key] = acc[key] || { ...curr, count: 0, pub_year: pubYear };
-      acc[key].count += 1;
+        const pubYear = new Date(curr.pub_date).getFullYear().toString();
+        const key = `${curr.isbn}`;
+        if (!acc[key]) {
+            acc[key] = { ...curr, count: 0, pub_year: pubYear, library: [] };
+        }
+        acc[key].library.push(curr.lib_name);
+        acc[key].count += 1;
 
-      return acc;
+        return acc;
     }, {});
-    setGroupedRequests(Object.values(grouped));
+    const groupedArray = Object.values(grouped).map(item => ({
+      ...item,
+      library: item.library.join(', '),
+    }));
+  
+    setGroupedRequests(groupedArray);
   };
+
 
   useEffect(() => {
     setSearchResult(groupedRequests.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage));
@@ -173,28 +182,40 @@ const AdminBookRequest = () => {
               <option value="date">출판년도</option>
             </select>
 
-            {searchCriteria === 'title' && (
-              <input
-                type="text"
-                placeholder="도서 제목을 입력하세요"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                onKeyDown={handleKeyDown}
-              />
-            )}
-
-            {searchCriteria === 'date' && (
-              <DatePicker
-                selected={searchMonth}
-                onChange={(date) => setSearchMonth(date)}
-                dateFormat="yyyy"
-                showMonthYearPicker
-                placeholderText="날짜를 선택하세요"
-                onKeyDown={handleKeyDown}
-              />
-            )}
-
+           
+              {searchCriteria === 'title' && (
+                <input
+                  type="text"
+                  placeholder="도서 제목을 입력하세요"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                 
+                />
+              )}
+              {searchCriteria === 'author' && (
+                <input
+                  type="text"
+                  placeholder="저자명을 입력하세요"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                 
+                />
+              )}
+              {searchCriteria === 'date' && (
+                <DatePicker
+                  selected={searchMonth}
+                  onChange={(date) => setSearchMonth(date)}
+                  dateFormat="yyyy"
+                  showYearPicker
+                  placeholderText="날짜를 선택하세요"
+                  onKeyDown={handleKeyDown}
+                 
+                />
+              )}
             <button type="button" className="btn btn-outline-dark" onClick={handleSearch}>검색</button>
+            
           </div>
 
 

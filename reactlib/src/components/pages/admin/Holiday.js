@@ -9,6 +9,8 @@ import HolidayDetail from './HolidayDetail';
 import AdminHeader from './AdminHeader';
 import AdminSide from './AdminSide';
 import { GlobalStyles } from './GlobalStyles';
+
+
 const Holiday = () => {
   const [getMoment, setMoment] = useState(moment());
   const today = getMoment;
@@ -57,7 +59,7 @@ const Holiday = () => {
 
     for (week; week <= lastWeek; week++) {
       result = result.concat(
-        <tr key={week}>
+        <tr key={week} className='admin-calender-td-tr'>
           {Array(7).fill(0).map((n, i) => {
             let current = today.clone().startOf('week').week(week).add(i, 'day');
             let isSelectedMonth = current.format('MM') === today.format('MM');
@@ -97,7 +99,8 @@ const Holiday = () => {
   return (
     <>
            <GlobalStyles width="100vw" />
-    <div className="admin-holiday-page">
+    <div className="admin-page">
+
       <div className="admin-base">
         <AdminHeader />
         <AdminSide />
@@ -110,25 +113,24 @@ const Holiday = () => {
           </div>
 
 
-          <div className="admin-holiday-month">
-
-            <button type="button" id="adminbtn" class="btn btn-outline-dark"  onClick={() => setMoment(getMoment.clone().subtract(1, 'month'))}>이전달</button>
-            <h4><span> {today.format('YYYY 년 MM 월')}</span> </h4>
-            <button type="button" id="adminbtn" class="btn btn-outline-dark"  onClick={() => setMoment(getMoment.clone().add(1, 'month'))}>다음달</button>
-          </div>
-
-
-          <div className="admin-holiday-btn">
-
-            <button type="button" id="adminbtn" class="btn btn-outline-dark"  onClick={() => navigate('/admin/holiday/list')}>목록보기</button>
-            <button type="button" id="adminbtn" class="btn btn-outline-dark"  onClick={() => setShowModal(true)}>등록하기</button>
-          </div>
+          <div className="admin-holiday-header">
+            <div></div>
+              <div className="admin-holiday-month">
+                <button type="button" id="adminbtn" className="btn btn-outline-dark" onClick={() => setMoment(getMoment.clone().subtract(1, 'month'))}>이전달</button>
+                <h4><span> {today.format('YYYY 년 MM 월')}</span> </h4>
+                <button type="button" id="adminbtn" className="btn btn-outline-dark" onClick={() => setMoment(getMoment.clone().add(1, 'month'))}>다음달</button>
+              </div>
+              <div className="admin-holiday-btn">
+                <button type="button" id="adminbtn" className="btn btn-outline-dark" onClick={() => navigate('/admin/holiday/list')}>목록보기</button>
+                <button type="button" id="adminbtn" className="btn btn-outline-dark" onClick={() => setShowModal(true)}>등록하기</button>
+              </div>
+            </div>
 
 
           <div className="admin-holiday-table">
             <table className='admin-calendar-table'>
               <thead>
-                <tr>
+                <tr className="admin-calendar-th-tr">
                   <th style={{ width: "14%" }}>일</th>
                   <th style={{ width: "14%" }}>월</th>
                   <th style={{ width: "14%" }}>화</th>

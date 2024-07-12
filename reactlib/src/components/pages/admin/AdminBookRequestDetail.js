@@ -36,7 +36,7 @@ const AdminBookRequestDetail = ({ isOpen, onClose, request, onSave }) => {
             <p><strong>출판사:</strong> {request.publisher}</p>
             <p><strong>출판년도:</strong> {request.pub_date}</p>
             <p><strong>신청 권수:</strong> {request.count}</p>
-            <p><strong>신청도서관:</strong> {request.lib_name}</p>
+            <p><strong>신청도서관:</strong> {request.library}</p>
         
           
           
