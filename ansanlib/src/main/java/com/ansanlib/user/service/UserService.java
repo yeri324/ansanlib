@@ -122,6 +122,17 @@ public class UserService {
 		}
 	}
 
+	
+	// 아이디 찾기
+	public ResponseEntity<String> findIdByEmailAndName(String email, String name) {
+		Optional<LibUser> userOptional = userRepository.findIdByEmailAndName(email, name);
+		if(userOptional.isPresent()) {
+		return ResponseEntity.status(HttpStatus.OK).body(userOptional.get().getLoginid());}
+		else {
+			return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("일치하는 사용자가 없습니다.");
+		}
+	}
+	
 //    public String getPassword(String userId) {
 //         Optional<LibUser> optionalUser = userRepository.findByLoginid(userId);
 //        if (optionalUser.isPresent()) {
@@ -132,12 +143,7 @@ public class UserService {
 //        }
 	// }
 //
-//	// 아이디 찾기
-//	public String findIdByEmailAndName(String email, String name) {
-//		Optional<LibUser> userOptional = userRepository.findIdByEmailAndName(email, name);
-//		return userOptional.map(LibUser::getLoginid).orElse(null);
-//	}
-//
+
 //	// 비밀번호찾기 - findPw
 //	public String findPw(UserDto userDto) {
 //		Optional<LibUser> foundPw = userRepository.findByLoginidAndEmail(userDto.getLoginid(), userDto.getEmail());

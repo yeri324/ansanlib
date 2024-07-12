@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { LoginContext } from '../../contexts/LoginContextProvider';
 import LoginContextConsumer from '../../contexts/LoginContextConsumer';
-import DaumPostcode from 'react-daum-postcode';
 import { getData } from '../../apis/auth';
 import './FormJoin.css'
+import DaumPostcode from 'react-daum-postcode';
 
 const FormJoin = ({ join, }) => {
     const [errors, setErrors] = useState('');
@@ -15,7 +15,7 @@ const FormJoin = ({ join, }) => {
         phone: '',
         email: '',
         email1: '',
-        email2: '',
+        email2: 'naver.com',
         address: '',
         address2: '',
         gender: 'male',
@@ -27,9 +27,9 @@ const FormJoin = ({ join, }) => {
     })
     const [passwordValid, setPasswordValid] = useState(true);
     const [passwordMatch, setPasswordMatch] = useState(true);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
-    //setFormData
+    // setFormData
     const handleChange = (e) => {
         const { name, value } = e.target;
 
@@ -46,13 +46,14 @@ const FormJoin = ({ join, }) => {
         }
     };
 
-    //회원가입 메소드로 데이터 전송
+    // 회원가입 메소드로 데이터 전송
     const onJoin = (e) => {
         e.preventDefault();
         onValidate();
+        join(formData);
     };
 
-    //아이디 중복 체크
+    // 아이디 중복 체크
     const onCheckId = async () => {
         if (formData.loginid == null || formData.loginid == "") {
             alert("아이디를 입력해주세요.");
@@ -80,9 +81,9 @@ const FormJoin = ({ join, }) => {
         }
     };
 
-    //이메일 중복 체크
+    // 이메일 중복 체크
     const onCheckEmail = async () => {
-        if (formData.email == null || formData.email == "") {
+        if (formData.email1 == null || formData.email1 == "") {
             alert("이메일을 입력해주세요.");
             return;
         }
@@ -108,18 +109,23 @@ const FormJoin = ({ join, }) => {
         }
     };
 
-    //비밀번호 유효성
+    // 이메일 합치기
+    useEffect(() => {
+        setFormData({ ...formData, email: formData.email1 + '@' + formData.email2 })
+    }, [formData.email1, formData.email2])
+
+    // 비밀번호 유효성
     const onCheckPassword = (password) => {
         const regex = /^(?=.*[A-Za-z])(?=.*\d|(?=.*\W)).{8,16}$/;
         return regex.test(password);
     }
 
-    //비밀번호 확인
+    // 비밀번호 확인
     const onMatchPassword = () => {
         setPasswordMatch(formData.password === formData.password2);
     }
 
-    //비밀번호 유효성검사 + 확인
+    // 비밀번호 유효성검사 + 확인
     useEffect(() => {
 
         const isValid = onCheckPassword(formData.password);
@@ -128,7 +134,7 @@ const FormJoin = ({ join, }) => {
 
     }, [formData.password, formData.password2])
 
-    //핸드폰 번호 포매팅
+    // 핸드폰 번호 포매팅
     const formatPhone = (str) => {
         str = str.replace(/[^0-9]/g, '');
         let tmp = '';
@@ -151,24 +157,40 @@ const FormJoin = ({ join, }) => {
         }
     };
 
-    //주소 모달창부터~
-    const openModal = () => {
-        setIsModalOpen(true);
+    // 주소 적용
+    const handleAddressComplete = (data) => {
+        setFormData({ ...formData, address: data.address });
+        setIsOpen(false); // 주소 선택 후 팝업을 닫습니다.
     };
 
-    const handleAddressComplete = () => {
-        setIsModalOpen(false);
+    // 주소창 닫기
+    const closeHandler = (state) => {
+            setIsOpen(false);
     };
 
+    // 주소창 열기
+    const toggleHandler = () => {
+        console.log(isOpen);
+        console.log('toggleHandler 실행됨');
+        setIsOpen(!isOpen); // isOpen 상태를 토글
+    };
 
     //유효성 검사 마무리
     const onValidate = () => {
-        if (!inputDisable.isloginid) {
-            alert('아이디 중복 체크를 완료해주세요.');
+        if (formData.loginid.trim() === '' || formData.loginid == null) {
+            alert('아이디를 입력해주세요.');
             return
         }
-        if (!inputDisable.isEmail) {
-            alert('이메일 중복 체크를 완료해주세요.');
+        if (formData.password.trim() === '' || formData.password == null) {
+            alert('비밀번호를 입력해주세요.');
+            return
+        }
+        if (formData.password2.trim() === '' || formData.password2 == null) {
+            alert('비밀번호를 확인해주세요.');
+            return
+        }
+        if (formData.email.trim() === '' || formData.email == null) {
+            alert('이메일을 입력해주세요.');
             return
         }
         if (formData.name.trim() === '' || formData.name == null) {
@@ -183,20 +205,23 @@ const FormJoin = ({ join, }) => {
             alert('주소를 입력해주세요.');
             return
         }
+        if (!inputDisable.isloginid) {
+            alert('아이디 중복 체크를 완료해주세요.');
+            return
+        }
+        if (!inputDisable.isEmail) {
+            alert('이메일 중복 체크를 완료해주세요.');
+            return
+        }
 
     }
-
-    useEffect(()=>{
-        setFormData({...formData, email : formData.email1 + '@' + formData.email2})
-    },[formData.email1, formData.email2])
-
 
     return (
         <div className="form">
             <h2 className="login-title">Join</h2>
 
             <form className="login-form" onSubmit={(e) => onJoin(e)}>
-                <div>
+                <div class='join-loginid'>
                     <label htmlFor="loginid">사용자ID</label>
                     <input
                         id="loginid"
@@ -209,7 +234,7 @@ const FormJoin = ({ join, }) => {
                     />
                     <button type='button' disabled={inputDisable.isloginid} onClick={onCheckId}>아이디체크</button>
                 </div>
-                <div>
+                <div class='join-password'>
                     <label htmlFor="password">비밀번호</label>
                     <input
                         id="password"
@@ -223,7 +248,7 @@ const FormJoin = ({ join, }) => {
                     />
                     {!passwordValid && <p style={{ color: 'red' }}>8자 이상 16자 이하로 영문자, 숫자, 특수문자 중 두 가지 이상 포함해야 합니다.</p>}
                 </div>
-                <div>
+                <div class='join-password2'>
                     <label htmlFor="password2">비밀번호확인</label>
                     <input
                         id="password2"
@@ -237,7 +262,7 @@ const FormJoin = ({ join, }) => {
                     />
                     {!passwordMatch && <p style={{ color: 'red' }}>비밀번호가 일치하지 않습니다.</p>}
                 </div>
-                <div>
+                <div class='join-name'>
                     <label htmlFor="name">이름</label>
                     <input
                         id="name"
@@ -248,7 +273,7 @@ const FormJoin = ({ join, }) => {
                         onChange={handleChange}
                     />
                 </div>
-                <div>
+                <div class='join-phone'>
                     <label htmlFor="text">핸드폰 번호</label>
                     <input
                         id="phone"
@@ -260,7 +285,7 @@ const FormJoin = ({ join, }) => {
                         onChange={handleChange}
                     />
                 </div>
-                <div>
+                <div class='join-email'>
                     <label htmlFor="email">Email</label>
                     <input
                         id="email"
@@ -271,34 +296,45 @@ const FormJoin = ({ join, }) => {
                         onChange={handleChange}
                         disabled={inputDisable.isEmail}
                     />@
-                   <select value={formData.email2} name="email2" disabled={inputDisable.isEmail} onChange={handleChange}>
-                    <option value='naver.com'>naver.com</option>
-                    <option value="gmail.com">gmail.com</option>
-                    <option value='daum.net'>daum.net</option>
-                    <option value='hanmail.net'>hanmail.net</option>
-                    <option value='nate.com'>nate.com</option>
-
-                </select>
+                    <select value={formData.email2} name="email2" disabled={inputDisable.isEmail} onChange={handleChange}>
+                        <option value='naver.com'>naver.com</option>
+                        <option value="gmail.com">gmail.com</option>
+                        <option value='daum.net'>daum.net</option>
+                        <option value='hanmail.net'>hanmail.net</option>
+                        <option value='nate.com'>nate.com</option>
+                    </select>
                     <button type='button' onClick={onCheckEmail}>이메일체크</button>
                 </div>
-                <div>
-                    <label htmlFor="address">주소</label>
-                    {/* <input
-                        id="address"
-                        type="address"
-                        placeholder="주소를 입력해주세요!"
-                        name="address"
-                        value={formData.address}
-                        onChange={handleChange}
-                    /> */}
-                    <button type='button' onClick={() => setIsModalOpen(true)}>주소 검색</button>
-                    {isModalOpen && (
-                        <DaumPostcode
-                            onComplete={handleAddressComplete}
-                            autoClose = {true}
-                            animation />)}
+                <div class='join-address'>
+                    <div class='dis_add'>
+                        <div class='zonecode'>
+                            <button
+                                class='address_btn' type="button" onClick={toggleHandler}> 주소 입력 </button>
+                        </div>
+                    </div>
+                    {isOpen && (
+                        <div class="daum-address-popup"  style={{textAlign:'right'}}>
+                            <button type='button' class="close-button" onClick={closeHandler} >&times;</button>
+                            <DaumPostcode
+                                onComplete={handleAddressComplete}
+                                onClose={closeHandler}
+                                autoClose
+                               />
+                        </div>
+                    )}
+                    <div class='address'>
+                        <label htmlFor="address">주소</label>
+                        <input
+                            id="address"
+                            type="text"
+                            placeholder="주소를 입력해주세요!"
+                            name="address"
+                            value={formData.address}
+                            readOnly
+                        />
+                    </div>
                 </div>
-                <div>
+                <div class='join-address2'>
                     <label htmlFor="address2">상세주소</label>
                     <input
                         id="address2"
@@ -309,14 +345,14 @@ const FormJoin = ({ join, }) => {
                         onChange={handleChange}
                     />
                 </div>
-                <div class='join-radio'>
+                <div class='join-radio gender'>
                     <label>성별</label>
                     <input type="radio" name="gender" id="male" value="male" checked={formData.gender === 'male'} onChange={handleChange} />
                     <label htmlFor="male" class='check-label'><span>남성</span></label>
                     <input type="radio" name="gender" id="female" value="female" checked={formData.gender === 'female'} onChange={handleChange} />
                     <label htmlFor="female" class='check-label'><span>여성</span></label>
                 </div>
-                <div class='join-radio'>
+                <div class='join-radio sms'>
                     <label htmlFor="address">SMS수신</label>
                     <input type="radio" name="sms" id="sms_yes" value="yes" checked={formData.sms === 'yes'} onChange={handleChange} />
                     <label htmlFor="sms_yes" class='check-label'><span>동의</span></label>
@@ -326,9 +362,9 @@ const FormJoin = ({ join, }) => {
                 <button className="btn btn--form btn-login" type="submit">
                     Join
                 </button>
-            </form>
+            </form >
             <LoginContextConsumer />
-        </div>
+        </div >
     );
 };
 
