@@ -52,7 +52,7 @@ public class RequestBookController {
 		}
 	}
 
-	@GetMapping("get")
+	@GetMapping("/get")
 	public ResponseEntity<?> getRequestBooksByUser(@AuthenticationPrincipal CustomUser user,
 			HttpServletRequest httpRequest) {
 		if(user == null) {

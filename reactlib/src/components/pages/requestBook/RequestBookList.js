@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import useRealName from '../../hooks/useRealName';
 import useAuth,{ LOGIN_STATUS } from '../../hooks/useAuth';
+import Cookies from 'js-cookie';
 
 const RequestBookList = () => {
   const navigate = useNavigate();
@@ -27,21 +28,21 @@ const RequestBookList = () => {
   const fetchRequestBook  = async () => {
     if(loginStatus === LOGIN_STATUS.LOGGED_IN) {
       try{
-        const response = await axios.get(`/api/requestbook/get`);
+        // 쿠키에서 JWT 토큰 추출
+        const token = Cookies.get('accessToken');
+        if (!token) {
+            throw new Error('No token found');
+        }
+        const response = await axios.get(`/api/requestbook/get`,{
+          headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        });
         setRequestBooks(response.data);
         setErrored(false);
       } catch(error){
-        if (error.response) {
-          // 서버가 응답을 반환한 경우 (예: 4xx, 5xx 오류)
-          console.error('Server responded with an error:', error.response.data);
-        } else if (error.request) {
-          // 요청이 서버에 도달하지 않은 경우 (예: 네트워크 오류)
-          console.error('Request did not reach the server:', error.request);
-        } else {
-          // 기타 오류 처리
-          console.error('Error while making the request:', error.message);
-        }
         setErrored(true);
+        console.error('There was an error fetching the request books!', error);
       }
     } else {
         setRequestBooks([]);
