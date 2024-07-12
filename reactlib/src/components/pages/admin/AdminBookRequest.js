@@ -3,10 +3,12 @@ import axios from 'axios';
 import AdminBookRequestDetail from './AdminBookRequestDetail';
 import AdminHeader from './AdminHeader';
 import AdminSide from './AdminSide';
-import "./Table.css";
+import "./AdminPage.css";
 import { useNavigate } from 'react-router-dom';
 import moment from "moment";
 import DatePicker from "react-datepicker";
+import { GlobalStyles } from './GlobalStyles';
+
 
 const AdminBookRequest = () => {
   const [requests, setRequests] = useState([]);
@@ -19,8 +21,7 @@ const AdminBookRequest = () => {
   const [itemsPerPage] = useState(10);
   const [searchResult, setSearchResult] = useState([]);
   const [originalResult, setOriginalResult] = useState([]); // 원본 데이터 저장
-  const [showModal, setShowModal] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(null);
+
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [searchMonth, setSearchMonth] = useState(null); // 검색할 날짜 상태 추가
@@ -38,10 +39,10 @@ const AdminBookRequest = () => {
         setSearchResult(response.data.result);
         setOriginalResult(response.data.result); // 원본 데이터 저장
       } else {
-        console.error('Fetched data is not an array:', response.data.result);
+        console.error(response.data.result);
       }
     } catch (error) {
-      console.error("Error fetching holidays:", error);
+      console.error(error);
     }
   };
 
@@ -86,7 +87,7 @@ const AdminBookRequest = () => {
     setIsModalOpen(false);
     setSelectedRequest(null);
   };
-
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const handleSort = (key) => {
     let direction = 'ascending';
     if (sortConfig.key === key && sortConfig.direction === 'ascending') {
@@ -121,7 +122,8 @@ const AdminBookRequest = () => {
     } else if (searchCriteria === 'date') {
       filteredResults = originalResult.filter(holiday => searchMonthStr && moment(holiday.holiday).format('YYYY-MM') === searchMonthStr);
     }
-    else { filteredResults = originalResult.filter(holiday => holiday.libNum.includes(searchTerm) );
+    else {
+      filteredResults = originalResult.filter(holiday => holiday.libNum.includes(searchTerm));
 
     }
 
@@ -149,19 +151,22 @@ const AdminBookRequest = () => {
 
   return (
     <>
-     <AdminHeader />
-      <div className="admin-main-container">
-
-        <div className="adminside">
-          <AdminSide />
-        </div>
-
-        <div className="admin-content">
-          <form className="admin-con">
-          <h1>희망도서신청</h1>
+    <GlobalStyles width="100vw" />
+    <div className="admin-page">
 
 
-          <div className="search-container">
+    <div className="admin-base">
+      <AdminHeader />
+      <AdminSide />
+    </div>
+    <main className="admin-page-main">
+      <div className="admin-page-body">
+        <div className="admin-page-title">
+            <h1>희망도서신청</h1>
+          </div>
+
+
+          <div className="admin-page-search">
             <select value={searchCriteria} onChange={(e) => setSearchCriteria(e.target.value)}>
               <option value="title">도서명</option>
               <option value="author">저자</option>
@@ -169,12 +174,12 @@ const AdminBookRequest = () => {
             </select>
 
             {searchCriteria === 'title' && (
-              <input 
-                type="text" 
-                placeholder="도서 제목을 입력하세요" 
-                value={searchTerm} 
-                onChange={(e) => setSearchTerm(e.target.value)} 
-                onKeyDown={handleKeyDown} 
+              <input
+                type="text"
+                placeholder="도서 제목을 입력하세요"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyDown={handleKeyDown}
               />
             )}
 
@@ -189,15 +194,14 @@ const AdminBookRequest = () => {
               />
             )}
 
-            <button type="button"  class="btn btn-outline-dark"   onClick={handleSearch}>검색</button>
+            <button type="button" className="btn btn-outline-dark" onClick={handleSearch}>검색</button>
           </div>
-          
 
 
 
-          <table className='adminTable'>
+          <table className="admin-table">
             <thead>
-              <tr class='admintr'>
+              <tr className='admin-th-tr'>
                 <th>No</th>
                 <th className='sortable' onClick={() => handleSort('isbn')}>ISBN</th>
                 <th className='sortable' onClick={() => handleSort('title')}>도서 제목</th>
@@ -209,7 +213,7 @@ const AdminBookRequest = () => {
             </thead>
             <tbody>
               {searchResult.map((request, index) => (
-                <tr key={index} onClick={() => handleOpenModal(request)} class='admintr'>
+                <tr key={index} onClick={() => handleOpenModal(request)} className='admin-td-tr'>
                   <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
                   <td>{request.isbn}</td>
                   <td>{request.title}</td>
@@ -220,35 +224,50 @@ const AdminBookRequest = () => {
                 </tr>
               ))}
             </tbody>
-            </table>
-            </form>
-          <nav aria-label="Page navigation example">
-            <ul className="pagination">
-              <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-                <button type="button" class="btn btn-outline-dark" className="page-link" onClick={() => changePage(currentPage - 1)}>&laquo;</button>
-              </li>
-              {Array.from({ length: totalPages }, (_, i) => (
-                <li key={i + 1} className={`page-item ${i + 1 === currentPage ? 'active' : ''}`}>
-                  <button type="button" class="btn btn-outline-dark" className="page-link" onClick={() => changePage(i + 1)}>
-                    {i + 1}
-                  </button>
-                </li>
-              ))}
-              <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-                <button type="button" class="btn btn-outline-dark" className="page-link" onClick={() => changePage(currentPage + 1)}>&raquo;</button>
-              </li>
-            </ul>
-          </nav>
-          {isModalOpen && (
-            <AdminBookRequestDetail
-              isOpen={isModalOpen}
-              onClose={handleCloseModal}
-              request={selectedRequest}
-              onSave={handleSave}
-            />
-          )}
+          </table>
+
+          <div className="admin-pagination">
+            <div className="admin-pagination" >
+              <nav aria-label="Page navigation example">
+                <ul className="pagination" id="admin-pagination">
+                  <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                    <button type="button" className="btn btn-outline-dark page-link" onClick={() => paginate(currentPage - 1)} aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                    </button>
+                  </li>
+                  {Array.from({ length: totalPages }, (_, index) => (
+                    <li key={index + 1} className={`page-item ${index + 1 === currentPage ? 'active' : ''}`}>
+                      <button type="button" className="btn btn-outline-dark page-link" style={{ backgroundColor: "#092a4bec" }}  onClick={() => paginate(index + 1)}>
+                        {index + 1}
+                      </button>
+                    </li>
+                  ))}
+                  <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                    <button type="button" className="btn btn-outline-dark page-link" onClick={() => paginate(currentPage + 1)} aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                    </button>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+
+            {isModalOpen && (
+              <AdminBookRequestDetail
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+                request={selectedRequest}
+                onSave={handleSave}
+              />
+            )}
+
+
+          </div>
+
         </div>
-      </div>
+
+      </main>
+    </div>
+
     </>
   );
 };

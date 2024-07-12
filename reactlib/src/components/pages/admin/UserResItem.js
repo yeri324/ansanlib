@@ -4,8 +4,8 @@ import Modal from 'react-modal';
 import Calendar from 'react-calendar'; 
 import './UserResItem.css';
 import moment from 'moment';
-import './Table.css';
-
+import './AdminPage.css';
+import { GlobalStyles } from './GlobalStyles';
 const UserResItem = ({ res, onClickToCancelRes }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -90,15 +90,16 @@ const UserResItem = ({ res, onClickToCancelRes }) => {
     };
     Modal.setAppElement('#root'); // 접근성 설정
     return (
-        <>
+           <>
+           <GlobalStyles width="100vw" />
 
         <tr key={res.id}>
             <td>{res.id}</td>
             <td>{res.bookId.title}</td>
             <td>{res.startDate.split('T')[0]}</td>
             <td>{res.endDate.split('T')[0]}</td>
-            <td><button  type="button" class="btn btn-outline-dark" value={res.id} onClick={onClickToCancelRes}>삭제</button></td>
-            <td><button type="button" class="btn btn-outline-dark" value={res.id} onClick={openModal}>기간연장</button></td>
+            <td><button  type="button"id="adminbtn" class="btn btn-outline-dark"  value={res.id} onClick={onClickToCancelRes}>삭제</button></td>
+            <td><button type="button"id="adminbtn" class="btn btn-outline-dark"  value={res.id} onClick={openModal}>기간연장</button></td>
             <Modal
                 isOpen={isOpen}
                 onRequestClose={closeModal}
@@ -123,7 +124,7 @@ const UserResItem = ({ res, onClickToCancelRes }) => {
                        prevLabel={showPrevButton ? '<' : null} 
                     />
                     </div>
-                    <button type="button" class="btn btn-outline-dark" onClick={extendRes}>연장하기</button>
+                    <button type="button" id="adminbtn" class="btn btn-outline-dark"  onClick={extendRes}>연장하기</button>
 
                 </div>
             </Modal>
