@@ -133,16 +133,46 @@ public class UserService {
 		}
 	}
 	
-//    public String getPassword(String userId) {
-//         Optional<LibUser> optionalUser = userRepository.findByLoginid(userId);
-//        if (optionalUser.isPresent()) {
-//             LibUser user = optionalUser.get();
-//            return user.getPassword();
-//        } else {
-//            return null;
-//        }
-	// }
+//	//임시 비밀번호 생성
+//	 public ResponseEntity<String> createTempPassword(String loginid, String email) {
+//	        Optional<LibUser> user = userRepository.findByLoginidAndEmail(loginid, email);
+//	        if (user == null) {
+//	            return null; // 사용자가 존재하지 않는 경우 처리
+//	        }
 //
+//	        // 임시 비밀번호 생성 로직 (예시)
+//	        String temporaryPassword = createTempPassword();
+//	        user.setPassword(temporaryPassword);
+//	        userRepository.save(user);
+//
+//	        // 여기서 이메일 전송 로직 추가 (실제로는 이메일 전송 라이브러리 등을 사용)
+//	        sendTemporaryPasswordByEmail(email, temporaryPassword);
+//
+//	        return temporaryPassword;
+//	    }
+//	
+//	// TempPass - 임시비밀번호 생성
+//	public String generateTempPassword() {
+//		SecureRandom random = new SecureRandom();
+//		StringBuilder password = new StringBuilder(PASSWORD_LENGTH);
+//		for (int i = 0; i < PASSWORD_LENGTH; i++) {
+//			password.append(CHARACTERS.charAt(random.nextInt(CHARACTERS.length())));
+//		}
+//		return password.toString();
+//	}
+//
+//	private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+//	private static final int PASSWORD_LENGTH = 10;
+//
+//	// 메일보내~
+//	public void sendEmail(String to, String subject, String text) {
+//		SimpleMailMessage message = new SimpleMailMessage();
+//		message.setTo(to);
+//		message.setSubject(subject);
+//		message.setText(text);
+//		// mailSender.send(message);
+//	}
+	
 
 //	// 비밀번호찾기 - findPw
 //	public String findPw(UserDto userDto) {
@@ -170,27 +200,4 @@ public class UserService {
 //		}
 //
 //	}
-//
-//	// TempPass - 임시비밀번호 생성
-//	public String generateTempPassword() {
-//		SecureRandom random = new SecureRandom();
-//		StringBuilder password = new StringBuilder(PASSWORD_LENGTH);
-//		for (int i = 0; i < PASSWORD_LENGTH; i++) {
-//			password.append(CHARACTERS.charAt(random.nextInt(CHARACTERS.length())));
-//		}
-//		return password.toString();
-//	}
-//
-//	private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-//	private static final int PASSWORD_LENGTH = 10;
-//
-//	// 메일보내~
-//	public void sendEmail(String to, String subject, String text) {
-//		SimpleMailMessage message = new SimpleMailMessage();
-//		message.setTo(to);
-//		message.setSubject(subject);
-//		message.setText(text);
-//		// mailSender.send(message);
-//	}
-
 }
