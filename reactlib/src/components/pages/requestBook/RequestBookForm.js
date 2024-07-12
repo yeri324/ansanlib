@@ -9,7 +9,7 @@ const RequestBookForm = () => {
 
   const name = useRealName();
 
-  const { loginStatus, userId: authUserId }= useAuth();
+  const { loginStatus }= useAuth();
   
   useEffect(()=>{
     //로그아웃 됨.
@@ -18,11 +18,7 @@ const RequestBookForm = () => {
       navigate("/login");
       return;
     }
-    // 로그인 상태일 때 사용자 ID 설정
-    if (loginStatus === LOGIN_STATUS.LOGGED_IN) {
-      setUserId(authUserId);
-    }
-  }, [loginStatus, authUserId]); // 로그인 상태 변경시 useEffect 실행
+  },[loginStatus]); //로그인 상태 변경시 useEffect 실행
 
 
   const [isbn, setIsbn] = useState('');
@@ -30,8 +26,6 @@ const RequestBookForm = () => {
   const [author, setAuthor] = useState('');
   const [publisher, setPublisher] = useState('');
   const [pubDate, setPubDate] = useState('');
-  const [userId, setUserId] = useState(null);
-  const [userName, setUserName] = useState("");
   const [libName, setLibName]  =useState('');
 
   const handleSubmit = async (event) => {
@@ -39,11 +33,8 @@ const RequestBookForm = () => {
 
     const requestBook = {
       isbn, title, author, publisher,
-      pubDate, userId, lib_name: libName
+      pubDate, lib_name: libName
     };
-
-    console.log("Sending request with data:", requestBook); // 디버깅 로그 추가
-
 
     try{
       const response = await axios.post('/api/requestbook/create', requestBook);

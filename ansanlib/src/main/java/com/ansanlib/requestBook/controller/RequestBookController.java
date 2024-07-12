@@ -39,8 +39,10 @@ public class RequestBookController {
 		if(user == null) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Not Logged in.");
 		}
+		
+		long userId = user.getUser().getUserId();
 		try {
-			RequestBook savedRequestBook = requestBookService.createRequestBook(createRequestBookDto);
+			RequestBook savedRequestBook = requestBookService.createRequestBook(userId, createRequestBookDto);
 			RequestBookDto savedRequestBookDto = new RequestBookDto(savedRequestBook);
 			return ResponseEntity.ok(savedRequestBookDto);
 		}catch (CreateRequestBookException e1) {

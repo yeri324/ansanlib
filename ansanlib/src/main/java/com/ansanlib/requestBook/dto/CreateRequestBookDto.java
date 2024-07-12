@@ -15,6 +15,5 @@ public class CreateRequestBookDto {
 	private String author;
 	private String publisher;
 	private LocalDate pubDate;
-	private Long userId;
 	private String lib_name;
 }

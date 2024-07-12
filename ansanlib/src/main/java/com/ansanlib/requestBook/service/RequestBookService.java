@@ -25,7 +25,7 @@ public class RequestBookService {
 	@Autowired
 	private AdminUserService adminUserService;
 	
-	public RequestBook createRequestBook(CreateRequestBookDto createRequestBookDto) {
+	public RequestBook createRequestBook(long userId, CreateRequestBookDto createRequestBookDto) {
 		
 		//희망 도서 entity 생성
 		RequestBook requestBook = new RequestBook();
@@ -37,13 +37,11 @@ public class RequestBookService {
 	    requestBook.setRegist_date(LocalDateTime.now());
 	    requestBook.setLib_name(createRequestBookDto.getLib_name());
 
-	    LibUser libUser = new LibUser();
-	    libUser.setUserId(createRequestBookDto.getUserId());
-	    requestBook.setLibUser(libUser);
 	    
         //사용자 존재여부 확인
+	    LibUser user;
         try {
-            libUser = adminUserService.getUserById(createRequestBookDto.getUserId());
+            user = adminUserService.getUserById(userId);
         } catch (EntityNotFoundException exception) {
             throw new CreateReservationException("해당 사용자를 찾을 수 없습니다.");
         }
