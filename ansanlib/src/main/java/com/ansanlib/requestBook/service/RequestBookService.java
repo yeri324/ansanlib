@@ -25,6 +25,7 @@ public class RequestBookService {
 	@Autowired
 	private AdminUserService adminUserService;
 	
+	@Transactional
 	public RequestBook createRequestBook(long userId, CreateRequestBookDto createRequestBookDto) {
 		
 		//희망 도서 entity 생성
@@ -57,16 +58,19 @@ public class RequestBookService {
 	    return requestBookRepository.save(requestBook);
 	}
 	
+	@Transactional
     public List<RequestBook> getRequestBooksByUser(Long userId) {
         return requestBookRepository.findByUserId(userId);
     }
-
-    public RequestBook getRequestBookById(Long id) {
-        return requestBookRepository.findById(id).orElse(null);
+	
+	@Transactional
+    public RequestBook getRequestBookById(Long requestBookId) {
+        return requestBookRepository.findById(requestBookId).orElse(null);
     }
-
-    public void deleteRequestBook(Long id) throws Exception {
-        RequestBook requestBook = requestBookRepository.findById(id)
+	
+	@Transactional
+    public void deleteRequestBook(Long requestBookId) throws Exception {
+        RequestBook requestBook = requestBookRepository.findById(requestBookId)
             .orElseThrow(() -> new Exception("신청된 도서를 찾을 수 없습니다."));
         requestBookRepository.delete(requestBook);
     }

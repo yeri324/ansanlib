@@ -9,8 +9,6 @@ const RequestBookList = () => {
 
   const name = useRealName();
 
-  const [userId, setUserId] = useState(null);
-  const [userName, setUserName] = useState("");
   const [requestBooks, setRequestBooks] = useState([]);
   const [selectedRequestBooks, setSelectedRequestBooks] = useState([]);
   const [isErrored, setErrored] =useState(false);
@@ -26,18 +24,6 @@ const RequestBookList = () => {
     }
   }, [loginStatus]); //로그인 상태 변경시 useEffect 실행
 
-  // useEffect(()=>{
-  //   const memberData = JSON.parse(sessionStorage.getItem("member") ?? "null");
-  //   if(memberData?.userId) {
-  //     setUserId(memberData?.userId);
-  //     setUserName(memberData?.name);
-  //   } else {
-  //       setErrored(true);
-  //       alert("로그인이 되어있지 않습니다.");
-  //       navigate("/login");
-  //   }
-  // },[])
-  
   const fetchRequestBook  = async () => {
     if(loginStatus === LOGIN_STATUS.LOGGED_IN) {
       try{
@@ -45,8 +31,17 @@ const RequestBookList = () => {
         setRequestBooks(response.data);
         setErrored(false);
       } catch(error){
+        if (error.response) {
+          // 서버가 응답을 반환한 경우 (예: 4xx, 5xx 오류)
+          console.error('Server responded with an error:', error.response.data);
+        } else if (error.request) {
+          // 요청이 서버에 도달하지 않은 경우 (예: 네트워크 오류)
+          console.error('Request did not reach the server:', error.request);
+        } else {
+          // 기타 오류 처리
+          console.error('Error while making the request:', error.message);
+        }
         setErrored(true);
-        console.error('There was an error fetching the request books!', error);
       }
     } else {
         setRequestBooks([]);
@@ -74,7 +69,7 @@ const RequestBookList = () => {
       setRequestBooks(requestBooks.filter(requestBook => !selectedRequestBooks.includes(requestBook.id)));
       setSelectedRequestBooks([]);
     } catch (error){
-      console.error('도서 삭제 중 오류 발생',error)
+      console.error('도서 삭제 중 오류 발생',error);
 ;      alert('희망도서 삭제 중 오류가 발생하였습니다. ');
     }
   };
