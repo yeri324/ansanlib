@@ -7,8 +7,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import AdminHeader from "./AdminHeader";
 import AdminSide from "./AdminSide";
-import "./Table.css";
-
+import "./AdminPage.css";
+import { GlobalStyles } from "./GlobalStyles";
 
 const HolidayList = () => {
   const [searchResult, setSearchResult] = useState([]);
@@ -78,8 +78,10 @@ const HolidayList = () => {
     try {
       const response = await axios.delete(`/api/admin/holiday/${id}`);
       console.log("Delete response:", response.data);
+      alert("삭제가 완료되었습니다.");
       // After deletion, fetch holidays again to update the list
       fetchHolidays();
+      
     } catch (error) {
       console.error("Error deleting holiday:", error);
     }
@@ -135,19 +137,22 @@ const HolidayList = () => {
 
   return (
     <>
+    <GlobalStyles width="100vw" />
+    <GlobalStyles min-height="100vh" />
+    <div className="admin-page">
+
+
+    <div className="admin-base">
       <AdminHeader />
-      <div className="admin-page-container">
+      <AdminSide />
+    </div>
+    <main className="admin-page-main">
+      <div className="admin-page-body">
+        <div className="admin-page-title">
+            <h1>휴관일 목록</h1>
+          </div>
 
-        <div className="adminside">
-          <AdminSide />
-        </div>
-
-        <div className="admin-content">
-          <form className="admin-con">
-          <h1>휴관일 목록</h1>
-
-
-          <div className="search-container">
+          <div className="admin-page-search">
             <select value={searchCriteria} onChange={(e) => setSearchCriteria(e.target.value)}>
               <option value="library">도서관 이름</option>
               <option value="date">날짜 (월)</option>
@@ -174,19 +179,27 @@ const HolidayList = () => {
               />
             )}
 
-            <button type="button" class="btn btn-outline-dark" onClick={handleSearch}>검색</button>
-            <button type="button" class="btn btn-outline-dark" onClick={handleRefresh}>새로고침</button>
+            <button type="button" id="adminbtn" class="btn btn-outline-dark"  onClick={handleSearch}>검색</button>
+            <button type="button" id="adminbtn" class="btn btn-outline-dark" onClick={handleRefresh}>새로고침</button>
+         
+            <div className="admin-page-button">
+            <button type="button" id="adminbtn" class="btn btn-outline-dark"  onClick={() => navigate('/admin/holiday')}>돌아가기</button>
+            <button type="button" id="adminbtn" class="btn btn-outline-dark"  onClick={handleAddHoliday}>등록하기</button>
           </div>
 
-          <div className="admin-buttons">
-            <button type="button" class="btn btn-outline-dark" onClick={() => navigate('/admin/holiday')}>돌아가기</button>
-            <button type="button" class="btn btn-outline-dark" onClick={handleAddHoliday}>등록하기</button>
+         
           </div>
 
 
-          <table className='adminTable' >
+
+          
+
+
+          <table className="admin-table">
+
             <thead>
-              <tr className="admintr">
+
+              <tr className="admin-th-tr">
                 <th>No</th>
                 <th className="sortable" onClick={() => handleSort('lib_name')} style={{ width: '20%' }}>도서관 이름</th>
                 <th className="sortable" onClick={() => handleSort('libNum')} style={{ width: '30%' }}>도서관 번호</th>
@@ -196,22 +209,23 @@ const HolidayList = () => {
             </thead>
             <tbody>
               {Array.isArray(currentItems) && currentItems.map((holiday) => (
-                <tr key={holiday.id} className="admintr">
+                <tr key={holiday.id} className="admin-td-tr" >
                   <td>{holiday.id}</td>
                   <td>{holiday.lib_name}</td>
                   <td>{holiday.library ? holiday.library.libNum : ''}</td>
                   <td>{holiday.holiday}</td>
                   <td>
-                    <button type="button" class="btn btn-light" onClick={() => handleDelete(holiday.id)}>삭제</button>
+                    <button type="button"id="adminbtn" class="btn btn-outline-dark" onClick={() => handleDelete(holiday.id)}>삭제</button>
                   </td>
                 </tr>
               ))}
             </tbody>
-
           </table>
-          </form>
-          <nav aria-label="Page navigation example">
-            <ul className="pagination">
+
+
+          <div className="admin-pagination" >
+   <nav aria-label="Page navigation example">
+            <ul className="pagination" id="admin-pagination">
               <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
                 <button type="button" class="btn btn-outline-dark" className="page-link" onClick={() => paginate(currentPage - 1)} aria-label="Previous">
                   <span aria-hidden="true">&laquo;</span>
@@ -219,13 +233,13 @@ const HolidayList = () => {
               </li>
               {Array.from({ length: totalPages }, (_, index) => (
                 <li key={index + 1} className={`page-item ${index + 1 === currentPage ? 'active' : ''}`}>
-                  <button type="button" class="btn btn-outline-dark" className="page-link" onClick={() => paginate(index + 1)}>
+                  <button type="button"  class="btn btn-outline-dark" style={{backgroundColor:"#092a4bec"}} className="page-link" onClick={() => paginate(index + 1)}>
                     {index + 1}
                   </button>
                 </li>
               ))}
               <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-                <button type="button" class="btn btn-outline-dark" className="page-link" onClick={() => paginate(currentPage + 1)} aria-label="Next">
+                <button type="button"  class="btn btn-outline-dark" className="page-link" onClick={() => paginate(currentPage + 1)} aria-label="Next">
                   <span aria-hidden="true">&raquo;</span>
                 </button>
               </li>
@@ -244,13 +258,14 @@ const HolidayList = () => {
     />
   )}
 
-         
+</div>
+
+
+
         </div>
-      </div>
-     
+      </main>
+    </div>
     </>
-  
   );
 };
-
 export default HolidayList;

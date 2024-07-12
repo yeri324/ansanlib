@@ -2,26 +2,24 @@ import React from "react";
 import AdminHeader from "./AdminHeader";
 import AdminSide from "./AdminSide";
 import './Admin.css'; // 스타일을 위한 CSS 파일을 임포트합니다.
-
+import { GlobalStyles } from "./GlobalStyles";
 const Admin = () => {
     return (
         <>
-            <AdminHeader />
-            <div className="admin-main-container">
+        <GlobalStyles width="100vw" />
 
 
-                <div className="adminside">
-                    <AdminSide />
-                </div>
-
-                <div className="admin-content">
-                    <h1>메인 콘텐츠</h1>
-                    <p>여기에 메인 콘텐츠가 표시됩니다.</p>
-                </div>
-
-
-
-            </div>
+        <div className="amdin-main">
+        <div className="admin-base">
+        <AdminHeader />
+        <AdminSide />
+        </div>
+        <main className="admin-main-main">
+            <div className="admin-body">
+        <p>메인콘텐추~</p>
+        </div>
+        </main>
+        </div>
         </>
     );
 }

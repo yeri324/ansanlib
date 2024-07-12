@@ -101,8 +101,8 @@ const HolidayNew = ({ showModal, handleCloseModal, selectedDate, setSelectedDate
           <label>날짜 선택</label>
           <input type="date" onChange={(e) => setSelectedDate(moment(e.target.value))} />
         </div>
-        <button  class="btn btn-outline-dark" onClick={handleCloseModal}>취소</button>
-        <button  class="btn btn-outline-dark" type="submit">저장</button>
+        <button id="adminbtn" class="btn btn-outline-dark"  onClick={handleCloseModal}>취소</button>
+        <button id="adminbtn" class="btn btn-outline-dark"  type="submit">저장</button>
       </form>
     </div>
   </div>

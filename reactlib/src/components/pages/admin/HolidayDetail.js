@@ -36,7 +36,7 @@ const HolidayDetail = ({ show, handleClose, holidays }) => {
         )}
       </div>
       <div className="modal-footer">
-        <button onClick={handleClose}  className="btn btn-outline-dark">닫기</button>
+        <button onClick={handleClose}  id="adminbtn" class="btn btn-outline-dark" >닫기</button>
       </div>
     </div>
   </div>

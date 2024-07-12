@@ -44,7 +44,7 @@ const AdminBookRequestDetail = ({ isOpen, onClose, request, onSave }) => {
         ) : (
           <p>No data available</p>
         )}
-        <button type="button" className="btn btn-outline-dark" onClick={handleSave}>확인</button>
+        <button type="button" id="adminbtn" class="btn btn-outline-dark"  onClick={handleSave}>확인</button>
       </div>
     </div>
   );

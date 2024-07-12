@@ -1,9 +1,9 @@
 import React from 'react';
-// import "./AdminUserList.css";
+import "./AdminPage.css";
 
 const AdminUserItem = ({ user, handleDetail }) => {
     return (
-        <tr onClick={() => handleDetail(user)}>
+        <tr onClick={() => handleDetail(user)} className="admin-td-tr">
             <td >{user.userId}</td>
             <td>{user.loginid}</td>
             <td>{user.name}</td>

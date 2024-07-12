@@ -5,6 +5,7 @@ import axios from 'axios';
 import "./AddBook.css";
 import AdminHeader from './AdminHeader';
 import AdminSide from './AdminSide';
+import { GlobalStyles } from "./GlobalStyles";
 
 const AddBook = ({ csrf = {} }) => {
     const initialFormData = {
@@ -173,23 +174,23 @@ const AddBook = ({ csrf = {} }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-      
+
         if (!validate()) {
-          return;
+            return;
         }
-      
+
         const formDataCopy = {
-          ...formData,
-          pub_date: formData.pub_date ? formData.pub_date.getFullYear().toString() : '',
+            ...formData,
+            pub_date: formData.pub_date ? formData.pub_date.getFullYear().toString() : '',
         };
-      
+
         const data = new FormData();
         data.append('book', new Blob([JSON.stringify(formDataCopy)], { type: 'application/json' }));
-      
+
         if (formData.bookImg) {
-          data.append('file', formData.bookImg);
+            data.append('file', formData.bookImg);
         }
-      
+
         try {
             const response = await axios.post('http://localhost:8090/api/admin/book/new', data, {
                 headers: {
@@ -202,41 +203,45 @@ const AddBook = ({ csrf = {} }) => {
             alert('도서가 성공적으로 등록되었습니다!');
             window.location.href = '/admin/booklist';
         } catch (error) {
-          console.error(error);
+            console.error(error);
         }
-      };
+    };
 
     return (
         <>
-            <AdminHeader />
-            <div className="admin-page-container">
-                <div className="adminside">
+            <GlobalStyles width="100vw" />
+
+            <div className="admin-page">
+                <div className="admin-base">
+                    <AdminHeader />
                     <AdminSide />
                 </div>
-                <div className="admin-content">
-                    <form className="admin-con" onSubmit={handleSubmit} encType="multipart/form-data">
-                        <h1>도서 등록</h1>
-                        <div className='inputForm'>
+
+                <main className="admin-addBook-main">
+                    <div className="admin-addBook-body">
+                        <div className="admin-addBook-title">
+                            <h1>도서 등록</h1>
+                        </div>
+
+                        <form className="admin-addBook-form" onSubmit={handleSubmit}>
                             <input type="hidden" name="id" value={formData.id} />
                             <input type="hidden" name="status" value="AVAILABLE" />
                             
-                            <div className="form-group">
-                                <label className="input-group-text">도서 표지</label>
-                                {imagePreview && (
-                                    <div className="form-group">
-                                        <img src={imagePreview} alt="미리보기" className="img-thumbnail" />
-                                        <button type="button" className="btn btn-outline-dark" onClick={handleImageCancel}>취소</button>
-                                    </div>
-                                )}
-                                <input
-                                    type="file"
-                                    className="custom-file-input"
-                                    name="bookImgFile"
-                                    onChange={handleFileChange}
-                                    ref={fileInputRef}
-                                />
-                                <label className="custom-file-label">도서 이미지</label>
-                            </div>
+                            <label className="input-group-text">도서 표지</label>
+                            {imagePreview && (
+                                <div className="form-group">
+                                    <img src={imagePreview} alt="미리보기" className="img-thumbnail" />
+                                    <button type="button" className="btn btn-outline-dark" onClick={handleImageCancel}>취소</button>
+                                </div>
+                            )}
+                            <input
+                                type="file"
+                                className="custom-file-input"
+                                name="bookImgFile"
+                                onChange={handleFileChange}
+                                ref={fileInputRef}
+                            />
+                            <label className="custom-file-label">도서 이미지</label>
 
                             <div className="input-group mb-3">
                                 <label className="input-group-text">도서명</label>
@@ -248,8 +253,8 @@ const AddBook = ({ csrf = {} }) => {
                                     value={formData.title}
                                     onChange={handleChange}
                                 />
+                                {errors.title && <p className="text-danger">{errors.title}</p>}
                             </div>
-                            {errors.title && <p className="text-danger">{errors.title}</p>}
 
                             <div className="input-group mb-3">
                                 <label className="input-group-text">ISBN</label>
@@ -261,8 +266,8 @@ const AddBook = ({ csrf = {} }) => {
                                     value={formData.isbn}
                                     onChange={handleChange}
                                 />
+                                {errors.isbn && <p className="text-danger">{errors.isbn}</p>}
                             </div>
-                            {errors.isbn && <p className="text-danger">{errors.isbn}</p>}
 
                             <div className="input-group mb-3">
                                 <label className="input-group-text">저자</label>
@@ -274,8 +279,8 @@ const AddBook = ({ csrf = {} }) => {
                                     value={formData.author}
                                     onChange={handleChange}
                                 />
+                                {errors.author && <p className="text-danger">{errors.author}</p>}
                             </div>
-                            {errors.author && <p className="text-danger">{errors.author}</p>}
 
                             <div className="input-group mb-3">
                                 <label className="input-group-text">출판사</label>
@@ -287,8 +292,8 @@ const AddBook = ({ csrf = {} }) => {
                                     value={formData.publisher}
                                     onChange={handleChange}
                                 />
+                                {errors.publisher && <p className="text-danger">{errors.publisher}</p>}
                             </div>
-                            {errors.publisher && <p className="text-danger">{errors.publisher}</p>}
 
                             <div className="input-group mb-3">
                                 <label className="input-group-text">출판년도</label>
@@ -300,8 +305,8 @@ const AddBook = ({ csrf = {} }) => {
                                     className="form-control"
                                     placeholderText="출판년도를 입력해주세요"
                                 />
+                                {errors.pub_date && <p className="text-danger">{errors.pub_date}</p>}
                             </div>
-                            {errors.pub_date && <p className="text-danger">{errors.pub_date}</p>}
 
                             <div className="input-group mb-3">
                                 <label className="input-group-text">카테고리코드</label>
@@ -312,8 +317,8 @@ const AddBook = ({ csrf = {} }) => {
                                     value={formData.category_code}
                                     onChange={handleChange}
                                 />
+                                {errors.category_code && <p className="text-danger">{errors.category_code}</p>}
                             </div>
-                            {errors.category_code && <p className="text-danger">{errors.category_code}</p>}
 
                             <div className="input-group mb-3">
                                 <label className="input-group-text">상세 내용</label>
@@ -324,8 +329,8 @@ const AddBook = ({ csrf = {} }) => {
                                     value={formData.bookDetail}
                                     onChange={handleChange}
                                 />
+                                {errors.bookDetail && <p className="text-danger">{errors.bookDetail}</p>}
                             </div>
-                            {errors.bookDetail && <p className="text-danger">{errors.bookDetail}</p>}
 
                             <div className="input-group mb-3">
                                 <label className="input-group-text">소장 도서관</label>
@@ -338,7 +343,7 @@ const AddBook = ({ csrf = {} }) => {
                                     ))}
                                 </select>
                                 <select className="form-control" value={selectedSection} onChange={handleSectionChange} disabled={!selectedLibrary}>
-                                    <option value="">도서관선택</option>
+                                    <option value="">도서관 선택</option>
                                     {selectedLibrary &&
                                         libraries[selectedLibrary].map((section) => (
                                             <option key={section} value={section}>
@@ -346,8 +351,8 @@ const AddBook = ({ csrf = {} }) => {
                                             </option>
                                         ))}
                                 </select>
+                                {errors.lib_name && <p className="text-danger">{errors.lib_name}</p>}
                             </div>
-                            {errors.lib_name && <p className="text-danger">{errors.lib_name}</p>}
 
                             <div className="input-group mb-3">
                                 <label className="input-group-text">소장 위치</label>
@@ -355,12 +360,12 @@ const AddBook = ({ csrf = {} }) => {
                                     type="text"
                                     name="location"
                                     className="form-control"
-                                    placeholder="소장위치를 입력해주세요"
+                                    placeholder="소장 위치를 입력해주세요"
                                     value={formData.location}
                                     onChange={handleChange}
                                 />
+                                {errors.location && <p className="text-danger">{errors.location}</p>}
                             </div>
-                            {errors.location && <p className="text-danger">{errors.location}</p>}
 
                             <div className="input-group mb-3">
                                 <label className="input-group-text">도서 수량</label>
@@ -372,16 +377,16 @@ const AddBook = ({ csrf = {} }) => {
                                     value={formData.count}
                                     onChange={handleChange}
                                 />
+                                {errors.count && <p className="text-danger">{errors.count}</p>}
                             </div>
-                            {errors.count && <p className="text-danger">{errors.count}</p>}
-                        </div>
-                        <div className="form-group text-center">
-                            <button type="submit" className="btn btn-outline-dark">저장</button>
-                            <button type="button" className="btn btn-outline-dark" onClick={handleReset}>리셋</button>
-                        </div>
-                        <input type="hidden" name={csrf.parameterName} value={csrf.token} />
-                    </form>
-                </div>
+
+                            <div className="form-group">
+                                <button type="submit" className="btn btn-outline-dark">등록</button>
+                                <button type="button" className="btn btn-outline-dark" onClick={handleReset}>초기화</button>
+                            </div>
+                        </form>
+                    </div>
+                </main>
             </div>
         </>
     );
