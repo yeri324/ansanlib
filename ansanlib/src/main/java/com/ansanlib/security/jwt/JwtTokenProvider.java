@@ -1,23 +1,21 @@
 package com.ansanlib.security.jwt;
 
-
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.crypto.SecretKey;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import com.ansanlib.constant.Role;
-import com.ansanlib.constant.UserStatus;
 import com.ansanlib.entity.LibUser;
 import com.ansanlib.security.user.CustomUser;
+import com.ansanlib.user.repository.UserRepository;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -27,10 +25,14 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 
 
 @Component
+@RequiredArgsConstructor
 public class JwtTokenProvider {
+	
+	private final UserRepository userRepository;
 	
 	private String secretKey="|+<T%0h;[G97|I$5Lr?h]}`8rUX.7;0gw@bFr<R/|-U0n:_6j={'.T'GHs~<AxU9";
 
@@ -97,6 +99,18 @@ public class JwtTokenProvider {
             
             List<SimpleGrantedAuthority> authorities = new ArrayList<>();
             authorities.add(new SimpleGrantedAuthority(user.getRole().toString()));
+            
+            try {
+                Optional<LibUser> userInfo = userRepository.findById(userid);
+                if( userInfo.isPresent() ) {
+                    user.setName(userInfo.get().getName());
+                    user.setEmail(userInfo.get().getEmail());
+                    //필요한 정보 추가...
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                System.out.println("토큰 유효 -> DB 추가 정보 조회시 에러 발생...");
+            }
 
             UserDetails userDetails = new CustomUser(user);
 
