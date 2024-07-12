@@ -46,7 +46,11 @@ public class RequestBookService {
         } catch (EntityNotFoundException exception) {
             throw new CreateReservationException("해당 사용자를 찾을 수 없습니다.");
         }
-                
+        
+        //LibUser 설정
+        requestBook.setLibUser(user);
+        
+        //신청 도서 중복 검사
         if (requestBookRepository.checkIfOverlappingReqeustBookExists(
                 requestBook.getIsbn(),
                 requestBook.getLibUser().getUserId()

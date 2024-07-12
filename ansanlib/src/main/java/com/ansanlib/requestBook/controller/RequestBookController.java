@@ -48,6 +48,7 @@ public class RequestBookController {
 		}catch (CreateRequestBookException e1) {
 			return ResponseEntity.badRequest().body(e1.getMessage()); 
 		}catch (RuntimeException e2) {
+	        e2.printStackTrace(); // 서버 로그에 예외 출력
 			return ResponseEntity.badRequest().body("서버 내부 오류");
 		}
 	}
