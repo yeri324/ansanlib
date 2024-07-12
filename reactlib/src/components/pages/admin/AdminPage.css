@@ -1,5 +1,6 @@
 .admin-page {
-  background-color: hsla(45, 6%, 87%, 0.459);
+
+
   width: 100%;
   font-family: 'Noto Sans KR', sans-serif;
   padding-bottom: 30px;
@@ -15,6 +16,7 @@
   height: calc(100vh - 100px); /* 전체 높이에서 여백을 뺀 높이 설정 */
   overflow: hidden; /* 주의: 이 속성은 main 요소에 스크롤을 숨깁니다. */
   overflow-y: auto; /* 세로 스크롤바 추가 */
+  background-color: hsla(45, 6%, 87%, 0.459);
 }
 
 /*메인 폼 영역 */

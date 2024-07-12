@@ -226,29 +226,36 @@ const AddBook = ({ csrf = {} }) => {
                         <form className="admin-addBook-form" onSubmit={handleSubmit}>
                             <input type="hidden" name="id" value={formData.id} />
                             <input type="hidden" name="status" value="AVAILABLE" />
-                            
-                            <label className="input-group-text">도서 표지</label>
-                            {imagePreview && (
+
+                                                       {imagePreview && (
                                 <div className="form-group">
                                     <img src={imagePreview} alt="미리보기" className="img-thumbnail" />
                                     <button type="button" className="btn btn-outline-dark" onClick={handleImageCancel}>취소</button>
                                 </div>
                             )}
+                       
+                            <div  id="admin-input-form" className="input-group mb-3">
+                               
+
+                            <label id="admin-addBook-label" className="input-group-text">도서 표지</label>
+                           
                             <input
                                 type="file"
-                                className="custom-file-input"
-                                name="bookImgFile"
+                           className="form-control"
+                                id="admin-addBook-input"                                 name="bookImgFile"
                                 onChange={handleFileChange}
                                 ref={fileInputRef}
                             />
-                            <label className="custom-file-label">도서 이미지</label>
+                           
+                            </div>
 
-                            <div className="input-group mb-3">
-                                <label className="input-group-text">도서명</label>
+                            <div  id="admin-input-form"className="input-group mb-3">
+                                <label id="admin-addBook-label" className="input-group-text">도서명</label>
                                 <input
                                     type="text"
                                     name="title"
                                     className="form-control"
+                                     id="admin-addBook-input"
                                     placeholder="도서명을 입력해주세요"
                                     value={formData.title}
                                     onChange={handleChange}
@@ -256,12 +263,13 @@ const AddBook = ({ csrf = {} }) => {
                                 {errors.title && <p className="text-danger">{errors.title}</p>}
                             </div>
 
-                            <div className="input-group mb-3">
-                                <label className="input-group-text">ISBN</label>
+                            <div id="admin-input-form" className="input-group mb-3">
+                                <label id="admin-addBook-label" className="input-group-text">ISBN</label>
                                 <input
                                     type="text"
                                     name="isbn"
                                     className="form-control"
+                                     id="admin-addBook-input"
                                     placeholder="ISBN을 입력해주세요"
                                     value={formData.isbn}
                                     onChange={handleChange}
@@ -269,12 +277,13 @@ const AddBook = ({ csrf = {} }) => {
                                 {errors.isbn && <p className="text-danger">{errors.isbn}</p>}
                             </div>
 
-                            <div className="input-group mb-3">
-                                <label className="input-group-text">저자</label>
+                            <div id="admin-input-form" className="input-group mb-3">
+                                <label  id="admin-addBook-label" className="input-group-text">저자</label>
                                 <input
                                     type="text"
                                     name="author"
                                     className="form-control"
+                                     id="admin-addBook-input"
                                     placeholder="저자를 입력해주세요"
                                     value={formData.author}
                                     onChange={handleChange}
@@ -282,12 +291,13 @@ const AddBook = ({ csrf = {} }) => {
                                 {errors.author && <p className="text-danger">{errors.author}</p>}
                             </div>
 
-                            <div className="input-group mb-3">
-                                <label className="input-group-text">출판사</label>
+                            <div id="admin-input-form" className="input-group mb-3">
+                                <label id="admin-addBook-label" className="input-group-text">출판사</label>
                                 <input
                                     type="text"
                                     name="publisher"
                                     className="form-control"
+                                     id="admin-addBook-input"
                                     placeholder="출판사를 입력해주세요"
                                     value={formData.publisher}
                                     onChange={handleChange}
@@ -295,23 +305,22 @@ const AddBook = ({ csrf = {} }) => {
                                 {errors.publisher && <p className="text-danger">{errors.publisher}</p>}
                             </div>
 
-                            <div className="input-group mb-3">
-                                <label className="input-group-text">출판년도</label>
-                                <DatePicker
+                            <div id="admin-input-form" className="input-group mb-3">
+                                <label id="admin-addBook-label" className="input-group-text">출판년도</label>
+                                <input id="admin-addBook-input"
                                     selected={formData.pub_date}
                                     onChange={handleDateChange}
-                                    dateFormat="yyyy"
-                                    showYearPicker
                                     className="form-control"
-                                    placeholderText="출판년도를 입력해주세요"
+                                    placeholder="출판년도를 입력해주세요"
                                 />
                                 {errors.pub_date && <p className="text-danger">{errors.pub_date}</p>}
                             </div>
 
-                            <div className="input-group mb-3">
-                                <label className="input-group-text">카테고리코드</label>
+                            <div id="admin-input-form" className="input-group mb-3">
+                                <label  id="admin-addBook-label" className="input-group-text">카테고리코드</label>
                                 <input
                                     className="form-control"
+                                     id="admin-addBook-input"
                                     name="category_code"
                                     placeholder="카테고리 코드를 입력하세요."
                                     value={formData.category_code}
@@ -320,10 +329,11 @@ const AddBook = ({ csrf = {} }) => {
                                 {errors.category_code && <p className="text-danger">{errors.category_code}</p>}
                             </div>
 
-                            <div className="input-group mb-3">
-                                <label className="input-group-text">상세 내용</label>
+                            <div id="admin-input-form" className="input-group mb-3">
+                                <label id="admin-addBook-textarea" style={{width:"150px"}} className="input-group-text">상세 내용</label>
                                 <textarea
                                     className="form-control"
+                                     id="admin-addBook-textarea"
                                     name="bookDetail"
                                     placeholder="도서 상세 내용을 입력하세요."
                                     value={formData.bookDetail}
@@ -332,9 +342,9 @@ const AddBook = ({ csrf = {} }) => {
                                 {errors.bookDetail && <p className="text-danger">{errors.bookDetail}</p>}
                             </div>
 
-                            <div className="input-group mb-3">
-                                <label className="input-group-text">소장 도서관</label>
-                                <select className="form-control" value={selectedLibrary} onChange={handleLibraryChange}>
+                            <div id="admin-input-form" className="input-group mb-3">
+                                <label id="admin-addBook-label" className="input-group-text">소장 도서관</label>
+                                <select  id="admin-addBook-input" className="form-control" value={selectedLibrary} onChange={handleLibraryChange}>
                                     <option value="">도서관 선택</option>
                                     {Object.keys(libraries).map((library) => (
                                         <option key={library} value={library}>
@@ -342,8 +352,8 @@ const AddBook = ({ csrf = {} }) => {
                                         </option>
                                     ))}
                                 </select>
-                                <select className="form-control" value={selectedSection} onChange={handleSectionChange} disabled={!selectedLibrary}>
-                                    <option value="">도서관 선택</option>
+                                <select  id="admin-addBook-input" className="form-control" value={selectedSection} onChange={handleSectionChange} disabled={!selectedLibrary}>
+                                    <option  id="admin-addBook-input" value="">도서관 선택</option>
                                     {selectedLibrary &&
                                         libraries[selectedLibrary].map((section) => (
                                             <option key={section} value={section}>
@@ -354,8 +364,8 @@ const AddBook = ({ csrf = {} }) => {
                                 {errors.lib_name && <p className="text-danger">{errors.lib_name}</p>}
                             </div>
 
-                            <div className="input-group mb-3">
-                                <label className="input-group-text">소장 위치</label>
+                            <div id="admin-input-form" className="input-group mb-3">
+                                <label id="admin-addBook-label" className="input-group-text">소장 위치</label>
                                 <input
                                     type="text"
                                     name="location"
@@ -367,8 +377,8 @@ const AddBook = ({ csrf = {} }) => {
                                 {errors.location && <p className="text-danger">{errors.location}</p>}
                             </div>
 
-                            <div className="input-group mb-3">
-                                <label className="input-group-text">도서 수량</label>
+                            <div id="admin-input-form" className="input-group mb-3">
+                                <label id="admin-addBook-label" className="input-group-text">도서 수량</label>
                                 <input
                                     type="number"
                                     name="count"
