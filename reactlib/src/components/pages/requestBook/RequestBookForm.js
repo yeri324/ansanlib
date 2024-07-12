@@ -1,25 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import axios from '../security/apis/api';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import useRealName from '../../hooks/useRealName';
-import useAuth,{ LOGIN_STATUS } from '../../hooks/useAuth';
+import useAuth, { LOGIN_STATUS } from '../../hooks/useAuth';
+import RedirectLogin from '../../helpers/RedirectLogin';
+import Auth from '../../helpers/Auth';
 
 const RequestBookForm = () => {
-  const navigate = useNavigate();
-
   const name = useRealName();
 
-  const { loginStatus }= useAuth();
-  
-  useEffect(()=>{
-    //로그아웃 됨.
-    if(loginStatus === LOGIN_STATUS.LOGGED_OUT){
-      alert("로그인이 필요합니다.");
-      navigate("/login");
-      return;
-    }
-  },[loginStatus]); //로그인 상태 변경시 useEffect 실행
-
+  const { axios } = useAuth();
 
   const [isbn, setIsbn] = useState('');
   const [title, setTitle] = useState('');
@@ -149,4 +137,13 @@ const RequestBookForm = () => {
   );
 };
 
-export default RequestBookForm;
+export default function() {
+  return (
+    <>
+      <RedirectLogin />
+      <Auth loginStatus={LOGIN_STATUS.LOGGED_IN}>
+        <RequestBookForm />
+      </Auth>
+    </>
+  );
+};

@@ -1,48 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import axios from "../security/apis/api";
-import { useNavigate } from 'react-router-dom';
 import useRealName from '../../hooks/useRealName';
 import useAuth, { LOGIN_STATUS } from '../../hooks/useAuth';
+import RedirectLogin from '../../helpers/RedirectLogin';
+import Auth from '../../helpers/Auth';
 
 const ReservationList = () => {
-    const navigate = useNavigate();
-
     const name = useRealName();
 
     const [reservations, setReservations] = useState([]);
     const [selectedReservations, setSelectedReservations] = useState([]); 
     const [isErrored, setErrored] = useState(false);
 
-    const { loginStatus } = useAuth();
-
-    useEffect(() => {
-      //로그아웃됨.
-      if(loginStatus === LOGIN_STATUS.LOGGED_OUT) {
-          alert("로그인이 필요합니다.");
-          navigate("/login");
-          return;
-      }
-    }, [loginStatus]); //로그인 상태 변경시 useEffect 실행
+    const { axios } = useAuth();
 
     const fetchReservations = async () => {
-        if(loginStatus === LOGIN_STATUS.LOGGED_IN) {
-            try {
-                const response = await axios.get(`/api/reservations/get`); 
-                //예약 정보를 셋팅한다.
-                setReservations(response.data);
-                setErrored(false);
-            } catch (error) { //오류 발생시(서버에서 NOT_FOUND(404) 요청 받거나 기타 오류 등등..)
-                //오류 발생 플래그 true로 설정
-                setErrored(true);
-                console.error('Error fetching reservations:', error);
-            }
-        } else {
-            setReservations([]);
+        try {
+            const response = await axios.get(`/api/reservations/get`); 
+            //예약 정보를 셋팅한다.
+            setReservations(response.data);
+            setErrored(false);
+        } catch (error) { //오류 발생시(서버에서 NOT_FOUND(404) 요청 받거나 기타 오류 등등..)
+            //오류 발생 플래그 true로 설정
             setErrored(true);
+            console.error('Error fetching reservations:', error);
         }
     };
 
-    useEffect(() => { fetchReservations(); }, [loginStatus]); //이부분은 의존성 배열인데, login 값이 변경될 때 마다 useEffect를 새로 실행하여 예약목록을 업데이트 하도록 함.
+    useEffect(() => { fetchReservations(); }, []); //이부분은 의존성 배열인데, 컴포넌트가 처음 랜더링될때 한번만 실행함.
 
     const handleSelectReservation = (reservationId) => {
         setSelectedReservations(prevSelected =>
@@ -115,4 +99,14 @@ const ReservationList = () => {
     );
 };
 
-export default ReservationList;
+export default function() {
+    return (
+      <>
+        <RedirectLogin />
+        <Auth loginStatus={LOGIN_STATUS.LOGGED_IN}>
+          <ReservationList />
+        </Auth>
+      </>
+    );
+};
+  

@@ -1,57 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import useRealName from '../../hooks/useRealName';
-import useAuth,{ LOGIN_STATUS } from '../../hooks/useAuth';
-import Cookies from 'js-cookie';
+import useAuth,{ LOGIN_STATUS, ROLES } from '../../hooks/useAuth';
+import Auth from '../../helpers/Auth';
+import RedirectLogin from '../../helpers/RedirectLogin';
 
 const RequestBookList = () => {
-  const navigate = useNavigate();
-
   const name = useRealName();
+
+  const { loginStatus, axios } = useAuth();
 
   const [requestBooks, setRequestBooks] = useState([]);
   const [selectedRequestBooks, setSelectedRequestBooks] = useState([]);
-  const [isErrored, setErrored] =useState(false);
-
-  const { loginStatus } = useAuth();
-
-  useEffect(()=>{
-    //로그아웃됨.
-    if(loginStatus === LOGIN_STATUS.LOGGED_OUT) {
-      alert("로그인이 필요합니다.");
-      navigate("/login");
-      return;
-    }
-  }, [loginStatus]); //로그인 상태 변경시 useEffect 실행
+  const [isErrored, setErrored] = useState(false);
 
   const fetchRequestBook  = async () => {
-    if(loginStatus === LOGIN_STATUS.LOGGED_IN) {
-      try{
-        // 쿠키에서 JWT 토큰 추출
-        const token = Cookies.get('accessToken');
-        if (!token) {
-            throw new Error('No token found');
-        }
-        const response = await axios.get(`/api/requestbook/get`,{
-          headers: {
-            Authorization: `Bearer ${token}`,
-        },
-        });
-        setRequestBooks(response.data);
-        setErrored(false);
-      } catch(error){
-        setErrored(true);
-        console.error('There was an error fetching the request books!', error);
-      }
-    } else {
-        setRequestBooks([]);
-        setErrored(true);
-      }
-    
+    try {
+      const response = await axios.get(`/api/requestbook/get`);
+      setRequestBooks(response.data);
+      setErrored(false);
+    } catch(error) {
+      setErrored(true);
+      console.error('There was an error fetching the request books!', error);
+    } 
   };
 
-  useEffect(()=>{ fetchRequestBook();}, [loginStatus]);
+  useEffect(()=>{ fetchRequestBook(); }, []);
 
   const handleSelectRequestBook =(requestBookId)=>{
     setSelectedRequestBooks(prevSelected=>
@@ -75,7 +48,7 @@ const RequestBookList = () => {
     }
   };
 
-  const deselectAll =() => setSelectedRequestBooks([]);
+  const deselectAll = () => setSelectedRequestBooks([]);
 
   const selectAll = () => setSelectedRequestBooks(requestBooks.map(({id}) => id));
 
@@ -125,4 +98,14 @@ const RequestBookList = () => {
   );
 };
 
-export default RequestBookList;
+export default function() {
+  return (
+    <>
+      <RedirectLogin />
+      <Auth loginStatus={LOGIN_STATUS.LOGGED_IN}>
+        <RequestBookList />
+      </Auth>
+    </>
+  );
+};
+
