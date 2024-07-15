@@ -18,8 +18,14 @@ const LoanStatusList = ()=>{
             setLoanStatuses(response.data);
             setErrored(false);
         } catch(error) {
-            setErrored(true);
-            console.error('대출상태를 가져오는 중에 오류가 발생했습니다.', error);
+            //항목을 찾을수 없음
+            if (error.response.status === 404) {
+                setErrored(false);
+                setLoanStatuses([]);
+            } else {
+                setErrored(true);
+                console.error('대출상태를 가져오는 중에 오류가 발생했습니다.', error);
+            }
         }
     };
 
