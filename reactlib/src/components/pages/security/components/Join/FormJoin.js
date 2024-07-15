@@ -1,6 +1,4 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { LoginContext } from '../../contexts/LoginContextProvider';
-import LoginContextConsumer from '../../contexts/LoginContextConsumer';
 import { getData } from '../../apis/auth';
 import './FormJoin.css'
 import DaumPostcode from 'react-daum-postcode';
@@ -363,7 +361,6 @@ const FormJoin = ({ join, }) => {
                     Join
                 </button>
             </form >
-            <LoginContextConsumer />
         </div >
     );
 };

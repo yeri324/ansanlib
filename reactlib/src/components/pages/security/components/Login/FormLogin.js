@@ -16,16 +16,16 @@ const FormLogin = ()=>{
     }
 
     const onFindId = () => {
-        navigate('/findId');
+        navigate('/find/id');
     }
 
     const onFindPw = () => {
-        navigate('/findPw');
+        navigate('/find/pw');
     }
 
     return (
         <div>
-            <h2>로그인 폼</h2>
+            <h2>로그인</h2>
             <form onSubmit={(e)=>onLogin(e)}>
             <div>
                 <label htmlFor="loginid">아이디</label>

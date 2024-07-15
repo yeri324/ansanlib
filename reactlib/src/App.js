@@ -29,11 +29,8 @@ import LoanStatusList from './components/pages/loanStatus/LoanStatusList';
 import UpdateUserForm from './components/pages/myPage/UpdateUserForm';
 import DeleteUserForm from './components/pages/myPage/DeleteUserForm';
 import Login from './components/pages/security/pages/Login';
-import FindId from './components/pages/security/components/Login/FindId';
-import FindPw from './components/pages/security/components/Login/FindPw';
+import Find from './components/pages/security/pages/Find';
 import Join from './components/pages/security/pages/Join';
-import About from './components/pages/security/pages/About';
-import Home from './components/pages/security/pages/Home';
 import User from './components/pages/security/pages/User';
 import Holiday from './components/pages/admin/Holiday';
 import HolidayList from './components/pages/admin/HolidayList';
@@ -95,13 +92,10 @@ function App() {
 
 
                                 {/* 시큐리티테스트용 페이지 */}
-                                <Route path="/home" element={<Home />} />
                                 <Route path="/login" element={<Login />} />
-                                <Route path="/findId" element={<FindId />} />
-                                <Route path="/findPw" element={<FindPw />} />
+                                <Route path="/find/:id" element={<Find />} />
                                 <Route path="/join" element={<Join />} />
                                 <Route path="/user" element={<User />} />
-                                <Route path="/about" element={<About />} />
 
 
                         </Routes>

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Header from '../components/Header/Header';
+import Header from '../../../fragments/header/header';
 import FormUser from '../components/User/FormUser'
 import * as auth from '../apis/auth';
 import { LoginContext } from '../contexts/LoginContextProvider';
@@ -11,7 +11,7 @@ const User = () => {
 
     // 사용자 정보 조회 
     const getUserInfo = async () => {
-        const response  = await auth.info()
+        const response = await auth.info()
         const data = response.data
         console.log(`getUserInfo :: `);
         console.log(data);
@@ -20,9 +20,9 @@ const User = () => {
     }
 
     // 회원 정보 수정
-    const updateUser = async ( form ) => {
+    const updateUser = async (form) => {
         console.log(form);
-    
+
         let response
         let data
         try {
@@ -38,20 +38,20 @@ const User = () => {
         console.log(`data : ${data}`);
         console.log(`status : ${status}`);
 
-        if( status == 200 ) { 
+        if (status == 200) {
             console.log(`회원수정 성공!`);
             alert("회원수정 성공", "로그아웃 후, 다시 로그인해주세요.", "success", () => { logout(true) })
         }
-        else { 
+        else {
             console.log(`회원수정 실패!`);
-            alert("회원수정 실패", "회원수정에 실패하였습니다.", "error" )
+            alert("회원수정 실패", "회원수정에 실패하였습니다.", "error")
         }
     }
 
     // 회원 탈퇴
     const deleteUser = async (userId) => {
         console.log(userId);
-    
+
         let response
         let data
         try {
@@ -67,17 +67,17 @@ const User = () => {
         console.log(`data : ${data}`);
         console.log(`status : ${status}`);
 
-        if( status == 200 ) { 
+        if (status == 200) {
             console.log(`회원탈퇴 성공!`);
             alert("회원탈퇴 성공", "그동안 감사했습니다:)", "success", () => { logout(true) })
         }
-        else { 
+        else {
             console.log(`회원탈퇴 실패!`);
-           alert("회원탈퇴 실패", "회원탈퇴에 실패하였습니다.", "error" )
+            alert("회원탈퇴 실패", "회원탈퇴에 실패하였습니다.", "error")
         }
     }
 
-    useEffect( () => {
+    useEffect(() => {
         getUserInfo()
     }, [])
 
