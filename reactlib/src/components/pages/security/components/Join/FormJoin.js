@@ -49,9 +49,9 @@ const FormJoin = ({ join,}) => {
 
  
     //비밀번호 확인
-    useEffect(()=>{
-        // if(password===password2){}
-    },[formData.password,formData.password2])
+    // useEffect(()=>{
+    //     if(password===password2){}
+    // },[formData.password,formData.password2])
 
     //아이디 중복 체크
     const onCheckId = async ()=>{

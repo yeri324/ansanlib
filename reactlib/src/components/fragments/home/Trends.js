@@ -51,14 +51,14 @@ const Trends = () => {
   return (
     <div className="trends-container">
       {visibleBooks.map((book) => (
-        <div key={book.id} className="book-item">
-          <img src={book.cover} alt={book.title} className="book-cover" />
-          <h3 className="book-title">{book.title}</h3>
+        <div key={book.id} className="trends-book-item">
+          <img src={book.cover} alt={book.title} className="trends-book-cover" />
+          <h3 className="trends-book-title">{book.title}</h3>
         </div>
       ))}
       <div className="pagination">
-        <button className='btn prev' onClick={goToPrevPage}>{'<'}</button>
-        <button className='btn next' onClick={goToNextPage}>{'>'}</button>
+        <button className='btn_prev' onClick={goToPrevPage}>{'<'}</button>
+        <button className='btn_next' onClick={goToNextPage}>{'>'}</button>
       </div>
     </div>
   );

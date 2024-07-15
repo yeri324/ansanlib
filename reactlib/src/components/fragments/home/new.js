@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSwipeable } from 'react-swipeable';
 import './new.css';
 import book1 from '../../images/cover/book1.jpg';
 import book2 from '../../images/cover/book2.jpg';
@@ -31,18 +32,16 @@ const NewBooks = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const goToNextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % booksData.length);
-  };
-
-  const goToPrevSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + booksData.length) % booksData.length);
-  };
+  const handlers = useSwipeable({
+    onSwipedLeft: () => setCurrentIndex((prevIndex) => (prevIndex + 1) % booksData.length),
+    onSwipedRight: () => setCurrentIndex((prevIndex) => (prevIndex - 1 + booksData.length) % booksData.length),
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true
+  });
 
   return (
     <div className="new-books-container">
-      <div className="new-books-slider">
-        <button className="new-books-btn new-books-prev" onClick={goToPrevSlide}>{'<'}</button>
+      <div className="new-books-slider" {...handlers}>
         <div className="new-books-slide-wrapper">
           {booksData.map((book, index) => (
             <div
@@ -54,7 +53,6 @@ const NewBooks = () => {
             </div>
           ))}
         </div>
-        <button className="new-books-btn new-books-next" onClick={goToNextSlide}>{'>'}</button>
       </div>
     </div>
   );
