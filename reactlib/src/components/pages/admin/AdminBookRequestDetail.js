@@ -19,41 +19,47 @@ const AdminBookRequestDetail = ({ isOpen, onClose, request, onSave }) => {
     onSave(updatedRequest);
   };
 
-
- 
-
   return (
-    
-    <div className="admin-modal" style={{ display:'block' }} id='admin=modal' >
+    <div className="admin-modal" style={{ display: 'block' }} id='admin-modal'>
       <div className="modal-dialog" id="admin-modal-dialog">
-    <div className="modal-content" id='admin-modal-content'>
-      <div className="modal-header">
-        <h5 className="modal-title" id="admin-modal-title">
-         희망도서 신청
-        </h5>
-       
-      </div>
+        <div className="modal-content" id='admin-modal-content'>
+          <div className="modal-header">
+            <h5 className="modal-title" id="admin-modal-title">
+              희망도서 신청
+            </h5>
+            <button type="button" className="close" onClick={onClose}>
+              &times;
+            </button>
+          </div>
 
-      <div className="modal-body" id='admin-modal-body'>
-{request ? (
-      <div>
-        <p><strong>ISBN:</strong> {request.isbn}</p>
-        <p><strong>도서 제목:</strong> {request.title}</p>
-        <p><strong>작가:</strong> {request.author}</p>
-        <p><strong>출판사:</strong> {request.publisher}</p>
-        <p><strong>출판년도:</strong> {request.pub_date}</p>
-        <p><strong>신청 권수:</strong> {request.count}</p>
-        <p><strong>신청도서관:</strong> {request.library}</p>
-    
-      
-      
+          <div className="modal-body">
+            {request && request.libraries && request.libraries.length > 0 ? (
+              <table className='table' id="admin-modal-table">
+                <thead>
+                  <tr>
+                    <th>번호</th>
+                    <th>신청도서관</th>
+                    <th>신청 권수</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {request.libraries.map((lib, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{lib.lib_name}</td>
+                      <td>{lib.count}권</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p>해당 도서에 대한 신청 내역이 없습니다.</p>
+            )}
+            <button type="button" id="adminbtn" className="btn btn-outline-dark" onClick={handleSave}>확인</button>
+          </div>
+        </div>
       </div>
-    ) : (
-      <p>No data available</p>
-    )}
-    <button type="button" id="adminbtn" class="btn btn-outline-dark"  onClick={handleSave}>확인</button>
-  </div>
-</div></div></div>
+    </div>
   );
 };
 

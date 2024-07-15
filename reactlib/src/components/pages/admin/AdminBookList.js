@@ -7,7 +7,7 @@ import AdminHeader from './AdminHeader';
 import AdminSide from './AdminSide';
 import { GlobalStyles } from './GlobalStyles';
 import "./AdminPage.css";
-
+import AdminPagination from './AdminPagination';
 
 const AdminBookList = () => {
   const [bookList, setBookList] = useState([]);
@@ -16,18 +16,26 @@ const AdminBookList = () => {
   const [searchYear, setSearchYear] = useState(null);
   const [filteredBookList, setFilteredBookList] = useState([]);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
   const navigate = useNavigate();
 
   useEffect(() => {
     getBookList();
   }, []);
 
+  useEffect(() => {
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    setFilteredBookList(bookList.slice(start, end));
+  }, [bookList, currentPage]);
+
   const getBookList = async () => {
     try {
       const response = await axios.get('http://localhost:8090/api/admin/book/list');
       if (Array.isArray(response.data)) {
         setBookList(response.data);
-        setFilteredBookList(response.data);
+        setFilteredBookList(response.data.slice(0, itemsPerPage));
       } else {
         console.error('Fetched data is not an array:', response.data);
         setBookList([]);
@@ -44,7 +52,7 @@ const AdminBookList = () => {
     let filteredList = bookList;
     if (searchCriteria === 'library') {
       filteredList = bookList.filter(book =>
-        book.lib_name && book.lib_name.toLowerCase().includes(searchTerm.toLowerCase())
+        book.libraries && book.libraries.some(lib => lib.lib_name.toLowerCase().includes(searchTerm.toLowerCase()))
       );
     } else if (searchCriteria === 'title') {
       filteredList = bookList.filter(book =>
@@ -63,17 +71,15 @@ const AdminBookList = () => {
         book.pub_date && book.pub_date.startsWith(searchYear ? searchYear.getFullYear().toString() : '')
       );
     }
-    setFilteredBookList(filteredList);
+    setFilteredBookList(filteredList.slice(0, itemsPerPage));
+    setCurrentPage(1);
   };
 
   const handleRefresh = () => {
     setSearchTerm('');
     setSearchYear(null);
-    setFilteredBookList(bookList);
-  };
-
-  const handleAddHoliday = () => {
-    // Implement your add holiday functionality here
+    setFilteredBookList(bookList.slice(0, itemsPerPage));
+    setCurrentPage(1);
   };
 
   const handleKeyDown = (e) => {
@@ -104,21 +110,9 @@ const AdminBookList = () => {
     setFilteredBookList(sortedData);
   };
 
-  const renderBookImages = (bookImg, type) => {
-    return bookImg && Array.isArray(bookImg) && bookImg.length > 0 ? (
-      bookImg.map((img, imgIndex) =>
-        img && img[type] ? (
-          <a key={imgIndex} href={img[type]} target="_blank" rel="noopener noreferrer">
-            {img[type]}
-          </a>
-        ) : (
-          <span key={imgIndex}>이미지 없음</span>
-        )
-      )
-    ) : (
-      <span>이미지 없음</span>
-    );
-  };
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const totalPages = Math.ceil(bookList.length / itemsPerPage);
 
   return (
     <>
@@ -179,35 +173,34 @@ const AdminBookList = () => {
             </div>
 
             <div className="admin-page-button">
-
-              <button type="button" className="btn btn-outline-dark" onClick={handleAddHoliday}>등록하기</button>
+              <button type="button" className="btn btn-outline-dark" onClick={() => navigate('/admin/book/new')}>등록하기</button>
             </div>
 
             <table className="admin-table">
               <thead>
                 <tr className="admin-th-tr">
                   <th>No</th>
+
                   <th className='sortable' onClick={() => handleSort('isbn')}>ISBN</th>
                   <th className='sortable' onClick={() => handleSort('title')}>도서 제목</th>
                   <th className='sortable' onClick={() => handleSort('author')}>작가</th>
                   <th className='sortable' onClick={() => handleSort('publisher')}>출판사</th>
                   <th className='sortable' onClick={() => handleSort('pub_date')}>출판년도</th>
-                  <th>이미지 URL</th>
-                  <th>이미지 이름</th>
+                  <th>도서 수량</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredBookList.length > 0 ? (
                   filteredBookList.map((book, index) => (
                     <tr className='list admin-td-tr' key={index}>
-                      <td>{index + 1}</td>
+                      <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
+         
                       <td>{book.isbn}</td>
                       <td>{book.title}</td>
                       <td>{book.author}</td>
                       <td>{book.publisher}</td>
                       <td>{book.pub_date}</td>
-                      <td>{renderBookImages(book.bookImg, 'imgUrl')}</td>
-                      <td>{renderBookImages(book.bookImg, 'imgName')}</td>
+                      <td>{book.count}</td>
                     </tr>
                   ))
                 ) : (
@@ -217,6 +210,13 @@ const AdminBookList = () => {
                 )}
               </tbody>
             </table>
+            <div className="admin-pagination">
+              <AdminPagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                paginate={paginate}
+              />
+            </div>
           </div>
         </main>
       </div>

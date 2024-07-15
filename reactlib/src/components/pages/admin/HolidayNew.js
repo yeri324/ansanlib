@@ -80,9 +80,19 @@ const HolidayNew = ({ showModal, handleCloseModal, selectedDate, setSelectedDate
             </h5>
             <button type="button" className="btn-close" aria-label="Close" onClick={handleCloseModal}></button>
           </div>
-         
+
           <div className="modal-body" id='admin-modal-body'>
             <form onSubmit={handleAddSchedule} className='holidaynew'>
+
+              <div className="form-group" id="admin-form-group">
+                <label>날짜 선택</label>
+                <input type="date" className="form-control" value={selectedDate ? selectedDate.format('YYYY-MM-DD') : ''} onChange={(e) => setSelectedDate(moment(e.target.value))} />
+              </div>
+
+
+
+
+
               <div className="form-group" id="admin-form-group">
                 <label>지역 선택</label>
                 <select value={district} className="form-control" onChange={(e) => setDistrict(e.target.value)}>
@@ -103,13 +113,9 @@ const HolidayNew = ({ showModal, handleCloseModal, selectedDate, setSelectedDate
                   </select>
                 </div>
               )}
-              <div className="form-group" id="admin-form-group">
-                <label>날짜 선택</label>
-                <input type="date" className="form-control" value={selectedDate ? selectedDate.format('YYYY-MM-DD') : ''} onChange={(e) => setSelectedDate(moment(e.target.value))} />
-              </div>
               <div className="modal-footer" id="admin-modal-footer">
                 <button type="button" id="admin-modal-btn" class="btn btn-outline-dark" onClick={handleCloseModal}>취소</button>
-                <button type="submit"  id="admin-modal-btn" class="btn btn-outline-dark">저장</button>
+                <button type="submit" id="admin-modal-btn" class="btn btn-outline-dark">저장</button>
               </div>
             </form>
           </div>

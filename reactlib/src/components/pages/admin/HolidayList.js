@@ -209,7 +209,7 @@ const HolidayList = () => {
             </thead>
             <tbody>
               {Array.isArray(currentItems) && currentItems.map((holiday) => (
-                <tr key={holiday.id} className="admin-td-tr" >
+                <tr key={holiday.id} className="admin-td-tr" style={{cursor:"default"}} >
                   <td>{holiday.id}</td>
                   <td>{holiday.lib_name}</td>
                   <td>{holiday.library ? holiday.library.libNum : ''}</td>

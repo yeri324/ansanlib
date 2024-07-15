@@ -52,27 +52,22 @@ min-height: 850px;
   width: 90%;
 }
 
-
+/*테이블 열 */
 .admin-th-tr{
   height: 50px;
   text-align: center;
-}
-
-
-.admin-
-
-
-
-.admin-table tr:hover{
-  background-color:  hsla(45, 6%, 87%, 0.459);
-  cursor: default;
-}
-
-
-/*테이블 열*/
-.admin-table th {
   background-color: #B0C4DE;
 }
+
+
+
+.admin-td-tr:hover{
+  background-color:  hsla(45, 6%, 87%, 0.459);
+  cursor: pointer;
+}
+
+
+
 
 /*정렬 호버- 헤더 호버하면 색상 변경*/
 .sortable:hover {

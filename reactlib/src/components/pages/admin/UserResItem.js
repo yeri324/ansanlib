@@ -67,6 +67,7 @@ const UserResItem = ({ res, onClickToCancelRes }) => {
         .then(response => {
             console.log('예약 연장 성공:');
             closeModal(); 
+            window.location.reload();
         }).catch(error => {
             console.error('예약 연장 실패:', error);
         });

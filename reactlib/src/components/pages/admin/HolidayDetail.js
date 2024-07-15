@@ -15,7 +15,7 @@ const HolidayDetail = ({ show, handleClose, holidays }) => {
           </div>
           <div className="modal-body">
             {holidays.length > 0 ? (
-              <table className='table table-striped detailTable' id="admin-modal-table">
+              <table className='table' id="admin-modal-table">
                 <thead>
                   <tr >
                     <th>번호</th>

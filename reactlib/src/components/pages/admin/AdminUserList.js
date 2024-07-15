@@ -6,7 +6,7 @@ import AdminHeader from "./AdminHeader";
 import AdminSide from "./AdminSide";
 import { GlobalStyles } from "./GlobalStyles";
 import "./AdminPage.css";
-
+import AdminPagination from "./AdminPagination";
 const AdminUserList = () => {
   const navigate = useNavigate();
 
@@ -106,27 +106,11 @@ const AdminUserList = () => {
           </table>
 
           <div className="admin-pagination" >
-   <nav aria-label="Page navigation example">
-            <ul className="pagination" id="admin-pagination">
-              <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-                <button type="button"  class="btn btn-outline-dark" className="page-link" onClick={() => paginate(currentPage - 1)} aria-label="Previous">
-                  <span aria-hidden="true">&laquo;</span>
-                </button>
-              </li>
-              {Array.from({ length: totalPages }, (_, index) => (
-                <li key={index + 1} className={`page-item ${index + 1 === currentPage ? 'active' : ''}`}>
-                  <button type="button" class="btn btn-outline-dark" style={{backgroundColor:"#092a4bec"}} className="page-link" onClick={() => paginate(index + 1)}>
-                    {index + 1}
-                  </button>
-                </li>
-              ))}
-              <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-                <button type="button" class="btn btn-outline-dark" className="page-link" onClick={() => paginate(currentPage + 1)} aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-                </button>
-              </li>
-            </ul>
-          </nav>
+          <AdminPagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              paginate={paginate}
+            />
 
 
 

@@ -3,9 +3,11 @@ package com.ansanlib.admin.service;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ansanlib.book.dto.BookDto;
@@ -14,6 +16,7 @@ import com.ansanlib.book.repository.BookRepository;
 import com.ansanlib.book.service.FileService;
 import com.ansanlib.entity.Book;
 import com.ansanlib.entity.BookImg;
+import com.ansanlib.entity.Holiday;
 import com.ansanlib.entity.RequestBook;
 import com.ansanlib.requestBook.repository.RequestBookRepository;
 
@@ -72,7 +75,7 @@ public class AdminBookService {
 	
 	  //도서조회
 	  public List<Book> getAllBooks() {
-	        return bookRepository.findAll();
+	        return bookRepository.findAllWithImages();
 	    }
 	  
 	  
@@ -83,6 +86,21 @@ public class AdminBookService {
 	    }
 
 
+	 
+	 
+	 //데이터 삭제
+	    @Transactional
+	    public void deleteBookById(Long id) {
+	        Optional<Book> bookOptional = bookRepository.findById(id);
+	        if (bookOptional.isPresent()) {
+	            Book book = bookOptional.get();
+	            bookRepository.delete(book);
+	        } else {
+	            throw new IllegalArgumentException("Holiday not found with id: " + id);
+	        }
+	 
+	 
+	 
 
 
-}
+}}
