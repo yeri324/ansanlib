@@ -12,24 +12,23 @@ import Kakao from '../../map/mapForm';
 import Bestseller from './Bestseller';
 import LibraryPage from '../../pages/visit/LibraryPage';
 import Popup from './popup';
+import KeywordCloud from './KeywordCloud';
 // import BookCloud from './bookCloud';
 // import StatisticsPage from '../../pages/visit/StatisticsPage';
 // import Calendar from 'react-calendar'
 // import { styled } from "styled-components";
 
 const HomePage = () => {
-
   const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
     const lastClosed = localStorage.getItem('popupLastClosed');
     const now = new Date().getTime();
-// 24 * 60 * 60 * 1000
     if (!lastClosed || now - lastClosed > 10) {
       setShowPopup(true);
     }
   }, []);
-  
+
   const closePopup = () => {
     localStorage.setItem('popupLastClosed', new Date().getTime());
     setShowPopup(false);
@@ -39,55 +38,57 @@ const HomePage = () => {
     <>
       <header><Header /></header>
       <section>
-        <div id="home_popup">
+        <div id="home-popup">
           {showPopup && <Popup onClose={closePopup} />}
         </div>
-        <div id="home-main-content" className="main_content">
-          <div id="home-main-grid" className="main_grid">
-            <div id="home-content-grid" className="content_grid">
-              <div id="home-top-column" className="top_column">
-                <div id="home-hr-div" className="hr_div"><hr></hr></div>
-                <div id="home-book-search" className="book_search">
+        <div id="home-main-content" className="main-content">
+          <div className="main-grid">
+            <div className="content-grid">
+              <div className="top-column">
+                <div className="hr-div"><hr /></div>
+                <div className="book-search">
                   <BookSearch />
                 </div>
+                <div className="key-cloud">
+                  <KeywordCloud />
+                </div>
               </div>
-              <div id="home-bottom-column" className="bottom_column">
-                <div id="home-notice-board" className="notice_board">
+              <div className="bottom-column">
+                <div className="notice-board">
                   <Notice />
                 </div>
-                <div id="home-monthly-plan" className="monthly_plan">
+                <div className="monthly-plan">
                   <TodoCalendar />
                 </div>
-                <div id="home-login-box" className="login_box">
-                  <div className="new_h2"><h2>신규도서</h2></div>
+                <div className="login-box">
+                  <div className="new-h2"><h2>신규도서</h2></div>
                   <New />
                 </div>
               </div>
             </div>
           </div>
-
-          <div id="home-sub-content" className="sub_content">
-            <div id="home-sub-content1" className="sub_content1">
-              <div className="trend_h2"><h2>인기도서</h2></div>
-              <div className="div_border"><hr></hr></div>              
-              <div className="trend_list">
+          <div className="sub-content">
+            <div className="sub-content1">
+              <div className="trend-h2"><h2>인기도서</h2></div>
+              <div className="div-border"><hr /></div>
+              <div className="trend-list">
                 <Trends />
               </div>
-              <div className="trend_h2"><h2>베스트셀러</h2></div>
-              <div className="div_border"><hr></hr></div>
-              <div className="best_list">
+              <div className="trend-h2"><h2>베스트셀러</h2></div>
+              <div className="div-border"><hr /></div>
+              <div className="best-list">
                 <Bestseller />
               </div>
-              <div className="trend_h2"><h2>방문 통계</h2></div>
-              <div className="div_border"><hr></hr></div>
-              <div className="total_visit">
+              <div className="trend-h2"><h2>방문 통계</h2></div>
+              <div className="div-border"><hr /></div>
+              <div className="total-visit">
                 <LibraryPage />
               </div>
             </div>
-            <div id="home-sub-content2" className="sub_content2">
-              <div className="lib_h2"><h2>오시는 길</h2></div>
-              <div className="div_border"><hr></hr></div>
-              <div className="lib_guide">
+            <div className="sub-content2">
+              <div className="lib-h2"><h2>오시는 길</h2></div>
+              <div className="div-border"><hr /></div>
+              <div className="lib-guide">
                 <Kakao />
               </div>
             </div>
@@ -98,6 +99,5 @@ const HomePage = () => {
     </>
   );
 }
-
 
 export default HomePage;
