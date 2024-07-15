@@ -2,15 +2,6 @@ import React, { useState, useEffect, useLocation } from 'react';
 
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import AdminFaqList from './components/pages/board/faq/AdminFaqList';
-import AdminFaqForm from './components/pages/board/faq/AdminFaqForm';
-import AdminFaqDetailForm from './components/pages/board/faq/AdminFaqDetailForm';
-import AdminNoticeDetailForm from './components/pages/board/notice/AdminNoticeDetailForm';
-import AdminNoticeList from './components/pages/board/notice/AdminNoticeList';
-import AdminNoticeForm from './components/pages/board/notice/AdminNoticeForm';
-import UserFaqList from './components/pages/board/faq/UserFaqList';
-import UserFaqDetailForm from './components/pages/board/faq/UserFaqDetailForm';
-import UserNoticeList from './components/pages/board/notice/UserNoticeList';
-import UserNoticeDetailForm from './components/pages/board/notice/UserNoticeDetailForm';
 import Header from './components/fragments/header/header';
 import Footer from './components/fragments/footer/footer';
 import HomePage from './components/fragments/home/homePage';
@@ -43,6 +34,7 @@ import { UseAuthBasic, UseAuthCheckAdmin, UseAuthCheckLogin } from './components
 import BoardList from './components/pages/board/page/BoardList';
 import BoardDetail from './components/pages/board/page/BoardDetail';
 import BoardForm from './components/pages/board/page/BoardForm';
+import AdminFaqForm from './components/pages/board/faq/AdminFaqForm';
 
 
 function App() {
@@ -71,7 +63,8 @@ function App() {
                                 <Route path="/admin/holiday/detail" element={<HolidayDetail />} />
                                 <Route path="/admin/book/new" element={<AddBook />} />
                                 <Route path="/admin/book/request" element={<AdminBookRequest />} />
-
+<Route path="/admin/faq/list" element={<AdminFaqList />} />
+<Route path="/admin/faq/new" element={<AdminFaqForm/>} />
                                 <Route path="/book/search" element={<SearchPage />} />
                                 <Route path="/book/detail/:id" element={<BookDetailPage />} />
 

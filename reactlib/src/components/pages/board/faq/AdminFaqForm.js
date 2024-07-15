@@ -1,9 +1,12 @@
-import '../../board/common/Form.css'
+import '../../board/common/AdminForm.css'
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
 import Auth from '../../../helpers/Auth';
 import RedirectLogin from '../../../helpers/RedirectLogin';
+import AdminHeader from '../../admin/AdminHeader';
+import AdminSide from '../../admin/AdminSide';
+
 
 function AdminFaqForm() {
   const { axios } = useAuth();
@@ -68,28 +71,41 @@ function AdminFaqForm() {
   }
 
   return (
-    <div>
-      <div class="create-form">
-        <form onSubmit={onCreate}>
-          <h3>글 등록하기</h3>
-          <div class="content-item">
+    <div className="admin-page">
+            <div className="admin-base">
+                <AdminHeader />
+                <AdminSide />
+            </div>
+    
+            <main className="admin-page-main">
+                <div className="admin-page-body">
+                    <div className="admin-page-title">
+                        <h1>FAQ 목록</h1>
+                    </div>
+
+ <form className="admin-board-form" onSubmit={onCreate}>
+  <div class="admin-board-title">
+   
             <input
-              id='title'
+             
               type='text'
               name='title'
               placeholder={isTitleClicked === true ? "" : "제목을 작성해주세요."}
               onFocus={() => { setIsTitleClicked(true); }}
               onBlur={() => { setIsTitleClicked(false); }}
               onChange={onInputChange} />
-
+</div>
+<div className="amdin-board-input">
             <textarea
-              id='content'
+          
+             
               name='content'
               placeholder={isContentClicked === true ? "" : "내용을 작성해주세요."}
               onFocus={() => { setIsContentClicked(true); }}
               onBlur={() => { setIsContentClicked(false); }}
               onChange={onInputChange} />
-
+</div>
+<div className="admin-board-input">
             {images.map(image => (
               <div key={image.id}>
                 <input type="file" onChange={(e) => handleImgChange(image.id, e.target.files[0])} />
@@ -99,9 +115,8 @@ function AdminFaqForm() {
           </div>
           {images.length < 5 && <button type="button" onClick={handleAddImg}>이미지추가</button>}
           <button type='submit'>저장</button>
-        </form>
-      </div>
-    </div>
+</form></div></main></div>
+      
   );
 };
 
@@ -115,3 +130,4 @@ export default function () {
     </>
   );
 };
+
