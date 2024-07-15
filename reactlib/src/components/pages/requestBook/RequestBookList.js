@@ -1,42 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import useRealName from '../../hooks/useRealName';
+import useAuth,{ LOGIN_STATUS, ROLES } from '../../hooks/useAuth';
+import Auth from '../../helpers/Auth';
+import RedirectLogin from '../../helpers/RedirectLogin';
 
 const RequestBookList = () => {
-  const navigate = useNavigate();
+  const name = useRealName();
 
-  const [userId, setUserId] = useState(null);
-  const [userName, setUserName] = useState("");
+  const { loginStatus, axios } = useAuth();
+
   const [requestBooks, setRequestBooks] = useState([]);
   const [selectedRequestBooks, setSelectedRequestBooks] = useState([]);
-  const [isErrored, setErrored] =useState(false);
+  const [isErrored, setErrored] = useState(false);
 
-  useEffect(()=>{
-    const memberData = JSON.parse(sessionStorage.getItem("member") ?? "null");
-    if(memberData?.userId) {
-      setUserId(memberData?.userId);
-      setUserName(memberData?.name);
-    } else {
-        setErrored(true);
-        alert("로그인이 되어있지 않습니다.");
-        navigate("/login");
-    }
-  },[])
-  
   const fetchRequestBook  = async () => {
-    if(userId) {
-      try{
-        const response = await axios.get(`/api/requestbook/get/by-user/${userId}`);
-        setRequestBooks(response.data);
-      } catch(error){
-        setErrored(true);
-        console.error('There was an error fetching the request books!', error);
-      }
-    }
-    
+    try {
+      const response = await axios.get(`/api/requestbook/get`);
+      setRequestBooks(response.data);
+      setErrored(false);
+    } catch(error) {
+      setErrored(true);
+      console.error('There was an error fetching the request books!', error);
+    } 
   };
 
-  useEffect(()=>{ fetchRequestBook();}, [userId]);
+  useEffect(()=>{ fetchRequestBook(); }, []);
 
   const handleSelectRequestBook =(requestBookId)=>{
     setSelectedRequestBooks(prevSelected=>
@@ -49,24 +37,24 @@ const RequestBookList = () => {
   const handleDeleteRequestBook = async()=>{
     try{
       await Promise.all(selectedRequestBooks.map(id =>
-          axios.delete(`/api/requestbook/${id}`)
+          axios.delete(`/api/requestbook/delete/${id}`)
       ));
       alert('선택한 도서가 삭제되었습니다.');
       setRequestBooks(requestBooks.filter(requestBook => !selectedRequestBooks.includes(requestBook.id)));
       setSelectedRequestBooks([]);
     } catch (error){
-      console.error('도서 삭제 중 오류 발생',error)
+      console.error('도서 삭제 중 오류 발생',error);
 ;      alert('희망도서 삭제 중 오류가 발생하였습니다. ');
     }
   };
 
-  const deselectAll =() => setSelectedRequestBooks([]);
+  const deselectAll = () => setSelectedRequestBooks([]);
 
   const selectAll = () => setSelectedRequestBooks(requestBooks.map(({id}) => id));
 
   return (
     <div>
-      <h2>{userName}의 도서 신청 목록</h2>
+      <h2>{name}의 도서 신청 목록</h2>
       <ul>
         {requestBooks.map(book => (
           <li key={book.id}>
@@ -110,4 +98,14 @@ const RequestBookList = () => {
   );
 };
 
-export default RequestBookList;
+export default function() {
+  return (
+    <>
+      <RedirectLogin />
+      <Auth loginStatus={LOGIN_STATUS.LOGGED_IN}>
+        <RequestBookList />
+      </Auth>
+    </>
+  );
+};
+
