@@ -2,6 +2,8 @@ package com.ansanlib.entity;
 
 import java.time.LocalDate;
 
+import com.ansanlib.constant.PopupStatus;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,7 +14,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Popup {
+public class Popup extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,5 +27,6 @@ public class Popup {
 
     private LocalDate endDate;
 
+    private PopupStatus status;
 
 }
