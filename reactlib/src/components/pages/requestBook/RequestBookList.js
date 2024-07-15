@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import useRealName from '../../hooks/useRealName';
-import useAuth,{ LOGIN_STATUS, ROLES } from '../../hooks/useAuth';
+import useAuth,{ LOGIN_STATUS } from '../../hooks/useAuth';
 import Auth from '../../helpers/Auth';
 import RedirectLogin from '../../helpers/RedirectLogin';
 
 const RequestBookList = () => {
   const name = useRealName();
 
-  const { loginStatus, axios } = useAuth();
+  const { axios } = useAuth();
 
   const [requestBooks, setRequestBooks] = useState([]);
   const [selectedRequestBooks, setSelectedRequestBooks] = useState([]);
