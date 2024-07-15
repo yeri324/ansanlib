@@ -89,16 +89,27 @@ public class UserService {
 		}
 	}
 
-	// 회원 수정
-//	  public int update(UserDto userDto) throws Exception {
-//		  LibUser user = userRepository.findByLoginid(userDto.getLoginid()).orElseThrow(EntityNotFoundException::new);
-//	        // 비밀번호 암호화
-//	        String password = userDto.getPassword();
-//	        String encodedPw = passwordEncoder.encode(password);
-//	        userDto.setPassword(encodedPw);
-//	        
-//	        //추후수정
-//	    }
+	// 회원 정보 수정
+	@Transactional
+    public void updateUser(Long userId, UserDto userDto ) {
+        Optional<LibUser> optionalUser = userRepository.findById(userId);
+        if(optionalUser.isPresent()) {
+            LibUser libUser = optionalUser.get();
+            libUser.setName(userDto.getName());
+            if (userDto.getPassword() != null && !userDto.getPassword().isEmpty()) {
+                libUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
+            }
+            libUser.setName(userDto.getName());
+            libUser.setPhone(userDto.getPhone());
+            libUser.setAddress(userDto.getAddress());
+            libUser.setAddress2(userDto.getAddress2());
+            libUser.setEmail(userDto.getEmail());
+            libUser.setSms(userDto.getSms());
+            userRepository.save(libUser);
+        } else {
+            throw new RuntimeException("User not found with id : "+ userId);
+        }
+    }
 
 	// id 중복검사
 	public ResponseEntity<String> checkId(String loginid) {
@@ -122,69 +133,6 @@ public class UserService {
 		}
 	}
 
-//    public String getPassword(String userId) {
-//         Optional<LibUser> optionalUser = userRepository.findByLoginid(userId);
-//        if (optionalUser.isPresent()) {
-//             LibUser user = optionalUser.get();
-//            return user.getPassword();
-//        } else {
-//            return null;
-//        }
-	// }
-//
-//	// 아이디 찾기
-//	public String findIdByEmailAndName(String email, String name) {
-//		Optional<LibUser> userOptional = userRepository.findIdByEmailAndName(email, name);
-//		return userOptional.map(LibUser::getLoginid).orElse(null);
-//	}
-//
-//	// 비밀번호찾기 - findPw
-//	public String findPw(UserDto userDto) {
-//		Optional<LibUser> foundPw = userRepository.findByLoginidAndEmail(userDto.getLoginid(), userDto.getEmail());
-//
-//		if (foundPw.isPresent())
-//			;
-//		if (foundPw.isPresent()) {
-//			LibUser user = foundPw.get();
-//
-//			String tempPassword = generateTempPassword();
-//			System.out.println("임시 비밀번호: " + tempPassword); // 콘솔에 임시 비밀번호 출력
-//
-//			sendEmail(user.getEmail(), "[AnsanLibrary]임시비밀번호", "\n\n 안녕하세요. 임시비밀번호는 다음과 같습니다.\n\n" + tempPassword);
-//
-//			// 데베에 임시비밀번호 저장하는 로직 추가
-//			// String encodedPassword = tempPassword;
-//			String encodedPassword = passwordEncoder.encode(tempPassword);
-//			user.setPassword(encodedPassword);
-//			userRepository.save(user);
-//
-//			return user.getEmail();
-//		} else {
-//			return null;
-//		}
-//
-//	}
-//
-//	// TempPass - 임시비밀번호 생성
-//	public String generateTempPassword() {
-//		SecureRandom random = new SecureRandom();
-//		StringBuilder password = new StringBuilder(PASSWORD_LENGTH);
-//		for (int i = 0; i < PASSWORD_LENGTH; i++) {
-//			password.append(CHARACTERS.charAt(random.nextInt(CHARACTERS.length())));
-//		}
-//		return password.toString();
-//	}
-//
-//	private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-//	private static final int PASSWORD_LENGTH = 10;
-//
-//	// 메일보내~
-//	public void sendEmail(String to, String subject, String text) {
-//		SimpleMailMessage message = new SimpleMailMessage();
-//		message.setTo(to);
-//		message.setSubject(subject);
-//		message.setText(text);
-//		// mailSender.send(message);
-//	}
+
 
 }

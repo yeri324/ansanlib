@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useRealName from '../../hooks/useRealName';
 import useAuth, { LOGIN_STATUS } from '../../hooks/useAuth';
 import RedirectLogin from '../../helpers/RedirectLogin';
@@ -14,7 +14,7 @@ const RequestBookForm = () => {
   const [author, setAuthor] = useState('');
   const [publisher, setPublisher] = useState('');
   const [pubDate, setPubDate] = useState('');
-  const [libName, setLibName]  =useState('');
+  const [libName, setLibName] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
