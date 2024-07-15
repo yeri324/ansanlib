@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../../contexts/LoginContextProvider";
+import './FormLogin.css';
 
 const FormLogin = ()=>{
     const {login} = useContext(LoginContext)
@@ -24,9 +25,9 @@ const FormLogin = ()=>{
     }
 
     return (
-        <div>
+        <div class='login'>
             <h2>로그인</h2>
-            <form onSubmit={(e)=>onLogin(e)}>
+            <form onSubmit={(e)=>onLogin(e)} class='login-form'>
             <div>
                 <label htmlFor="loginid">아이디</label>
                 <input type="text" id="loginid" placeholder="loginid" name="loginid" autoComplete="loginid" required />
@@ -35,9 +36,9 @@ const FormLogin = ()=>{
                 <label htmlFor="password">비밀번호</label>
                 <input type="password" id="password" placeholder="password" name="password" autoComplete="password" required />
             </div>
+            <button type="submit">Login</button>
             <button type="button" onClick={onFindId}>아이디 찾기</button>
             <button type="button" onClick={onFindPw}>비밀번호 찾기</button>
-            <button type="submit">Login</button>
             </form>
         </div>
     )

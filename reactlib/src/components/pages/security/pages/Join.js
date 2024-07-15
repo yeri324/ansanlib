@@ -2,6 +2,7 @@ import FormJoin from '../components/Join/FormJoin'
 import * as auth from '../apis/auth';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../../fragments/header/header';
+import Footer from "../../../fragments/footer/footer";
 
 const Join = () => {
 
@@ -87,6 +88,7 @@ const Join = () => {
       <div className='container'>
         <FormJoin join={join} checkId={checkId} checkEmail={checkEmail} />
       </div>
+      <Footer />
     </>
   )
 }

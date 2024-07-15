@@ -136,7 +136,7 @@ function AdminNoticeDetailForm() {
 
     return (
         <div>
-            <div class='update-form'>
+            <div class='detail-form'>
                 <form>
                     <h3>수정하기</h3>
                     <div class='content-container'>

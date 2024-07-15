@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Header from '../../../fragments/header/header';
+import Footer from "../../../fragments/footer/footer";
 import FormUser from '../components/User/FormUser'
 import * as auth from '../apis/auth';
 import { LoginContext } from '../contexts/LoginContextProvider';
@@ -87,6 +88,7 @@ const User = () => {
             <div className='container'>
                 <FormUser userInfo={userInfo} updateUser={updateUser} deleteUser={deleteUser} />
             </div>
+            <Footer />
         </>
     )
 }

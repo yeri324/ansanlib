@@ -72,7 +72,7 @@ function UserFaqList() {
 
     return (
         <div>
-            <section class="board">
+            <section class="board-list">
                 <div id="search">
                     <div class="container">
                         <div class="page-title">
