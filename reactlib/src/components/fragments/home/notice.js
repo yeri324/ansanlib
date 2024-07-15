@@ -25,25 +25,42 @@ const noticePosts = {
   ]
 };
 
+
 const Notice = () => {
   const [activeCategory, setActiveCategory] = useState('공지사항');
 
   const categories = ['공지사항', '신간도서', '추천도서'];
 
+  const handleCategoryClick = (category) => {
+    setActiveCategory(category);
+  };
+
+  const handlePlusButtonClick = () => {
+    const pageMapping = {
+      공지사항: '/공지사항',
+      신간도서: '/신간도서',
+      추천도서: '/추천도서'
+    };
+    window.location.href = pageMapping[activeCategory];
+  };
+
   return (
     <div className="notice_full">
       <div className="notice_board">
-        <ul className="notice_tabs">
-          {categories.map(category => (
-            <li
-              key={category}
-              className={activeCategory === category ? 'active' : ''}
-              onClick={() => setActiveCategory(category)}
-            >
-              {category}
-            </li>
-          ))}
-        </ul>
+        <div className="notice_tabs_wrapper">
+          <ul className="notice_tabs">
+            {categories.map(category => (
+              <li
+                key={category}
+                className={activeCategory === category ? 'active' : ''}
+                onClick={() => handleCategoryClick(category)}
+              >
+                {category}
+              </li>
+            ))}
+          </ul>
+          <button className="plus_button" onClick={handlePlusButtonClick}>+</button>
+        </div>
         <div className="notice_content">
           <ul>
             {noticePosts[activeCategory].slice(0, 5).map(post => (

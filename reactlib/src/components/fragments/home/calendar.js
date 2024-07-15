@@ -50,7 +50,7 @@ const TodoCalendar = () => {
   };
 
   return (
-    <div className="calendar-container">
+    <div id="todo-calendar-container" className="calendar-container">
       <Calendar
         locale="ko"
         onChange={onChangeToday}
@@ -79,8 +79,3 @@ const TodoCalendar = () => {
 };
 
 export default TodoCalendar;
-
-
-
-
-

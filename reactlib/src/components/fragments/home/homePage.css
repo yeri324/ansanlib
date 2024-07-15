@@ -23,7 +23,6 @@
     --point_bg_06: #2F4F4F;
 }
 
-/* 기본 레이아웃 */
 body {
     margin: 0;
     padding: 0;
@@ -36,7 +35,7 @@ header, footer {
     width: 100%;
 }
 
-.main_content {
+#home-main-content {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
@@ -47,7 +46,7 @@ header, footer {
     justify-content: center;
 }
 
-.main_grid, content_grid {
+#home-main-grid, #home-content-grid {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -55,7 +54,7 @@ header, footer {
     align-items: center;
 }
 
-.sub_content {
+#home-sub-content {
     width: 100%;
     display: flex;
     /* position: relative; */
@@ -64,7 +63,7 @@ header, footer {
     gap: 20px;
 }
 
-.top_column {
+#home-top-column {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -72,7 +71,7 @@ header, footer {
     margin-top: -10px;
 }
 
-.bottom_column {
+#home-bottom-column {
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -80,12 +79,12 @@ header, footer {
     align-items: center;
 }
 
-.notice_board {
+#home-notice-board {
     display: flex;
     text-align: left;
 }
 
-.login_box {
+#home-login-box {
     width: 300px;
     justify-content: center;
     align-items: center;
@@ -96,7 +95,7 @@ header, footer {
     justify-content: center;
 }
 
-.sub_content {
+#home-sub-content {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -104,8 +103,8 @@ header, footer {
     gap: 20px;
 }
 
-.sub_content1,
-.sub_content2 {
+#home-sub-content1,
+#home-sub-content2 {
     width: 100%;
     max-width: 1200px;
     margin: 10px auto;
@@ -128,8 +127,8 @@ header, footer {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.sub_content1 .trend_list,
-.sub_content2 .lib_guide {
+#home-sub-content1 .trend_list,
+#home-sub-content2 .lib_guide {
     padding: 20px;
     background-color: #fdfdfd;
 }
@@ -144,11 +143,11 @@ header, footer {
     font-weight: 600;
 }
 
-.hr_div {
+#home-hr-div {
     height: 20px;
 }
 
-.hr_div>hr {
+#home-hr-div > hr {
     border: 0;
     height: 12px;
     background-color: #ccc;
@@ -158,7 +157,7 @@ header, footer {
     height: 25px;
 }
 
-.div_border>hr {
+.div_border > hr {
     border: 0;
     height: 12px;
     background-color: #ddd;
@@ -177,3 +176,4 @@ header, footer {
 .lib_guide {
     margin-bottom: 20px;
 }
+
