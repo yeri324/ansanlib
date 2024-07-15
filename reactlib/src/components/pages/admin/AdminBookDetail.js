@@ -1,0 +1,56 @@
+import React from 'react';
+import "./AdminModal.css";
+
+const AdminBookDetail = ({ isOpen, onClose, book }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="admin-modal" id="admin-modal">
+      <div className="modal-dialog" id="admin-modal-dialog">
+        <div className="modal-content" id="admin-modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title" id="admin-modal-title">
+              도서관 소장 내역
+            </h5>
+            <button type="button" className="close" onClick={onClose}>
+              &times;
+            </button>
+          </div>
+
+          <div className="modal-body">
+            {book && book.libraries && book.libraries.length > 0 ? (
+              <table className="table" id="admin-modal-table">
+                <thead>
+                  <tr>
+                    <th>번호</th>
+                    <th>도서관</th>
+                    <th>소장 권수</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {book.libraries.map((lib, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{lib.libNum.lib_name}</td>
+                      <td>{lib.count}권</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p>해당 도서에 대한 신청 내역이 없습니다.</p>
+            )}
+          </div>
+
+          <div className="modal-footer">
+            <button type="button" id="adminbtn" className="btn btn-outline-dark" onClick={onClose}>
+              확인
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AdminBookDetail;

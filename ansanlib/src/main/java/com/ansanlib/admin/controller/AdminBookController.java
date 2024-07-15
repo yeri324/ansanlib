@@ -34,6 +34,7 @@ public class AdminBookController {
     public ResponseEntity<BookDto> addBook(@RequestPart("book") BookDto bookDto, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
         BookDto savedBook = adminBookService.saveBook(bookDto, file);
         return ResponseEntity.ok(savedBook);
+
     }
     
     

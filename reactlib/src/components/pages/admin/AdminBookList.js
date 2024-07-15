@@ -8,6 +8,7 @@ import AdminSide from './AdminSide';
 import { GlobalStyles } from './GlobalStyles';
 import "./AdminPage.css";
 import AdminPagination from './AdminPagination';
+import AdminBookDetail from './AdminBookDetail';
 
 const AdminBookList = () => {
   const [bookList, setBookList] = useState([]);
@@ -17,6 +18,8 @@ const AdminBookList = () => {
   const [filteredBookList, setFilteredBookList] = useState([]);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
   const [currentPage, setCurrentPage] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedBook, setSelectedBook] = useState(null);
   const itemsPerPage = 10;
   const navigate = useNavigate();
 
@@ -34,8 +37,7 @@ const AdminBookList = () => {
     try {
       const response = await axios.get('http://localhost:8090/api/admin/book/list');
       if (Array.isArray(response.data)) {
-        setBookList(response.data);
-        setFilteredBookList(response.data.slice(0, itemsPerPage));
+        groupBooks(response.data);
       } else {
         console.error('Fetched data is not an array:', response.data);
         setBookList([]);
@@ -48,11 +50,26 @@ const AdminBookList = () => {
     }
   };
 
+  const groupBooks = (data) => {
+    const grouped = data.reduce((acc, book) => {
+      const key = `${book.isbn}-${book.title}-${book.author}-${book.publisher}-${book.pub_date}`;
+      if (!acc[key]) {
+        acc[key] = { ...book, total_count: 0, libraries: [] };
+      }
+      acc[key].total_count += book.count;
+      acc[key].libraries.push({ lib_name: book.lib_name, count: book.count });
+      return acc;
+    }, {});
+    const groupedArray = Object.values(grouped);
+    setBookList(groupedArray);
+    setFilteredBookList(groupedArray.slice(0, itemsPerPage));
+  };
+
   const handleSearch = () => {
     let filteredList = bookList;
     if (searchCriteria === 'library') {
       filteredList = bookList.filter(book =>
-        book.libraries && book.libraries.some(lib => lib.lib_name.toLowerCase().includes(searchTerm.toLowerCase()))
+        book.libraries.some(lib => lib.lib_name.toLowerCase().includes(searchTerm.toLowerCase()))
       );
     } else if (searchCriteria === 'title') {
       filteredList = bookList.filter(book =>
@@ -108,6 +125,16 @@ const AdminBookList = () => {
       return 0;
     });
     setFilteredBookList(sortedData);
+  };
+
+  const handleOpenModal = (book) => {
+    setSelectedBook(book);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedBook(null);
   };
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -180,7 +207,6 @@ const AdminBookList = () => {
               <thead>
                 <tr className="admin-th-tr">
                   <th>No</th>
-
                   <th className='sortable' onClick={() => handleSort('isbn')}>ISBN</th>
                   <th className='sortable' onClick={() => handleSort('title')}>도서 제목</th>
                   <th className='sortable' onClick={() => handleSort('author')}>작가</th>
@@ -192,15 +218,14 @@ const AdminBookList = () => {
               <tbody>
                 {filteredBookList.length > 0 ? (
                   filteredBookList.map((book, index) => (
-                    <tr className='list admin-td-tr' key={index}>
+                    <tr className='list admin-td-tr' key={index} onClick={() => handleOpenModal(book)}>
                       <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
-         
                       <td>{book.isbn}</td>
                       <td>{book.title}</td>
                       <td>{book.author}</td>
                       <td>{book.publisher}</td>
                       <td>{book.pub_date}</td>
-                      <td>{book.count}</td>
+                      <td>{book.total_count}</td>
                     </tr>
                   ))
                 ) : (
@@ -217,6 +242,14 @@ const AdminBookList = () => {
                 paginate={paginate}
               />
             </div>
+
+            {isModalOpen && (
+              <AdminBookDetail
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+                book={selectedBook}
+              />
+            )}
           </div>
         </main>
       </div>

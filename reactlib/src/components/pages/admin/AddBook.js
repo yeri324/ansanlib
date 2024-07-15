@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
@@ -43,7 +44,7 @@ const AddBook = ({ csrf = {} }) => {
     const [selectedSection, setSelectedSection] = useState('');
     const [imagePreview, setImagePreview] = useState(null); // 이미지 미리보기 상태
     const fileInputRef = useRef(null); // 파일 입력 요소에 접근하기 위한 ref
-
+    const navigate = useNavigate();
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -392,6 +393,7 @@ const AddBook = ({ csrf = {} }) => {
                             <div className="form-group">
                                 <button type="submit" className="btn btn-outline-dark">등록</button>
                                 <button type="button" className="btn btn-outline-dark" onClick={handleReset}>초기화</button>
+                                <button type="button" id="adminbtn" class="btn btn-outline-dark"  onClick={() => navigate('/admin/book/list')}>목록보기</button>
                             </div>
                         </form>
                     </div>
