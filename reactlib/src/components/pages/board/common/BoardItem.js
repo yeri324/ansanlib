@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react';
+import React from 'react';
 import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
 
 function BoardItem({ item, onDetail, checkedList, checkHandler, }) {
@@ -32,7 +32,7 @@ function BoardItem({ item, onDetail, checkedList, checkHandler, }) {
     //         <img key={faq.faqImgs} src={viewImg} style={{ width: '100px', height: '100px' }} />
     // </td>
 
-    const { loginStatus, roles } = useAuth();
+    const { roles } = useAuth();
 
     return (
             <tr>
@@ -41,7 +41,7 @@ function BoardItem({ item, onDetail, checkedList, checkHandler, }) {
                 <td onClick={() => onDetail(item)}>{item.title}</td>
                 <td>{item.createdBy}</td>
                 <td>{item.updateTime.split('T')[0]}</td>
-                {/* {roles === ROLES.ADMIN && (<td><input type='checkbox' id={item.id} checkedList={checkedList.includes(item.id)} onChange={(e) => checkHandler(e, item.id)} /></td>)} */}
+                <td><input type='checkbox' id={item.id} checked={checkedList.includes(item.id)} onChange={(e) => checkHandler(e, item.id)} /></td>
             </tr>
     );
 }

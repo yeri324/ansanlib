@@ -42,7 +42,7 @@ function UserFaqDetailForm({id}) {
 
     return (
         <div>
-            <div class='update-form'>
+            <div class='detail-form'>
                 <form>
                     <div class='content-container'>
                         <div class='input-container'>
