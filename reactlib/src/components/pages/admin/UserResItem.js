@@ -5,7 +5,7 @@ import Calendar from 'react-calendar';
 import './UserResItem.css';
 import moment from 'moment';
 import './AdminPage.css';
-import { GlobalStyles } from './GlobalStyles';
+
 const UserResItem = ({ res, onClickToCancelRes }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -92,7 +92,7 @@ const UserResItem = ({ res, onClickToCancelRes }) => {
     Modal.setAppElement('#root'); // 접근성 설정
     return (
            <>
-           <GlobalStyles width="100vw" />
+
 
         <tr key={res.id}>
             <td>{res.id}</td>

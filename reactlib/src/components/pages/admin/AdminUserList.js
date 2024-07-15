@@ -4,7 +4,7 @@ import axios from "axios";
 import AdminUserItem from './AdminUserItem';
 import AdminHeader from "./AdminHeader";
 import AdminSide from "./AdminSide";
-import { GlobalStyles } from "./GlobalStyles";
+
 import "./AdminPage.css";
 import AdminPagination from "./AdminPagination";
 const AdminUserList = () => {
@@ -55,7 +55,7 @@ const AdminUserList = () => {
 
   return (
     <>
-    <GlobalStyles width="100vw" />
+
     <div className="admin-page">
 
 

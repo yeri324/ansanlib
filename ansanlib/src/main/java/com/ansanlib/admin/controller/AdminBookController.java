@@ -55,9 +55,13 @@ public class AdminBookController {
     
     //데이터삭제
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBookById(@PathVariable Long id) {
-        adminBookService.deleteBookById(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> deleteBook(@PathVariable Long id) {
+        try {
+            adminBookService.deleteBookById(id);
+            return ResponseEntity.ok("Holiday deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete holiday");
+        }
     }
     
     

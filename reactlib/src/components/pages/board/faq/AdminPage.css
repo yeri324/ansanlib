@@ -1,0 +1,90 @@
+.admin-page {
+  padding-top:7px;
+  width: 100%;
+  font-family: 'Noto Sans KR', sans-serif;
+  padding-bottom: 30px;
+  overflow: hidden; /* 메인 영역에 스크롤 바 추가 */
+}
+
+.admin-page-main {
+  margin-top: 100px;
+  margin-left: 270px;
+  padding-bottom: 30px;
+  width: 85%;
+  align-items: center;
+  height: calc(100vh - 100px); /* 전체 높이에서 여백을 뺀 높이 설정 */
+  overflow: hidden; /* 주의: 이 속성은 main 요소에 스크롤을 숨깁니다. */
+  overflow-y: auto; /* 세로 스크롤바 추가 */
+  background-color: hsla(45, 6%, 87%, 0.459);
+}
+
+/*메인 폼 영역 */
+.admin-page-main>.admin-page-body {
+  padding: 20px 100px 20px 100px;
+  border-radius: 15px;
+min-height: 850px;
+  align-items: center;
+  background-color: white;
+  margin: 0 auto;
+
+
+}
+
+/*제목, 검색창 가운데 정렬 */
+.admin-page-title,
+.admin-page-search {
+  text-align: center;
+  padding: 10px;
+
+}
+
+
+/*검색창 비율 */
+.admin-page-search input,
+.admin-page-search .react-datepicker-wrapper {
+  flex: 1;
+}
+
+
+/*테이블*/
+.admin-table {
+  margin: 0 auto;
+  width: 90%;
+}
+
+/*테이블 열 */
+.admin-th-tr{
+  height: 50px;
+  text-align: center;
+  background-color: #B0C4DE;
+}
+
+
+
+.admin-td-tr:hover{
+  background-color:  hsla(45, 6%, 87%, 0.459);
+  cursor: pointer;
+}
+
+
+
+
+/*정렬 호버- 헤더 호버하면 색상 변경*/
+.sortable:hover {
+  background-color:#708090;
+  color: #faf9f7;
+}
+
+
+/* 휴관리스트 오른쪽 위치할 버튼*/
+.admin-page-button {
+  text-align: right;
+  margin-right: 100px;
+ 
+  display: flex;
+  justify-content: flex-end;
+
+  
+}
+
+

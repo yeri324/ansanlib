@@ -11,7 +11,7 @@ import com.ansanlib.entity.Book;
 
 public interface BookRepository extends JpaRepository<Book, Long>, BookRepositoryCustom {
 
-		// 주어진 ID를 가진 책을 Optional로 반환합니다.
+	// 주어진 ID를 가진 책을 Optional로 반환합니다.
 	// book 엔티티를 함께 로드합니다.
 	@EntityGraph(attributePaths = { "bookImg" })
 	Optional<Book> findById(Long id);
@@ -23,9 +23,9 @@ public interface BookRepository extends JpaRepository<Book, Long>, BookRepositor
 
 	List<Book> findByTitleContainingIgnoreCase(String title);
 
-	  @Query("SELECT b FROM Book b LEFT JOIN FETCH b.bookImg")
-	    List<Book> findAllWithImages();
-	
-	
+	@Query("SELECT b FROM Book b LEFT JOIN FETCH b.bookImg")
+	List<Book> findAllWithImages();
+
+	void deleteAllByIdIn(List<Long> ids);
 
 }

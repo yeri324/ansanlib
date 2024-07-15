@@ -5,7 +5,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import AdminHeader from './AdminHeader';
 import AdminSide from './AdminSide';
-import { GlobalStyles } from './GlobalStyles';
 import "./AdminPage.css";
 import AdminPagination from './AdminPagination';
 import AdminBookDetail from './AdminBookDetail';
@@ -20,6 +19,7 @@ const AdminBookList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
+  const [selectedBooks, setSelectedBooks] = useState([]);
   const itemsPerPage = 10;
   const navigate = useNavigate();
 
@@ -97,6 +97,7 @@ const AdminBookList = () => {
     setSearchYear(null);
     setFilteredBookList(bookList.slice(0, itemsPerPage));
     setCurrentPage(1);
+    setSelectedBooks([]); // Clear the selected books
   };
 
   const handleKeyDown = (e) => {
@@ -137,13 +138,23 @@ const AdminBookList = () => {
     setSelectedBook(null);
   };
 
+  const handleCheckboxChange = (book) => {
+    setSelectedBooks(prevSelectedBooks => {
+      if (prevSelectedBooks.includes(book)) {
+        return prevSelectedBooks.filter(selectedBook => selectedBook !== book);
+      } else {
+        return [...prevSelectedBooks, book];
+      }
+    });
+  };
+
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const totalPages = Math.ceil(bookList.length / itemsPerPage);
 
   return (
     <>
-      <GlobalStyles width="100vw" />
+
 
       <div className="admin-page">
         <div className="admin-base">
@@ -201,31 +212,38 @@ const AdminBookList = () => {
 
             <div className="admin-page-button">
               <button type="button" className="btn btn-outline-dark" onClick={() => navigate('/admin/book/new')}>등록하기</button>
+
             </div>
 
             <table className="admin-table">
               <thead>
                 <tr className="admin-th-tr">
+   
                   <th>No</th>
+               
                   <th className='sortable' onClick={() => handleSort('isbn')}>ISBN</th>
                   <th className='sortable' onClick={() => handleSort('title')}>도서 제목</th>
                   <th className='sortable' onClick={() => handleSort('author')}>작가</th>
                   <th className='sortable' onClick={() => handleSort('publisher')}>출판사</th>
                   <th className='sortable' onClick={() => handleSort('pub_date')}>출판년도</th>
                   <th>도서 수량</th>
+               
                 </tr>
               </thead>
               <tbody>
                 {filteredBookList.length > 0 ? (
                   filteredBookList.map((book, index) => (
-                    <tr className='list admin-td-tr' key={index} onClick={() => handleOpenModal(book)}>
-                      <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
-                      <td>{book.isbn}</td>
-                      <td>{book.title}</td>
-                      <td>{book.author}</td>
-                      <td>{book.publisher}</td>
-                      <td>{book.pub_date}</td>
-                      <td>{book.total_count}</td>
+                    <tr className='list admin-td-tr' key={index}>
+                    
+                      <td onClick={() => handleOpenModal(book)}>{(currentPage - 1) * itemsPerPage + index + 1}</td>
+                 
+                      <td onClick={() => handleOpenModal(book)}>{book.isbn}</td>
+                      <td onClick={() => handleOpenModal(book)}>{book.title}</td>
+                      <td onClick={() => handleOpenModal(book)}>{book.author}</td>
+                      <td onClick={() => handleOpenModal(book)}>{book.publisher}</td>
+                      <td onClick={() => handleOpenModal(book)}>{book.pub_date}</td>
+                      <td onClick={() => handleOpenModal(book)}>{book.total_count}</td>
+                     
                     </tr>
                   ))
                 ) : (

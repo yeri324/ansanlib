@@ -6,7 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import AdminHeader from './AdminHeader';
 import AdminSide from './AdminSide';
 import "./AdminUserDetail.css";
-import { GlobalStyles } from './GlobalStyles';
+
 
 const AdminUserDetail = () => {
     const navigate = useNavigate();
@@ -112,7 +112,7 @@ const AdminUserDetail = () => {
 
     return (
         <>
-            <GlobalStyles width="100vw" />
+
             <div className="admin-page">
                 <div className="admin-base">
                     <AdminHeader />

@@ -6,7 +6,7 @@ import axios from 'axios';
 import "./AddBook.css";
 import AdminHeader from './AdminHeader';
 import AdminSide from './AdminSide';
-import { GlobalStyles } from "./GlobalStyles";
+
 
 const AddBook = ({ csrf = {} }) => {
     const initialFormData = {
@@ -15,11 +15,12 @@ const AddBook = ({ csrf = {} }) => {
         title: '',
         author: '',
         publisher: '',
-        pub_date: '', // 날짜 필드를 null로 초기화
+        pub_date: '',
         category_code: '',
         location: '',
         bookDetail: '',
         lib_name: '',
+        lib_num: '', // New field for library number
         count: '',
         status: 'AVAILABLE',
         book_img:'null'
@@ -42,9 +43,30 @@ const AddBook = ({ csrf = {} }) => {
     const [errors, setErrors] = useState(initialErrors);
     const [selectedLibrary, setSelectedLibrary] = useState('');
     const [selectedSection, setSelectedSection] = useState('');
-    const [imagePreview, setImagePreview] = useState(null); // 이미지 미리보기 상태
-    const fileInputRef = useRef(null); // 파일 입력 요소에 접근하기 위한 ref
+    const [imagePreview, setImagePreview] = useState(null);
+    const fileInputRef = useRef(null);
     const navigate = useNavigate();
+
+    const libraries = {
+        '상록구': [
+            { name: '감골도서관', lib_num: 1 },
+            { name: '반월도서관', lib_num: 2 },
+            { name: '부곡도서관', lib_num: 3 },
+            { name: '본오도서관', lib_num: 4 },
+            { name: '상록수도서관', lib_num: 5 },
+            { name: '상록어린이도서관', lib_num: 6 },
+            { name: '성포도서관', lib_num: 7 },
+            { name: '수암도서관', lib_num: 8 }
+        ],
+        '단원구': [
+            { name: '관산도서관', lib_num: 9 },
+            { name: '단원어린이도서관', lib_num: 10 },
+            { name: '미디어도서관', lib_num: 11 },
+            { name: '선부도서관', lib_num: 12 },
+            { name: '원고잔도서관', lib_num: 13 }
+        ],
+    };
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -55,11 +77,6 @@ const AddBook = ({ csrf = {} }) => {
             ...prevErrors,
             [name]: '',
         }));
-    };
-
-    const libraries = {
-        '상록구': ['감골도서관', '반월도서관', '부곡도서관', '본오도서관', '상록수도서관', '상록어린이도서관', '성포도서관', '수암도서관'],
-        '단원구': ['관산도서관', '단원어린이도서관', '미디어도서관', '선부도서관', '원고잔도서관'],
     };
 
     const handleDateChange = (date) => {
@@ -80,7 +97,6 @@ const AddBook = ({ csrf = {} }) => {
             bookImg: files[0],
         }));
 
-        // 이미지 미리보기 설정
         if (files && files[0]) {
             const reader = new FileReader();
             reader.onload = (event) => {
@@ -97,7 +113,7 @@ const AddBook = ({ csrf = {} }) => {
         }));
         setImagePreview(null);
         if (fileInputRef.current) {
-            fileInputRef.current.value = ''; // 파일 입력 필드 초기화
+            fileInputRef.current.value = '';
         }
     };
 
@@ -108,23 +124,28 @@ const AddBook = ({ csrf = {} }) => {
         setSelectedSection('');
         setImagePreview(null);
         if (fileInputRef.current) {
-            fileInputRef.current.value = ''; // 파일 입력 필드 초기화
+            fileInputRef.current.value = '';
         }
     };
 
     const handleLibraryChange = (e) => {
         setSelectedLibrary(e.target.value);
+        setSelectedSection('');
+        const selectedLib = libraries[e.target.value];
         setFormData((prevData) => ({
             ...prevData,
             lib_name: '',
+            lib_num: '', // Clear lib_num when library changes
         }));
     };
 
     const handleSectionChange = (e) => {
+        const selectedLib = libraries[selectedLibrary].find(lib => lib.name === e.target.value);
         setSelectedSection(e.target.value);
         setFormData((prevData) => ({
             ...prevData,
             lib_name: e.target.value,
+            lib_num: selectedLib ? selectedLib.lib_num : '',
         }));
     };
 
@@ -168,6 +189,10 @@ const AddBook = ({ csrf = {} }) => {
             tempErrors.count = '도서 수량을 입력해주세요';
             isValid = false;
         }
+        if (!formData.lib_num) {
+            tempErrors.lib_name = '도서관을 선택해주세요';
+            isValid = false;
+        }
 
         setErrors(tempErrors);
         return isValid;
@@ -202,7 +227,7 @@ const AddBook = ({ csrf = {} }) => {
 
             console.log(response.data);
             alert('도서가 성공적으로 등록되었습니다!');
-            // window.location.href = '/admin/booklist';
+          
         } catch (error) {
             console.error(error);
         }
@@ -210,8 +235,6 @@ const AddBook = ({ csrf = {} }) => {
 
     return (
         <>
-            <GlobalStyles width="100vw" />
-
             <div className="admin-page">
                 <div className="admin-base">
                     <AdminHeader />
@@ -356,8 +379,8 @@ const AddBook = ({ csrf = {} }) => {
                                     <option id="admin-addBook-input" value="">도서관 선택</option>
                                     {selectedLibrary &&
                                         libraries[selectedLibrary].map((section) => (
-                                            <option key={section} value={section}>
-                                                {section}
+                                            <option key={section.name} value={section.name}>
+                                                {section.name}
                                             </option>
                                         ))}
                                 </select>
@@ -393,7 +416,7 @@ const AddBook = ({ csrf = {} }) => {
                             <div className="form-group">
                                 <button type="submit" className="btn btn-outline-dark">등록</button>
                                 <button type="button" className="btn btn-outline-dark" onClick={handleReset}>초기화</button>
-                                <button type="button" id="adminbtn" class="btn btn-outline-dark"  onClick={() => navigate('/admin/book/list')}>목록보기</button>
+                                <button type="button" id="adminbtn" className="btn btn-outline-dark" onClick={() => navigate('/admin/book/list')}>목록보기</button>
                             </div>
                         </form>
                     </div>

@@ -1,8 +1,30 @@
 import React from 'react';
 import "./AdminModal.css";
+import axios from 'axios';
 
 const AdminBookDetail = ({ isOpen, onClose, book }) => {
   if (!isOpen) return null;
+
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await axios.delete(`/api/admin/book/delete/${id}`);
+      console.log("Delete response:", response.data);
+      alert("삭제가 완료되었습니다.");
+
+      // After deletion, fetch holidays again to update the list
+      
+      
+    } catch (error) {
+      console.error( error);
+    }
+  };
+
+
+
+
+
+
 
   return (
     <div className="admin-modal" id="admin-modal">
@@ -25,14 +47,16 @@ const AdminBookDetail = ({ isOpen, onClose, book }) => {
                     <th>번호</th>
                     <th>도서관</th>
                     <th>소장 권수</th>
+                    <th>삭제</th>
                   </tr>
                 </thead>
                 <tbody>
                   {book.libraries.map((lib, index) => (
                     <tr key={index}>
                       <td>{index + 1}</td>
-                      <td>{lib.libNum.lib_name}</td>
+                      <td>{lib.libName}</td>
                       <td>{lib.count}권</td>
+                      <td><button type="button" id="admin-modal-button" class="btn btn-outline-dark" onClick={() => handleDelete(book.id)}>삭제</button></td>
                     </tr>
                   ))}
                 </tbody>

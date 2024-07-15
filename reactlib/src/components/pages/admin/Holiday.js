@@ -8,7 +8,7 @@ import HolidayNew from './HolidayNew';
 import HolidayDetail from './HolidayDetail';
 import AdminHeader from './AdminHeader';
 import AdminSide from './AdminSide';
-import { GlobalStyles } from './GlobalStyles';
+
 import './AdminModal.css';
 
 
@@ -99,7 +99,7 @@ const Holiday = () => {
 
   return (
     <>
-           <GlobalStyles width="100vw" />
+         
     <div className="admin-page">
 
       <div className="admin-base">

@@ -8,7 +8,7 @@ import moment from "moment";
 import AdminHeader from "./AdminHeader";
 import AdminSide from "./AdminSide";
 import AdminPagination from './AdminPagination';
-import { GlobalStyles } from "./GlobalStyles";
+
 
 const HolidayList = () => {
   const [searchResult, setSearchResult] = useState([]);
@@ -137,8 +137,7 @@ const HolidayList = () => {
 
   return (
     <>
-    <GlobalStyles width="100vw" />
-    <GlobalStyles min-height="100vh" />
+
     <div className="admin-page">
 
 
@@ -204,7 +203,7 @@ const HolidayList = () => {
                 <th className="sortable" onClick={() => handleSort('lib_name')} style={{ width: '20%' }}>도서관 이름</th>
                 <th className="sortable" onClick={() => handleSort('libNum')} style={{ width: '30%' }}>도서관 번호</th>
                 <th className="sortable" onClick={() => handleSort('holiday')}>휴관일</th>
-                <th className="delete" style={{ width: '20%' }}>삭제</th>
+                <th style={{ width: '20%' }}>삭제</th>
               </tr>
             </thead>
             <tbody>
@@ -215,7 +214,7 @@ const HolidayList = () => {
                   <td>{holiday.library ? holiday.library.libNum : ''}</td>
                   <td>{holiday.holiday}</td>
                   <td>
-                    <button type="button"id="adminbtn" class="btn btn-outline-dark" onClick={() => handleDelete(holiday.id)}>삭제</button>
+                    <button type="button" class="btn btn-outline-dark" onClick={() => handleDelete(holiday.id)}>삭제</button>
                   </td>
                 </tr>
               ))}

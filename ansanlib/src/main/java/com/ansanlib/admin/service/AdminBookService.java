@@ -88,19 +88,20 @@ public class AdminBookService {
 
 	 
 	 
-	 //데이터 삭제
-	    @Transactional
-	    public void deleteBookById(Long id) {
-	        Optional<Book> bookOptional = bookRepository.findById(id);
-	        if (bookOptional.isPresent()) {
-	            Book book = bookOptional.get();
-	            bookRepository.delete(book);
-	        } else {
-	            throw new IllegalArgumentException("Holiday not found with id: " + id);
-	        }
-	 
+
+	//데이터 삭제
+		    @Transactional
+		    public void deleteBookById(Long id) {
+		        Optional<Book> bookOptional = bookRepository.findById(id);
+		        if (bookOptional.isPresent()) {
+		            Book book = bookOptional.get();
+		            bookRepository.delete(book);
+		        } else {
+		            throw new IllegalArgumentException("Holiday not found with id: " + id);
+		        }
+		    }
 	 
 	 
 
 
-}}
+}

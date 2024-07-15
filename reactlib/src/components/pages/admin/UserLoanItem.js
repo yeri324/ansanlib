@@ -1,10 +1,10 @@
 import './AdminPage.css'
-import { GlobalStyles } from './GlobalStyles';
+
 const UserLoanItem = ({ loan,onClickToReturn }) => {
 
     return (
         <>
-           <GlobalStyles width="100vw" />
+
         <tr key={loan.id}>
             <td>{loan.id}</td>
             <td>{loan.book.title}</td>

@@ -7,7 +7,7 @@ import "./AdminPage.css";
 import { useNavigate } from 'react-router-dom';
 import moment from "moment";
 import DatePicker from "react-datepicker";
-import { GlobalStyles } from './GlobalStyles';
+
 import "react-datepicker/dist/react-datepicker.css"; // Include DatePicker CSS
 import AdminPagination from './AdminPagination';
 
@@ -145,10 +145,13 @@ const AdminBookRequest = () => {
   if (error) {
     return <div>{error}</div>;
   }
+  const handleRefresh = () => {
+    fetchRequests();
+  };
 
   return (
     <>
-      <GlobalStyles width="100vw" />
+
       <div className="admin-page">
         <div className="admin-base">
           <AdminHeader />
@@ -187,6 +190,7 @@ const AdminBookRequest = () => {
                 />
               )}
               <button type="button" className="btn btn-outline-dark" onClick={handleSearch}>검색</button>
+              <button type="button" id="adminbtn" class="btn btn-outline-dark" onClick={handleRefresh}>새로고침</button>
             </div>
 
             <table className="admin-table">
