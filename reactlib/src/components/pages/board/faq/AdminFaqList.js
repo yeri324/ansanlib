@@ -33,10 +33,10 @@ function AdminFaqList() {
         console.log(isLogin, "**", !isLogin)
         console.log(roles.isAdmin, "**", !roles.isAdmin)
 
-        // if (!isLogin && !roles.isAdmin) {
-        //     alert("관리자로 로그인 해주세요.", () => { navigate("/login") })
-        //     return
-        // }
+        if (!isLogin && !roles.isAdmin) {
+            alert("관리자로 로그인 해주세요.", () => { navigate("/login") })
+            return
+        }
         onSearch(currentPage);
     }, [currentPage]);
 
@@ -139,8 +139,12 @@ function AdminFaqList() {
                     <div className="admin-page-title">
                         <h1>FAQ 목록</h1>
                     </div>
+                    <div className="admin-page-top">
+                    <div className="admin-page-count" style={{width:"25%"}}>
+                        총 {totalFaqCount}건 / {totalPages} 페이지
+                    </div>
     
-                    <div className="admin-page-search">
+                    <div className="admin-page-search" style={{width:"50%"}}>
                         <select name="searchBy" value={searchOption.searchBy} onChange={handleOnChange}>
                             <option value="loginid">작성자</option>
                             <option value="title">제목</option>
@@ -148,16 +152,13 @@ function AdminFaqList() {
                         <input type="text" id="search" name="searchQuery" value={searchOption.searchQuery} onChange={handleOnChange} />
                         <button className="btn btn-dark" onClick={() => onSearch(currentPage)}>검색</button>
                     </div>
-    
-                    <div className="admin-count_content">
-                        총 {totalFaqCount}건 / {totalPages} 페이지
-                    </div>
-    
-                    <div className=".admin-page-button">
+                  
+                  
+                    <div className="admin-page-button" style={{width:"25%"}}>
                         <button className="btn btn-outline-dark" onClick={onDelete}>삭제하기</button>
                         <button  className="btn btn-outline-dark" onClick={onCreate}>작성하기</button>
                     </div>
-
+                    </div>
 
                     <table className="admin-table">
                         <thead>

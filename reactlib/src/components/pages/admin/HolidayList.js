@@ -8,6 +8,7 @@ import moment from "moment";
 import AdminHeader from "./AdminHeader";
 import AdminSide from "./AdminSide";
 import AdminPagination from './AdminPagination';
+import "./AdminPage.css";
 
 
 const HolidayList = () => {
@@ -150,8 +151,9 @@ const HolidayList = () => {
         <div className="admin-page-title">
             <h1>휴관일 목록</h1>
           </div>
-
-          <div className="admin-page-search">
+<div className="admin-page-top">
+<div style={{width: "25%"}}></div>
+          <div className="admin-page-search" style={{width: "50%"}}>
             <select value={searchCriteria} onChange={(e) => setSearchCriteria(e.target.value)}>
               <option value="library">도서관 이름</option>
               <option value="date">날짜 (월)</option>
@@ -181,33 +183,32 @@ const HolidayList = () => {
             <button type="button" id="adminbtn" class="btn btn-outline-dark"  onClick={handleSearch}>검색</button>
             <button type="button" id="adminbtn" class="btn btn-outline-dark" onClick={handleRefresh}>새로고침</button>
          
-            <div className="admin-page-button">
-            <button type="button" id="adminbtn" class="btn btn-outline-dark"  onClick={() => navigate('/admin/holiday')}>돌아가기</button>
-            <button type="button" id="adminbtn" class="btn btn-outline-dark"  onClick={handleAddHoliday}>등록하기</button>
-          </div>
+           
 
          
           </div>
 
-
-
+          <div className="admin-page-button" style={{width: "25%"}}>
+            <button type="button" id="adminbtn" class="btn btn-outline-dark"  onClick={() => navigate('/admin/holiday')}>돌아가기</button>
+            <button type="button" id="adminbtn" class="btn btn-outline-dark"  onClick={handleAddHoliday}>등록하기</button>
+          </div>
+          </div>
           
 
 
           <table className="admin-table">
+              <thead>
+                <tr className="admin-th-tr">
 
-            <thead>
-
-              <tr className="admin-th-tr">
-                <th>No</th>
+                             <th>No</th>
                 <th className="sortable" onClick={() => handleSort('lib_name')} style={{ width: '20%' }}>도서관 이름</th>
                 <th className="sortable" onClick={() => handleSort('libNum')} style={{ width: '30%' }}>도서관 번호</th>
                 <th className="sortable" onClick={() => handleSort('holiday')}>휴관일</th>
-                <th style={{ width: '20%' }}>삭제</th>
-              </tr>
-            </thead>
-            <tbody>
-              {Array.isArray(currentItems) && currentItems.map((holiday) => (
+                <th>삭제</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Array.isArray(currentItems) && currentItems.map((holiday) => (
                 <tr key={holiday.id} className="admin-td-tr" style={{cursor:"default"}} >
                   <td>{holiday.id}</td>
                   <td>{holiday.lib_name}</td>
@@ -218,9 +219,8 @@ const HolidayList = () => {
                   </td>
                 </tr>
               ))}
-            </tbody>
-          </table>
-
+              </tbody>
+            </table>
 
           <div className="admin-pagination" >
           <div className="admin-pagination">

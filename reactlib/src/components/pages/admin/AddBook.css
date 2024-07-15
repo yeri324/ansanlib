@@ -6,14 +6,7 @@
     overflow: hidden;
 }
 
-.admin-addBook-page {
-    background-color: hsla(45, 6%, 87%, 0.459);
-    width: 100%;
-    font-family: 'Noto Sans KR', sans-serif;
-    padding-bottom: 30px;
-    height: 100vh;
-    overflow: hidden;
-}
+
 
 .admin-addBook-main {
     margin-top: 100px;

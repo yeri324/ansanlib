@@ -38,6 +38,11 @@ min-height: 850px;
 
 }
 
+.admin-page-top {
+  display: flex;
+  width: 90%;
+  margin: 0 auto;
+}
 
 /*검색창 비율 */
 .admin-page-search input,
@@ -60,6 +65,9 @@ min-height: 850px;
 }
 
 
+.admin-td-tr {
+  height: 50px;
+}
 
 .admin-td-tr:hover{
   background-color:  hsla(45, 6%, 87%, 0.459);
@@ -79,12 +87,15 @@ min-height: 850px;
 /* 휴관리스트 오른쪽 위치할 버튼*/
 .admin-page-button {
   text-align: right;
-  margin-right: 100px;
- 
+
+padding: 10px;
   display: flex;
   justify-content: flex-end;
 
   
 }
 
+.admin-page-count {
+  padding: 10px;
+}
 

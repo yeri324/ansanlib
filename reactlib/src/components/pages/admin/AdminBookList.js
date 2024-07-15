@@ -172,7 +172,9 @@ const AdminBookList = () => {
               <h1>도서 조회</h1>
             </div>
 
-            <div className="admin-page-search">
+<div className='admin-page-top'>
+  <div style={{width:"25%"}}></div>
+            <div className="admin-page-search"  style={{width:"50%"}}>
               <select value={searchCriteria} onChange={(e) => setSearchCriteria(e.target.value)}>
                 <option value="title">도서 제목</option>
                 <option value="author">작가</option>
@@ -210,11 +212,11 @@ const AdminBookList = () => {
               <button type="button" className="btn btn-outline-dark" onClick={handleRefresh}>새로고침</button>
             </div>
 
-            <div className="admin-page-button">
+            <div className="admin-page-button"  style={{width:"25%"}}>
               <button type="button" className="btn btn-outline-dark" onClick={() => navigate('/admin/book/new')}>등록하기</button>
               {/* <button type="button" className="btn btn-outline-dark" onClick={handleDelete}>삭제하기</button> */}
             </div>
-
+            </div>
             <table className="admin-table">
               <thead>
                 <tr className="admin-th-tr">
