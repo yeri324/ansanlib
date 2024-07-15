@@ -22,7 +22,7 @@
 .admin-page-main>.admin-page-body {
   padding: 20px 100px 20px 100px;
   border-radius: 15px;
-
+min-height: 850px;
   align-items: center;
   background-color: white;
   margin: 0 auto;
@@ -39,30 +39,11 @@
 }
 
 
-
+/*검색창 비율 */
 .admin-page-search input,
 .admin-page-search .react-datepicker-wrapper {
   flex: 1;
 }
-
-.admin-page-search .react-datepicker-wrapper {
-  width: 100%;
-}
-
-
-
-
-
-/*오른쪽 위치할 버튼*/
-.admin-page-button {
-    text-align: right;
-    margin-right: 100px;
-   
-    display: flex;
-    justify-content: flex-end;
- 
-    
-  }
 
 
 /*테이블*/
@@ -78,6 +59,9 @@
 }
 
 
+.admin-
+
+
 
 .admin-table tr:hover{
   background-color:  hsla(45, 6%, 87%, 0.459);
@@ -87,22 +71,25 @@
 
 /*테이블 열*/
 .admin-table th {
-  background-color: #fdc92c81;
+  background-color: #B0C4DE;
 }
 
 /*정렬 호버- 헤더 호버하면 색상 변경*/
 .sortable:hover {
-  background-color: #201406ab;
+  background-color:#708090;
   color: #faf9f7;
 }
 
 
-
-
-/* 페이지네이션 */
-#admin-pagination {
+/* 휴관리스트 오른쪽 위치할 버튼*/
+.admin-page-button {
+  text-align: right;
+  margin-right: 100px;
+ 
   display: flex;
-  justify-content: center;
-  margin-top: 20px;
+  justify-content: flex-end;
 
+  
 }
+
+

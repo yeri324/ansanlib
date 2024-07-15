@@ -14,14 +14,14 @@ const AddBook = ({ csrf = {} }) => {
         title: '',
         author: '',
         publisher: '',
-        pub_date: '',
+        pub_date: '', // 날짜 필드를 null로 초기화
         category_code: '',
         location: '',
         bookDetail: '',
         lib_name: '',
         count: '',
         status: 'AVAILABLE',
-        bookImg: null,
+        book_img:'null'
     };
 
     const initialErrors = {
@@ -192,7 +192,7 @@ const AddBook = ({ csrf = {} }) => {
         }
 
         try {
-            const response = await axios.post('http://localhost:8090/api/admin/book/new', data, {
+            const response = await axios.post('/api/admin/book/new', data, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     [csrf.parameterName]: csrf.token,
@@ -201,7 +201,7 @@ const AddBook = ({ csrf = {} }) => {
 
             console.log(response.data);
             alert('도서가 성공적으로 등록되었습니다!');
-            window.location.href = '/admin/booklist';
+            // window.location.href = '/admin/booklist';
         } catch (error) {
             console.error(error);
         }
@@ -227,35 +227,32 @@ const AddBook = ({ csrf = {} }) => {
                             <input type="hidden" name="id" value={formData.id} />
                             <input type="hidden" name="status" value="AVAILABLE" />
 
-                                                       {imagePreview && (
+                            {imagePreview && (
                                 <div className="form-group">
                                     <img src={imagePreview} alt="미리보기" className="img-thumbnail" />
                                     <button type="button" className="btn btn-outline-dark" onClick={handleImageCancel}>취소</button>
                                 </div>
                             )}
-                       
-                            <div  id="admin-input-form" className="input-group mb-3">
-                               
 
-                            <label id="admin-addBook-label" className="input-group-text">도서 표지</label>
-                           
-                            <input
-                                type="file"
-                           className="form-control"
-                                id="admin-addBook-input"                                 name="bookImgFile"
-                                onChange={handleFileChange}
-                                ref={fileInputRef}
-                            />
-                           
+                            <div id="admin-input-form" className="input-group mb-3">
+                                <label id="admin-addBook-label" className="input-group-text">도서 표지</label>
+                                <input
+                                    type="file"
+                                    className="form-control"
+                                    id="admin-addBook-input"
+                                    name="bookImgFile"
+                                    onChange={handleFileChange}
+                                    ref={fileInputRef}
+                                />
                             </div>
 
-                            <div  id="admin-input-form"className="input-group mb-3">
+                            <div id="admin-input-form" className="input-group mb-3">
                                 <label id="admin-addBook-label" className="input-group-text">도서명</label>
                                 <input
                                     type="text"
                                     name="title"
                                     className="form-control"
-                                     id="admin-addBook-input"
+                                    id="admin-addBook-input"
                                     placeholder="도서명을 입력해주세요"
                                     value={formData.title}
                                     onChange={handleChange}
@@ -269,7 +266,7 @@ const AddBook = ({ csrf = {} }) => {
                                     type="text"
                                     name="isbn"
                                     className="form-control"
-                                     id="admin-addBook-input"
+                                    id="admin-addBook-input"
                                     placeholder="ISBN을 입력해주세요"
                                     value={formData.isbn}
                                     onChange={handleChange}
@@ -278,12 +275,12 @@ const AddBook = ({ csrf = {} }) => {
                             </div>
 
                             <div id="admin-input-form" className="input-group mb-3">
-                                <label  id="admin-addBook-label" className="input-group-text">저자</label>
+                                <label id="admin-addBook-label" className="input-group-text">저자</label>
                                 <input
                                     type="text"
                                     name="author"
                                     className="form-control"
-                                     id="admin-addBook-input"
+                                    id="admin-addBook-input"
                                     placeholder="저자를 입력해주세요"
                                     value={formData.author}
                                     onChange={handleChange}
@@ -297,7 +294,7 @@ const AddBook = ({ csrf = {} }) => {
                                     type="text"
                                     name="publisher"
                                     className="form-control"
-                                     id="admin-addBook-input"
+                                    id="admin-addBook-input"
                                     placeholder="출판사를 입력해주세요"
                                     value={formData.publisher}
                                     onChange={handleChange}
@@ -307,20 +304,22 @@ const AddBook = ({ csrf = {} }) => {
 
                             <div id="admin-input-form" className="input-group mb-3">
                                 <label id="admin-addBook-label" className="input-group-text">출판년도</label>
-                                <input id="admin-addBook-input"
+                                <DatePicker
                                     selected={formData.pub_date}
                                     onChange={handleDateChange}
                                     className="form-control"
-                                    placeholder="출판년도를 입력해주세요"
+                                    dateFormat="yyyy"
+                                    showYearPicker
+                                    placeholderText="출판년도를 선택해주세요"
                                 />
                                 {errors.pub_date && <p className="text-danger">{errors.pub_date}</p>}
                             </div>
 
                             <div id="admin-input-form" className="input-group mb-3">
-                                <label  id="admin-addBook-label" className="input-group-text">카테고리코드</label>
+                                <label id="admin-addBook-label" className="input-group-text">카테고리코드</label>
                                 <input
                                     className="form-control"
-                                     id="admin-addBook-input"
+                                    id="admin-addBook-input"
                                     name="category_code"
                                     placeholder="카테고리 코드를 입력하세요."
                                     value={formData.category_code}
@@ -330,10 +329,10 @@ const AddBook = ({ csrf = {} }) => {
                             </div>
 
                             <div id="admin-input-form" className="input-group mb-3">
-                                <label id="admin-addBook-textarea" style={{width:"150px"}} className="input-group-text">상세 내용</label>
+                                <label id="admin-addBook-textarea" style={{ width: "150px" }} className="input-group-text">상세 내용</label>
                                 <textarea
                                     className="form-control"
-                                     id="admin-addBook-textarea"
+                                    id="admin-addBook-textarea"
                                     name="bookDetail"
                                     placeholder="도서 상세 내용을 입력하세요."
                                     value={formData.bookDetail}
@@ -344,7 +343,7 @@ const AddBook = ({ csrf = {} }) => {
 
                             <div id="admin-input-form" className="input-group mb-3">
                                 <label id="admin-addBook-label" className="input-group-text">소장 도서관</label>
-                                <select  id="admin-addBook-input" className="form-control" value={selectedLibrary} onChange={handleLibraryChange}>
+                                <select id="admin-addBook-input" className="form-control" value={selectedLibrary} onChange={handleLibraryChange}>
                                     <option value="">도서관 선택</option>
                                     {Object.keys(libraries).map((library) => (
                                         <option key={library} value={library}>
@@ -352,8 +351,8 @@ const AddBook = ({ csrf = {} }) => {
                                         </option>
                                     ))}
                                 </select>
-                                <select  id="admin-addBook-input" className="form-control" value={selectedSection} onChange={handleSectionChange} disabled={!selectedLibrary}>
-                                    <option  id="admin-addBook-input" value="">도서관 선택</option>
+                                <select id="admin-addBook-input" className="form-control" value={selectedSection} onChange={handleSectionChange} disabled={!selectedLibrary}>
+                                    <option id="admin-addBook-input" value="">도서관 선택</option>
                                     {selectedLibrary &&
                                         libraries[selectedLibrary].map((section) => (
                                             <option key={section} value={section}>
