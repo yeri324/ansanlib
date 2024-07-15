@@ -77,14 +77,14 @@
 
 .admin-calendar-table th, .admin-calendar-table td {
   border: 1px solid #eee;
-  
+
 }
 
 
 .admin-calendar-table th {
   text-align: center;
   height: 50px;
-  background-color: #fdc92c81;
+  background-color:#B0C4DE;
 }
 
 .admin-calendar-table td {
@@ -106,7 +106,7 @@
   
 /*해당 월이 아닌 날짜 */
 .not-current {
-  background-color: #c4c3c381;
+  background-color: #b2b8c252;
   color:#0611258e;
 }
 
@@ -130,9 +130,11 @@
 
 /*휴관일 목록 */
 .holiday {
-  font-size: 0.8em;
-  background-color: #061a3dd8;
+
+    font-size: 0.8em;
+  background-color: #708090;
   color: white;
+  
 }
 
 /*3개 이상이면 표시 */

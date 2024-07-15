@@ -18,8 +18,8 @@ const AdminSide = () => {
         <li className="has-submenu">
           <a href="#" className="no-underline" onClick={() => toggleMenu('board')}>게시판관리</a>
           <ul className={`submenu ${openMenu === 'board' ? 'open' : ''}`}>
-            <li><a href="/admin/faqlist" className="no-underline">FAQ</a></li>
-            <li><a href="#" className="no-underline">공지사항</a></li>
+            <li><a href="/admin/faq/list" className="no-underline">FAQ</a></li>
+            <li><a href="/admin/notice/list" className="no-underline">공지사항</a></li>
       
           </ul>
         </li>

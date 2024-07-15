@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import { getLibraryNum } from '../../../utils/libraryUtils';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import "./Modal.css";
+import "./AdminModal.css";
 
 const HolidayNew = ({ showModal, handleCloseModal, selectedDate, setSelectedDate, districts }) => {
   const [district, setDistrict] = useState('');
@@ -73,14 +73,15 @@ const HolidayNew = ({ showModal, handleCloseModal, selectedDate, setSelectedDate
   return (
     <div className={`modal fade ${showModal ? 'show d-block' : 'd-none'}`} id="admin-modal" tabIndex="-1" aria-labelledby="admin-modal-title" aria-hidden="true">
       <div className="modal-dialog" id="admin-modal-dialog">
-        <div className="modal-content">
+        <div className="modal-content" id='admin-modal-content'>
           <div className="modal-header">
             <h5 className="modal-title" id="admin-modal-title">
               도서관 휴관일 등록 - {selectedDate && selectedDate.format('YYYY-MM-DD')}
             </h5>
             <button type="button" className="btn-close" aria-label="Close" onClick={handleCloseModal}></button>
           </div>
-          <div className="modal-body">
+         
+          <div className="modal-body" id='admin-modal-body'>
             <form onSubmit={handleAddSchedule} className='holidaynew'>
               <div className="form-group" id="admin-form-group">
                 <label>지역 선택</label>

@@ -1,12 +1,12 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import "./Modal.css";
+import "./AdminModal.css";
 
 const HolidayDetail = ({ show, handleClose, holidays }) => {
   return (
     <div className={`modal fade ${show ? 'show d-block' : 'd-none'}`} id="admin-modal" tabIndex="-1" aria-labelledby="admin-modal-title" aria-hidden="true">
       <div className="modal-dialog" id="admin-modal-dialog">
-        <div className="modal-content">
+        <div className="modal-content" id='admin-modal-content'>
           <div className="modal-header">
             <h5 className="modal-title" id="admin-modal-title">
               도서관 휴관정보
@@ -15,9 +15,9 @@ const HolidayDetail = ({ show, handleClose, holidays }) => {
           </div>
           <div className="modal-body">
             {holidays.length > 0 ? (
-              <table className='table table-striped detailTable'>
+              <table className='table table-striped detailTable' id="admin-modal-table">
                 <thead>
-                  <tr>
+                  <tr >
                     <th>번호</th>
                     <th style={{ width: "30%" }}>도서관</th>
                     <th>날짜</th>

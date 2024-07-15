@@ -9,6 +9,7 @@ import HolidayDetail from './HolidayDetail';
 import AdminHeader from './AdminHeader';
 import AdminSide from './AdminSide';
 import { GlobalStyles } from './GlobalStyles';
+import './AdminModal.css';
 
 
 const Holiday = () => {

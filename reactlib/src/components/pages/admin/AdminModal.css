@@ -14,33 +14,39 @@
 }
 
 /* 모달 창 */
-.admin-modal-content {
+#admin-modal-content {
 
   margin: 0 auto; /* 모달창 가운데 */
   background-color: #fff;
   border-radius: 8px;
   width: 600px; /* 모달 너비 조절 */
-  max-width: 600px; /* 최대 너비 설정 */
+  max-width: 1000px; /* 최대 너비 설정 */
   position: relative; /* 닫기 버튼이 모달 내에 위치하도록 설정 */
   padding: 30px; /* 내용과 경계 사이 여백 설정 */
   z-index: 1000;
 }
 
-.detailTable {
+#admin-modal-table {
   width: 100%;
   border: 1px solid #eee;  
   border-radius: 3px;
 }
 
-.modal-content .holidaynew {
+
+/*holidayNew*/
+#admin-modal-content .holidaynew {
   width:100%;
 }
 
-
-form-group {
+/*holidayNew*/
+#admin-form-group {
   width: 100%;
   margin: 0 auto;
+  padding-top: 20px;
+
 }
+
+
 
 /* 닫기 버튼
 .close {
