@@ -79,6 +79,12 @@ public class RequestBookService {
         requestBookRepository.delete(requestBook);
     }
     
+	public void deleteRequestBookBelongsTo(Long requestBookId, Long userId) throws Exception{
+		if(requestBookRepository.deleteBookBelongsTo(requestBookId, userId)==0) {
+			throw new EntityNotFoundException();
+		}
+	}
+	
     //회원 탈퇴 관련
     @Transactional
     public void deleteRequestBookByUserId(Long userId) {

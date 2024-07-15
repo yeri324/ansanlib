@@ -79,16 +79,17 @@ public class RequestBookController {
 //        }
 //    }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteRequestBook(@AuthenticationPrincipal CustomUser user, @PathVariable Long id){
+    @DeleteMapping("/delete/{requestBookId}")
+    public ResponseEntity<?> deleteRequestBook(@AuthenticationPrincipal CustomUser user, @PathVariable Long requestBookId){
     	if(user == null) {
     		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Not Logged in.");
     	}
     	long userId =user.getUser().getUserId();
     	try {
-    		requestBookService.deleteRequestBookByUserId(userId);
+    		requestBookService.deleteRequestBookBelongsTo(requestBookId,userId);
     		return ResponseEntity.noContent().build();
     	} catch (Exception e) {
+            e.printStackTrace();
     		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     	}
     }
