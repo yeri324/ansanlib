@@ -40,6 +40,9 @@ import AddBook from './components/pages/admin/AddBook';
 
 import AdminBookRequest from './components/pages/admin/AdminBookRequest';
 import { UseAuthBasic, UseAuthCheckAdmin, UseAuthCheckLogin } from './components/hooks/examples/useAuthExamples';
+import BoardList from './components/pages/board/page/BoardList';
+import BoardDetail from './components/pages/board/page/BoardDetail';
+import BoardForm from './components/pages/board/page/BoardForm';
 
 
 function App() {
@@ -55,16 +58,9 @@ function App() {
                                 <Route path="/fragments/header" element={<Header />} />
                                 <Route path="/fragments/footer" element={<Footer />} />
 
-                                <Route path="/admin/faq/list" element={<AdminFaqList />} />
-                                <Route path="/admin/faq/new" element={<AdminFaqForm />} />
-                                <Route path="/admin/faq/detail/:id" element={<AdminFaqDetailForm />} />
-                                <Route path="/admin/notice/list" element={<AdminNoticeList />} />
-                                <Route path="/admin/notice/new" element={<AdminNoticeForm />} />
-                                <Route path="/admin/notice/detail/:id" element={<AdminNoticeDetailForm />} />
-                                <Route path="/user/notice/list" element={<UserNoticeList />} />
-                                <Route path="/user/notice/detail/:id" element={<UserNoticeDetailForm />} />
-                                <Route path="/user/faq/list" element={<UserFaqList />} />
-                                <Route path="/user/faq/detail/:id" element={<UserFaqDetailForm />} />
+                                <Route path="/:roles/:board/list" element={<BoardList />} />
+                                <Route path="/admin/:board/form" element={<BoardForm />} />
+                                <Route path="/:roles/:board/detail/:id" element={<BoardDetail />} />
 
                                 <Route path="/admin" element={<Admin />} />
                                 <Route path="/admin/user/search" element={<AdminUserList />} />

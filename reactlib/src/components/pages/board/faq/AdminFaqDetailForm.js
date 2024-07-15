@@ -1,32 +1,41 @@
-import axios from 'axios';
-import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate, useParams, } from 'react-router-dom';
-import BoardFileLabel from '../common/BoardFileLabel';
-import ImgPreview from '../common/ImgPreview';
-import {LoginContext} from "../../security/contexts/LoginContextProvider";
+import React, { useState, useEffect, } from 'react';
+import { useNavigate,} from 'react-router-dom';
 import '../../board/common/DetailForm.css'
 import BoardImgList from '../common/BoardImgList';
-import { drawerClasses } from '@mui/material';
+import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
+import Auth from '../../../helpers/Auth';
+import RedirectLogin from '../../../helpers/RedirectLogin';
 
-function AdminFaqDetailForm() {
+
+function AdminFaqDetailForm({id}) {
+    const { axios } = useAuth();
     const navigate = useNavigate();
-    const { id } = useParams();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [images, setImages] = useState([]);
     const [count, setCount] = useState(1);
-    const [deleteImg,setDeleteImg] = useState([])
-
-    const { isLogin, roles } = useContext(LoginContext);
-
+    const [deleteImg, setDeleteImg] = useState([]);
+    const { loginStatus, roles } = useAuth();
 
 
+    //권한 여부 확인
     useEffect(() => {
-        // if (!isLogin && !roles.isAdmin) {
-        //     alert("관리자로 로그인 해주세요.")
-        //     navigate("/login")
-        //     return
-        //   }
+        //로그아웃됨.
+        if (loginStatus === LOGIN_STATUS.LOGGED_OUT) {
+            alert("로그인이 필요합니다.");
+            navigate("/login");
+            return;
+        } else if (loginStatus === LOGIN_STATUS.LOGGED_IN) {
+            //어드민인지 확인
+            if (roles !== ROLES.ADMIN) {
+                alert("권한이 없습니다.");
+                navigate(-1);
+            }
+        }
+        getDataset();
+    }, [loginStatus]); //로그인 상태 변경시 useEffect 실행
+    
+    useEffect(() => {
         getDataset();
     }, []);
 
@@ -36,7 +45,7 @@ function AdminFaqDetailForm() {
 
     // 게시글 가져오기
     const getDataset = async () => {
-        axios(
+        await axios(
             {
                 url: '/faq/detail',
                 method: 'post',
@@ -62,9 +71,9 @@ function AdminFaqDetailForm() {
     // 파일 추가
     const handleAddImg = () => {
         if (images.length < 5) {
-            setImages([...images, { id: 'a'+count, file: null }]);
-            console.log('a'+count);
-            setCount(count+1)
+            setImages([...images, { id: 'a' + count, file: null }]);
+            console.log('a' + count);
+            setCount(count + 1)
         }
     };
 
@@ -80,13 +89,13 @@ function AdminFaqDetailForm() {
                     formData.append('faqImgFileId', image.id)
                     formData.append('faqImgFile', image.file);
                 }
-                
+
             });
-  
+
             deleteImg.forEach((item) => {
-                    formData.append('delImg', item);
+                formData.append('delImg', item);
             });
-           try{
+            try {
                 axios.put(
                     'http://localhost:8090/admin/faq/update',
                     formData, {
@@ -123,10 +132,10 @@ function AdminFaqDetailForm() {
     const onImgDelete = (e) => {
         const filteredItems = images.filter(item => item !== e);
         setImages(filteredItems)
-        if(typeof(e.id)==='number'){
-        setDeleteImg([...deleteImg,e.id])
-    }
+        if (typeof (e.id) === 'number') {
+            setDeleteImg([...deleteImg, e.id])
         }
+    }
 
     //목록으로가기
     const onGoBack = () => {
@@ -135,7 +144,7 @@ function AdminFaqDetailForm() {
 
     return (
         <div>
-            <div class='update-form'>
+            <div class='detail-form'>
                 <form>
                     <h3>수정하기</h3>
                     <div class='content-container'>
@@ -143,7 +152,7 @@ function AdminFaqDetailForm() {
                             <input type='text' name='title' value={title} onChange={updateTitle} />
                             <textarea type='text' name='content' value={content} onChange={updateContent} />
                         </div>
-                        <BoardImgList images = {images}  handleImgChange={handleImgChange} onImgDelete={onImgDelete} />
+                        <BoardImgList images={images} handleImgChange={handleImgChange} onImgDelete={onImgDelete} />
                         {images.length < 5 && <button type="button" onClick={handleAddImg}>이미지추가</button>}
                         <button type='button' onClick={() => onUpdate()} >수정</button>
                         <button type="button" onClick={() => onDelete()}>삭제</button>

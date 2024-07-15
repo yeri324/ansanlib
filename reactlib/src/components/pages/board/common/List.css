@@ -1,12 +1,12 @@
 /* General Styles */
-.board{
+.board-list{
     width: 100%;
     font-family: Arial, sans-serif;
     background-color: #f8f9fa;
     margin: 0;
     padding: 0;
 }
-.board .container {
+.board-list .container {
     width: 70%;
     max-width: 1200px;
     margin: 0 auto;
@@ -14,18 +14,18 @@
 }
 
 /* Page Title */
-.board_page-title {
+.board-list .board_page-title {
     text-align: center;
     margin-bottom: 20px;
 }
 
-.board_page-title h3 {
+.board-list .board_page-title h3 {
     font-size: 24px;
     color: #333;
 }
 
 /* Search Wrap */
-.board .search-wrap {
+.board-list .search-wrap {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -34,21 +34,21 @@
     margin: 0 auto;
 }
 
-.board .search-wrap select,
-.board .search-wrap input[type="text"],
-.board .search-wrap .btn {
+.board-list .search-wrap select,
+.board-list .search-wrap input[type="text"],
+.board-list .search-wrap .btn {
     margin: 0 5px;
     padding: 10px;
     font-size: 16px;
 }
 
-.board .search-wrap input[type="text"] {
+.board-list .search-wrap input[type="text"] {
     border: 1px solid #ccc;
     border-radius: 4px;
     flex: 1;
 }
 
-.board .search-wrap .btn[type='button'] {
+.board-list .search-wrap .btn[type='button'] {
     background-color: #343a40;
     color: white;
     border: none;
@@ -56,17 +56,17 @@
     cursor: pointer;
 }
 
-.board .search-wrap .btn:hover {
+.board-list .search-wrap .btn:hover {
     background-color: #495057;
 }
 
 /* FAQ Table */
-.board .list {
+.board-list .list {
     width: 70%;
     margin: 0 auto;
 }
 
-.board .table {
+.board-list .table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
@@ -74,49 +74,49 @@
 
 /* 리스트 내부 비율 */
 
-.board .table th:nth-child(1),
-.board .table td:nth-child(1) {
+.board-list .table th:nth-child(1),
+.board-list .table td:nth-child(1) {
     width: 7%;
 }
 
-.board .table th:nth-child(2),
-.board .table td:nth-child(2) {
+.board-list .table th:nth-child(2),
+.board-list .table td:nth-child(2) {
     width: 30%;
 }
 
-.board .table th:nth-child(3),
-.board .table td:nth-child(3) {
+.board-list .table th:nth-child(3),
+.board-list .table td:nth-child(3) {
     width: 15%;
 }
 
-.board .table th:nth-child(4),
-.board .table td:nth-child(4) {
+.board-list .table th:nth-child(4),
+.board-list .table td:nth-child(4) {
     width: 10%;
 }
 
-.board .table th:nth-child(5),
-.board .table td:nth-child(5) {
+.board-list .table th:nth-child(5),
+.board-list .table td:nth-child(5) {
     width: 5%;
 }
 
-.board .table th,
-.board .table td {
+.board-list .table th,
+.board-list .table td {
     border: 1px solid #ddd;
     padding: 12px;
     text-align: center;
 }
 
-.board .table th {
+.board-list .table th {
     background-color: #f1f1f1;
     font-weight: bold;
 }
 
-.board .table tr:nth-child(even) {
+.board-list .table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
 /* Buttons */
-.board .list button {
+.board-list .list button {
     margin: 10px 5px;
     padding: 10px 15px;
     background-color: #343a40;
@@ -126,7 +126,7 @@
     cursor: pointer;
 }
 
-.board .list button:hover {
+.board-list .list button:hover {
     background-color: #343a40;
 }
 
@@ -158,34 +158,10 @@
 }
 
 /* Total Count */
-.board .count_content {
+.board-list  .count_content {
     width: 75%;
     text-align: right;
     margin: 0 auto;
     margin-top: 20px;
     font-size: 16px;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .board .search-wrap {
-        flex-direction: column;
-    }
-
-    .board .search-wrap select,
-    .board .search-wrap input[type="text"],
-    .board .search-wrap button {
-        margin: 5px 0;
-        width: 100%;
-    }
-
-    .board .table th,
-    .board .table td {
-        font-size: 14px;
-        padding: 8px;
-    }
-
-    .board_pagination .page-link {
-        padding: 8px 12px;
-    }
 }

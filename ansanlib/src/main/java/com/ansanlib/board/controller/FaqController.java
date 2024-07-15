@@ -37,7 +37,7 @@ public class FaqController {
 	private final FaqImgService faqImgService;
 
 	//생성
-//	@Secured("ROLE_ADMIN")
+	@Secured("ROLE_ADMIN")
 	@PostMapping(value = "/admin/faq/new")
 	public ResponseEntity<String> createfaq(@RequestParam(required = false) List<MultipartFile> faqImgFile,
 			FaqFormDto faqFormDto) throws Exception {
@@ -55,7 +55,7 @@ public class FaqController {
 	}
 
 	//수정
-//	@Secured("ROLE_ADMIN")
+	@Secured("ROLE_ADMIN")
 	@PutMapping(value = "/admin/faq/update")
 	public ResponseEntity<String> updateFaq(FaqFormDto faqFormDto,
 			@RequestParam(required = false) List<MultipartFile> faqImgFile,
@@ -73,7 +73,7 @@ public class FaqController {
 	}
 
 	//글 삭제
-//	@Secured("ROLE_ADMIN")
+	@Secured("ROLE_ADMIN")
 	@DeleteMapping("/admin/faq/delete")
 	public void deleteFaq(@RequestBody FaqFormDto faqFormDto) {
 		ResponseEntity resEntity = null;
@@ -105,6 +105,7 @@ public class FaqController {
 	@PostMapping("/faq/detail")
 	public ResponseEntity<String> detailFaq(@RequestBody FaqDto faqDto){
 		ResponseEntity resEntity = null;
+		System.out.println(faqDto.getId());
 		Faq faq = faqService.getDetail(faqDto);
 		resEntity = new ResponseEntity(faq, HttpStatus.OK);
 		return resEntity;

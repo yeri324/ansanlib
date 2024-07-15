@@ -1,9 +1,4 @@
-import { useContext } from "react";
-import {LoginContext} from "../../security/contexts/LoginContextProvider";
-
 function BoardFileLabel({ putImage, handleImgChange, onImgDelete, }) {
-
-    const { isLogin, roles } = useContext(LoginContext);
 
     return (
         <div key={putImage.id} class='img-upload'>

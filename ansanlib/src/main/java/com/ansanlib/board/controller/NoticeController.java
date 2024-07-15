@@ -38,7 +38,7 @@ public class NoticeController {
 	private final NoticeImgService noticeImgService;
 
 	// 생성
-//	@Secured("ROLE_ADMIN")
+	@Secured("ROLE_ADMIN")
 	@PostMapping(value = "/admin/notice/new")
 	public ResponseEntity<String> createNotice(@RequestParam(required = false) List<MultipartFile> noticeImgFile,
 			NoticeFormDto noticeFormDto) throws Exception {
@@ -56,7 +56,7 @@ public class NoticeController {
 	}
 
 	// 수정
-//	@Secured("ROLE_ADMIN")
+	@Secured("ROLE_ADMIN")
 	@PutMapping(value = "/admin/notice/update")
 	public ResponseEntity<String> updatenotice(NoticeFormDto noticeFormDto,
 			@RequestParam(required = false) List<MultipartFile> noticeImgFile,
@@ -79,7 +79,7 @@ public class NoticeController {
 
 
 	// 글 삭제
-//	@Secured("ROLE_ADMIN")
+	@Secured("ROLE_ADMIN")
 	@DeleteMapping("/admin/notice/delete")
 	public void deleteNotice(@RequestBody NoticeFormDto noticeFormDto) {
 		ResponseEntity resEntity = null;
@@ -99,7 +99,7 @@ public class NoticeController {
 	}
 
 	// 이미지 삭제
-//	@Secured("ROLE_ADMIN")
+	@Secured("ROLE_ADMIN")
 	@DeleteMapping("/admin/notice/imgDelete")
 	public ResponseEntity<String> deleteImg(@RequestBody NoticeImgDto noticeImgDto) throws Exception {
 		ResponseEntity resEntity = null;
