@@ -148,18 +148,7 @@ const AdminBookList = () => {
     });
   };
 
-  const handleDelete = async () => {
-    const bookIdsToDelete = selectedBooks.map(book => book.id);
-    try {
-        await axios.delete('http://localhost:8090/api/admin/book/delete', { data: bookIdsToDelete });
-        getBookList(); // Refresh the book list after deletion
-        setSelectedBooks([]); // Clear the selected books
-        alert('Selected books have been deleted.');
-    } catch (error) {
-        console.error('Error deleting books:', error);
-        alert('An error occurred while deleting books.');
-    }
-  };
+
 
   const refreshBookList = () => {
     getBookList(); // Fetch the book list again
@@ -171,8 +160,6 @@ const AdminBookList = () => {
 
   return (
     <>
-
-
       <div className="admin-page">
         <div className="admin-base">
           <AdminHeader />
@@ -187,7 +174,6 @@ const AdminBookList = () => {
 
             <div className="admin-page-search">
               <select value={searchCriteria} onChange={(e) => setSearchCriteria(e.target.value)}>
-                
                 <option value="title">도서 제목</option>
                 <option value="author">작가</option>
                 <option value="publisher">출판사</option>
@@ -197,13 +183,12 @@ const AdminBookList = () => {
               {searchCriteria !== 'date' && (
                 <input
                   type="text"
-                  placeholder={`${
-                    searchCriteria === 'title'
+                  placeholder={`${searchCriteria === 'title'
                       ? '도서 제목'
                       : searchCriteria === 'author'
-                      ? '작가'
-                      : '출판사'
-                  }을 입력하세요`}
+                        ? '작가'
+                        : '출판사'
+                    }을 입력하세요`}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   onKeyDown={handleKeyDown}
@@ -227,44 +212,36 @@ const AdminBookList = () => {
 
             <div className="admin-page-button">
               <button type="button" className="btn btn-outline-dark" onClick={() => navigate('/admin/book/new')}>등록하기</button>
-              <button type="button" className="btn btn-outline-dark" onClick={handleDelete}>삭제하기</button>
+              {/* <button type="button" className="btn btn-outline-dark" onClick={handleDelete}>삭제하기</button> */}
             </div>
 
             <table className="admin-table">
               <thead>
                 <tr className="admin-th-tr">
-                <th>선택</th>
+
                   <th>No</th>
-               
                   <th className='sortable' onClick={() => handleSort('isbn')}>ISBN</th>
                   <th className='sortable' onClick={() => handleSort('title')}>도서 제목</th>
                   <th className='sortable' onClick={() => handleSort('author')}>작가</th>
                   <th className='sortable' onClick={() => handleSort('publisher')}>출판사</th>
                   <th className='sortable' onClick={() => handleSort('pub_date')}>출판년도</th>
                   <th>도서 수량</th>
-               
                 </tr>
               </thead>
               <tbody>
                 {filteredBookList.length > 0 ? (
                   filteredBookList.map((book, index) => (
                     <tr className='list admin-td-tr' key={index}>
-                           <td>
-                        <input
-                          type="checkbox"
-                          checked={selectedBooks.includes(book)}
-                          onChange={() => handleCheckboxChange(book)}
-                        />
-                      </td>
+               
+
+                
                       <td onClick={() => handleOpenModal(book)}>{(currentPage - 1) * itemsPerPage + index + 1}</td>
-                 
                       <td onClick={() => handleOpenModal(book)}>{book.isbn}</td>
                       <td onClick={() => handleOpenModal(book)}>{book.title}</td>
                       <td onClick={() => handleOpenModal(book)}>{book.author}</td>
                       <td onClick={() => handleOpenModal(book)}>{book.publisher}</td>
                       <td onClick={() => handleOpenModal(book)}>{book.pub_date}</td>
                       <td onClick={() => handleOpenModal(book)}>{book.total_count}</td>
-                     
                     </tr>
                   ))
                 ) : (

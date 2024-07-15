@@ -1,12 +1,12 @@
+
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+
 import axios from 'axios';
 import "./AddBook.css";
 import AdminHeader from './AdminHeader';
 import AdminSide from './AdminSide';
-
 
 const AddBook = ({ csrf = {} }) => {
     const initialFormData = {
@@ -23,7 +23,7 @@ const AddBook = ({ csrf = {} }) => {
         lib_num: '', // New field for library number
         count: '',
         status: 'AVAILABLE',
-        book_img:'null'
+        book_img: 'null'
     };
 
     const initialErrors = {
@@ -233,6 +233,18 @@ const AddBook = ({ csrf = {} }) => {
         }
     };
 
+    // Custom input component for DatePicker
+    const CustomDateInput = ({ value, onClick }) => (
+        <input
+            type="text"
+            value={value}
+            onClick={onClick}
+            readOnly
+            className="form-control admin-date-picker"
+            placeholder="출판년도를 선택해주세요"
+        />
+    );
+
     return (
         <>
             <div className="admin-page">
@@ -254,7 +266,7 @@ const AddBook = ({ csrf = {} }) => {
                             {imagePreview && (
                                 <div className="form-group">
                                     <img src={imagePreview} alt="미리보기" className="img-thumbnail" />
-                                    <button type="button" className="btn btn-outline-dark" onClick={handleImageCancel}>취소</button>
+                                    <button  className="btn btn-outline-dark" onClick={handleImageCancel}>취소</button>
                                 </div>
                             )}
 
@@ -270,7 +282,9 @@ const AddBook = ({ csrf = {} }) => {
                                 />
                             </div>
 
-                            <div id="admin-input-form" className="input-group mb-3">
+                           
+
+ <div id="admin-input-form" className="input-group mb-3">
                                 <label id="admin-addBook-label" className="input-group-text">도서명</label>
                                 <input
                                     type="text"
@@ -328,13 +342,12 @@ const AddBook = ({ csrf = {} }) => {
 
                             <div id="admin-input-form" className="input-group mb-3">
                                 <label id="admin-addBook-label" className="input-group-text">출판년도</label>
-                                <DatePicker
+                                <DatePicker 
                                     selected={formData.pub_date}
                                     onChange={handleDateChange}
-                                    className="form-control"
+                                    customInput={<CustomDateInput />}
                                     dateFormat="yyyy"
                                     showYearPicker
-                                    placeholderText="출판년도를 선택해주세요"
                                 />
                                 {errors.pub_date && <p className="text-danger">{errors.pub_date}</p>}
                             </div>
@@ -414,9 +427,9 @@ const AddBook = ({ csrf = {} }) => {
                             </div>
 
                             <div className="form-group">
-                                <button type="submit" className="btn btn-outline-dark">등록</button>
-                                <button type="button" className="btn btn-outline-dark" onClick={handleReset}>초기화</button>
-                                <button type="button" id="adminbtn" className="btn btn-outline-dark" onClick={() => navigate('/admin/book/list')}>목록보기</button>
+                                <button  className="btn btn-outline-dark">등록</button>
+                                <button  className="btn btn-outline-dark" onClick={handleReset}>초기화</button>
+                                <button id="adminbtn" className="btn btn-outline-dark" onClick={() => navigate('/admin/book/list')}>목록보기</button>
                             </div>
                         </form>
                     </div>

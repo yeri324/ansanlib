@@ -18,6 +18,7 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
       onClose();
     } catch (error) {
       console.error(error);
+      alert("삭제 할 수 없습니다. 다시 확인해주세요");
     }
   };
 

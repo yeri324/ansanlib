@@ -49,7 +49,7 @@ form input[type='text']::placeholder {
     font-family: Arial, sans-serif;
 }
 
-form button[type='button'],
+/* form button[type='button'],
 form button[type='submit'] {
     display: inline-block;
     padding: 10px 20px;
@@ -60,7 +60,7 @@ form button[type='submit'] {
     font-size: 16px;
     cursor: pointer;
     margin: 10px;
-}
+} */
 
 .img-upload {
     margin: 0 auto;
