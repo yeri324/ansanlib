@@ -53,12 +53,12 @@ public class UserController {
         return userService.delete(userId);
     }
 	
-	//중복 아이디 체크
+	// 중복 아이디 체크
 	@PostMapping("/check/loginid")
 	public ResponseEntity<?> checkId(@RequestBody UserDto user) throws Exception {
 		return userService.checkId(user.getLoginid());
 	}
-	//중복 이메일 체크
+	// 중복 이메일 체크
 	@PostMapping("/check/email")
 	public ResponseEntity<?> checkEmail(@RequestBody UserDto user) throws Exception {
 		return userService.checkEmail(user.getEmail());
@@ -69,5 +69,12 @@ public class UserController {
 	public ResponseEntity<?> findIdByEmail(@RequestBody UserDto userDto) throws Exception {
 		System.out.println(userDto.getEmail() + userDto.getName());
 		return userService.findIdByEmailAndName(userDto.getEmail(), userDto.getName());
+	}
+	
+	// 비밀번호 찾기
+	@PostMapping("/findPw")
+	public ResponseEntity<?> findPwSendEmail(@RequestBody UserDto userDto) throws Exception {
+		System.out.println(userDto.getLoginid() + userDto.getEmail());
+		return userService.resetPassword(userDto.getLoginid(), userDto.getEmail());
 	}
 }

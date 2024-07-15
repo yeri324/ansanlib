@@ -1,9 +1,11 @@
 package com.ansanlib.user.service;
 
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
-import java.util.regex.Pattern;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,17 +13,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ansanlib.entity.Faq;
 import com.ansanlib.entity.LibUser;
-import com.ansanlib.security.user.CustomUser;
 import com.ansanlib.user.dto.UserDto;
 import com.ansanlib.user.repository.UserRepository;
 
@@ -36,6 +33,17 @@ public class UserService {
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final AuthenticationManager authenticationManager;
+	private final MailService mailService;
+
+	// 비밀번호에 포함될 문자열 세트들을 상수로 정의합니다.
+	private static final String LOWERCASE_CHARS = "abcdefghijklmnopqrstuvwxyz"; // 소문자
+	private static final String UPPERCASE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // 대문자
+	private static final String DIGITS = "0123456789"; // 숫자
+	private static final String SPECIAL_CHARS = "!@#$%^&*()_+-=[]{}|;:,.<>?"; // 특수문자
+
+	// 비밀번호의 최소 길이와 최대 길이를 상수로 정의합니다.
+	private static final int MIN_LENGTH = 8;
+	private static final int MAX_LENGTH = 10;
 
 	// 회원가입
 	public ResponseEntity<String> join(UserDto userDto) throws Exception {
@@ -122,48 +130,76 @@ public class UserService {
 		}
 	}
 
-	
 	// 아이디 찾기
 	public ResponseEntity<String> findIdByEmailAndName(String email, String name) {
 		Optional<LibUser> userOptional = userRepository.findIdByEmailAndName(email, name);
-		if(userOptional.isPresent()) {
-		return ResponseEntity.status(HttpStatus.OK).body(userOptional.get().getLoginid());}
-		else {
-			return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("일치하는 사용자가 없습니다.");
+		if (userOptional.isPresent()) {
+			return ResponseEntity.status(HttpStatus.OK).body(userOptional.get().getLoginid());
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("일치하는 사용자가 없습니다.");
 		}
 	}
-	
-//	//임시 비밀번호 생성
-//	 public ResponseEntity<String> createTempPassword(String loginid, String email) {
-//	        Optional<LibUser> user = userRepository.findByLoginidAndEmail(loginid, email);
-//	        if (user == null) {
-//	            return null; // 사용자가 존재하지 않는 경우 처리
-//	        }
-//
-//	        // 임시 비밀번호 생성 로직 (예시)
-//	        String temporaryPassword = createTempPassword();
-//	        user.setPassword(temporaryPassword);
-//	        userRepository.save(user);
-//
-//	        // 여기서 이메일 전송 로직 추가 (실제로는 이메일 전송 라이브러리 등을 사용)
-//	        sendTemporaryPasswordByEmail(email, temporaryPassword);
-//
-//	        return temporaryPassword;
-//	    }
-//	
-//	// TempPass - 임시비밀번호 생성
-//	public String generateTempPassword() {
-//		SecureRandom random = new SecureRandom();
-//		StringBuilder password = new StringBuilder(PASSWORD_LENGTH);
-//		for (int i = 0; i < PASSWORD_LENGTH; i++) {
-//			password.append(CHARACTERS.charAt(random.nextInt(CHARACTERS.length())));
-//		}
-//		return password.toString();
-//	}
-//
-//	private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-//	private static final int PASSWORD_LENGTH = 10;
-//
+
+	// 임시 비밀번호 생성 및 전송
+	@Transactional
+	public ResponseEntity<String> resetPassword(String loginid, String email) {
+		Optional<LibUser> user = userRepository.findByLoginidAndEmail(loginid, email);
+		if (user == null) {
+			System.out.println("일치하는 사용자가 없습니다.");// 사용자가 존재하지 않는 경우 처리
+			return null;
+		}
+
+		// 임시 비밀번호 생성 로직 (예시)
+		if (user != null && user.get().getEmail().equals(email)) {
+			String temporaryPassword = createTempPassword();
+			user.get().setPassword(passwordEncoder.encode(temporaryPassword));
+			userRepository.save(user.get());
+
+			// 여기서 이메일 전송 로직 추가 (실제로는 이메일 전송 라이브러리 등을 사용)
+			mailService.sendResetPassword(email, temporaryPassword);
+
+		} else {
+			throw new RuntimeException("사용자 정보를 찾을 수 없습니다.");
+		}
+
+		return null;
+	}
+
+	// 임시 비밀번호 생성
+	private static String createTempPassword() {
+		SecureRandom random = new SecureRandom();
+		List<Character> passwordChars = new ArrayList<>();
+
+		// 최소한 두 가지 종류의 문자를 포함하도록 설정
+		includeRandomChars(passwordChars, LOWERCASE_CHARS, 1, random);
+		includeRandomChars(passwordChars, UPPERCASE_CHARS, 1, random);
+		includeRandomChars(passwordChars, DIGITS, 1, random);
+		includeRandomChars(passwordChars, SPECIAL_CHARS, 1, random);
+
+		// 남은 길이만큼 랜덤하게 모든 문자 세트에서 문자를 추가
+		int remainingLength = MIN_LENGTH - passwordChars.size();
+		includeRandomChars(passwordChars, LOWERCASE_CHARS + UPPERCASE_CHARS + DIGITS + SPECIAL_CHARS, remainingLength,
+				random);
+
+		// 비밀번호 문자들을 섞습니다.
+		Collections.shuffle(passwordChars);
+
+		// List<Character>를 String으로 변환하여 최종 임시 비밀번호를 생성
+		StringBuilder password = new StringBuilder();
+		for (Character ch : passwordChars) {
+			password.append(ch);
+		}
+
+		return password.toString();
+	}
+
+	// 주어진 문자 세트에서 랜덤하게 count 개수만큼 문자를 리스트에 추가하는 메서드입니다.
+	private static void includeRandomChars(List<Character> list, String characters, int count, SecureRandom random) {
+		for (int i = 0; i < count; i++) {
+			list.add(characters.charAt(random.nextInt(characters.length())));
+		}
+	}
+
 //	// 메일보내~
 //	public void sendEmail(String to, String subject, String text) {
 //		SimpleMailMessage message = new SimpleMailMessage();
@@ -172,7 +208,6 @@ public class UserService {
 //		message.setText(text);
 //		// mailSender.send(message);
 //	}
-	
 
 //	// 비밀번호찾기 - findPw
 //	public String findPw(UserDto userDto) {

@@ -189,7 +189,7 @@ const FormJoin = ({ join, }) => {
             alert('비밀번호를 확인해주세요.');
             return
         }
-        if (formData.email.trim() === '' || formData.email == null) {
+        if (formData.email1.trim() === '' || formData.email1 == null) {
             alert('이메일을 입력해주세요.');
             return
         }
