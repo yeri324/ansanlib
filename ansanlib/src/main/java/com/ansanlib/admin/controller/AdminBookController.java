@@ -53,14 +53,18 @@ public class AdminBookController {
         return ResponseEntity.ok().body(new CommonListResponse<>(requestBooks.size(), requestBooks));
     }
     
+    
     //데이터삭제
+    //도서 등록 후, 예약이나 대출이 걸려있으면 삭제 불가
+    //깨꿋한 상태(?)여야 삭제가눙~
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteBook(@PathVariable Long id) {
         try {
             adminBookService.deleteBookById(id);
-            return ResponseEntity.ok("Holiday deleted successfully");
+            return ResponseEntity.ok("Book deleted successfully");
+          
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete holiday");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete book");
         }
     }
     

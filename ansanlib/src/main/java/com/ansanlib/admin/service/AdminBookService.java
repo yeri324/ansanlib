@@ -96,8 +96,9 @@ public class AdminBookService {
 		        if (bookOptional.isPresent()) {
 		            Book book = bookOptional.get();
 		            bookRepository.delete(book);
+		           
 		        } else {
-		            throw new IllegalArgumentException("Holiday not found with id: " + id);
+		            throw new IllegalArgumentException("book not found with id: " + id);
 		        }
 		    }
 	 
