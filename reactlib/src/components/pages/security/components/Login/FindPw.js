@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
 import axios from 'axios';
 import './FindPw.css';
 
@@ -10,7 +10,6 @@ const FindPw = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [showPopup, setShowPopup] = useState(false);
     const [isFind, setIsFind] = useState(false);
-    const navigate = useNavigate();
 
     // 임시 비밀번호 발급
     const onSendPw = async (e) => {
@@ -37,34 +36,39 @@ const FindPw = () => {
         }
     };
 
-    //로그인페이지로 돌아가기
-    const onLogin = () => {
-        navigate('/login');
-    }
+
 
     if (!isFind) {
         return (
             <div class='findpw'>
+                <h2>비밀번호 찾기</h2>
                 <form class='findpw-form' onSubmit={onSendPw}>
                     <div class='findpw-id'>
-                        <label>사용자 아이디</label>
-                        <input type="text" name="username" value={loginid} onChange={(e) => setLoginid(e.target.value)}/>
+                        <label>아이디</label>
+                        <input type="text" name="username" placeholder='아이디를 입력해주세요' value={loginid} onChange={(e) => setLoginid(e.target.value)} />
                         {/* {errors.username && <span>사용자 아이디를 입력하세요.</span>} */}
                     </div>
                     <div class='findpw-email'>
                         <label>이메일</label>
-                        <input type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                        <input type="email" name="email" placeholder='이메일을 입력해주세요' value={email} onChange={(e) => setEmail(e.target.value)} />
                         {/* {errors.email && <span>이메일을 입력하세요.</span>} */}
                     </div>
-                    <button type="submit">임시 비밀번호 발급 요청</button>
+                    <button type="submit">비밀번호 찾기</button>
+                    <span>&nbsp;&nbsp;</span>
+                    <div className="link">
+                        <NavLink to="/find/id" >아이디 찾기</NavLink>
+                        <span>&nbsp;|&nbsp;</span>
+                        <NavLink to="/login" >돌아가기</NavLink>
+                    </div>
                 </form>
+
             </div>
         );
     } else {
         return (
-            <div class="findpw-popup">
+            <div class="popup">
                 {errorMessage && <p>{errorMessage}</p>}
-                <button type='button' onClick={onLogin}>닫기</button>
+                <NavLink to="/login" >돌아가기</NavLink>
             </div>);
     }
 }

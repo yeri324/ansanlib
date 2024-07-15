@@ -1,49 +1,58 @@
 .findid {
-    max-width: 400px;
+    max-width: 70%;
     margin: 0 auto;
     padding: 20px;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
+    background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
 .findid h2 {
-    font-size: 1.5rem;
-    text-align: center;
     margin-bottom: 20px;
+    color: #333;
 }
 
 .findid .findid-form {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
 }
 
-.findid .findid-form label {
+.findid .findid-form div {
     margin-bottom: 10px;
+    text-align: center;
+    width: 60%;
+}
+.findid .findid-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #666;
+    text-align: left;
 }
 
 .findid .findid-form input {
     width: 100%;
     padding: 8px;
-    font-size: 1rem;
+    font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
 .findid .findid-form button {
     padding: 10px;
-    font-size: 1rem;
+    font-size: 16px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    background-color: #495057;
+    background-color: #3949ab;
     color: #fff;
-    margin-top: 10px;
+    width: 45%;
 }
 
 .findid .findid-form button:hover {
-    background-color: #395057;
+    background-color: #283593;
 }
 
 .findid .popup {
@@ -71,10 +80,17 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    background-color: #495057;
+    background-color: #3949ab;
     color: #fff;
 }
 
 .findid .popup button:hover {
-    background-color: #495057;
+    background-color: #283593;
 }
+
+.findid .link a {
+    text-decoration: none;
+    color: #666;
+    text-align: center;
+    margin-top: 20px;
+ }

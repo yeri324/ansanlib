@@ -3,7 +3,7 @@
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 60%;
+    width: 70%;
     text-align: center;
     margin: 0 auto;
 }
@@ -15,22 +15,20 @@
 
 .login-form {
     display: flex;
-    flex-direction: row;
-    /* 수정: 세로에서 가로로 변경 */
-    flex-wrap: wrap;
-    /* 필요한 경우 버튼이 줄 바꿈될 수 있도록 설정 */
+    flex-direction: column;
     align-items: center;
-    /* 수정: 가운데 정렬 */
-    justify-content: space-between;
-    /* 필요에 따라 버튼 사이의 간격 조정 */
     margin-top: 20px;
-    /* 상단 여백 추가 */
 }
 
 .login-form div {
     margin-bottom: 10px;
+    /* text-align: left; */
+    width: 60%;
+}
+.login-form div label {
     text-align: left;
 }
+
 
 .login-form label {
     display: block;
@@ -40,17 +38,24 @@
 
 .login-form input[type="text"],
 .login-form input[type="password"] {
-    width: calc(100% - 20px);
+    width: 100%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 14px;
 }
 
+.login-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+}
+
 .login-form button {
-    width: calc(100% - 20px);
+    width: 45%;
     padding: 10px 0;
-    background-color: #4CAF50;
+    background-color: #5c6bc0;
     color: white;
     border: none;
     border-radius: 4px;
@@ -59,19 +64,22 @@
 }
 
 .login-form button:hover {
-    background-color: #45a049;
+    background-color: #3949ab;
 }
 
 .login-form button[type="submit"] {
-    background-color: #3498db;
+    background-color: #3949ab;
 }
 
 .login-form button[type="submit"]:hover {
-    background-color: #2980b9;
+    background-color: #283593;
 }
 
-.login-form .button-group {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
+.login-form .link a {
+    text-decoration: none; /* 밑줄 제거 */
+    color: rgb(107, 107, 107); /* 색상 변경 */
+}
+
+.login-form .link a:hover {
+    color: #283593; /* 마우스 호버 시 색상 변경 */
 }
