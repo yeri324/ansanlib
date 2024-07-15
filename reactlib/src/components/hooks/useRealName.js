@@ -1,9 +1,8 @@
-import { useContext, useEffect, useState } from "react";
-import { LoginContext } from "../pages/security/contexts/LoginContextProvider";
-import axios from "../pages/security/apis/api";
+import { useEffect, useState } from "react";
+import useAuth, { LOGIN_STATUS } from "./useAuth";
 
 export default function useRealName() {
-    const { isLogin, isUserId } = useContext(LoginContext);
+    const { loginStatus, axios } = useAuth();
     const [name, setName] = useState(null);
 
     const fetchName = async () => {
@@ -15,7 +14,7 @@ export default function useRealName() {
         }
     };
 
-    useEffect(() => { fetchName(); }, [isLogin]);
+    useEffect(() => { loginStatus === LOGIN_STATUS.LOGGED_IN && fetchName(); }, [loginStatus]);
 
     return name;
 }

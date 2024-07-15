@@ -38,6 +38,7 @@ import HolidayNew from './components/pages/admin/HolidayNew';
 import AddBook from './components/pages/admin/AddBook';
 
 import AdminBookRequest from './components/pages/admin/AdminBookRequest';
+import { UseAuthBasic, UseAuthCheckAdmin, UseAuthCheckLogin } from './components/hooks/examples/useAuthExamples';
 
 
 function App() {
@@ -98,6 +99,10 @@ function App() {
                                 <Route path="/user" element={<User />} />
 
 
+                                {/* useAuth 훅 테스트 페이지 */}
+                                <Route path="/examples/useauth/basic" element={<UseAuthBasic />} />
+                                <Route path="/examples/useauth/check_login" element={<UseAuthCheckLogin />} />
+                                <Route path="/examples/useauth/check_admin" element={<UseAuthCheckAdmin />} />
                         </Routes>
                 </div>
         );

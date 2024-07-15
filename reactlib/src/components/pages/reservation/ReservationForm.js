@@ -1,28 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react';
-import axios from "../security/apis/api";
-import { useNavigate } from 'react-router-dom';
-import { LoginContext } from '../security/contexts/LoginContextProvider';
+import React, { useState } from 'react';
 import useRealName from '../../hooks/useRealName';
+import useAuth, { LOGIN_STATUS } from '../../hooks/useAuth';
+import Auth from '../../helpers/Auth';
+import RedirectLogin from '../../helpers/RedirectLogin';
 
 const ReservationForm = () => {
-  const navigate = useNavigate();
-
   const name = useRealName();
 
-  const { isLogin, roles, isLoginInProgress } = useContext(LoginContext);
-
-  useEffect(() => {
-    //현재 로그인이 진행중인 경우 아무것도 실행하지 않음.
-    if(isLoginInProgress) return;
-    if(!isLogin) {
-      alert("로그인이 필요합니다.");
-      navigate("/login");
-      return;
-    } else if(!roles.isUser) {
-      alert("권한이 없습니다.");
-      navigate(-1);
-    }
-  }, [isLogin, roles]);
+  const { axios } = useAuth();
 
   const [bookId, setBookId] = useState('');
   const [reservationDate, setReservationDate] = useState('');
@@ -67,4 +52,13 @@ const ReservationForm = () => {
   );
 };
 
-export default ReservationForm;
+export default function() {
+  return (
+    <>
+      <RedirectLogin />
+      <Auth loginStatus={LOGIN_STATUS.LOGGED_IN}>
+        <ReservationForm />
+      </Auth>
+    </>
+  );
+};
