@@ -67,14 +67,12 @@ public class UserController {
 	// 아이디 찾기
 	@PostMapping("/findId")
 	public ResponseEntity<?> findIdByEmail(@RequestBody UserDto userDto) throws Exception {
-		System.out.println(userDto.getEmail() + userDto.getName());
 		return userService.findIdByEmailAndName(userDto.getEmail(), userDto.getName());
 	}
 	
 	// 비밀번호 찾기
 	@PostMapping("/findPw")
 	public ResponseEntity<?> findPwSendEmail(@RequestBody UserDto userDto) throws Exception {
-		System.out.println(userDto.getLoginid() + userDto.getEmail());
 		return userService.resetPassword(userDto.getLoginid(), userDto.getEmail());
 	}
 }

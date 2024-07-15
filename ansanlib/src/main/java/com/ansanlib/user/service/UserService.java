@@ -152,6 +152,7 @@ public class UserService {
 		// 임시 비밀번호 생성 로직 (예시)
 		if (user != null && user.get().getEmail().equals(email)) {
 			String temporaryPassword = createTempPassword();
+			System.out.println("임시 비밀번호는 "+temporaryPassword+"입니다.");
 			user.get().setPassword(passwordEncoder.encode(temporaryPassword));
 			userRepository.save(user.get());
 
