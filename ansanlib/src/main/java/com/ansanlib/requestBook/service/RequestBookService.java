@@ -25,7 +25,8 @@ public class RequestBookService {
 	@Autowired
 	private AdminUserService adminUserService;
 	
-	public RequestBook createRequestBook(CreateRequestBookDto createRequestBookDto) {
+	@Transactional
+	public RequestBook createRequestBook(long userId, CreateRequestBookDto createRequestBookDto) {
 		
 		//희망 도서 entity 생성
 		RequestBook requestBook = new RequestBook();
@@ -37,17 +38,19 @@ public class RequestBookService {
 	    requestBook.setRegist_date(LocalDateTime.now());
 	    requestBook.setLib_name(createRequestBookDto.getLib_name());
 
-	    LibUser libUser = new LibUser();
-	    libUser.setUserId(createRequestBookDto.getUserId());
-	    requestBook.setLibUser(libUser);
 	    
         //사용자 존재여부 확인
+	    LibUser user;
         try {
-            libUser = adminUserService.getUserById(createRequestBookDto.getUserId());
+            user = adminUserService.getUserById(userId);
         } catch (EntityNotFoundException exception) {
             throw new CreateReservationException("해당 사용자를 찾을 수 없습니다.");
         }
-                
+        
+        //LibUser 설정
+        requestBook.setLibUser(user);
+        
+        //신청 도서 중복 검사
         if (requestBookRepository.checkIfOverlappingReqeustBookExists(
                 requestBook.getIsbn(),
                 requestBook.getLibUser().getUserId()
@@ -59,20 +62,29 @@ public class RequestBookService {
 	    return requestBookRepository.save(requestBook);
 	}
 	
+	@Transactional
     public List<RequestBook> getRequestBooksByUser(Long userId) {
         return requestBookRepository.findByUserId(userId);
     }
-
-    public RequestBook getRequestBookById(Long id) {
-        return requestBookRepository.findById(id).orElse(null);
+	
+	@Transactional
+    public RequestBook getRequestBookById(Long requestBookId) {
+        return requestBookRepository.findById(requestBookId).orElse(null);
     }
-
-    public void deleteRequestBook(Long id) throws Exception {
-        RequestBook requestBook = requestBookRepository.findById(id)
+	
+	@Transactional
+    public void deleteRequestBook(Long requestBookId) throws Exception {
+        RequestBook requestBook = requestBookRepository.findById(requestBookId)
             .orElseThrow(() -> new Exception("신청된 도서를 찾을 수 없습니다."));
         requestBookRepository.delete(requestBook);
     }
     
+	public void deleteRequestBookBelongsTo(Long requestBookId, Long userId) throws Exception{
+		if(requestBookRepository.deleteBookBelongsTo(requestBookId, userId)==0) {
+			throw new EntityNotFoundException();
+		}
+	}
+	
     //회원 탈퇴 관련
     @Transactional
     public void deleteRequestBookByUserId(Long userId) {

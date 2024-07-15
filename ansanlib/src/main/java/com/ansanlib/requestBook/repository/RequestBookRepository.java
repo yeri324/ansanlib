@@ -22,6 +22,12 @@ public interface RequestBookRepository extends JpaRepository<RequestBook, Long>{
 			@Param("isbn") String isbn,
 			@Param("userId") Long userId);
 	
+	@Transactional
+    @Modifying
+    @Query("DELETE FROM RequestBook r WHERE r.libUser.userId = :userId AND r.id = :requestBookId")
+    int deleteBookBelongsTo(@Param("requestBookId") Long requestBookId, @Param("userId") Long userId);
+
+	
 	 @Modifying
 	 @Transactional
 	 @Query("DELETE FROM RequestBook r WHERE r.libUser.userId = :userId")

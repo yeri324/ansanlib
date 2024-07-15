@@ -1,11 +1,8 @@
-import React, { useContext } from "react";
-import {LoginContext} from "../../security/contexts/LoginContextProvider";
-// import axios from "axios";
+import React from 'react';
+import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
 
 function BoardItem({ item, onDetail, checkedList, checkHandler, }) {
-    
-    const { isLogin, roles } = useContext(LoginContext);
-
+    // const { axios } = useAuth();
     // // 이미지 미리보기 (필요할때 주석 해제하기)
     // const [viewImg, setViewImg] = useState('');
     // const getBoardImage = async () => {
@@ -35,6 +32,8 @@ function BoardItem({ item, onDetail, checkedList, checkHandler, }) {
     //         <img key={faq.faqImgs} src={viewImg} style={{ width: '100px', height: '100px' }} />
     // </td>
 
+    const { roles } = useAuth();
+
     return (
             <tr>
                 {console.log(roles)}
@@ -42,7 +41,7 @@ function BoardItem({ item, onDetail, checkedList, checkHandler, }) {
                 <td onClick={() => onDetail(item)}>{item.title}</td>
                 <td>{item.createdBy}</td>
                 <td>{item.updateTime.split('T')[0]}</td>
-                {roles.isAdmin && (<td><input type='checkbox' id={item.id} checkedList={checkedList.includes(item.id)} onChange={(e) => checkHandler(e, item.id)} /></td>)}
+                <td><input type='checkbox' id={item.id} checked={checkedList.includes(item.id)} onChange={(e) => checkHandler(e, item.id)} /></td>
             </tr>
     );
 }

@@ -3,7 +3,7 @@ function Pagination ({ currentPage, totalPages, onPageChange }) {
     
     {/* 페이징 */}
     return (
-        <ul className="pagination">
+        <ul className="board_pagination">
             <li className="page-item">
                 <button onClick={() => onPageChange(1)} className="page-link">
                     {'<<'}

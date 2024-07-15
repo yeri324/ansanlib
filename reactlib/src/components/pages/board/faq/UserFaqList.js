@@ -72,7 +72,7 @@ function UserFaqList() {
 
     return (
         <div>
-            <section class="board">
+            <section class="board-list">
                 <div id="search">
                     <div class="container">
                         <div class="page-title">
@@ -103,7 +103,12 @@ function UserFaqList() {
                         </thead>
                         <tbody class="list_content">
                             {searchResult.map((faq) => (
-                                <BoardItem key={faq.id} item={faq} board='faq' onDetail={onDetail} />
+                                <tr>
+                                <td scope="col" class="th-num">{faq.id}</td>
+                                <td scope="col" class="th-title" onClick={() => onDetail(faq)}>{faq.title}</td>
+                                <td scope="col" class="th-loginid">{faq.createdBy}</td>
+                                <td scope="col" class="th-loginid">{faq.updateTime.split('T')[0]}</td>
+                                </tr>
                             ))}
                         </tbody>
                     </table>

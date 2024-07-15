@@ -1,19 +1,25 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-function ImgPreview({ putImage, board }) {
+function ImgPreview({ putImage}) {
 
     useEffect(() => {
         getNoticeImage();
-    }, []);
+    }, [putImage]);
 
     // 모든 이미지 미리보기
     const [viewImg, setViewImg] = useState('');
     const getNoticeImage = () => {
-        console.log(putImage.imgUrl);
+        if (putImage.file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setViewImg(reader.result);
+            };
+            reader.readAsDataURL(putImage.file);
+        }else{
         axios(
             {
-                url: `/${board}/getImg`,
+                url: `/getImg`,
                 method: 'post',
                 data: {
                     imgUrl: putImage.imgUrl
@@ -25,7 +31,7 @@ function ImgPreview({ putImage, board }) {
             const blob = new Blob([response.data], { type: 'image/jpeg' });
             const imageUrl = URL.createObjectURL(blob);
             setViewImg(imageUrl)
-        });
+        });}
     }
 
     return (

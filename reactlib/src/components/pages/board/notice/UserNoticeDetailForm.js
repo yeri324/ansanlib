@@ -5,9 +5,8 @@ import ImgPreview from '../common/ImgPreview';
 import BoardFileLabel from '../common/BoardFileLabel';
 import '../../board/common/DetailForm.css'
 
-function UserNoticeDetailForm() {
+function UserNoticeDetailForm({id}) {
     const navigate = useNavigate();
-    const { id } = useParams();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [images, setImages] = useState([]);
@@ -44,7 +43,7 @@ function UserNoticeDetailForm() {
 
     return (
         <div>
-            <div class='update-form'>
+            <div class='detail-form'>
                 <form>
                     <div class='content-container'>
                         <div class='input-container'>
