@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import axios from 'axios';
+
 import { useNavigate } from 'react-router-dom';
 import AdminHeader from './AdminHeader';
 import AdminSide from './AdminSide';
 import "./AdminPage.css";
 import AdminPagination from './AdminPagination';
 import AdminBookDetail from './AdminBookDetail';
+import useAuth, { LOGIN_STATUS, ROLES } from '../../hooks/useAuth';
+import Auth from '../../helpers/Auth';
+import RedirectLogin from '../../helpers/RedirectLogin';
+
+
 
 const AdminBookList = () => {
+  const { axios } = useAuth();
   const [bookList, setBookList] = useState([]);
   const [searchCriteria, setSearchCriteria] = useState('library');
   const [searchTerm, setSearchTerm] = useState('');
@@ -276,4 +282,13 @@ const AdminBookList = () => {
   );
 };
 
-export default AdminBookList;
+export default function () {
+  return (
+    <>
+      <RedirectLogin />
+      <Auth loginStatus={LOGIN_STATUS.LOGGED_IN} roles={ROLES.ADMIN}>
+        <AdminBookList  />
+      </Auth>
+    </>
+  );
+}

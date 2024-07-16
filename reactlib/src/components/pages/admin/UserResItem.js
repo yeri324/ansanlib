@@ -5,8 +5,12 @@ import Calendar from 'react-calendar';
 import './UserResItem.css';
 import moment from 'moment';
 import './AdminPage.css';
+import useAuth, { LOGIN_STATUS, ROLES } from '../../hooks/useAuth';
+import Auth from '../../helpers/Auth';
+import RedirectLogin from '../../helpers/RedirectLogin';
 
 const UserResItem = ({ res, onClickToCancelRes }) => {
+    const { axios } = useAuth();
     const [isOpen, setIsOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [bookRes, setBookRes] = useState([]);
@@ -134,4 +138,13 @@ const UserResItem = ({ res, onClickToCancelRes }) => {
     );
 };
 
-export default UserResItem;
+export default function () {
+    return (
+      <>
+        <RedirectLogin />
+        <Auth loginStatus={LOGIN_STATUS.LOGGED_IN} roles={ROLES.ADMIN}>
+          <UserResItem />
+        </Auth>
+      </>
+    );
+  }

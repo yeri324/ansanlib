@@ -1,12 +1,18 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
-import axios from 'axios';
+
 import "./AddBook.css";
 import AdminHeader from './AdminHeader';
 import AdminSide from './AdminSide';
+import useAuth, { LOGIN_STATUS, ROLES } from '../../hooks/useAuth';
+import Auth from '../../helpers/Auth';
+import RedirectLogin from '../../helpers/RedirectLogin';
+
+
 
 const AddBook = ({ csrf = {} }) => {
+    const { axios } = useAuth();
     const initialFormData = {
         id: '',
         isbn: '',
@@ -413,4 +419,13 @@ const AddBook = ({ csrf = {} }) => {
     );
 };
 
-export default AddBook;
+export default function () {
+    return (
+      <>
+        <RedirectLogin />
+        <Auth loginStatus={LOGIN_STATUS.LOGGED_IN} roles={ROLES.ADMIN}>
+          <AddBook />
+        </Auth>
+      </>
+    );
+  }

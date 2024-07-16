@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './AdminModal.css';
+import useAuth, { LOGIN_STATUS, ROLES } from '../../hooks/useAuth';
+import Auth from '../../helpers/Auth';
+import RedirectLogin from '../../helpers/RedirectLogin';
+
+
+
 
 const AdminBookRequestDetail = ({ isOpen, onClose, request, onSave }) => {
+  const { axios } = useAuth();
   const [status, setStatus] = useState(request ? request.status : '');
 
   useEffect(() => {
@@ -63,4 +70,13 @@ const AdminBookRequestDetail = ({ isOpen, onClose, request, onSave }) => {
   );
 };
 
-export default AdminBookRequestDetail;
+export default function () {
+  return (
+    <>
+      <RedirectLogin />
+      <Auth loginStatus={LOGIN_STATUS.LOGGED_IN} roles={ROLES.ADMIN}>
+        <AdminBookRequestDetail  />
+      </Auth>
+    </>
+  );
+}

@@ -9,9 +9,14 @@ import AdminHeader from "./AdminHeader";
 import AdminSide from "./AdminSide";
 import AdminPagination from './AdminPagination';
 import "./AdminPage.css";
+import useAuth, { LOGIN_STATUS, ROLES } from '../../hooks/useAuth';
+import Auth from '../../helpers/Auth';
+import RedirectLogin from '../../helpers/RedirectLogin';
+
 
 
 const HolidayList = () => {
+  const { axios } = useAuth();
   const [searchResult, setSearchResult] = useState([]);
   const [originalResult, setOriginalResult] = useState([]); // 원본 데이터 저장
   const [showModal, setShowModal] = useState(false);
@@ -253,4 +258,13 @@ const HolidayList = () => {
     </>
   );
 };
-export default HolidayList;
+export default function () {
+  return (
+    <>
+      <RedirectLogin />
+      <Auth loginStatus={LOGIN_STATUS.LOGGED_IN} roles={ROLES.ADMIN}>
+        <HolidayList  />
+      </Auth>
+    </>
+  );
+}

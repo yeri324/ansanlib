@@ -72,6 +72,7 @@ public class LibUser extends BaseEntity {
 	
 	
 	public LibUser bind(UserDto userDto) {
+	
 		this.setLoginid(userDto.getLoginid());
 		 this.setPassword(userDto.getPassword());
 

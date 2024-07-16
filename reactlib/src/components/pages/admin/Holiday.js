@@ -1,8 +1,7 @@
-import './Holiday.css';
 import { useState, useEffect } from 'react';
 import moment from 'moment';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from 'axios';
+
 import { useNavigate } from 'react-router-dom';
 import HolidayNew from './HolidayNew';
 import HolidayDetail from './HolidayDetail';
@@ -10,9 +9,15 @@ import AdminHeader from './AdminHeader';
 import AdminSide from './AdminSide';
 
 import './AdminModal.css';
+import './Holiday.css';
+import useAuth, { LOGIN_STATUS, ROLES } from '../../hooks/useAuth';
+import Auth from '../../helpers/Auth';
+import RedirectLogin from '../../helpers/RedirectLogin';
+
 
 
 const Holiday = () => {
+  const { axios } = useAuth();
   const [getMoment, setMoment] = useState(moment());
   const today = getMoment;
   const firstWeek = today.clone().startOf('month').week();
@@ -178,4 +183,13 @@ const Holiday = () => {
   );
 };
 
-export default Holiday;
+export default function () {
+  return (
+    <>
+      <RedirectLogin />
+      <Auth loginStatus={LOGIN_STATUS.LOGGED_IN} roles={ROLES.ADMIN}>
+        <Holiday/>
+      </Auth>
+    </>
+  );
+}

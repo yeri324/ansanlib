@@ -1,8 +1,13 @@
 import React from 'react';
 import "./AdminModal.css";
 import axios from 'axios';
+import useAuth, { LOGIN_STATUS, ROLES } from '../../hooks/useAuth';
+import Auth from '../../helpers/Auth';
+import RedirectLogin from '../../helpers/RedirectLogin';
+
 
 const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
+  const { axios } = useAuth();
   if (!isOpen) return null;
 
   const handleDelete = async (id) => {
@@ -79,4 +84,13 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
   );
 };
 
-export default AdminBookDetail;
+export default function () {
+  return (
+    <>
+      <RedirectLogin />
+      <Auth loginStatus={LOGIN_STATUS.LOGGED_IN} roles={ROLES.ADMIN}>
+        <AdminBookDetail  />
+      </Auth>
+    </>
+  );
+}

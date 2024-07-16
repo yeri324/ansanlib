@@ -1,8 +1,12 @@
 import './AdminPage.css'
+import useAuth, { LOGIN_STATUS, ROLES } from '../../hooks/useAuth';
+import Auth from '../../helpers/Auth';
+import RedirectLogin from '../../helpers/RedirectLogin';
 
 const UserLoanItem = ({ loan,onClickToReturn }) => {
-
+    const { axios } = useAuth();
     return (
+        
         <>
 
         <tr key={loan.id}>
@@ -17,4 +21,13 @@ const UserLoanItem = ({ loan,onClickToReturn }) => {
 };
 
 
-export default UserLoanItem;
+export default function () {
+    return (
+      <>
+        <RedirectLogin />
+        <Auth loginStatus={LOGIN_STATUS.LOGGED_IN} roles={ROLES.ADMIN}>
+          <UserLoanItem  />
+        </Auth>
+      </>
+    );
+  }

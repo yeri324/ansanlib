@@ -6,9 +6,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import AdminHeader from './AdminHeader';
 import AdminSide from './AdminSide';
 import "./AdminUserDetail.css";
-
+import useAuth, { LOGIN_STATUS, ROLES } from '../../hooks/useAuth';
+import Auth from '../../helpers/Auth';
+import RedirectLogin from '../../helpers/RedirectLogin';
 
 const AdminUserDetail = () => {
+    const { axios } = useAuth();
     const navigate = useNavigate();
     const { id } = useParams();
     const [userDetail, setUserDetail] = useState({});
@@ -23,7 +26,7 @@ const AdminUserDetail = () => {
 
     const getDataset = (id) => {
         axios({
-            url: '/admin/user/detail',
+            url:'/admin/user/detail',
             method: 'post',
             data: { id },
         }).then((res) => {
@@ -33,7 +36,7 @@ const AdminUserDetail = () => {
         });
 
         axios({
-            url: '/admin/user/getRes',
+            url:'/admin/user/getRes',
             method: 'post',
             data: { id },
         }).then((res) => {
@@ -214,4 +217,14 @@ const AdminUserDetail = () => {
     );
 };
 
-export default AdminUserDetail;
+
+export default function () {
+    return (
+      <>
+        <RedirectLogin />
+        <Auth loginStatus={LOGIN_STATUS.LOGGED_IN} roles={ROLES.ADMIN}>
+          <AdminUserDetail />
+        </Auth>
+      </>
+    );
+  }

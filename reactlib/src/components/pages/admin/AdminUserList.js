@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import axios from "axios";
 import AdminUserItem from './AdminUserItem';
 import AdminHeader from "./AdminHeader";
 import AdminSide from "./AdminSide";
+import useAuth, { LOGIN_STATUS, ROLES } from '../../hooks/useAuth';
+import Auth from '../../helpers/Auth';
+import RedirectLogin from '../../helpers/RedirectLogin';
 
 import "./AdminPage.css";
 import AdminPagination from "./AdminPagination";
 const AdminUserList = () => {
+  const { axios } = useAuth();
   const navigate = useNavigate();
 
   const [searchOption, setSearchOption] = useState({
@@ -43,7 +46,7 @@ const AdminUserList = () => {
   }, []);
 
   const handleDetail = (user) => {
-    navigate(`/admin/user/detail/${user.userId}`, { state: { ...user } });
+    navigate('/admin/user/detail/${user.userId}', { state: { ...user } });
   };
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -129,4 +132,14 @@ const AdminUserList = () => {
   );
 };
 
-export default AdminUserList;
+export default function () {
+  return (
+    <>
+      <RedirectLogin />
+      <Auth loginStatus={LOGIN_STATUS.LOGGED_IN} roles={ROLES.ADMIN}>
+        <AdminUserList />
+      </Auth>
+    </>
+  );
+}
+
