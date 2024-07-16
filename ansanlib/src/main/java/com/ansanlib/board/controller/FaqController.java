@@ -115,6 +115,7 @@ public class FaqController {
 	//이미지 미리보기
 	@PostMapping("/getImg")
 	public ResponseEntity<byte[]> getFaqImage(@RequestBody FaqImgDto faqImgDto){
+		
 		try {
 			byte[] imgBytes = fileService.getImgByte(faqImgDto.getImgUrl());
 			

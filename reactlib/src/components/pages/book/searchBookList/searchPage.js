@@ -3,6 +3,7 @@ import axios from 'axios';
 import './SearchPage.css'; // 스타일 파일을 임포트합니다.
 import Highlight from './Highlight'; // 하이라이트 컴포넌트를 임포트합니다.
 import AutoComplete from './AutoComplete'; // AutoComplete 컴포넌트를 임포트합니다.
+import BookImg from './bookImg';
 
 const SearchPage = ({ isAuthenticated, isAnonymous }) => {
   const [formValues, setFormValues] = useState({
@@ -12,14 +13,14 @@ const SearchPage = ({ isAuthenticated, isAnonymous }) => {
     publisher: '',
     pub_date: '',
     category_code: ''
-});
+  });
   const [bookList, setBookList] = useState([]);
   const [pagination, setPagination] = useState({
     hasPrev: false,
     hasNext: false,
     previous: 0,
     next: 0
-});
+  });
   const [errorMessage, setErrorMessage] = useState('');
   const [sortCriteria, setSortCriteria] = useState('title'); // 기본 정렬 기준을 제목으로 설정
   const [sortOrder, setSortOrder] = useState('asc'); // 기본 정렬 순서를 오름차순으로 설정
@@ -31,7 +32,7 @@ const SearchPage = ({ isAuthenticated, isAnonymous }) => {
   const handleSearch = useCallback(async (e, page = 0) => {
     if (e) e.preventDefault();
     try {
-      const cleanFormValues = { 
+      const cleanFormValues = {
         ...formValues,
         page: page // page 매개변수를 추가하여 현재 페이지 정보 전달
       };
@@ -48,6 +49,7 @@ const SearchPage = ({ isAuthenticated, isAnonymous }) => {
       setErrorMessage('검색 중 오류가 발생했습니다.');
     }
   }, [formValues]);
+
 
   const handleAlertLogin = () => {
     alert('로그인 후 이용가능합니다.');
@@ -175,7 +177,8 @@ const SearchPage = ({ isAuthenticated, isAnonymous }) => {
             <div className="card mb-3 full-width book-detail-container" key={index}>
               <div className="img-container">
                 {book.bookImg ? (
-                  <img src={`http://localhost:8090/api/images/${book.bookImg.imgName}`} alt="책 이미지" className="img-fluid cover-img" />
+                  <BookImg book={book}/>
+                  // <img src={handleGetImg(book)} alt="책 이미지" className="img-fluid cover-img" />
                 ) : (
                   <div className="no-image">No Image</div>
                 )}

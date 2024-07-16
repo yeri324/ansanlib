@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import './BookDetailPage.css'; // 스타일 파일을 임포트합니다.
+import BookImg from '../searchBookList/bookImg';
 
 const BookDetailPage = () => {
   const { id } = useParams();
@@ -22,6 +23,8 @@ const BookDetailPage = () => {
       }
     };
 
+   
+
     fetchBookDetails();
   }, [id]);
 
@@ -29,6 +32,18 @@ const BookDetailPage = () => {
     alert('로그인 후 이용가능합니다.');
     navigate('/login');
   };
+
+   //---------------------------
+   const handleGetImg = async (book) => {
+    const response = await axios.post('/getImg',{imgUrl : book.bookImg.imgUrl}, {responseType: 'arraybuffer'});
+    const blob = new Blob([response.data], { type: 'image/jpeg' });
+    const imageUrl = URL.createObjectURL(blob);
+    console.log(imageUrl,"***");
+    return imageUrl;
+  }
+  
+
+  //-------------------------
 
   const handleReservation = (bookId) => {
     axios.post(`http://localhost:8090/book/reservation/${bookId}`)
@@ -91,11 +106,7 @@ const BookDetailPage = () => {
           <div className="row g-0 book-detail-container">
             <div className="col-md-4 img-container">
               {book.bookImg ? (
-                <img 
-                  src={`http://localhost:8090/api/images/${book.bookImg.imgName}`} 
-                  alt={book.title} 
-                  className="img-fluid cover-img" 
-                />
+               <BookImg book={book}/>
               ) : (
                 <div className="no-image">No Image</div>
               )}
