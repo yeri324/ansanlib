@@ -31,10 +31,10 @@ public class AdminUserController {
 
 	// 모든 유저 가져오기
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ResponseEntity<List<LibUser>> userList() {
-		List<LibUser> userList = adminUserService.getUserList();
-		return ResponseEntity.ok(userList);
-	}
+	 public ResponseEntity<List<LibUser>> getUserList() {
+        List<LibUser> userList = adminUserService.getUserList();
+        return ResponseEntity.ok(userList);
+    }
 
 	// 검색으로 찾기
 	@PostMapping("/search")
