@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import './BookDetailPage.css'; // 스타일 파일을 임포트합니다.
 
 const BookDetailPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [book, setBook] = useState({});
   const [bookList, setBookList] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false); // 사용자 로그인 상태 관리
 
   useEffect(() => {
     const fetchBookDetails = async () => {
@@ -23,15 +23,11 @@ const BookDetailPage = () => {
     };
 
     fetchBookDetails();
-
-    // 여기에 사용자 로그인 상태를 확인하는 로직을 추가합니다.
-    // 예를 들어, 토큰이 로컬 스토리지에 있는지 확인합니다.
-    const token = localStorage.getItem('token');
-    setIsUserLoggedIn(!!token);
   }, [id]);
 
   const alertLogin = () => {
     alert('로그인 후 이용가능합니다.');
+    navigate('/login');
   };
 
   const handleReservation = (bookId) => {
@@ -81,7 +77,8 @@ const BookDetailPage = () => {
           <div className="container">
             <ol>
               <li><a href="/">Home</a></li>
-              <li><a href="/book/search">통합검색</a></li>
+              <li><a href={`/book/search`}>도서관 상세 검색</a></li>
+              <li>{book.title}</li>
             </ol>
           </div>
         </nav>
@@ -133,10 +130,12 @@ const BookDetailPage = () => {
                     <td>
                       <div className="card-body">
                         <div className="row">
-                          <button onClick={() => isUserLoggedIn ? handleReservation(relatedBook.id) : alertLogin()} disabled={relatedBook.status !== 'AVAILABLE'}>
+                          <button disabled={relatedBook.status !== 'AVAILABLE'} onClick={alertLogin || (() => handleReservation(relatedBook.id))}>
                             도서예약
                           </button>
-                          <button onClick={() => isUserLoggedIn ? handleInterest(relatedBook.id) : alertLogin()}>
+                        </div>
+                        <div className="row">
+                          <button onClick={alertLogin || (() => handleInterest(relatedBook.id))}>
                             관심도서담기
                           </button>
                         </div>

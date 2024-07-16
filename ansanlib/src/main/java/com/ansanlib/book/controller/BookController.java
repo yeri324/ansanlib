@@ -20,6 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ansanlib.book.bookapi.dto.BookApiResultDto;
+import com.ansanlib.book.bookapi.paging.Criteria;
+import com.ansanlib.book.bookapi.paging.PageMaker;
+import com.ansanlib.book.bookapi.service.BookApiService;
 import com.ansanlib.book.dto.BookDto;
 import com.ansanlib.book.dto.BookListDto;
 import com.ansanlib.book.dto.BookSearchCondition;
@@ -35,7 +39,7 @@ public class BookController {
 	
 	private final ModelMapper modelMapper;
 	private final BookService bookService;
-	private static final Logger logger = LoggerFactory.getLogger(BookController.class);
+	private final BookApiService bookApiService;
 	
 	// 검색
 	@GetMapping("/api/book/search")
@@ -95,38 +99,27 @@ public class BookController {
                 .collect(Collectors.toList());
     }
 	
+	// 네이버 API BOOK 검색 결과 v2 - 페이징
+	private static final Logger logger = LoggerFactory.getLogger(BookController.class);
+
+	@GetMapping("/api/bookapi/search")
+	@ResponseBody
+	public Map<String, Object> searchBookAPIList(@RequestParam(defaultValue = "") String keyword,
+	                                             @RequestParam(defaultValue = "title") String sortBy,
+	                                             @RequestParam(defaultValue = "asc") String sortOrder,
+	                                             Criteria cri) {
+	    logger.info("Received request: keyword={}, sortBy={}, sortOrder={}", keyword, sortBy, sortOrder);
+
+	    PageMaker pageMaker = new PageMaker();
+	    pageMaker.setCri(cri);
+	    BookApiResultDto books = bookApiService.searchBookNaverAPI(keyword, sortBy, sortOrder, cri);
+	    pageMaker.setTotalCount(books.getTotal());
+
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("pageMaker", pageMaker);
+	    response.put("keyword", keyword);
+	    response.put("books", books);
+
+	    return response;
+	}
 }
-//	// 새로운 책 등록 폼 (이 부분은 필요에 따라 수정)
-//	@GetMapping("/admin/book/new")
-//	public String bookForm(Model model) {
-//		model.addAttribute("bookFormDto", new BookFormDto());
-//		return "admin/addBookForm";
-//	}
-//
-//	// 새로운 책 등록
-//	@PostMapping("/admin/book/new")
-//	public String addNewBook(@Valid BookFormDto bookFormDto, BindingResult bindingResult, Model model,
-//			@RequestParam("bookImgFile") MultipartFile bookImgFile, Principal principal) {
-//
-//		if (bindingResult.hasErrors()) {
-//			return "admin/addBookForm";
-//		}
-//
-//		if (bookImgFile.isEmpty()) {
-//			model.addAttribute("errorMessage", "이미지는 필수 입력 값 입니다.");
-//			return "admin/addBookForm";
-//		}
-//
-//		try {
-//			String email = principal.getName();
-//			bookService.saveBook(bookFormDto, bookImgFile, email);
-//		} catch (Exception e) {
-//			model.addAttribute("errorMessage", "상품 등록 중 에러가 발생하였습니다.");
-//			return "admin/addBookForm";
-//		}
-//
-//		return "redirect:/";
-//	}
-//	
-//	
-//	
