@@ -19,6 +19,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ansanlib.book.repository.BookRepository;
 import com.ansanlib.entity.Faq;
 import com.ansanlib.entity.LibUser;
 import com.ansanlib.security.user.CustomUser;
@@ -34,6 +35,7 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 
 	private final UserRepository userRepository;
+	private final BookRepository bookRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final AuthenticationManager authenticationManager;
 
@@ -80,13 +82,22 @@ public class UserService {
 	}
 
 	// 회원 삭제
-	public ResponseEntity<?> delete(Long userId) throws Exception {
-		try {
-			userRepository.deleteById(userId);
-			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
-		}
+	@Transactional
+	public void deleteUser(Long userId) throws Exception {
+	    Optional<LibUser> optionalUser = userRepository.findById(userId);
+	    if (optionalUser.isPresent()) {
+	        try {
+	        	//사용자 삭제
+	            userRepository.deleteById(userId);
+	            //연결된 도서의 사용자 초기화
+	            bookRepository.resetUserFromBooks(userId);
+	        } catch (Exception e) {
+	        	e.printStackTrace();
+	            throw new Exception("회원 탈퇴 중 오류가 발생했습니다.");
+	        }
+	    } else {
+	        throw new Exception("삭제할 사용자를 찾을 수 없습니다.");
+	    }
 	}
 
 	// 회원 정보 수정
