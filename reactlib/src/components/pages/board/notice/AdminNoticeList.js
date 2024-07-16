@@ -1,11 +1,13 @@
 import React, { useEffect, useState, } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BoardItem from '../common/BoardItem';
-import Pagination from '../common/Pagination';
+import AdminPagination from "../../admin/AdminPagination";
 import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
 import Auth from '../../../helpers/Auth';
 import RedirectLogin from '../../../helpers/RedirectLogin';
-import '../../board/common/List.css'
+import '../../board/common/AdminForm.css'
+import AdminHeader from '../../admin/AdminHeader';
+import AdminSide from '../../admin/AdminSide';
 
 function AdminNoticeList() {
     const { axios } = useAuth();
@@ -131,36 +133,48 @@ function AdminNoticeList() {
     };
 
     return (
-        <div>
-            <section class="board-list">
-                <div id="search">
-                    <div class="container">
-                        <div class="page-title">
-                            <h3>공지사항</h3>
-                            {console.log(roles)}
+        <div className="admin-page">
+            <div className="admin-base">
+                <AdminHeader />
+                <AdminSide />
+            </div>
+
+            <main className="admin-page-main">
+                <div className="admin-page-body">
+                    <div className="admin-page-title">
+                        <h1>공지사항</h1>
+                        {console.log(roles)}
+                    </div>
+                    <div className="admin-page-top">
+                        <div className="admin-page-count" style={{ width: "25%" }}>
+                            총 {totalNoticeCount}건 / {totalPages} 페이지
                         </div>
-                        <div class="search-wrap">
+
+                        <div className="admin-page-search" style={{ width: "50%" }}>
                             <select name="searchBy" value={searchOption.searchBy} onChange={handleOnChange}>
                                 <option value="loginid">작성자</option>
                                 <option value="title">제목</option>
                             </select>
                             <input type="text" id="search" name="searchQuery" value={searchOption.searchQuery} onChange={handleOnChange} />
-                            <button class="btn btn-dark" onClick={onSearch}>검색</button>
+                            <button className="btn btn-outline-dark" onClick={() => onSearch(currentPage)}>검색</button>
                         </div>
-                        <div className="count_content">
-                            총 {totalNoticeCount}건 / {totalPages} 페이지
+
+
+                        <div className="admin-page-button" style={{ width: "25%" }}>
+                            <button className="btn btn-outline-dark" onClick={onDelete}>삭제하기</button>
+                            <button className="btn btn-outline-dark" onClick={onCreate}>작성하기</button>
                         </div>
                     </div>
-                </div>
-                <div class="list">
-                    <table class="table">
+
+                    <table className="admin-table">
                         <thead>
-                            <tr>
-                                <th scope="col" class="th-num">번호</th>
-                                <th scope="col" class="th-title">제목</th>
-                                <th scope="col" class="th-loginid">작성자</th>
-                                <th scope="col" class="th-date">작성일</th>
-                                <th scope="col" class="th-check"> - </th>
+                            <tr className="admin-th-tr">
+                                <th scope="col" className="th-check" style={{ width: "5%" }}>  </th>
+                                <th scope="col" className="th-num" style={{ width: "10%" }}>번호</th>
+                                <th scope="col" className="th-title" style={{ width: "40%" }}>제목</th>
+                                <th scope="col" className="th-loginid" style={{ width: "10%" }}>작성자</th>
+                                <th scope="col" className="th-date" style={{ width: "20%" }}>작성일</th>
+
                             </tr>
                         </thead>
                         <tbody class="list_content">
@@ -169,12 +183,19 @@ function AdminNoticeList() {
                             ))}
                         </tbody>
                     </table>
-                    <button onClick={onDelete}>삭제하기</button>
-                    <button onClick={onCreate}>작성하기</button>
+                    <div className="admin-pagination">
+                        <AdminPagination
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            paginate={setCurrentPage}
+                        />
+
+                    </div>
+
+
                 </div>
-            </section>
-            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
-        </div >
+            </main>
+        </div>
     );
 };
 

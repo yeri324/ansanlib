@@ -106,16 +106,16 @@
   
 /*해당 월이 아닌 날짜 */
 .not-current {
-  background-color: #b2b8c252;
+  background-color: #c6cbd452;
   color:#0611258e;
 }
 
 /*오늘!*/
 .today {
-  background-color: #fffb0036;
+  background-color: #93bcf136;
   font-weight: bold;
   color: #061a3d;
-  text-shadow: 1px 1px 3px rgb(255, 255, 255);
+
   position: relative;
 }
 

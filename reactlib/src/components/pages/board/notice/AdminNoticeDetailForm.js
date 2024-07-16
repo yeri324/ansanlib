@@ -1,11 +1,11 @@
 import React, { useState, useEffect, } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ImgPreview from '../common/ImgPreview';
-import '../../board/common/DetailForm.css'
+import '../../board/common/AdminForm.css';
 import BoardImgList from '../common/BoardImgList';
 import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
-import Auth from '../../../helpers/Auth';
-import RedirectLogin from '../../../helpers/RedirectLogin';
+import AdminHeader from '../../admin/AdminHeader';
+import AdminSide from '../../admin/AdminSide';
 
 function AdminNoticeDetailForm({id}) {
     const { axios } = useAuth();
@@ -16,6 +16,7 @@ function AdminNoticeDetailForm({id}) {
     const [count, setCount] = useState(1);
     const [deleteImg,setDeleteImg] = useState([])
     const { loginStatus, roles } = useAuth();
+    
 
     //권한 여부 확인
     useEffect(() => {
@@ -137,25 +138,57 @@ function AdminNoticeDetailForm({id}) {
     };
 
     return (
-        <div>
-            <div class='detail-form'>
-                <form>
-                    <h3>수정하기</h3>
-                    <div class='content-container'>
-                        <div class='input-container'>
+        <div className="admin-page">
+        <div className="admin-base">
+          <AdminHeader />
+          <AdminSide />
+        </div>
+  
+        <main className="admin-page-main">
+          <div className="admin-page-body">
+            <div className="admin-page-title">
+              <h1>NOTICE 수정</h1>
+            </div>
+            <div className='admin-detail-form'>
+                <form className="admin-board-form">
+                   
+                    <div className='admin-content-container'>
+
+
+                        <div className='admin-input-container'>
+
+
+                            <div className='admin-input-title'>
+                            <label className='admin-board-label'>제목</label>
                             <input type='text' name='title' value={title} onChange={updateTitle} />
-                            <textarea type='text' name='content' value={content} onChange={updateContent} />
+                            </div>
+
+
+                            <div className='admin-input-textarea'>
+                            <label className='admin-board-label'>내용</label>
+                             <textarea type='text' name='content' value={content} onChange={updateContent} />
                         </div>
 
-                        <BoardImgList images = {images} ImgPreview={ImgPreview} handleImgChange={handleImgChange} onImgDelete={onImgDelete} />
+
+                       
+
+                        
+                       <div className='admin-input-img'>
+                         <BoardImgList images = {images} ImgPreview={ImgPreview} handleImgChange={handleImgChange} onImgDelete={onImgDelete} />
                         {images.length < 5 && <button type="button" onClick={handleAddImg}>이미지추가</button>}
-                        <button type='submit' onClick={() => onUpdate()} >수정</button>
-                        <button type="button" onClick={() => onDelete()}>삭제</button>
-                        <button type="button" onClick={() => onGoBack()}>돌아가기</button>
+                        </div>
+                        </div>
+                        <div className="admin-board-button">
+                        <button type="button" className="btn btn-outline-dark" onClick={() => onUpdate()} >수정</button>
+                        <button type="button" className="btn btn-outline-dark" onClick={() => onDelete()}>삭제</button>
+                        <button type="button" className="btn btn-outline-dark" onClick={() => onGoBack()}>돌아가기</button></div>
                     </div>
+
                 </form>
-            </div>
-        </div>
+            </div >
+  </div></main></div>
+    
+
     );
 };
 

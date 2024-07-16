@@ -21,9 +21,9 @@ const BoardList = () => {
 
     return (
         <>
-            <Header />
+            {/* <Header /> */}
             {renderContent(roles, board)}
-            <Footer />
+            {/* <Footer /> */}
         </>
     )
 }

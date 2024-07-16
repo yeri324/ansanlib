@@ -35,6 +35,7 @@ import BoardList from './components/pages/board/page/BoardList';
 import BoardDetail from './components/pages/board/page/BoardDetail';
 import BoardForm from './components/pages/board/page/BoardForm';
 import AdminFaqForm from './components/pages/board/faq/AdminFaqForm';
+import AdminBookList from './components/pages/admin/AdminBookList';
 
 
 function App() {
@@ -63,8 +64,9 @@ function App() {
                                 <Route path="/admin/holiday/detail" element={<HolidayDetail />} />
                                 <Route path="/admin/book/new" element={<AddBook />} />
                                 <Route path="/admin/book/request" element={<AdminBookRequest />} />
-<Route path="/admin/faq/list" element={<AdminFaqList />} />
-<Route path="/admin/faq/new" element={<AdminFaqForm/>} />
+                                <Route path="/admin/faq/list" element={<AdminFaqList />} />
+                                <Route path="/admin/faq/new" element={<AdminFaqForm />} />
+                                <Route path="/admin/book/list" element={<AdminBookList />} />
                                 <Route path="/book/search" element={<SearchPage />} />
                                 <Route path="/book/detail/:id" element={<BookDetailPage />} />
 

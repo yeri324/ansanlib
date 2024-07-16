@@ -1,9 +1,9 @@
-import "../../admin/AdminPage.css";
+import '../../board/common/AdminForm.css'
 import axios from 'axios';
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BoardItem from '../common/BoardItem';
-import Pagination from '../common/Pagination';
+import AdminPagination from "../../admin/AdminPagination";
 import { LoginContext } from "../../security/contexts/LoginContextProvider";
 import AdminHeader from '../../admin/AdminHeader';
 import AdminSide from '../../admin/AdminSide';
@@ -150,7 +150,7 @@ function AdminFaqList() {
                             <option value="title">제목</option>
                         </select>
                         <input type="text" id="search" name="searchQuery" value={searchOption.searchQuery} onChange={handleOnChange} />
-                        <button className="btn btn-dark" onClick={() => onSearch(currentPage)}>검색</button>
+                        <button className="btn btn-outline-dark" onClick={() => onSearch(currentPage)}>검색</button>
                     </div>
                   
                   
@@ -163,11 +163,12 @@ function AdminFaqList() {
                     <table className="admin-table">
                         <thead>
                             <tr className="admin-th-tr">
-                                <th scope="col" className="th-num">번호</th>
-                                <th scope="col" className="th-title">제목</th>
-                                <th scope="col" className="th-loginid">작성자</th>
-                                <th scope="col" className="th-date">작성일</th>
-                                <th scope="col" className="th-check"> - </th>
+                            <th scope="col" className="th-check" style={{width:"5%"}}>  </th>
+                                <th scope="col" className="th-num" style={{width:"10%"}}>번호</th>
+                                <th scope="col" className="th-title" style={{width:"40%"}}>제목</th>
+                                <th scope="col" className="th-loginid" style={{width:"10%"}}>작성자</th>
+                                <th scope="col" className="th-date" style={{width:"20%"}}>작성일</th>
+                              
                             </tr>
                         </thead>
                         <tbody className="list_content">
@@ -183,16 +184,16 @@ function AdminFaqList() {
                             ))}
                         </tbody>
                     </table>
-    
-                  
-                </div>
-    
-                <div className="admin-pagination">
-                    <Pagination 
+                    <div className="admin-pagination">
+                    <AdminPagination 
                         currentPage={currentPage} 
                         totalPages={totalPages} 
                         paginate={setCurrentPage} 
                     />
+                  
+                </div>
+    
+                
                 </div>
             </main>
         </div>
