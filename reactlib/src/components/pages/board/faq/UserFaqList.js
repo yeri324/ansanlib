@@ -103,7 +103,7 @@ function UserFaqList() {
                         </thead>
                         <tbody class="list_content">
                             {searchResult.map((faq) => (
-                                <tr>
+                                <tr key={faq.id}>
                                 <td scope="col" class="th-num">{faq.id}</td>
                                 <td scope="col" class="th-title" onClick={() => onDetail(faq)}>{faq.title}</td>
                                 <td scope="col" class="th-loginid">{faq.createdBy}</td>
