@@ -1,5 +1,3 @@
-import React, { useState, useEffect, useLocation } from 'react';
-
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import AdminFaqList from './components/pages/board/faq/AdminFaqList';
 import AdminFaqForm from './components/pages/board/faq/AdminFaqForm';
@@ -37,13 +35,14 @@ import Holiday from './components/pages/admin/Holiday';
 import HolidayList from './components/pages/admin/HolidayList';
 import HolidayNew from './components/pages/admin/HolidayNew';
 import AddBook from './components/pages/admin/AddBook';
-
+import BookInterest from './components/pages/book/bookInterest/BookInterest';
 import AdminBookRequest from './components/pages/admin/AdminBookRequest';
 import { UseAuthBasic, UseAuthCheckAdmin, UseAuthCheckLogin } from './components/hooks/examples/useAuthExamples';
 import BoardList from './components/pages/board/page/BoardList';
 import BoardDetail from './components/pages/board/page/BoardDetail';
 import BoardForm from './components/pages/board/page/BoardForm';
-
+import BookSearch from './components/fragments/home/booksearch';
+import ApiBookSearch from './components/pages/book/bookApi/ApiSearchPage';
 
 function App() {
 
@@ -72,8 +71,11 @@ function App() {
                                 <Route path="/admin/book/new" element={<AddBook />} />
                                 <Route path="/admin/book/request" element={<AdminBookRequest />} />
 
+                                {/* <Route path="/" element={<BookSearch />} /> */}
                                 <Route path="/book/search" element={<SearchPage />} />
                                 <Route path="/book/detail/:id" element={<BookDetailPage />} />
+                                <Route path="/book/interest/:id" element={<BookInterest />} />
+                                <Route path="/bookapi/search" element={<ApiBookSearch />} />
 
                                 <Route path="/requestbook/new" element={<RequestBookForm />} />
                                 <Route path="/requestbook/list" element={<RequestBookList />} />

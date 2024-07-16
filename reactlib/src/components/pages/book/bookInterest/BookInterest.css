@@ -1,7 +1,5 @@
 .centered-content {
   text-align: center;
-  padding-left: 100px;
-  padding-right: 100px;
 }
 
 .bordered {
@@ -17,9 +15,7 @@
 }
 
 .cover-img {
-  object-fit: cover;  
-  max-width: 150px; /* 원하는 이미지 크기로 설정 */
-  margin: 0 auto; /* 이미지 중앙 정렬 */
+  object-fit: cover;
 }
 
 .no-image {
@@ -33,27 +29,15 @@
 
 .book-detail-container {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto; /* 전체 컨테이너 중앙 정렬 */
+  flex-direction: row;
 }
 
 .img-container {
   flex: 1;
+  max-width: 150px; /* 원하는 이미지 크기로 설정 */
 }
 
 .text-container {
   flex: 2;
   padding-left: 20px; /* 이미지와 텍스트 사이에 여백 추가 */
-  font-size: 15px;
-}
-
-.bookD{
-  border-top: 1px solid black;
-  padding-bottom: 50px;
-}
-
-.card-body{
-  padding-top: 10px;
-  padding-bottom: 10px;
 }

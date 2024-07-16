@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import './SearchPage.css'; // 스타일 파일을 임포트합니다.
 import Highlight from './Highlight'; // 하이라이트 컴포넌트를 임포트합니다.
@@ -12,14 +12,14 @@ const SearchPage = ({ isAuthenticated, isAnonymous }) => {
     publisher: '',
     pub_date: '',
     category_code: ''
-  });
+});
   const [bookList, setBookList] = useState([]);
   const [pagination, setPagination] = useState({
     hasPrev: false,
     hasNext: false,
     previous: 0,
     next: 0
-  });
+});
   const [errorMessage, setErrorMessage] = useState('');
   const [sortCriteria, setSortCriteria] = useState('title'); // 기본 정렬 기준을 제목으로 설정
   const [sortOrder, setSortOrder] = useState('asc'); // 기본 정렬 순서를 오름차순으로 설정
@@ -28,7 +28,7 @@ const SearchPage = ({ isAuthenticated, isAnonymous }) => {
     setFormValues({ ...formValues, [name]: newValue });
   };
 
-  const handleSearch = async (e, page = 0) => {
+  const handleSearch = useCallback(async (e, page = 0) => {
     if (e) e.preventDefault();
     try {
       const cleanFormValues = { 
@@ -47,7 +47,7 @@ const SearchPage = ({ isAuthenticated, isAnonymous }) => {
     } catch (error) {
       setErrorMessage('검색 중 오류가 발생했습니다.');
     }
-  };
+  }, [formValues]);
 
   const handleAlertLogin = () => {
     alert('로그인 후 이용가능합니다.');
@@ -74,6 +74,12 @@ const SearchPage = ({ isAuthenticated, isAnonymous }) => {
 
   const sortedBookList = sortBooks(bookList, sortCriteria, sortOrder);
 
+  useEffect(() => {
+    // 초기 로드 시 데이터를 가져옵니다.
+    handleSearch();
+  }, [formValues, handleSearch]);
+
+
   return (
     <main>
       <div className="breadcrumbs">
@@ -81,7 +87,7 @@ const SearchPage = ({ isAuthenticated, isAnonymous }) => {
           <div className="container">
             <ol>
               <li><a href="/">Home</a></li>
-              <li><a href={`/book/search`}>상세검색</a></li>
+              <li><a href={`/bookapi/search`}>네이버 API BOOK 검색</a></li>
             </ol>
           </div>
         </nav>
@@ -169,7 +175,7 @@ const SearchPage = ({ isAuthenticated, isAnonymous }) => {
             <div className="card mb-3 full-width book-detail-container" key={index}>
               <div className="img-container">
                 {book.bookImg ? (
-                  <img src={`http://localhost:8090/api/images/${book.bookImg.imgName}`} alt="..." className="img-fluid cover-img" />
+                  <img src={`http://localhost:8090/api/images/${book.bookImg.imgName}`} alt="책 이미지" className="img-fluid cover-img" />
                 ) : (
                   <div className="no-image">No Image</div>
                 )}
@@ -178,8 +184,8 @@ const SearchPage = ({ isAuthenticated, isAnonymous }) => {
                 <a href={`/book/detail/${book.id}`}>
                   <h5 className="card-title"><Highlight text={`제목 : 『${book.title}』`} highlight={formValues.title} /></h5>
                 </a>
-                <p><Highlight text={`저자 : 『${book.author}』`} highlight={formValues.author} /> || <Highlight text={`ISBN : 『${book.isbn}』`} highlight={formValues.isbn} /></p>
-                <p><Highlight text={`출판사 : 『${book.publisher}』`} highlight={formValues.publisher} /> || 출판 날짜 : 『{book.pub_date}』 || 분류 코드 : 『{book.category_code}』</p>
+                <p><Highlight text={`저자 : 『${book.author}』   ||   ISBN : 『${book.isbn}』`} highlight={formValues.author} /></p>
+                <p><Highlight text={`출판사 : 『${book.publisher}』   ||   출판 날짜 : 『${book.pub_date}』   ||   분류 코드 : 『${book.category_code}』`} highlight={formValues.publisher} /></p>
                 <p>위치 : 『{book.location}』</p>
               </div>
               <div className="row">
