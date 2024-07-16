@@ -1,5 +1,6 @@
 package com.ansanlib.board.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -40,20 +41,21 @@ public class RecBoardService {
 		return ResponseEntity.status(HttpStatus.OK).body(recBoard);
 	}
 	
+	// 도서검색
+	public ResponseEntity<List<Book>> searchBook(RecBoardFormDto recFormDto) throws Exception {
+		if(recFormDto.getSearchQuery() == null) {
+			List<Book> book = bookRepository.findAll();
+			return ResponseEntity.status(HttpStatus.OK).body(book);
+		} else {
+			List<Book> book = bookRepository.findByTitleContainingIgnoreCase(recFormDto.getSearchQuery());
+			return ResponseEntity.status(HttpStatus.OK).body(book);
+		}
+	}
+	
 	// 게시판 조회
 	public Page<RecBoard> getRec(RecBoardDto recDto) throws Exception {
 		Pageable pageable = PageRequest.of(recDto.getPage(), recDto.getSize(), Sort.by(Order.desc("regTime")));
 		return recBoardRepository.findAll(pageable);
-	}
-	
-	// 생성시 도서검색
-	public ResponseEntity<?> searchBook(RecBoardFormDto recFormDto) throws Exception {
-		if(recFormDto.getSearchQuery() == null) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST);
-		} else {
-			RecBoard recBoard = bookRepository.findByTitleContainingIgnoreCase(recFormDto.getSearchQuery());
-			return ResponseEntity.status(HttpStatus.OK).body(recBoard);
-		}
 	}
 	
 	// 삭제
