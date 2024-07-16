@@ -8,8 +8,10 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -34,7 +36,8 @@ public class Faq extends BaseEntity {
    private String content; //내용
    
    @ManyToOne
-   @JoinColumn(name="user_id")
+   //외래키 연결 해제. faq를 작성한 사용자가 탈퇴해도 게시물은 유지.
+   @JoinColumn(name="user_id", referencedColumnName = "user_id", foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
    private LibUser libUser;
    
    @JsonManagedReference
