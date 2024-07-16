@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import useRealName from '../../hooks/useRealName';
 import useAuth, { LOGIN_STATUS } from '../../hooks/useAuth';
 import RedirectLogin from '../../helpers/RedirectLogin';
