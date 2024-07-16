@@ -77,8 +77,19 @@ public class UserController {
     // 회원탈퇴
     @Secured("ROLE_USER")          //  USER 권한 설정
     @DeleteMapping("/{userId}")
-    public ResponseEntity<?> destroy(@PathVariable("userId") Long userId) throws Exception {
-        return userService.delete(userId);
+    public ResponseEntity<?> destroy(@AuthenticationPrincipal CustomUser user){
+       if(user == null) {
+    	   return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Not Logged in.");
+       }
+       long userId = user.getUser().getUserId();
+       try {
+    	   System.out.println("Deleting user");
+    	   userService.deleteUser(userId);
+    	   return ResponseEntity.ok("회원탈퇴가 성공적으로 처리되었습니다.");
+       } catch (Exception e) {
+    	   e.printStackTrace();
+    	   return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 탈퇴 중 오류가 발생했습니다.");
+       }
     }
 	
 	//중복 아이디 체크
