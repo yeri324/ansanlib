@@ -49,7 +49,7 @@ public class Book extends BaseEntity {
     private String genre; // 장르
     private String category_code; // 분류코드
 
-    private String location; // 위치
+
 
     @Lob
     @Column(columnDefinition = "TEXT")
@@ -72,7 +72,12 @@ public class Book extends BaseEntity {
     @JsonIgnore
     private Library library;
     
-    public void updateBook(BookFormDto itemFormDto){
+    private String lib_name;  //도서관이름   (location 대신 lib_name)
 
-    }
+    
+
+
+
+
+
 }

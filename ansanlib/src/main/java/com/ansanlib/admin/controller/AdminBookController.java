@@ -25,53 +25,45 @@ import com.ansanlib.response.CommonListResponse;
 @RequestMapping("/api/admin/book")
 public class AdminBookController {
 
-    @Autowired
-    private AdminBookService adminBookService;
+	@Autowired
+	private AdminBookService adminBookService;
 
- 
+	@PostMapping("/new")
+	public ResponseEntity<BookDto> createBook(@RequestPart("bookDto") BookDto bookDto,
+			@RequestPart(value = "file", required = false) MultipartFile file) {
+		try {
+			BookDto savedBook = adminBookService.saveBook(bookDto, file);
+			return ResponseEntity.ok(savedBook);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
 
-    @PostMapping("/new")
-    public ResponseEntity<BookDto> addBook(@RequestPart("book") BookDto bookDto, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
-        BookDto savedBook = adminBookService.saveBook(bookDto, file);
-        return ResponseEntity.ok(savedBook);
+	@GetMapping("/list")
+	public List<Book> getBooks() {
+		return adminBookService.getAllBooks();
+	}
 
-    }
-    
-    
-    @GetMapping("/list")
-    public List<Book> getBooks() {
-        return adminBookService.getAllBooks();
-    }
-    
-    
-    
-    
-    @GetMapping("/request")
-    public ResponseEntity<CommonListResponse<List<RequestBook>>> getAllRequestBooks() {
-        List<RequestBook> requestBooks = adminBookService.getAllRequestBooks();
-       
-        return ResponseEntity.ok().body(new CommonListResponse<>(requestBooks.size(), requestBooks));
-    }
-    
-    
-    //데이터삭제
-    //도서 등록 후, 예약이나 대출이 걸려있으면 삭제 불가
-    //깨꿋한 상태(?)여야 삭제가눙~
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteBook(@PathVariable Long id) {
-        try {
-            adminBookService.deleteBookById(id);
-            return ResponseEntity.ok("Book deleted successfully");
-          
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete book");
-        }
-    }
-    
-    
-    
-    
-    
-    
+	@GetMapping("/request")
+	public ResponseEntity<CommonListResponse<List<RequestBook>>> getAllRequestBooks() {
+		List<RequestBook> requestBooks = adminBookService.getAllRequestBooks();
+
+		return ResponseEntity.ok().body(new CommonListResponse<>(requestBooks.size(), requestBooks));
+	}
+
+	// 데이터삭제
+	// 도서 등록 후, 예약이나 대출이 걸려있으면 삭제 불가
+	// 깨꿋한 상태(?)여야 삭제가눙~
+	@DeleteMapping("/{id}")
+	public ResponseEntity<String> deleteBook(@PathVariable Long id) {
+		try {
+			adminBookService.deleteBookById(id);
+			return ResponseEntity.ok("Book deleted successfully");
+
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete book");
+		}
+	}
 
 }

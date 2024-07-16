@@ -65,3 +65,16 @@
   text-decoration: none;
   cursor: pointer;
 } */
+
+
+/*북사진볼때 필요*/
+.modal-image {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.modal-image img {
+  max-width: 100%;
+  height: auto;
+  display: inline-block;
+}

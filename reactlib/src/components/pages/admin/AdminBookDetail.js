@@ -35,6 +35,12 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
             </button>
           </div>
 
+          {book && book.imageUrl && (
+            <div className="modal-image">
+              <img src={book.imageUrl} alt="Book" className="img-fluid" />
+            </div>
+          )}
+
           <div className="modal-body">
             {book && book.libraries && book.libraries.length > 0 ? (
               <table className="table" id="admin-modal-table">
@@ -50,9 +56,9 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
                   {book.libraries.map((lib, index) => (
                     <tr key={index}>
                       <td>{index + 1}</td>
-                      <td>{lib.libName}</td>
+                      <td>{lib.lib_name}</td>
                       <td>{lib.count}권</td>
-                      <td><button type="button" id="admin-modal-button" className="btn btn-outline-dark" onClick={() => handleDelete(book.id)}>삭제</button></td>
+                      <td><button type="button" id="admin-modal-button" className="btn btn-outline-dark" onClick={() => handleDelete(lib.id)}>삭제</button></td> {/* Use lib.id here */}
                     </tr>
                   ))}
                 </tbody>

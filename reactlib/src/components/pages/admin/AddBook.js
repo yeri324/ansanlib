@@ -1,8 +1,6 @@
-
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
-
 import axios from 'axios';
 import "./AddBook.css";
 import AdminHeader from './AdminHeader';
@@ -17,10 +15,8 @@ const AddBook = ({ csrf = {} }) => {
         publisher: '',
         pub_date: '',
         category_code: '',
-        location: '',
-        bookDetail: '',
         lib_name: '',
-        lib_num: '', // New field for library number
+        bookDetail: '',
         count: '',
         status: 'AVAILABLE',
         book_img: 'null'
@@ -33,9 +29,8 @@ const AddBook = ({ csrf = {} }) => {
         publisher: '',
         pub_date: '',
         category_code: '',
-        location: '',
-        bookDetail: '',
         lib_name: '',
+        bookDetail: '',
         count: '',
     };
 
@@ -131,11 +126,9 @@ const AddBook = ({ csrf = {} }) => {
     const handleLibraryChange = (e) => {
         setSelectedLibrary(e.target.value);
         setSelectedSection('');
-        const selectedLib = libraries[e.target.value];
         setFormData((prevData) => ({
             ...prevData,
-            lib_name: '',
-            lib_num: '', // Clear lib_num when library changes
+            lib_name: '', // Clear lib_name when library changes
         }));
     };
 
@@ -144,8 +137,7 @@ const AddBook = ({ csrf = {} }) => {
         setSelectedSection(e.target.value);
         setFormData((prevData) => ({
             ...prevData,
-            lib_name: e.target.value,
-            lib_num: selectedLib ? selectedLib.lib_num : '',
+            lib_name: selectedLib ? selectedLib.name : '', // Set lib_name based on the selected section
         }));
     };
 
@@ -177,8 +169,8 @@ const AddBook = ({ csrf = {} }) => {
             tempErrors.category_code = '카테고리 코드를 입력해주세요';
             isValid = false;
         }
-        if (!formData.location) {
-            tempErrors.location = '소장 위치를 입력해주세요';
+        if (!formData.lib_name) {
+            tempErrors.lib_name = '소장 도서관을 선택해주세요';
             isValid = false;
         }
         if (!formData.bookDetail) {
@@ -187,10 +179,6 @@ const AddBook = ({ csrf = {} }) => {
         }
         if (!formData.count || formData.count <= 0) {
             tempErrors.count = '도서 수량을 입력해주세요';
-            isValid = false;
-        }
-        if (!formData.lib_num) {
-            tempErrors.lib_name = '도서관을 선택해주세요';
             isValid = false;
         }
 
@@ -211,39 +199,40 @@ const AddBook = ({ csrf = {} }) => {
         };
 
         const data = new FormData();
-        data.append('book', new Blob([JSON.stringify(formDataCopy)], { type: 'application/json' }));
+        data.append('bookDto', new Blob([JSON.stringify(formDataCopy)], { type: 'application/json' }));
 
         if (formData.bookImg) {
             data.append('file', formData.bookImg);
         }
 
         try {
-            const response = await axios.post('/api/admin/book/new', data, {
+            const response = await axios.post(`/api/admin/book/new`, data, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     [csrf.parameterName]: csrf.token,
                 },
             });
 
-            console.log(response.data);
+            console.log('Response:', response.data);
             alert('도서가 성공적으로 등록되었습니다!');
-          
+            // handleReset(); // Reset the form after successful submission
         } catch (error) {
-            console.error(error);
+            console.error('Error submitting the form:', error);
         }
     };
 
     // Custom input component for DatePicker
-    const CustomDateInput = ({ value, onClick }) => (
+    const CustomDateInput = React.forwardRef(({ value, onClick }, ref) => (
         <input
             type="text"
             value={value}
             onClick={onClick}
             readOnly
+            ref={ref}
             className="form-control admin-date-picker"
             placeholder="출판년도를 선택해주세요"
         />
-    );
+    ));
 
     return (
         <>
@@ -266,7 +255,7 @@ const AddBook = ({ csrf = {} }) => {
                             {imagePreview && (
                                 <div className="form-group">
                                     <img src={imagePreview} alt="미리보기" className="img-thumbnail" />
-                                    <button  className="btn btn-outline-dark" onClick={handleImageCancel}>취소</button>
+                                    <button type="button" className="btn btn-outline-dark" onClick={handleImageCancel}>취소</button>
                                 </div>
                             )}
 
@@ -282,9 +271,7 @@ const AddBook = ({ csrf = {} }) => {
                                 />
                             </div>
 
-                           
-
- <div id="admin-input-form" className="input-group mb-3">
+                            <div id="admin-input-form" className="input-group mb-3">
                                 <label id="admin-addBook-label" className="input-group-text">도서명</label>
                                 <input
                                     type="text"
@@ -342,7 +329,7 @@ const AddBook = ({ csrf = {} }) => {
 
                             <div id="admin-input-form" className="input-group mb-3">
                                 <label id="admin-addBook-label" className="input-group-text">출판년도</label>
-                                <DatePicker 
+                                <DatePicker
                                     selected={formData.pub_date}
                                     onChange={handleDateChange}
                                     customInput={<CustomDateInput />}
@@ -366,7 +353,7 @@ const AddBook = ({ csrf = {} }) => {
                             </div>
 
                             <div id="admin-input-form" className="input-group mb-3">
-                                <label id="admin-addBook-textarea" style={{ width: "150px" }} className="input-group-text">상세 내용</label>
+                                <label id="admin-addBook-label" className="input-group-text">상세 내용</label>
                                 <textarea
                                     className="form-control"
                                     id="admin-addBook-textarea"
@@ -401,19 +388,6 @@ const AddBook = ({ csrf = {} }) => {
                             </div>
 
                             <div id="admin-input-form" className="input-group mb-3">
-                                <label id="admin-addBook-label" className="input-group-text">소장 위치</label>
-                                <input
-                                    type="text"
-                                    name="location"
-                                    className="form-control"
-                                    placeholder="소장 위치를 입력해주세요"
-                                    value={formData.location}
-                                    onChange={handleChange}
-                                />
-                                {errors.location && <p className="text-danger">{errors.location}</p>}
-                            </div>
-
-                            <div id="admin-input-form" className="input-group mb-3">
                                 <label id="admin-addBook-label" className="input-group-text">도서 수량</label>
                                 <input
                                     type="number"
@@ -427,9 +401,9 @@ const AddBook = ({ csrf = {} }) => {
                             </div>
 
                             <div className="form-group">
-                                <button  className="btn btn-outline-dark">등록</button>
-                                <button  className="btn btn-outline-dark" onClick={handleReset}>초기화</button>
-                                <button id="adminbtn" className="btn btn-outline-dark" onClick={() => navigate('/admin/book/list')}>목록보기</button>
+                                <button type="submit" className="btn btn-outline-dark">등록</button>
+                                <button type="button" className="btn btn-outline-dark" onClick={handleReset}>초기화</button>
+                                <button type="button" className="btn btn-outline-dark" onClick={() => navigate('/admin/book/list')}>목록보기</button>
                             </div>
                         </form>
                     </div>

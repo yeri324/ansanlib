@@ -27,7 +27,7 @@ public class LoanStatusDto {
 			.pub_date(book.getPub_date())
 			.isbn(book.getIsbn())
 			.status(book.getStatus())
-			.location(book.getLocation());
+			.lib_name(book.getLib_name());
 		
 		if(book.getBookDetail() != null) {
 			String detail = book.getBookDetail().replace("\r\n","<br>");
