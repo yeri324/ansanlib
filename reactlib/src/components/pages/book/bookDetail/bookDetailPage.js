@@ -101,12 +101,12 @@ const BookDetailPage = () => {
               )}
             </div>
             <div className="col-md-8 text-container">
-              <div className="card-body left-align">
+              <div className="book-detail left-align">
                 <h5 className="card-title">제목 : 『{book.title}』</h5>
                 <p>저자 : 『{book.author}』</p>
                 <p>ISBN : 『{book.isbn}』</p>
                 <p>출판사 : 『{book.publisher}』 || 출판 날짜 : 『{book.pub_date}』 || 분류 코드 : 『{book.category_code}』</p>
-                <p>위치 : 『{book.location}』</p>
+                <p>위치 : 『{book.lib_name}』</p>
               </div>
             </div>
           </div><br />
@@ -121,10 +121,10 @@ const BookDetailPage = () => {
                   <th>서비스신청</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="table-detail">
                 {bookList.map((relatedBook) => (
                   <tr key={relatedBook.id}>
-                    <td>{relatedBook.location}</td>
+                    <td>{relatedBook.lib_name}</td>
                     <td>{relatedBook.status ?? '정보 없음'}</td>
                     <td>{relatedBook.returnDay}</td>
                     <td>

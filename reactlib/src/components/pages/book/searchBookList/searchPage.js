@@ -186,7 +186,7 @@ const SearchPage = ({ isAuthenticated, isAnonymous }) => {
                 </a>
                 <p><Highlight text={`저자 : 『${book.author}』   ||   ISBN : 『${book.isbn}』`} highlight={formValues.author} /></p>
                 <p><Highlight text={`출판사 : 『${book.publisher}』   ||   출판 날짜 : 『${book.pub_date}』   ||   분류 코드 : 『${book.category_code}』`} highlight={formValues.publisher} /></p>
-                <p>위치 : 『{book.location}』</p>
+                <p>위치 : 『{book.lib_name}』</p>
               </div>
               <div className="row">
                 <p>{book.status}</p>

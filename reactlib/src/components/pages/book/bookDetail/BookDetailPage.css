@@ -54,6 +54,14 @@
 }
 
 .card-body{
-  padding-top: 10px;
-  padding-bottom: 10px;
+  /* padding-top: 10px;
+  padding-bottom: 10px; */
+}
+
+.card-title{
+  font-size: 25px;
+}
+
+.table-detail{
+  
 }

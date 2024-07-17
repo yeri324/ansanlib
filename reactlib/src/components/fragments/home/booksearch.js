@@ -1,16 +1,19 @@
 // BookSearch.js
 import React, { useState } from 'react';
 import BookCloud from './bookCloud';
+import { useNavigate } from 'react-router-dom';
 import './booksearch.css';
 
 function BookSearch() {
     const [query, setQuery] = useState('');
+    const navigate = useNavigate();
 
     const handleSearch = (e) => {
         e.preventDefault();
         const form = e.target;
         const input = form.elements['search-input'];
         setQuery(input.value);
+        navigate(`/book/search?query=${input.value}`);
     };
 
     return (

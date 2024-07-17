@@ -49,7 +49,7 @@ public class Book extends BaseEntity {
     private String genre; // 장르
     private String category_code; // 분류코드
 
-    private String location; // 위치
+    private String lib_name; // 위치
 
     @Lob
     @Column(columnDefinition = "TEXT")
