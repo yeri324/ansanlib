@@ -33,6 +33,6 @@ public class BookDto {
 	private List<BookListDto> relatedBooks;
 	private int count;
 
-	private String lib_name;
+	private String libName;
 
 }

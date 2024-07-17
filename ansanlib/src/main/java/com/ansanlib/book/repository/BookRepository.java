@@ -42,5 +42,9 @@ public interface BookRepository extends JpaRepository<Book, Long>, BookRepositor
     @Query("UPDATE Book b SET b.libUser = null WHERE b.libUser.userId = :userId")
     int resetUserFromBooks(@Param("userId") Long userId);
 
+	
+	//도서-도서관 중복확인
+	 boolean existsByIsbnAndLibName(String isbn, String libName); // lib_name 사용
+
 
 }

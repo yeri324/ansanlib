@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,18 +31,34 @@ public class AdminBookController {
 	private AdminBookService adminBookService;
 
 	
+//도서-도서관 중복확인
+	   @GetMapping("/exists")
+	    public ResponseEntity<Boolean> checkBookExists(@RequestParam String isbn, @RequestParam String libName) {
+	        boolean exists = adminBookService.checkBookExists(isbn, libName);
+	        return ResponseEntity.ok(exists);
+	    }
+	
+	
+	
+	
+	   @PostMapping("/new")
+	    public ResponseEntity<?> createBook(@RequestPart("bookDto") BookDto bookDto,
+	                                        @RequestPart(value = "file", required = false) MultipartFile file) {
+	        boolean bookExists = adminBookService.checkBookExists(bookDto.getIsbn(), bookDto.getLibName());
+	        if (bookExists) {
+	            return ResponseEntity.badRequest().body("해당 도서관에 소장 중입니다");
+	        }
 
-	@PostMapping("/new")
-	public ResponseEntity<BookDto> createBook(@RequestPart("bookDto") BookDto bookDto,
-			@RequestPart(value = "file", required = false) MultipartFile file) {
-		try {
-			BookDto savedBook = adminBookService.saveBook(bookDto, file);
-			return ResponseEntity.ok(savedBook);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
-	}
+	        try {
+	            BookDto savedBook = adminBookService.saveBook(bookDto, file);
+	            return ResponseEntity.ok(savedBook);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+	        }
+	    }
+		
+	
 
 	
 
@@ -62,13 +79,9 @@ public class AdminBookController {
 	
 	
 	 @PutMapping("/{id}")
-	    public ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody BookDto bookDto) {
-	        try {
-	            Book updatedBook = adminBookService.updateBookCount(id, bookDto);
-	            return ResponseEntity.ok(updatedBook);
-	        } catch (Exception e) {
-	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-	        }
+	 public ResponseEntity<Book> updateBookCount(@PathVariable Long id, @RequestBody BookDto bookDto) {
+	        Book updatedBook = adminBookService.updateBookCount(id, bookDto);
+	        return ResponseEntity.ok(updatedBook);
 	    }
 	
 	

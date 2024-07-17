@@ -17,7 +17,7 @@ const AddBook = ({ csrf = {} }) => {
         publisher: '',
         pub_date: '',
         category_code: '',
-        lib_name: '',
+        libName: '',
         bookDetail: '',
         count: '',
         status: 'AVAILABLE',
@@ -31,7 +31,7 @@ const AddBook = ({ csrf = {} }) => {
         publisher: '',
         pub_date: '',
         category_code: '',
-        lib_name: '',
+        libName: '',
         bookDetail: '',
         count: '',
     };
@@ -119,7 +119,7 @@ const AddBook = ({ csrf = {} }) => {
         setSelectedSection('');
         setFormData((prevData) => ({
             ...prevData,
-            lib_name: '', // Clear lib_name when library changes
+            libName: '', // Clear libName when library changes
         }));
     };
 
@@ -128,7 +128,7 @@ const AddBook = ({ csrf = {} }) => {
         setSelectedSection(e.target.value);
         setFormData((prevData) => ({
             ...prevData,
-            lib_name: selectedLib ? selectedLib.name : '', // Set lib_name based on the selected section
+            libName: selectedLib ? selectedLib.name : '', // Set libName based on the selected section
         }));
     };
 
@@ -160,8 +160,8 @@ const AddBook = ({ csrf = {} }) => {
             tempErrors.category_code = '카테고리 코드를 입력해주세요';
             isValid = false;
         }
-        if (!formData.lib_name) {
-            tempErrors.lib_name = '소장 도서관을 선택해주세요';
+        if (!formData.libName) {
+            tempErrors.libName = '소장 도서관을 선택해주세요';
             isValid = false;
         }
         if (!formData.bookDetail) {
@@ -181,6 +181,24 @@ const AddBook = ({ csrf = {} }) => {
         e.preventDefault();
 
         if (!validate()) {
+            return;
+        }
+
+        // Check if the book already exists in the selected library
+        try {
+            const existsResponse = await axios.get('/api/admin/book/exists', {
+                params: {
+                    isbn: formData.isbn,
+                    libName: formData.libName,
+                },
+            });
+
+            if (existsResponse.data) {
+                alert('해당 도서관에 소장 중입니다');
+                return;
+            }
+        } catch (error) {
+            console.error('Error checking book existence:', error);
             return;
         }
 
@@ -370,7 +388,7 @@ const AddBook = ({ csrf = {} }) => {
                                         </option>
                                     ))}
                             </select>
-                            {errors.lib_name && <p className="text-danger">{errors.lib_name}</p>}
+                            {errors.libName && <p className="text-danger">{errors.libName}</p>}
                         </div>
 
                         <div id="admin-input-form" className="input-group mb-3">

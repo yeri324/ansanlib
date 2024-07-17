@@ -63,7 +63,7 @@ const AdminBookList = () => {
         acc[key] = { ...book, total_count: 0, libraries: [] };
       }
       acc[key].total_count += book.count;
-      acc[key].libraries.push({ lib_name: book.lib_name, count: book.count });
+      acc[key].libraries.push({ libName: book.libName, count: book.count });
       return acc;
     }, {});
     const groupedArray = Object.values(grouped);
@@ -75,7 +75,7 @@ const AdminBookList = () => {
     let filteredList = bookList;
     if (searchCriteria === 'library') {
       filteredList = bookList.filter(book =>
-        book.libraries.some(lib => lib.lib_name.toLowerCase().includes(searchTerm.toLowerCase()))
+        book.libraries.some(lib => lib.libName.toLowerCase().includes(searchTerm.toLowerCase()))
       );
     } else if (searchCriteria === 'title') {
       filteredList = bookList.filter(book =>

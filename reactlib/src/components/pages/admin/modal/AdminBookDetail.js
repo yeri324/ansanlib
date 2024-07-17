@@ -1,9 +1,12 @@
-import React from 'react';
 import "./AdminModal.css";
 import axios from 'axios';
-
+import React, { useState } from 'react';
+import moment from 'moment/moment';
 
 const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
+  const [editMode, setEditMode] = useState(null);
+  const [editedCounts, setEditedCounts] = useState({});
+
   if (!isOpen) return null;
 
   const handleDelete = async (id) => {
@@ -22,6 +25,51 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
       alert("삭제 할 수 없습니다. 다시 확인해주세요");
     }
   };
+
+  const handleEdit = (lib) => {
+    setEditMode(lib.libName);
+    setEditedCounts((prevCounts) => ({
+      ...prevCounts,
+      [lib.libName]: lib.count,
+    }));
+  };
+
+  const handleEditChange = (libName, value) => {
+    setEditedCounts((prevCounts) => ({
+      ...prevCounts,
+      [libName]: value,
+    }));
+  };
+
+  const handleEditSave = async (id, libName) => {
+    try {
+      const response = await axios.put(`/api/admin/book/${id}`, {
+        libName: libName,
+        count: editedCounts[libName],
+      });
+      console.log("Edit response:", response.data);
+      alert("수정이 완료되었습니다.");
+      setEditMode(null);
+      refreshBookList();
+    } catch (error) {
+      console.error("Edit error:", error);
+      alert("수정할 수 없습니다. 다시 확인해주세요");
+    }
+  };
+
+  const groupLibraries = (libraries) => {
+    const grouped = libraries.reduce((acc, lib) => {
+      if (!acc[lib.libName]) {
+        acc[lib.libName] = { ...lib, count: 0 };
+      }
+      acc[lib.libName].count += lib.count;
+      return acc;
+    }, {});
+
+    return Object.values(grouped);
+  };
+
+  const groupedLibraries = groupLibraries(book.libraries);
 
   return (
     <div className="admin-modal" id="admin-modal">
@@ -43,27 +91,62 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
           )}
 
           <div className="modal-body">
-            {book && book.libraries && book.libraries.length > 0 ? (
+            {groupedLibraries && groupedLibraries.length > 0 ? (
               <table className="table" id="admin-modal-table">
                 <thead>
                   <tr>
                     <th>번호</th>
                     <th>도서관</th>
                     <th>소장 권수</th>
+                    <th>등록일</th>
+                    <th>수정</th>
                     <th>삭제</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {book.libraries.map((lib, index) => (
-                    <tr key={index}>
+                  {groupedLibraries.map((lib, index) => (
+                    <tr key={lib.libName}>
                       <td>{index + 1}</td>
-                      <td>{lib.lib_name}</td>
-                      <td>{lib.count}권</td>
+                      <td>{lib.libName}</td>
                       <td>
-                        <button 
-                          type="button" 
-                          id="admin-modal-button" 
-                          className="btn btn-outline-dark" 
+                        {editMode === lib.libName ? (
+                          <input
+                            type="number"
+                            style={{ width: "100px" }}
+                            value={editedCounts[lib.libName] || ''}
+                            onChange={(e) => handleEditChange(lib.libName, e.target.value)}
+                          />
+                        ) : (
+                          `${lib.count}권`
+                        )}
+                      </td>
+                      <td>{moment(lib.reg_time).format('YYYY-MM-DD')}</td>
+                      <td>
+                        {editMode === lib.libName ? (
+                          <button
+                            type="button"
+                            id="admin-modal-button"
+                            className="btn btn-outline-dark"
+                            onClick={() => handleEditSave(book.id, lib.libName)}
+                          >
+                            저장
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            id="admin-modal-button"
+                            className="btn btn-outline-dark"
+                            onClick={() => handleEdit(lib)}
+                          >
+                            수정
+                          </button>
+                        )}
+                      </td>
+                      <td>
+                        <button
+                          type="button"
+                          id="admin-modal-button"
+                          className="btn btn-outline-dark"
                           onClick={() => handleDelete(book.id)}
                         >
                           삭제

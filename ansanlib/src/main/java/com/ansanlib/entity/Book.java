@@ -75,7 +75,7 @@ public class Book extends BaseEntity {
     @JsonIgnore
     private Library library;
     
-    private String lib_name;  //도서관이름   (location 대신 lib_name)
+    private String libName;  //도서관이름   (location 대신 lib_name)
 
     
 

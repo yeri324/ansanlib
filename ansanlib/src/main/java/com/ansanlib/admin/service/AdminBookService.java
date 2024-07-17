@@ -1,7 +1,6 @@
 package com.ansanlib.admin.service;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -17,7 +16,6 @@ import com.ansanlib.book.repository.BookRepository;
 import com.ansanlib.book.service.FileService;
 import com.ansanlib.entity.Book;
 import com.ansanlib.entity.BookImg;
-import com.ansanlib.entity.Library;
 import com.ansanlib.entity.RequestBook;
 import com.ansanlib.library.LibraryRepository;
 import com.ansanlib.requestBook.repository.RequestBookRepository;
@@ -37,9 +35,15 @@ public class AdminBookService {
 	@Autowired
 	private BookImgRepository bookImgRepository;
 	
-	@Autowired
-	private LibraryRepository libraryRepository;
 
+
+	
+	//도서-도서관 중복확인
+	 public boolean checkBookExists(String isbn, String libName) {
+	        return bookRepository.existsByIsbnAndLibName(isbn, libName); // lib_name 사용
+	    }
+	
+	
 	public BookDto saveBook(BookDto bookDto, MultipartFile file) throws IOException {
 		// 도서 등록
 		Book book = new Book();
@@ -51,7 +55,7 @@ public class AdminBookService {
 		book.setCategory_code(bookDto.getCategory_code());
 		book.setBookDetail(bookDto.getBookDetail());
 		book.setCount(bookDto.getCount());
-		book.setLib_name(bookDto.getLib_name());
+		book.setLibName(bookDto.getLibName());
 		
 		Book savedBook = bookRepository.save(book);
 		bookDto.setId(savedBook.getId());
