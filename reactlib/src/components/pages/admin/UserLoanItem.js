@@ -1,33 +1,19 @@
-import './AdminPage.css'
-import useAuth, { LOGIN_STATUS, ROLES } from '../../hooks/useAuth';
-import Auth from '../../helpers/Auth';
-import RedirectLogin from '../../helpers/RedirectLogin';
+import React from 'react';
+import "./AdminPage.css";
 
-const UserLoanItem = ({ loan,onClickToReturn }) => {
-    const { axios } = useAuth();
-    return (
-        
-        <>
+const UserLoanItem = ({ loan, onClickToReturn }) => {
 
-        <tr key={loan.id}>
-            <td>{loan.id}</td>
-            <td>{loan.book.title}</td>
-            <td>{loan.loanStart.split('T')[0]}</td>
-            <td>{loan.loanEnd.split('T')[0]}</td>
-           <td> <button type="button" id="adminbtn" class="btn btn-outline-dark"  value={loan.id} onClick={onClickToReturn}>반납</button></td>
-        </tr>
-        </>
-    );
+  return (
+      <tr key={loan.id}>
+          <td>{loan.id}</td>
+          <td>{loan.book.title}</td>
+          <td>{loan.loanStart.split('T')[0]}</td>
+          <td>{loan.loanEnd.split('T')[0]}</td>
+          <td>
+              <button type="button" id="adminbtn" className="btn btn-outline-dark" value={loan.id} onClick={onClickToReturn}>반납</button>
+          </td>
+      </tr>
+  );
 };
 
-
-export default function () {
-    return (
-      <>
-        <RedirectLogin />
-        <Auth loginStatus={LOGIN_STATUS.LOGGED_IN} roles={ROLES.ADMIN}>
-          <UserLoanItem  />
-        </Auth>
-      </>
-    );
-  }
+export default UserLoanItem;

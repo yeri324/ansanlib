@@ -95,56 +95,46 @@ const UserResItem = ({ res, onClickToCancelRes }) => {
     };
     Modal.setAppElement('#root'); // 접근성 설정
     return (
-           <>
-
-
-        <tr key={res.id}>
-            <td>{res.id}</td>
-            <td>{res.bookId.title}</td>
-            <td>{res.startDate.split('T')[0]}</td>
-            <td>{res.endDate.split('T')[0]}</td>
-            <td><button  type="button"id="adminbtn" class="btn btn-outline-dark"  value={res.id} onClick={onClickToCancelRes}>삭제</button></td>
-            <td><button type="button"id="adminbtn" class="btn btn-outline-dark"  value={res.id} onClick={openModal}>기간연장</button></td>
-            <Modal
-                isOpen={isOpen}
-                onRequestClose={closeModal}
-                contentLabel="연장할 기간을 선택하세요"
-                className="Res-modal"
-            >
-                <div className="Res-modal-content">
-                    <span className="close" onClick={closeModal}>&times;</span>
-                    <h2>예약 연장</h2>
-                    <div className='calendar'>
-                    <Calendar
-                       onChange={handleDateChange}
-                       value={selectedDate}
-                       next2Label={null}
-                       prev2Label={null}
-                       formatDay={(locale, date) => moment(date).format("DD")}
-                       tileDisabled={({ date }) => isDateReserved(date)}
-                       showNeighboringMonth={false}
-                       activeStartDate={activeStartDate}
-                       onActiveStartDateChange={handleActiveStartDateChange}
-                       nextLabel={showNextButton ? '>' : null}
-                       prevLabel={showPrevButton ? '<' : null} 
-                    />
-                    </div>
-                    <button type="button" id="adminbtn" class="btn btn-outline-dark"  onClick={extendRes}>연장하기</button>
-
-                </div>
-            </Modal>
-        </tr>
-        </>
+        res ? ( // res가 undefined가 아닌 경우에만 렌더링
+            <>
+                <tr key={res.id}>
+                    <td>{res.id}</td>
+                    <td>{res.bookId.title}</td>
+                    <td>{res.startDate.split('T')[0]}</td>
+                    <td>{res.endDate.split('T')[0]}</td>
+                    <td><button type="button" id="adminbtn" className="btn btn-outline-dark" value={res.id} onClick={onClickToCancelRes}>삭제</button></td>
+                    <td><button type="button" id="adminbtn" className="btn btn-outline-dark" value={res.id} onClick={openModal}>기간연장</button></td>
+                    <Modal
+                        isOpen={isOpen}
+                        onRequestClose={closeModal}
+                        contentLabel="연장할 기간을 선택하세요"
+                        className="Res-modal"
+                    >
+                        <div className="Res-modal-content">
+                            <span className="close" onClick={closeModal}>&times;</span>
+                            <h2>예약 연장</h2>
+                            <div className='calendar'>
+                                <Calendar
+                                    onChange={handleDateChange}
+                                    value={selectedDate}
+                                    next2Label={null}
+                                    prev2Label={null}
+                                    formatDay={(locale, date) => moment(date).format("DD")}
+                                    tileDisabled={({ date }) => isDateReserved(date)}
+                                    showNeighboringMonth={false}
+                                    activeStartDate={activeStartDate}
+                                    onActiveStartDateChange={handleActiveStartDateChange}
+                                    nextLabel={showNextButton ? '>' : null}
+                                    prevLabel={showPrevButton ? '<' : null} 
+                                />
+                            </div>
+                            <button type="button" id="adminbtn" className="btn btn-outline-dark" onClick={extendRes}>연장하기</button>
+                        </div>
+                    </Modal>
+                </tr>
+            </>
+        ) : null
     );
 };
 
-export default function () {
-    return (
-      <>
-        <RedirectLogin />
-        <Auth loginStatus={LOGIN_STATUS.LOGGED_IN} roles={ROLES.ADMIN}>
-          <UserResItem />
-        </Auth>
-      </>
-    );
-  }
+export default UserResItem;

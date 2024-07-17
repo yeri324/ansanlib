@@ -46,13 +46,11 @@ public class AdminUserController {
 	}
 
 	// 유저정보 가져오기
-	@PostMapping("/detail")
-	public ResponseEntity getUserDetails(@RequestBody AdminDetailUserDto adminDetailUserDto) {
-
-		LibUser user = adminUserService.getUserById(adminDetailUserDto.getId());
-		return ResponseEntity.ok(user);
-
-	}
+	   @PostMapping("/detail")
+	    public ResponseEntity<LibUser> getUserDetails(@RequestBody AdminDetailUserDto adminDetailUserDto) {
+	        LibUser user = adminUserService.getUserById(adminDetailUserDto.getId());
+	        return ResponseEntity.ok(user);
+	    }
 
 	// 예약정보가져오기
 	@PostMapping("/getRes")

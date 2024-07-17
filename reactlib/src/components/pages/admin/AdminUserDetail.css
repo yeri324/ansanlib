@@ -44,6 +44,7 @@
 }
 
 .admin-userDetail-button, .admin-return-btn {
+  margin:40px;
   text-align: center;
   padding: 40px;
 
@@ -54,6 +55,7 @@
 .admin-Userdetail-table {
   margin: 0 auto;
   width: 90%;
+ 
 
 }
 
@@ -95,6 +97,7 @@ width: 95%;
    display: flex;
    flex-direction: row;
 margin: 0 auto;
+
    justify-content: space-between;
   
 }
@@ -102,5 +105,6 @@ margin: 0 auto;
 .admin-Userdetail-bottom >.admin-Userdetail-res, .admin-Userdetail-loan {
  width:100%;
 }
+
 
 

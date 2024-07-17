@@ -16,8 +16,8 @@ import com.ansanlib.book.repository.BookRepository;
 import com.ansanlib.book.service.FileService;
 import com.ansanlib.entity.Book;
 import com.ansanlib.entity.BookImg;
-import com.ansanlib.entity.Holiday;
 import com.ansanlib.entity.RequestBook;
+import com.ansanlib.library.LibraryRepository;
 import com.ansanlib.requestBook.repository.RequestBookRepository;
 
 @Service
@@ -34,6 +34,9 @@ public class AdminBookService {
 
 	@Autowired
 	private BookImgRepository bookImgRepository;
+	
+	@Autowired
+	private LibraryRepository libraryRepository;
 
 	public BookDto saveBook(BookDto bookDto, MultipartFile file) throws IOException {
 		// 도서 등록
@@ -81,17 +84,17 @@ public class AdminBookService {
 		return requestBookRepository.findAll();
 	}
 
-	// 데이터 삭제
-	@Transactional
-	public void deleteBookById(Long id) {
-		Optional<Book> bookOptional = bookRepository.findById(id);
-		if (bookOptional.isPresent()) {
-			Book book = bookOptional.get();
-			bookRepository.delete(book);
-
-		} else {
-			throw new IllegalArgumentException("book not found with id: " + id);
-		}
-	}
-
+	
+	 @Transactional
+	    public void deleteBookById(Long id) {
+	        Optional<Book> bookOptional = bookRepository.findById(id);
+	        if (bookOptional.isPresent()) {
+	            bookRepository.deleteById(id);
+	        } else {
+	            throw new IllegalArgumentException("Book not found with id: " + id);
+	        }
+	    }
 }
+
+	
+	

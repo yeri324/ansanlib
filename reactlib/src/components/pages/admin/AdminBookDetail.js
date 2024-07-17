@@ -1,13 +1,8 @@
 import React from 'react';
 import "./AdminModal.css";
 import axios from 'axios';
-import useAuth, { LOGIN_STATUS, ROLES } from '../../hooks/useAuth';
-import Auth from '../../helpers/Auth';
-import RedirectLogin from '../../helpers/RedirectLogin';
-
 
 const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
-  const { axios } = useAuth();
   if (!isOpen) return null;
 
   const handleDelete = async (id) => {
@@ -22,7 +17,7 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
       // Close the modal
       onClose();
     } catch (error) {
-      console.error(error);
+      console.error("Delete error:", error);
       alert("삭제 할 수 없습니다. 다시 확인해주세요");
     }
   };
@@ -63,7 +58,16 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
                       <td>{index + 1}</td>
                       <td>{lib.lib_name}</td>
                       <td>{lib.count}권</td>
-                      <td><button type="button" id="admin-modal-button" className="btn btn-outline-dark" onClick={() => handleDelete(lib.id)}>삭제</button></td> {/* Use lib.id here */}
+                      <td>
+                        <button 
+                          type="button" 
+                          id="admin-modal-button" 
+                          className="btn btn-outline-dark" 
+                          onClick={() => handleDelete(book.id)}
+                        >
+                          삭제
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -84,13 +88,4 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
   );
 };
 
-export default function () {
-  return (
-    <>
-      <RedirectLogin />
-      <Auth loginStatus={LOGIN_STATUS.LOGGED_IN} roles={ROLES.ADMIN}>
-        <AdminBookDetail  />
-      </Auth>
-    </>
-  );
-}
+export default AdminBookDetail;

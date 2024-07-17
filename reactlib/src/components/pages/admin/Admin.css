@@ -1,36 +1,32 @@
-
 .admin-page {
-  background-color: hsla(45, 6%, 87%, 0.459);
+  padding-top:7px;
   width: 100%;
   font-family: 'Noto Sans KR', sans-serif;
   padding-bottom: 30px;
   overflow: hidden; /* 메인 영역에 스크롤 바 추가 */
 }
 
-/*메인영역 */
 .admin-main-main {
-
-
-  border: 1px solid #00000000;
-
-  margin-top: 80px;
+  margin-top: 100px;
   margin-left: 270px;
-
-
-  height: 100%;
+  padding-bottom: 30px;
   width: 85%;
   align-items: center;
-
+  height: calc(100vh - 100px); /* 전체 높이에서 여백을 뺀 높이 설정 */
+  overflow: hidden; /* 주의: 이 속성은 main 요소에 스크롤을 숨깁니다. */
+  overflow-y: auto; /* 세로 스크롤바 추가 */
+  background-color: hsla(45, 6%, 87%, 0.459);
 }
 
 /*메인 폼 영역 */
-.admin-main>.admin-body {
-  padding: 40px 100px 40px 100px;
-  border: 1px solid #00000000;
-  border-radius: 20px;
-
+.admin-main-main>.admin-main-body {
+  
+  padding: 20px 100px 20px 100px;
+  border-radius: 15px;
+min-height: 850px;
   align-items: center;
   background-color: white;
   margin: 0 auto;
-  margin-top: 20px;
+
+
 }

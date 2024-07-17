@@ -1,14 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
+import "./AdminPage.css";
 import AdminUserItem from './AdminUserItem';
 import AdminHeader from "./AdminHeader";
 import AdminSide from "./AdminSide";
+import AdminPagination from "./AdminPagination";
+
 import useAuth, { LOGIN_STATUS, ROLES } from '../../hooks/useAuth';
 import Auth from '../../helpers/Auth';
 import RedirectLogin from '../../helpers/RedirectLogin';
 
-import "./AdminPage.css";
-import AdminPagination from "./AdminPagination";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
+
+
+
+
+
 const AdminUserList = () => {
   const { axios } = useAuth();
   const navigate = useNavigate();
@@ -46,7 +52,7 @@ const AdminUserList = () => {
   }, []);
 
   const handleDetail = (user) => {
-    navigate('/admin/user/detail/${user.userId}', { state: { ...user } });
+    navigate(`/admin/user/detail/${user.userId}`, { state: { ...user } });
   };
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -59,76 +65,71 @@ const AdminUserList = () => {
   return (
     <>
 
-    <div className="admin-page">
+      <div className="admin-page">
 
 
-    <div className="admin-base">
-      <AdminHeader />
-      <AdminSide />
-    </div>
-    <main className="admin-page-main">
-      <div className="admin-page-body">
-        <div className="admin-page-title">
-            <h1>회원 관리</h1>
+        <div className="admin-base">
+          <AdminHeader />
+          <AdminSide />
+        </div>
+        <main className="admin-page-main">
+          <div className="admin-page-body">
+            <div className="admin-page-title">
+              <h1>회원 관리</h1>
+            </div>
+
+
+            <div className="admin-page-search">
+              <select name="searchBy" value={searchOption.searchBy} onChange={handleOnChange}>
+                <option value="userId">ID</option>
+                <option value="userName">이름</option>
+              </select>
+
+              <input type="text" name="searchQuery" value={searchOption.searchQuery} onChange={handleOnChange} />
+              <input type="radio" id="all" name="selectRadio" value="all" checked={searchOption.selectRadio === "all"} onChange={handleOnChange} />
+              <label htmlFor="all">all</label>
+              <input type="radio" id="penalty" name="selectRadio" value="penalty" checked={searchOption.selectRadio === "penalty"} onChange={handleOnChange} />
+              <label htmlFor="penalty">penalty</label>
+              <input type="radio" id="latefee" name="selectRadio" value="latefee" checked={searchOption.selectRadio === "latefee"} onChange={handleOnChange} />
+              <label htmlFor="latefee">latefee</label>
+              <button type="button" class="btn btn-outline-dark" onClick={onSearch}>Search</button>
+            </div>
+
+
+
+            <table className="admin-table">
+              <thead>
+                <tr className="admin-th-tr">
+                  <th style={{ width: '5%' }}>no</th>
+                  <th style={{ width: '10%' }}>아이디</th>
+                  <th style={{ width: '10%' }}>이름</th>
+                  <th style={{ width: '15%' }}>번호</th>
+                  <th style={{ width: '15%' }}>주소</th>
+                  <th style={{ width: '15%' }}>상세주소</th>
+                  <th style={{ width: '10%' }}>패널티</th>
+                  <th style={{ width: '10%' }}>연체료</th>
+                  <th style={{ width: '10%' }}>문자수신</th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentItems.map(user => (
+                  <AdminUserItem key={user.userId} user={user} handleDetail={handleDetail} />
+                ))}
+              </tbody>
+            </table>
+
+            <div className="admin-pagination" >
+              <AdminPagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                paginate={paginate}
+              />
+
+            </div>
           </div>
-
-
-          <div className="admin-page-search">
-            <select name="searchBy" value={searchOption.searchBy} onChange={handleOnChange}>
-              <option value="userId">ID</option>
-              <option value="userName">이름</option>
-            </select>
-
-            <input type="text" name="searchQuery" value={searchOption.searchQuery} onChange={handleOnChange} />
-            <input type="radio" id="all" name="selectRadio" value="all" checked={searchOption.selectRadio === "all"} onChange={handleOnChange} />
-            <label htmlFor="all">all</label>
-            <input type="radio" id="penalty" name="selectRadio" value="penalty" checked={searchOption.selectRadio === "penalty"} onChange={handleOnChange} />
-            <label htmlFor="penalty">penalty</label>
-            <input type="radio" id="latefee" name="selectRadio" value="latefee" checked={searchOption.selectRadio === "latefee"} onChange={handleOnChange} />
-            <label htmlFor="latefee">latefee</label>
-            <button type="button" class="btn btn-outline-dark" onClick={onSearch}>Search</button>
-          </div>
-
-
-
-          <table className="admin-table">
-            <thead>
-              <tr className="admin-th-tr">
-                <th style={{ width: '10%' }}>no</th>
-                <th style={{ width: '20%' }}>아이디</th>
-                <th style={{ width: '20%' }}>이름</th>
-                <th style={{ width: '20%' }}>패널티</th>
-                <th style={{ width: '20%' }}>연체료</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentItems.map(user => (
-                <AdminUserItem key={user.userId} user={user} handleDetail={handleDetail} />
-              ))}
-            </tbody>
-          </table>
-
-          <div className="admin-pagination" >
-          <AdminPagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              paginate={paginate}
-            />
-
-
-
-          </div>
-
-
-
-
-
-
-
-</div>
-    </main>
-</div>
-</>
+        </main>
+      </div>
+    </>
   );
 };
 

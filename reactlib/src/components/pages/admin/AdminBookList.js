@@ -58,7 +58,7 @@ const AdminBookList = () => {
 
   const groupBooks = (data) => {
     const grouped = data.reduce((acc, book) => {
-      const key = `${book.isbn}-${book.title}-${book.author}-${book.publisher}-${book.pub_date}`;
+      const key = `${book.isbn}`;
       if (!acc[key]) {
         acc[key] = { ...book, total_count: 0, libraries: [] };
       }
@@ -239,17 +239,15 @@ const AdminBookList = () => {
               <tbody>
                 {filteredBookList.length > 0 ? (
                   filteredBookList.map((book, index) => (
-                    <tr className='list admin-td-tr' key={index}>
+                    <tr className='list admin-td-tr' key={index} onClick={() => handleOpenModal(book)}>
                
-
-                
-                      <td onClick={() => handleOpenModal(book)}>{(currentPage - 1) * itemsPerPage + index + 1}</td>
-                      <td onClick={() => handleOpenModal(book)}>{book.isbn}</td>
-                      <td onClick={() => handleOpenModal(book)}>{book.title}</td>
-                      <td onClick={() => handleOpenModal(book)}>{book.author}</td>
-                      <td onClick={() => handleOpenModal(book)}>{book.publisher}</td>
-                      <td onClick={() => handleOpenModal(book)}>{book.pub_date}</td>
-                      <td onClick={() => handleOpenModal(book)}>{book.total_count}</td>
+                      <td >{(currentPage - 1) * itemsPerPage + index + 1}</td>
+                      <td >{book.isbn}</td>
+                      <td>{book.title}</td>
+                      <td >{book.author}</td>
+                      <td>{book.publisher}</td>
+                      <td >{book.pub_date}</td>
+                      <td >{book.total_count}</td>
                     </tr>
                   ))
                 ) : (

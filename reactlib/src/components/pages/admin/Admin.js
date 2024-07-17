@@ -10,22 +10,21 @@ import RedirectLogin from '../../helpers/RedirectLogin';
 const Admin = () => {
     const { axios } = useAuth();
     return (
-        <>
+       
+    <div className="admin-page">
 
 
-
-        <div className="amdin-main">
-        <div className="admin-base">
-        <AdminHeader />
-        <AdminSide />
-        </div>
+    <div className="admin-base">
+      <AdminHeader />
+      <AdminSide />
+    </div>
         <main className="admin-main-main">
-            <div className="admin-body">
+            <div className="admin-main-body">
         <p>메인콘텐추~</p>
         </div>
         </main>
         </div>
-        </>
+       
     );
 }
 

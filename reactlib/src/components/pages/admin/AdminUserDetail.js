@@ -1,11 +1,10 @@
-import axios from 'axios';
-import UserResItem from './UserResItem';
-import UserLoanItem from './UserLoanItem';
+import "./AdminUserDetail.css";
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import AdminHeader from './AdminHeader';
 import AdminSide from './AdminSide';
-import "./AdminUserDetail.css";
+import UserResItem from './UserResItem';
+import UserLoanItem from './UserLoanItem';
 import useAuth, { LOGIN_STATUS, ROLES } from '../../hooks/useAuth';
 import Auth from '../../helpers/Auth';
 import RedirectLogin from '../../helpers/RedirectLogin';
@@ -115,7 +114,6 @@ const AdminUserDetail = () => {
 
     return (
         <>
-
             <div className="admin-page">
                 <div className="admin-base">
                     <AdminHeader />
@@ -171,7 +169,7 @@ const AdminUserDetail = () => {
                                     <tbody>
                                         {ResData ? (
                                             userRes.map((res) => (
-                                                <UserResItem key={res.id} res={res} onClickToCancelRes={onClickToCancelRes} />
+                                                res && <UserResItem key={res.id} res={res} onClickToCancelRes={onClickToCancelRes} />
                                             ))
                                         ) : (
                                             <tr>
@@ -196,7 +194,7 @@ const AdminUserDetail = () => {
                                     <tbody>
                                         {LoanData ? (
                                             userLoan.map((loan) => (
-                                                <UserLoanItem key={loan.id} loan={loan} onClickToReturn={onClickToReturn} />
+                                                loan && <UserLoanItem key={loan.id} loan={loan} onClickToReturn={onClickToReturn} />
                                             ))
                                         ) : (
                                             <tr>
@@ -217,14 +215,13 @@ const AdminUserDetail = () => {
     );
 };
 
-
-export default function () {
+export default function AdminUserDetailPage() {
     return (
-      <>
-        <RedirectLogin />
-        <Auth loginStatus={LOGIN_STATUS.LOGGED_IN} roles={ROLES.ADMIN}>
-          <AdminUserDetail />
-        </Auth>
-      </>
+        <>
+            <RedirectLogin />
+            <Auth loginStatus={LOGIN_STATUS.LOGGED_IN} roles={ROLES.ADMIN}>
+                <AdminUserDetail />
+            </Auth>
+        </>
     );
-  }
+}

@@ -7,17 +7,14 @@ import "./AdminPage.css";
 import { useNavigate } from 'react-router-dom';
 import moment from "moment";
 import DatePicker from "react-datepicker";
-import useAuth, { LOGIN_STATUS, ROLES } from '../../hooks/useAuth';
-import Auth from '../../helpers/Auth';
-import RedirectLogin from '../../helpers/RedirectLogin';
-
+import axios from 'axios';
 
 
 import "react-datepicker/dist/react-datepicker.css"; // Include DatePicker CSS
 import AdminPagination from './AdminPagination';
 
 const AdminBookRequest = () => {
-  const { axios } = useAuth();
+
 
   const [requests, setRequests] = useState([]);
   const [groupedRequests, setGroupedRequests] = useState([]);
@@ -249,13 +246,4 @@ const AdminBookRequest = () => {
     </>
   );
 };
-export default function () {
-  return (
-    <>
-      <RedirectLogin />
-      <Auth loginStatus={LOGIN_STATUS.LOGGED_IN} roles={ROLES.ADMIN}>
-        <AdminBookRequest  />
-      </Auth>
-    </>
-  );
-}
+export default AdminBookRequest;
