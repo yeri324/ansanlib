@@ -1,42 +1,43 @@
 import React, { useState, useEffect, useLocation } from 'react';
-
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import AdminFaqList from './components/pages/board/faq/AdminFaqList';
 import Header from './components/fragments/header/header';
 import Footer from './components/fragments/footer/footer';
 import HomePage from './components/fragments/home/homePage';
-import AdminUserList from './components/pages/admin/AdminUserList';
-import AdminUserDetail from './components/pages/admin/AdminUserDetail';
+
 import ReservationForm from './components/pages/reservation/ReservationForm';
-import Admin from './components/pages/admin/Admin';
 import MyPage from './components/pages/myPage/MyPage';
 import ReservationList from './components/pages/reservation/ReservationList';
 import RequestBookForm from './components/pages/requestBook/RequestBookForm';
 import RequestBookList from './components/pages/requestBook/RequestBookList';
-import HolidayDetail from './components/pages/admin/HolidayDetail';
 import SearchPage from './components/pages/book/searchBookList/searchPage';
 import BookDetailPage from './components/pages/book/bookDetail/bookDetailPage';
 import LoanStatusList from './components/pages/loanStatus/LoanStatusList';
 import UpdateUserForm from './components/pages/myPage/UpdateUserForm';
 import DeleteUserForm from './components/pages/myPage/DeleteUserForm';
+
 import Login from './components/pages/security/pages/Login';
 import Join from './components/pages/security/pages/Join';
 import About from './components/pages/security/pages/About';
 import Home from './components/pages/security/pages/Home';
 import User from './components/pages/security/pages/User';
-import Holiday from './components/pages/admin/Holiday';
-import HolidayList from './components/pages/admin/HolidayList';
-import HolidayNew from './components/pages/admin/HolidayNew';
-import AddBook from './components/pages/admin/AddBook';
 
-import AdminBookRequest from './components/pages/admin/AdminBookRequest';
+import Admin from './components/pages/admin/common/Admin';
+import AdminFaqList from './components/pages/board/faq/AdminFaqList';
+import AdminFaqForm from './components/pages/board/faq/AdminFaqForm';
+import AddBook from './components/pages/admin/page/AddBook';
+import AdminBookList from './components/pages/admin/page/AdminBookList';
+import AdminUserList from './components/pages/admin/page/AdminUserList';
+import AdminUserDetail from './components/pages/admin/page/AdminUserDetail';
+import AdminBookRequest from './components/pages/admin/page/AdminBookRequest';
+import HolidayDetail from './components/pages/admin/modal/HolidayDetail';
+import Holiday from './components/pages/admin/page/Holiday';
+import HolidayList from './components/pages/admin/page/HolidayList';
+import HolidayNew from './components/pages/admin/modal/HolidayNew';
+
 import { UseAuthBasic, UseAuthCheckAdmin, UseAuthCheckLogin } from './components/hooks/examples/useAuthExamples';
 import BoardList from './components/pages/board/page/BoardList';
 import BoardDetail from './components/pages/board/page/BoardDetail';
 import BoardForm from './components/pages/board/page/BoardForm';
-import AdminFaqForm from './components/pages/board/faq/AdminFaqForm';
-import AdminBookList from './components/pages/admin/AdminBookList';
-
 
 function App() {
 
@@ -67,6 +68,7 @@ function App() {
                                 <Route path="/admin/faq/list" element={<AdminFaqList />} />
                                 <Route path="/admin/faq/new" element={<AdminFaqForm />} />
                                 <Route path="/admin/book/list" element={<AdminBookList />} />
+                 
                                 <Route path="/book/search" element={<SearchPage />} />
                                 <Route path="/book/detail/:id" element={<BookDetailPage />} />
 

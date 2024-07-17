@@ -1,13 +1,13 @@
 import "./AdminUserDetail.css";
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import AdminHeader from './AdminHeader';
-import AdminSide from './AdminSide';
+import AdminHeader from '../common/AdminHeader';
+import AdminSide from '../common/AdminSide';
 import UserResItem from './UserResItem';
 import UserLoanItem from './UserLoanItem';
-import useAuth, { LOGIN_STATUS, ROLES } from '../../hooks/useAuth';
-import Auth from '../../helpers/Auth';
-import RedirectLogin from '../../helpers/RedirectLogin';
+import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
+import Auth from '../../../helpers/Auth';
+import RedirectLogin from '../../../helpers/RedirectLogin';
 
 const AdminUserDetail = () => {
     const { axios } = useAuth();

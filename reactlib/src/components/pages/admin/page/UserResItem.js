@@ -5,9 +5,9 @@ import Calendar from 'react-calendar';
 import './UserResItem.css';
 import moment from 'moment';
 import './AdminPage.css';
-import useAuth, { LOGIN_STATUS, ROLES } from '../../hooks/useAuth';
-import Auth from '../../helpers/Auth';
-import RedirectLogin from '../../helpers/RedirectLogin';
+import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
+import Auth from '../../../helpers/Auth';
+import RedirectLogin from '../../../helpers/RedirectLogin';
 
 const UserResItem = ({ res, onClickToCancelRes }) => {
     const { axios } = useAuth();

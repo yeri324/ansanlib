@@ -1,6 +1,7 @@
 package com.ansanlib.admin.service;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -16,6 +17,7 @@ import com.ansanlib.book.repository.BookRepository;
 import com.ansanlib.book.service.FileService;
 import com.ansanlib.entity.Book;
 import com.ansanlib.entity.BookImg;
+import com.ansanlib.entity.Library;
 import com.ansanlib.entity.RequestBook;
 import com.ansanlib.library.LibraryRepository;
 import com.ansanlib.requestBook.repository.RequestBookRepository;
@@ -73,6 +75,8 @@ public class AdminBookService {
 
 		return bookDto;
 	}
+	
+	
 
 	// 도서조회
 	public List<Book> getAllBooks() {
@@ -85,6 +89,19 @@ public class AdminBookService {
 	}
 
 	
+	//도서권수 수정
+	 @Transactional
+	    public Book updateBookCount(Long id, BookDto bookDto) {
+	        Book book = bookRepository.findById(id)
+	                .orElseThrow(() -> new IllegalArgumentException("Book not found with id: " + id));
+	        book.setCount(bookDto.getCount());
+	        return bookRepository.save(book);
+	    }
+	
+	
+	
+	
+	//삭제
 	 @Transactional
 	    public void deleteBookById(Long id) {
 	        Optional<Book> bookOptional = bookRepository.findById(id);
@@ -94,7 +111,8 @@ public class AdminBookService {
 	            throw new IllegalArgumentException("Book not found with id: " + id);
 	        }
 	    }
-}
 
+
+}
 	
 	

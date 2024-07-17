@@ -3,14 +3,14 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import { useNavigate } from 'react-router-dom';
-import AdminHeader from './AdminHeader';
-import AdminSide from './AdminSide';
+import AdminHeader from '../common/AdminHeader';
+import AdminSide from '../common/AdminSide';
 import "./AdminPage.css";
-import AdminPagination from './AdminPagination';
-import AdminBookDetail from './AdminBookDetail';
-import useAuth, { LOGIN_STATUS, ROLES } from '../../hooks/useAuth';
-import Auth from '../../helpers/Auth';
-import RedirectLogin from '../../helpers/RedirectLogin';
+import AdminPagination from '../common/AdminPagination';
+import AdminBookDetail from '../modal/AdminBookDetail';
+import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
+import Auth from '../../../helpers/Auth';
+import RedirectLogin from '../../../helpers/RedirectLogin';
 
 
 

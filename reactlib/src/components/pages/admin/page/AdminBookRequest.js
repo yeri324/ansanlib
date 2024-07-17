@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
-import AdminBookRequestDetail from './AdminBookRequestDetail';
-import AdminHeader from './AdminHeader';
-import AdminSide from './AdminSide';
+import AdminBookRequestDetail from '../modal/AdminBookRequestDetail';
+import AdminHeader from '../common/AdminHeader';
+import AdminSide from '../common/AdminSide';
 import "./AdminPage.css";
 import { useNavigate } from 'react-router-dom';
 import moment from "moment";
@@ -11,7 +11,7 @@ import axios from 'axios';
 
 
 import "react-datepicker/dist/react-datepicker.css"; // Include DatePicker CSS
-import AdminPagination from './AdminPagination';
+import AdminPagination from '../common/AdminPagination';
 
 const AdminBookRequest = () => {
 

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,6 +43,10 @@ public class AdminBookController {
 		}
 	}
 
+	
+
+	
+	
 	@GetMapping("/list")
 	public List<Book> getBooks() {
 		return adminBookService.getAllBooks();
@@ -53,6 +59,22 @@ public class AdminBookController {
 		return ResponseEntity.ok().body(new CommonListResponse<>(requestBooks.size(), requestBooks));
 	}
 
+	
+	
+	 @PutMapping("/{id}")
+	    public ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody BookDto bookDto) {
+	        try {
+	            Book updatedBook = adminBookService.updateBookCount(id, bookDto);
+	            return ResponseEntity.ok(updatedBook);
+	        } catch (Exception e) {
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+	        }
+	    }
+	
+	
+	
+	
+	//삭제
 	 @DeleteMapping("/{id}")
 	    public ResponseEntity<String> deleteBook(@PathVariable Long id) {
 	        try {

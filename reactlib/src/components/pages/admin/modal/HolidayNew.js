@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import moment from 'moment';
-import { getLibraryNum } from '../../../utils/libraryUtils';
+import { getLibraryNum } from '../../../../utils/libraryUtils';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./AdminModal.css";
 

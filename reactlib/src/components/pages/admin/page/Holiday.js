@@ -3,16 +3,16 @@ import moment from 'moment';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { useNavigate } from 'react-router-dom';
-import HolidayNew from './HolidayNew';
-import HolidayDetail from './HolidayDetail';
-import AdminHeader from './AdminHeader';
-import AdminSide from './AdminSide';
+import HolidayNew from '../modal/HolidayNew';
+import HolidayDetail from '../modal/HolidayDetail';
+import AdminHeader from '../common/AdminHeader';
+import AdminSide from '../common/AdminSide';
 
-import './AdminModal.css';
+import '../modal/AdminModal.css';
 import './Holiday.css';
-import useAuth, { LOGIN_STATUS, ROLES } from '../../hooks/useAuth';
-import Auth from '../../helpers/Auth';
-import RedirectLogin from '../../helpers/RedirectLogin';
+import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
+import Auth from '../../../helpers/Auth';
+import RedirectLogin from '../../../helpers/RedirectLogin';
 
 
 

@@ -4,8 +4,8 @@ import ImgPreview from '../common/ImgPreview';
 import '../../board/common/AdminForm.css';
 import BoardImgList from '../common/BoardImgList';
 import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
-import AdminHeader from '../../admin/AdminHeader';
-import AdminSide from '../../admin/AdminSide';
+import AdminHeader from '../../admin/common/AdminHeader';
+import AdminSide from '../../admin/common/AdminSide';
 
 function AdminFaqDetailForm({id}) {
     const { axios } = useAuth();

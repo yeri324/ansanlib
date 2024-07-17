@@ -1,13 +1,13 @@
 import React, { useEffect, useState, } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BoardItem from '../common/BoardItem';
-import AdminPagination from "../../admin/AdminPagination";
+import AdminPagination from "../../admin/common/AdminPagination";
 import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
 import Auth from '../../../helpers/Auth';
 import RedirectLogin from '../../../helpers/RedirectLogin';
 import '../../board/common/AdminForm.css'
-import AdminHeader from '../../admin/AdminHeader';
-import AdminSide from '../../admin/AdminSide';
+import AdminHeader from '../../admin/common/AdminHeader';
+import AdminSide from '../../admin/common/AdminSide';
 
 function AdminNoticeList() {
     const { axios } = useAuth();

@@ -2,6 +2,7 @@ import React from 'react';
 import "./AdminModal.css";
 import axios from 'axios';
 
+
 const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
   if (!isOpen) return null;
 

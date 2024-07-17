@@ -1,6 +1,6 @@
 import React from 'react';
 import './AdminHeader.css'; // 스타일을 위한 CSS 파일을 임포트합니다.
-import center_logo from '../../images/logo/center_logo.png'
+
 
 const AdminHeader = () => {
     return (

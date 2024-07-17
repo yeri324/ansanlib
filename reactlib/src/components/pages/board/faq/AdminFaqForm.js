@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
 import Auth from '../../../helpers/Auth';
 import RedirectLogin from '../../../helpers/RedirectLogin';
-import AdminHeader from '../../admin/AdminHeader';
-import AdminSide from '../../admin/AdminSide';
+import AdminHeader from '../../admin/common/AdminHeader';
+import AdminSide from '../../admin/common/AdminSide';
 
 
 

@@ -1,12 +1,12 @@
 import "./AdminPage.css";
 import AdminUserItem from './AdminUserItem';
-import AdminHeader from "./AdminHeader";
-import AdminSide from "./AdminSide";
-import AdminPagination from "./AdminPagination";
+import AdminHeader from "../common/AdminHeader";
+import AdminSide from "../common/AdminSide";
+import AdminPagination from "../common/AdminPagination";
 
-import useAuth, { LOGIN_STATUS, ROLES } from '../../hooks/useAuth';
-import Auth from '../../helpers/Auth';
-import RedirectLogin from '../../helpers/RedirectLogin';
+import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
+import Auth from '../../../helpers/Auth';
+import RedirectLogin from '../../../helpers/RedirectLogin';
 
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
@@ -75,7 +75,7 @@ const AdminUserList = () => {
         <main className="admin-page-main">
           <div className="admin-page-body">
             <div className="admin-page-title">
-              <h1>회원 관리</h1>
+              <h1>회원목록</h1>
             </div>
 
 

@@ -3,10 +3,10 @@ import axios from 'axios';
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BoardItem from '../common/BoardItem';
-import AdminPagination from "../../admin/AdminPagination";
+import AdminPagination from "../../admin/common/AdminPagination";
 import { LoginContext } from "../../security/contexts/LoginContextProvider";
-import AdminHeader from '../../admin/AdminHeader';
-import AdminSide from '../../admin/AdminSide';
+import AdminHeader from '../../admin/common/AdminHeader';
+import AdminSide from '../../admin/common/AdminSide';
 
 
 function AdminFaqList() {

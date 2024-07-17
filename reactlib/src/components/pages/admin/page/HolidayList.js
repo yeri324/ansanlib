@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
-import HolidayNew from './HolidayNew';
+import HolidayNew from '../modal/HolidayNew';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
-import AdminHeader from "./AdminHeader";
-import AdminSide from "./AdminSide";
-import AdminPagination from './AdminPagination';
+import AdminHeader from "../common/AdminHeader";
+import AdminSide from "../common/AdminSide";
+import AdminPagination from '../common/AdminPagination';
 import "./AdminPage.css";
-import useAuth, { LOGIN_STATUS, ROLES } from '../../hooks/useAuth';
-import Auth from '../../helpers/Auth';
-import RedirectLogin from '../../helpers/RedirectLogin';
+import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
+import Auth from '../../../helpers/Auth';
+import RedirectLogin from '../../../helpers/RedirectLogin';
 
 
 
