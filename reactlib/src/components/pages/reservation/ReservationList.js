@@ -3,7 +3,7 @@ import useRealName from '../../hooks/useRealName';
 import useAuth, { LOGIN_STATUS } from '../../hooks/useAuth';
 import RedirectLogin from '../../helpers/RedirectLogin';
 import Auth from '../../helpers/Auth';
-
+import './ReservationList.css';
 const ReservationList = () => {
     const name = useRealName();
 
@@ -53,26 +53,38 @@ const ReservationList = () => {
     const selectAll = () => setSelectedReservations(reservations.map(({id}) => id));
 
     return (
-        <div>
+        <div className="reservation_list">
             <h2>{name}의 예약 목록</h2>
-            <ul>
-                {reservations.map(reservation => (
-                    <li key={reservation.id}>
-                        <input
-                            type="checkbox"
-                            checked={selectedReservations.includes(reservation.id)}
-                            onChange={() => handleSelectReservation(reservation.id)}
-                        />
-                        <strong>책 제목:</strong> {reservation.book.title} <br />
-                        <strong>책 ISBN:</strong> {reservation.book.isbn} <br />
-                        <strong>시작 날짜:</strong> {reservation.startDate} <br />
-                        <strong>종료 날짜:</strong> {reservation.endDate}
-                    </li>
-                ))}
-            </ul>
-            {
-                !isErrored &&
-                <>
+            <table>
+                <thead>
+                    <tr>
+                        <th>책 제목</th>
+                        <th>책 ISBN</th>
+                        <th>시작 날짜</th>
+                        <th>종료 날짜</th>
+                        <th>선택</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {reservations.map(reservation => (
+                        <tr key={reservation.id}>
+                            <td>{reservation.book.title}</td>
+                            <td>{reservation.book.isbn}</td>
+                            <td>{reservation.startDate}</td>
+                            <td>{reservation.endDate}</td>
+                            <td>
+                                <input
+                                    type="checkbox"
+                                    checked={selectedReservations.includes(reservation.id)}
+                                    onChange={() => handleSelectReservation(reservation.id)}
+                                />
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+            {!isErrored && (
+                <div className="actions">
                     <button
                         onClick={selectAll}
                         disabled={selectedReservations.length === reservations.length}
@@ -91,10 +103,9 @@ const ReservationList = () => {
                     >
                         예약 삭제
                     </button>
-                </>
-
-            }
-            {isErrored && <h2>자료를 가져오지 못했습니다.</h2>}
+                </div>
+            )}
+            {isErrored && <h2 className="error_message">자료를 가져오지 못했습니다.</h2>}
         </div>
     );
 };

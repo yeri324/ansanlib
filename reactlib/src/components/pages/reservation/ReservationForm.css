@@ -1,0 +1,62 @@
+/* reservation.css */
+
+/* 기본 스타일 설정 */
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: var(--main-bg-color);
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* 예약 폼 컨테이너 스타일 */
+  .reservation_container {
+    width: 100%;
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  /* 폼 제목 스타일 */
+  .reservation_container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* 폼 레이블 스타일 */
+  .reservation_container label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: var(--text-color);
+  }
+  
+  /* 인풋 필드 스타일 */
+  .reservation_container input[type="text"],
+  .reservation_container input[type="datetime-local"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  /* 버튼 스타일 */
+  .reservation_container button {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--point_bg_03);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .reservation_container button:hover {
+    background-color: var(--sub_bg_03);
+  }
+  
