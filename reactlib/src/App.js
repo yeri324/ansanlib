@@ -35,6 +35,7 @@ import BookSearch from './components/fragments/home/booksearch';
 import ApiBookSearch from './components/pages/book/bookApi/ApiSearchPage';
 import AdminRecList from './components/pages/board/recboard/AdminRecList';
 import AdminRecForm from './components/pages/board/recboard/AdminRecForm';
+import UserRecList from './components/pages/board/recboard/UserRecList';
 
 function App() {
 
@@ -54,6 +55,7 @@ function App() {
                                 <Route path="/:roles/:board/detail/:id" element={<BoardDetail />} />
                                 <Route path="/admin/recboard/list" element={<AdminRecList />} />
                                 <Route path="/admin/recboard/form" element={<AdminRecForm />} />
+                                <Route path="/user/recboard/list" element={<UserRecList />} />
 
                                 <Route path="/admin" element={<Admin />} />
                                 <Route path="/admin/user/search" element={<AdminUserList />} />

@@ -46,14 +46,14 @@ function AdminRecList() {
     }
 
     // 삭제
-    const onDelete = () => {
+    const onDelete = (e) => {
         if (window.confirm('삭제 하시겠습니까?')) {
             axios(
                 {
                     url: '/admin/recboard/delete',
                     method: 'delete',
                     data: {
-                        id: searchResult.id,
+                        id: e,
                     },
                     baseURL: 'http://localhost:8090',
                 }
@@ -65,9 +65,9 @@ function AdminRecList() {
     return (
         <div class='rec-list'>
         {searchResult.map((card)=>(
-            <div key={card.id} class='card'>
+            <div class='card'>
            <AdminRecCard card={card} />
-           <button type='button' onClick={onDelete}>삭제</button>
+           <button type='button' onClick={() => onDelete(card.id)}>삭제</button>
            </div>
         ))}
          <button type='button' onClick={onCreate}>생성</button>
