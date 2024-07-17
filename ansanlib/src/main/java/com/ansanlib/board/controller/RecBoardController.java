@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ansanlib.board.dto.RecBoardDto;
-import com.ansanlib.board.dto.RecBoardFormDto;
 import com.ansanlib.board.service.RecBoardService;
 import com.ansanlib.entity.Book;
 import com.ansanlib.entity.RecBoard;
@@ -27,14 +26,14 @@ public class RecBoardController {
 	
 	// 생성
 	@PostMapping(value = "/new")
-	public ResponseEntity<?> createRec(@RequestBody RecBoardFormDto recFormDto)throws Exception {
-		return recBoardService.createRec(recFormDto);
+	public ResponseEntity<?> createRec(@RequestBody RecBoardDto recDto)throws Exception {
+		return recBoardService.createRec(recDto);
 	}
 	
 	// 도서검색
 	@PostMapping(value = "/searchbook")
-	public ResponseEntity<List<Book>> bookList(@RequestBody RecBoardFormDto recBoardFormDto) throws Exception {
-		return recBoardService.searchBook(recBoardFormDto);
+	public ResponseEntity<List<Book>> bookList(@RequestBody RecBoardDto recDto) throws Exception {
+		return recBoardService.searchBook(recDto);
 	}
 	
 	// 리스트조회
@@ -45,8 +44,8 @@ public class RecBoardController {
 	
 	// 삭제
 	@DeleteMapping(value = "/delete")
-	public void deleteRec(@RequestBody RecBoardFormDto recFormDto) throws Exception {
-		recBoardService.deleteRec(recFormDto.getId());
+	public void deleteRec(@RequestBody RecBoardDto recDto) throws Exception {
+		recBoardService.deleteRec(recDto.getId());
 	}
 	
 }

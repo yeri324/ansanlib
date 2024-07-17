@@ -1,14 +1,4 @@
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import AdminFaqList from './components/pages/board/faq/AdminFaqList';
-import AdminFaqForm from './components/pages/board/faq/AdminFaqForm';
-import AdminFaqDetailForm from './components/pages/board/faq/AdminFaqDetailForm';
-import AdminNoticeDetailForm from './components/pages/board/notice/AdminNoticeDetailForm';
-import AdminNoticeList from './components/pages/board/notice/AdminNoticeList';
-import AdminNoticeForm from './components/pages/board/notice/AdminNoticeForm';
-import UserFaqList from './components/pages/board/faq/UserFaqList';
-import UserFaqDetailForm from './components/pages/board/faq/UserFaqDetailForm';
-import UserNoticeList from './components/pages/board/notice/UserNoticeList';
-import UserNoticeDetailForm from './components/pages/board/notice/UserNoticeDetailForm';
 import Header from './components/fragments/header/header';
 import Footer from './components/fragments/footer/footer';
 import HomePage from './components/fragments/home/homePage';
@@ -43,6 +33,8 @@ import BoardDetail from './components/pages/board/page/BoardDetail';
 import BoardForm from './components/pages/board/page/BoardForm';
 import BookSearch from './components/fragments/home/booksearch';
 import ApiBookSearch from './components/pages/book/bookApi/ApiSearchPage';
+import AdminRecList from './components/pages/board/recboard/AdminRecList';
+import AdminRecForm from './components/pages/board/recboard/AdminRecForm';
 
 function App() {
 
@@ -60,6 +52,8 @@ function App() {
                                 <Route path="/:roles/:board/list" element={<BoardList />} />
                                 <Route path="/admin/:board/form" element={<BoardForm />} />
                                 <Route path="/:roles/:board/detail/:id" element={<BoardDetail />} />
+                                <Route path="/admin/recboard/list" element={<AdminRecList />} />
+                                <Route path="/admin/recboard/form" element={<AdminRecForm />} />
 
                                 <Route path="/admin" element={<Admin />} />
                                 <Route path="/admin/user/search" element={<AdminUserList />} />

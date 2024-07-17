@@ -1,0 +1,13 @@
+.rec-form .searchModal{
+    border: 1px solid #333;
+    width: 70%;
+    margin: 30px;
+    height:500px;
+}
+
+.rec-form tr {
+    border: 1px solid #333;
+    background-color: beige;
+    margin: 5px;
+    width: 100%;
+}

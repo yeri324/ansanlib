@@ -3,9 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import ImgPreview from '../common/ImgPreview';
 import '../../board/common/DetailForm.css'
 import BoardImgList from '../common/BoardImgList';
-import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
-import Auth from '../../../helpers/Auth';
-import RedirectLogin from '../../../helpers/RedirectLogin';
+import useAuth from '../../../hooks/useAuth';
 
 function AdminNoticeDetailForm({id}) {
     const { axios } = useAuth();
@@ -15,24 +13,11 @@ function AdminNoticeDetailForm({id}) {
     const [images, setImages] = useState([]);
     const [count, setCount] = useState(1);
     const [deleteImg,setDeleteImg] = useState([])
-    const { loginStatus, roles } = useAuth();
 
     //권한 여부 확인
     useEffect(() => {
-        //로그아웃됨.
-        if (loginStatus === LOGIN_STATUS.LOGGED_OUT) {
-            alert("로그인이 필요합니다.");
-            navigate("/login");
-            return;
-        } else if (loginStatus === LOGIN_STATUS.LOGGED_IN) {
-            //어드민인지 확인
-            if (roles !== ROLES.ADMIN) {
-                alert("권한이 없습니다.");
-                navigate(-1);
-            }
-        }
         getDataset();
-    }, [loginStatus]); //로그인 상태 변경시 useEffect 실행
+    }, []);
 
 
     // 수정 제목, 내용
