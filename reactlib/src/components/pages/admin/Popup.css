@@ -1,0 +1,34 @@
+
+.whiteScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    opacity: 0.5;
+    z-index: 1000;
+}
+.locationPoint > input{
+    display: inline;
+    width: 100px;
+    margin-right: 10px;
+}
+
+.popupForm{
+    position: fixed;
+    top: 30%;
+    left: 30%;
+    background-color: #fff;
+    border: 1px solid #333;
+    padding: 20px;
+    width: 600px;
+    
+}
+.formContainer{
+    display: flex;
+    text-align: center;
+}
+.formContainer > .formSection{
+flex: 1;
+}

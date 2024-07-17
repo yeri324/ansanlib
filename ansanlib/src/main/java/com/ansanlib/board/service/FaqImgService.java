@@ -29,7 +29,7 @@ public class FaqImgService {
 		FaqImg faqImg = new FaqImg();
 		faqImg.setFaq(faq);
 
-		// 파일업로드
+		// 파일업로드                             
 		Map<String, String> map = fileService.fileHandler(faqImgFile, "faq", faq.getId());
 
 		String oriImgName = map.get("oriImgName");

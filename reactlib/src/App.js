@@ -28,14 +28,13 @@ import Holiday from './components/pages/admin/Holiday';
 import HolidayList from './components/pages/admin/HolidayList';
 import HolidayNew from './components/pages/admin/HolidayNew';
 import AddBook from './components/pages/admin/AddBook';
-
 import AdminBookRequest from './components/pages/admin/AdminBookRequest';
-import { UseAuthBasic, UseAuthCheckAdmin, UseAuthCheckLogin } from './components/hooks/examples/useAuthExamples';
 import BoardList from './components/pages/board/page/BoardList';
 import BoardDetail from './components/pages/board/page/BoardDetail';
 import BoardForm from './components/pages/board/page/BoardForm';
 import AdminFaqForm from './components/pages/board/faq/AdminFaqForm';
-
+import AdminPopPage from './components/pages/admin/AdminPopPage';
+import { UseAuthBasic, UseAuthCheckAdmin, UseAuthCheckLogin } from './components/hooks/examples/useAuthExamples';
 
 function App() {
 
@@ -63,8 +62,11 @@ function App() {
                                 <Route path="/admin/holiday/detail" element={<HolidayDetail />} />
                                 <Route path="/admin/book/new" element={<AddBook />} />
                                 <Route path="/admin/book/request" element={<AdminBookRequest />} />
-<Route path="/admin/faq/list" element={<AdminFaqList />} />
-<Route path="/admin/faq/new" element={<AdminFaqForm/>} />
+                                <Route path="/admin/faq/list" element={<AdminFaqList />} />
+                                <Route path="/admin/popup" element={<AdminPopPage />} />
+
+                                
+                                <Route path="/admin/faq/new" element={<AdminFaqForm />} />
                                 <Route path="/book/search" element={<SearchPage />} />
                                 <Route path="/book/detail/:id" element={<BookDetailPage />} />
 

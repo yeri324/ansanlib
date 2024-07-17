@@ -13,9 +13,14 @@ public class AdminPopupDto {
 
 	private String title;
 
-	private String imgUrl;
-
 	private LocalDate startDate;
 
 	private LocalDate endDate;
+	
+	
+	private int xLoc;
+	private int yLoc;
+	
+	private String status;
+
 }

@@ -18,28 +18,35 @@ import KeywordCloud from './KeywordCloud';
 // import Calendar from 'react-calendar'
 // import { styled } from "styled-components";
 
+import axios from 'axios';
+
 const HomePage = () => {
-  const [showPopup, setShowPopup] = useState(false);
+
+  const [popList, setPopList] = useState([])
 
   useEffect(() => {
-    const lastClosed = localStorage.getItem('popupLastClosed');
-    const now = new Date().getTime();
-    if (!lastClosed || now - lastClosed > 10) {
-      setShowPopup(true);
-    }
-  }, []);
+    getPopList()
+  }, [])
 
-  const closePopup = () => {
-    localStorage.setItem('popupLastClosed', new Date().getTime());
-    setShowPopup(false);
-  };
+  const getPopList = () => {
+    axios({
+      url: `/api/popup/home`,
+      method: 'get',
+      baseURL: 'http://localhost:8090',
+    }
+    ).then((res) => {
+      setPopList(res.data);
+      console.log(res.data);
+    })
+  }
 
   return (
     <>
       <header><Header /></header>
       <section>
         <div id="home-popup">
-          {showPopup && <Popup onClose={closePopup} />}
+          {popList.map((popup) => (<Popup key={popup.id} popup={popup} />))}
+
         </div>
         <div id="home-main-content" className="main-content">
           <div className="main-grid">
