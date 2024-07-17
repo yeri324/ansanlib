@@ -8,6 +8,7 @@ import '../../fragments/footer/footer.css';
 import Header from '../../fragments/header/header';
 import '../../fragments/header/header.css';
 import './ReservationForm.css';
+import Side from '../myPage/Side';
 
 const ReservationForm = () => {
   const name = useRealName();
@@ -60,6 +61,7 @@ export default function() {
       <Auth loginStatus={LOGIN_STATUS.LOGGED_IN}>
         <Header />
           <ReservationForm />
+          <Side />
         <Footer />
       </Auth>
     </>

@@ -3,6 +3,9 @@ import useRealName from '../../hooks/useRealName';
 import useAuth, { LOGIN_STATUS } from '../../hooks/useAuth';
 import RedirectLogin from '../../helpers/RedirectLogin';
 import Auth from '../../helpers/Auth';
+import Header from '../../fragments/header/header';
+import Footer from '../../fragments/footer/footer';
+import Side from '../myPage/Side';
 
 const RequestBookForm = () => {
   const name = useRealName();
@@ -39,32 +42,6 @@ const RequestBookForm = () => {
       console.error('There was an error creating the requestBook!', error.response.data);
     }
   }
-  //   axios.post('/api/requestbook', requestBook, {
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     }
-  //   })
-  //   .then(response => {
-  //     console.log('Book request created:', response.data);
-  //     alert('신청되었습니다.');
-  //     setIsbn('');
-  //     setTitle('');
-  //     setAuthor('');
-  //     setPublisher('');
-  //     setPubDate('');
-  //     setUserId('');
-  //     setLibName('');
-  //   })
-  //   .catch(error => {
-  //     if(error.response){
-  //       alert(`에러 : ${error.response.data}`);
-  //     } else if(error.request){
-  //       alert('서버에 요청을 보내는 중 오류가 발생했습니다.');
-  //     } else{
-  //       alert(`에러 : ${error.message}`);
-  //     }
-  //   });
-  // };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -123,16 +100,7 @@ const RequestBookForm = () => {
           required 
         />
       </div>
-      {/*<div>
-        <label>User ID:</label>
-        <input 
-          type="text" 
-          value={userId} 
-          onChange={(e) => setUserId(e.target.value)} 
-          required 
-        />
-      </div>*/}
-      <button type="submit">Submit Request</button>
+      <button type="submit">신청하기</button>
     </form>
   );
 };
@@ -142,7 +110,10 @@ export default function() {
     <>
       <RedirectLogin />
       <Auth loginStatus={LOGIN_STATUS.LOGGED_IN}>
+        <Header />
         <RequestBookForm />
+        <Side />
+        <Footer />
       </Auth>
     </>
   );

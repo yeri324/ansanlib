@@ -3,6 +3,9 @@ import useAuth, { LOGIN_STATUS } from '../../hooks/useAuth';
 import RedirectLogin from '../../helpers/RedirectLogin';
 import Auth from '../../helpers/Auth';
 import { info, update } from '../security/apis/auth';
+import Header from '../../fragments/header/header';
+import Footer from '../../fragments/footer/footer';
+import Side from './Side';
 
 const UpdateUserForm = () => {
   const { axios } = useAuth();
@@ -63,50 +66,30 @@ const UpdateUserForm = () => {
               <span>*은 필수 입력 사항입니다.</span>
             </div>
             <div className="base_info">
-              <div className="base_left">
-                <ul className="base_left1">
-                  <li>* 이름</li>
-                  <li>* 휴대폰 번호</li>
-                  <li>* 이메일</li>
-                  <li>* 주소</li>
-                  <li>* 상세주소</li>
-                </ul>
-                <ul className="base_left2">
-                  <li>* 문자수신동의</li>
-                </ul>
-              </div>
-              <div className="base_right">
-                <ul className="base_right1">
-                  <li><input name="name" value={userInfo.name} onChange={handleChange} /></li>
-                  <li><input type="text" name="phone" maxLength="13" value={userInfo.phone} onChange={handleChange} /></li>
-                  <li><input className='email' name="email" value={userInfo.email} onChange={handleChange} /></li>
-                  <li>
-                    <div>
-                      <div className='dis_add'>
-                        <div className='zonecode'>
-                          <div className="zonecode_view">
-                            {userInfo.address}
-                          </div>
-                          <button className='address_btn' type="button">
-                            우편번호 조회
-                          </button>
-                        </div>
-                      </div>
-                      <div className='address1'>
-                        <input name="address" value={userInfo.address} onChange={handleChange} />
-                      </div>
-                      <input className='add_input' name="address2" value={userInfo.address2} onChange={handleChange} placeholder="상세주소 입력" />
-                    </div>
-                  </li>
-                </ul>
-                <ul className="base_right2">
-                  <li>
-                    <input type="radio" name="sms" id="sms_yes" value="yes" checked={userInfo.sms === 'yes'} onChange={handleChange} />
-                    <label htmlFor="sms_yes">동의</label>
-                    <input type="radio" name="sms" id="sms_no" value="no" checked={userInfo.sms === 'no'} onChange={handleChange} />
-                    <label htmlFor="sms_no">비동의</label>
-                  </li>
-                </ul>
+              <label htmlFor="name">* 이름</label>
+              <input name="name" value={userInfo.name} onChange={handleChange} /> <br/>
+
+              <label htmlFor="phone">* 휴대폰 번호</label>
+              <input type="text" name="phone" maxLength="13" value={userInfo.phone} onChange={handleChange} /><br/>
+
+              <label htmlFor="email">* 이메일</label>
+              <input className='email' name="email" value={userInfo.email} onChange={handleChange} /><br/>
+
+              <label>* 주소</label>
+              <div>
+                <div className='zonecode_view'>{userInfo.address}</div>
+                <button className='address_btn' type="button">우편번호 조회</button>
+              </div><br/>
+
+              <label>* 상세주소</label>
+              <input name="address2" value={userInfo.address2} onChange={handleChange} placeholder="상세주소 입력" /><br/>
+
+              <label>* 문자수신동의</label>
+              <div>
+                <input type="radio" name="sms" id="sms_yes" value="yes" checked={userInfo.sms === 'yes'} onChange={handleChange} />
+                <label htmlFor="sms_yes">동의</label>
+                <input type="radio" name="sms" id="sms_no" value="no" checked={userInfo.sms === 'no'} onChange={handleChange} />
+                <label htmlFor="sms_no">비동의</label><br/>
               </div>
             </div>
           </div>
@@ -122,7 +105,10 @@ export default function () {
     <>
       <RedirectLogin />
       <Auth loginStatus={LOGIN_STATUS.LOGGED_IN}>
+        <Header /> 
         <UpdateUserForm />
+        <Side />
+        <Footer/>
       </Auth>
     </>
   );

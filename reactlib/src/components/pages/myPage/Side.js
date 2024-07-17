@@ -1,10 +1,10 @@
 // Sidebar.js
 
 import React from "react";
-import './Sidebar.css';
+import './SideBar.css';
 import { Link } from "react-router-dom";
 
-const Sidebar = () => {
+const Side = () => {
   return (
     <div className="sidebar">
       <h3>사이드 메뉴</h3>
@@ -26,4 +26,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default Side;

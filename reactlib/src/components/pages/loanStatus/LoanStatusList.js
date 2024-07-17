@@ -3,6 +3,8 @@ import useAuth,{ LOGIN_STATUS } from '../../hooks/useAuth';
 import Auth from '../../helpers/Auth';
 import RedirectLogin from '../../helpers/RedirectLogin';
 import useRealName from "../../hooks/useRealName";
+import Header from "../../fragments/header/header";
+import Footer from "../../fragments/footer/footer";
 
 const LoanStatusList = ()=>{
     const name  = useRealName();
@@ -55,7 +57,9 @@ export default function() {
       <>
         <RedirectLogin />
         <Auth loginStatus={LOGIN_STATUS.LOGGED_IN}>
+          <Header />
           <LoanStatusList />
+          <Footer />
         </Auth>
       </>
     );

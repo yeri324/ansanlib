@@ -1,9 +1,0 @@
-/* Sidebar 컴포넌트의 CSS */
-.sidebar {
-    width: 200px; /* 사이드바 너비 설정 */
-    float: left; /* 왼쪽으로 부유(플로팅) */
-    padding: 20px;
-    background-color: #f0f0f0;
-  }
-
-  
