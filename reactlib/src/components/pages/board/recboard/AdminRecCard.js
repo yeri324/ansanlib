@@ -11,22 +11,6 @@ function AdminRecCard({ card }) {
         navigate(`/book/detail/${card.book.id}`);
     }
 
-    const onDelete = () => {
-        if (window.confirm('삭제 하시겠습니까?')) {
-            axios(
-                {
-                    url: '/admin/recboard/delete',
-                    method: 'delete',
-                    data: {
-                        id: card.id,
-                    },
-                    baseURL: 'http://localhost:8090',
-                }
-            )
-            window.location.reload(navigate("/admin/recboard/list", { repalce: true }));
-        }
-       }
-
     const getBookImg = () => {
         axios(
             {
@@ -63,7 +47,6 @@ function AdminRecCard({ card }) {
                     </Card.Text>
                 </Card.Body>
                 </div>
-                <button type='button' onClick={onDelete}>삭제</button>
             </Card>
         </div>
     )

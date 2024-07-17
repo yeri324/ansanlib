@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,12 +26,14 @@ public class RecBoardController {
 	private final RecBoardService recBoardService;
 	
 	// 생성
+	@Secured("ROLE_ADMIN")
 	@PostMapping(value = "/new")
 	public ResponseEntity<?> createRec(@RequestBody RecBoardDto recDto)throws Exception {
 		return recBoardService.createRec(recDto);
 	}
 	
 	// 도서검색
+	@Secured("ROLE_ADMIN")
 	@PostMapping(value = "/searchbook")
 	public ResponseEntity<List<Book>> bookList(@RequestBody RecBoardDto recDto) throws Exception {
 		return recBoardService.searchBook(recDto);
@@ -43,6 +46,7 @@ public class RecBoardController {
 	}
 	
 	// 삭제
+	@Secured("ROLE_ADMIN")
 	@DeleteMapping(value = "/delete")
 	public void deleteRec(@RequestBody RecBoardDto recDto) throws Exception {
 		recBoardService.deleteRec(recDto.getId());

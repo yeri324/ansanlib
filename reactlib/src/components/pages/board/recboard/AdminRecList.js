@@ -1,5 +1,3 @@
-import Button from 'react-bootstrap/Button';
-
 import React, { useEffect, useState, } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Pagination from '../common/Pagination';
@@ -12,7 +10,6 @@ import AdminRecCard from './AdminRecCard';
 function AdminRecList() {
     const { axios } = useAuth();
     const navigate = useNavigate();
-    const { loginStatus, roles } = useAuth();
     const [searchResult, setSearchResult] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -20,23 +17,11 @@ function AdminRecList() {
     const recPerPage = 8;
 
     useEffect(() => {
-        if (loginStatus === LOGIN_STATUS.LOGGED_OUT) {
-            alert("로그인이 필요합니다.");
-            navigate("/login");
-            return;
-        } else if (loginStatus === LOGIN_STATUS.LOGGED_IN) {
-            //어드민인지 확인
-            if (roles !== ROLES.ADMIN) {
-                alert("권한이 없습니다.");
-                navigate(-1);
-            }
-        }
         onSearch(currentPage);
-    }, [loginStatus, currentPage])
+    }, [currentPage])
 
     // 리스트 조회
     const onSearch = (page) => {
-        console.log(currentPage, recPerPage);
         axios(
             {
                 url: '/admin/recboard/list',
@@ -60,10 +45,30 @@ function AdminRecList() {
         navigate('/admin/recboard/form')
     }
 
+    // 삭제
+    const onDelete = () => {
+        if (window.confirm('삭제 하시겠습니까?')) {
+            axios(
+                {
+                    url: '/admin/recboard/delete',
+                    method: 'delete',
+                    data: {
+                        id: searchResult.id,
+                    },
+                    baseURL: 'http://localhost:8090',
+                }
+            )
+            window.location.reload(navigate("/admin/recboard/list", { repalce: true }));
+        }
+       }
+
     return (
         <div class='rec-list'>
         {searchResult.map((card)=>(
-           <AdminRecCard card={card}/>
+            <div key={card.id} class='card'>
+           <AdminRecCard card={card} />
+           <button type='button' onClick={onDelete}>삭제</button>
+           </div>
         ))}
          <button type='button' onClick={onCreate}>생성</button>
           <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
