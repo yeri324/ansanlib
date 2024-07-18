@@ -43,10 +43,10 @@ function SearchModal({ setIsOpen, setSelectBook }) {
             <div class='search-list'>
                 <table class='s-table'>
                     <tr>
-                        <td scope="col" class="td-title">제목</td>
-                        <td scope="col" class="td-author">저자</td>
-                        <td scope="col" class="td-publisher">출판사</td>
-                        <td scope="col" class="td-pub_date">출판년도</td>
+                        <td class="td-title">제목</td>
+                        <td class="td-author">저자</td>
+                        <td class="td-publisher">출판사</td>
+                        <td class="td-pub_date">출판년도</td>
                     </tr>
                     {searchList.map((list) => (
                         <tr key={list.id} onClick={() => onSelect(list)}>

@@ -1,12 +1,12 @@
 import React, { useState, useEffect, } from 'react';
-import { useNavigate,} from 'react-router-dom';
+import { useNavigate, } from 'react-router-dom';
 import '../../board/common/DetailForm.css'
 import BoardImgList from '../common/BoardImgList';
 import useAuth from '../../../hooks/useAuth';
 
 
 
-function AdminFaqDetailForm({id}) {
+function AdminFaqDetailForm({ id }) {
     const { axios } = useAuth();
     const navigate = useNavigate();
     const [title, setTitle] = useState("");
@@ -14,7 +14,7 @@ function AdminFaqDetailForm({id}) {
     const [images, setImages] = useState([]);
     const [count, setCount] = useState(1);
     const [deleteImg, setDeleteImg] = useState([]);
-    
+
     useEffect(() => {
         getDataset();
     }, []);
@@ -133,11 +133,11 @@ function AdminFaqDetailForm({id}) {
                             <textarea type='text' name='content' value={content} onChange={updateContent} />
                         </div>
                         <BoardImgList images={images} handleImgChange={handleImgChange} onImgDelete={onImgDelete} />
-                        {images.length < 5 && <button type="button" onClick={handleAddImg}>이미지추가</button>}
-                        <button type='button' onClick={() => onUpdate()} >수정</button>
-                        <button type="button" onClick={() => onDelete()}>삭제</button>
-                        <button type="button" onClick={() => onGoBack()}>돌아가기</button>
                     </div>
+                    {images.length < 5 && <button type="button" onClick={handleAddImg}>이미지추가</button>}
+                    <button type='button' onClick={() => onUpdate()} >수정</button>
+                    <button type="button" onClick={() => onDelete()}>삭제</button>
+                    <button type="button" onClick={() => onGoBack()}>돌아가기</button>
                 </form>
             </div >
         </div >
