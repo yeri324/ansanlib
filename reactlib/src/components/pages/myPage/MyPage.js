@@ -15,10 +15,8 @@ const MyPage = () => {
       <div className="container">
         <div className="main-content">
           <div className="sidebar">
-            {/* Sidebar 컴포넌트 추가 */}
             <Sidebar />
           </div>
-          {/* Switch 대신 Routes를 사용하여 각 Route 설정 */}
           <Routes>
             <Route path="/update" element={<UpdateUserForm />} />
             <Route path="/reservation/new" element={<ReservationForm />} />

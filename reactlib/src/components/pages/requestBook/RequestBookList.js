@@ -5,8 +5,8 @@ import Auth from '../../helpers/Auth';
 import RedirectLogin from '../../helpers/RedirectLogin';
 import Header from '../../fragments/header/header';
 import Footer from '../../fragments/footer/footer';
-import Sidebar from '../myPage/Side';
 import Side from '../myPage/Side';
+import './RequestBookList.css';
 
 const RequestBookList = () => {
   const name = useRealName();
@@ -57,49 +57,48 @@ const RequestBookList = () => {
   const selectAll = () => setSelectedRequestBooks(requestBooks.map(({id}) => id));
 
   return (
-    <div>
-      <h2>{name}의 도서 신청 목록</h2>
-      <ul>
-        {requestBooks.map(book => (
-          <li key={book.id}>
-            <input
-              type="checkbox"
-              checked={selectedRequestBooks.includes(book.id)}
-              onChange={() => handleSelectRequestBook(book.id)}
-            />
-            책 제목:{book.title} <br/>
-            저자 : {book.author} (ISBN: {book.isbn})<br />
-            출판사: {book.publisher}, 출판일: {new Date(book.pub_date).toLocaleDateString()}
-            신청 한 도서관 : {book.lib_name}
-          </li>
-        ))}
-      </ul>
-      {
-        !isErrored &&
-        <>
-          <button 
-            onClick={selectAll}
-            disabled={selectedRequestBooks.length === requestBooks.length}
-          >
-            전체 선택
-          </button>
-          <button 
-            onClick={deselectAll}
-            disabled={selectedRequestBooks.length === 0}
-          >
-            전체 선택해제
-          </button>
-          <button 
-            onClick={handleDeleteRequestBook}
-            disabled={selectedRequestBooks.length === 0}
-          >
-            삭제
-          </button>
-        </>
-      }
-     {isErrored && <h2>신청한 도서가 없습니다.</h2>}
+    <div className="request_books_list">
+        <h2>{name}의 도서 신청 목록</h2>
+        <ul>
+            {requestBooks.map(book => (
+                <li key={book.id}>
+                    <input
+                        type="checkbox"
+                        checked={selectedRequestBooks.includes(book.id)}
+                        onChange={() => handleSelectRequestBook(book.id)}
+                    />
+                    책 제목: {book.title} <br/>
+                    저자: {book.author} (ISBN: {book.isbn})<br />
+                    출판사: {book.publisher}, 출판일: {new Date(book.pub_date).toLocaleDateString()}<br />
+                    신청 한 도서관: {book.lib_name}
+                </li>
+            ))}
+        </ul>
+        {!isErrored && (
+            <div className="actions">
+                <button 
+                    onClick={selectAll}
+                    disabled={selectedRequestBooks.length === requestBooks.length}
+                >
+                    전체 선택
+                </button>
+                <button 
+                    onClick={deselectAll}
+                    disabled={selectedRequestBooks.length === 0}
+                >
+                    전체 선택해제
+                </button>
+                <button 
+                    onClick={handleDeleteRequestBook}
+                    disabled={selectedRequestBooks.length === 0}
+                >
+                    삭제
+                </button>
+            </div>
+        )}
+        {isErrored && <h2 className="error_message">신청한 도서가 없습니다.</h2>}
     </div>
-  );
+);
 };
 
 export default function() {
