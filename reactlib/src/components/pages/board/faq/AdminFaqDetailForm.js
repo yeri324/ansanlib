@@ -1,13 +1,12 @@
 import React, { useState, useEffect, } from 'react';
-import { useNavigate,} from 'react-router-dom';
-import ImgPreview from '../common/ImgPreview';
-import '../../board/common/AdminForm.css';
+import { useNavigate, } from 'react-router-dom';
+import '../../board/common/DetailForm.css'
 import BoardImgList from '../common/BoardImgList';
-import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
-import AdminHeader from '../../admin/common/AdminHeader';
-import AdminSide from '../../admin/common/AdminSide';
+import useAuth from '../../../hooks/useAuth';
 
-function AdminFaqDetailForm({id}) {
+
+
+function AdminFaqDetailForm({ id }) {
     const { axios } = useAuth();
     const navigate = useNavigate();
     const [title, setTitle] = useState("");
@@ -15,26 +14,7 @@ function AdminFaqDetailForm({id}) {
     const [images, setImages] = useState([]);
     const [count, setCount] = useState(1);
     const [deleteImg, setDeleteImg] = useState([]);
-    const { loginStatus, roles } = useAuth();
 
-
-    //권한 여부 확인
-    useEffect(() => {
-        //로그아웃됨.
-        if (loginStatus === LOGIN_STATUS.LOGGED_OUT) {
-            alert("로그인이 필요합니다.");
-            navigate("/login");
-            return;
-        } else if (loginStatus === LOGIN_STATUS.LOGGED_IN) {
-            //어드민인지 확인
-            if (roles !== ROLES.ADMIN) {
-                alert("권한이 없습니다.");
-                navigate(-1);
-            }
-        }
-        getDataset();
-    }, [loginStatus]); //로그인 상태 변경시 useEffect 실행
-    
     useEffect(() => {
         getDataset();
     }, []);
@@ -143,55 +123,24 @@ function AdminFaqDetailForm({id}) {
     };
 
     return (
-        <div className="admin-page">
-        <div className="admin-base">
-          <AdminHeader />
-          <AdminSide />
-        </div>
-  
-        <main className="admin-page-main">
-          <div className="admin-page-body">
-            <div className="admin-page-title">
-              <h1>FAQ 수정하기</h1>
-            </div>
-            <div className='admin-detail-form'>
-                <form className="admin-board-form">
-                   
-                    <div className='admin-content-container'>
-
-
-                        <div className='admin-input-container'>
-
-
-                            <div className='admin-input-title'>
-                            <label className='admin-board-label'>제목</label>
+        <div>
+            <div class='detail-form'>
+                <form>
+                    <h3>수정하기</h3>
+                    <div class='content-container'>
+                        <div class='input-container'>
                             <input type='text' name='title' value={title} onChange={updateTitle} />
-                            </div>
-
-
-                            <div className='admin-input-textarea'>
-                            <label className='admin-board-label'>내용</label>
                             <textarea type='text' name='content' value={content} onChange={updateContent} />
                         </div>
-
-
-                       
-
-                        
-                       <div className='admin-input-img'>
-                        <BoardImgList images = {images} ImgPreview={ImgPreview} handleImgChange={handleImgChange} onImgDelete={onImgDelete} />
-                        {images.length < 5 && <button type="button" className="btn btn-outline-dark" onClick={handleAddImg}>이미지추가</button>}
-                        </div>
-                        </div>
-                        <div className="admin-board-button">
-                        <button type="button" className="btn btn-outline-dark" onClick={() => onUpdate()} >수정</button>
-                        <button type="button" className="btn btn-outline-dark" onClick={() => onDelete()}>삭제</button>
-                        <button type="button" className="btn btn-outline-dark" onClick={() => onGoBack()}>돌아가기</button></div>
+                        <BoardImgList images={images} handleImgChange={handleImgChange} onImgDelete={onImgDelete} />
                     </div>
-
+                    {images.length < 5 && <button type="button" onClick={handleAddImg}>이미지추가</button>}
+                    <button type='button' onClick={() => onUpdate()} >수정</button>
+                    <button type="button" onClick={() => onDelete()}>삭제</button>
+                    <button type="button" onClick={() => onGoBack()}>돌아가기</button>
                 </form>
             </div >
-  </div></main></div>
+        </div >
     );
 };
 

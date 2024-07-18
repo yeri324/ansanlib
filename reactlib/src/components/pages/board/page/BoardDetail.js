@@ -14,7 +14,7 @@ import RedirectLogin from '../../../helpers/RedirectLogin';
 const BoardDetail = ()=>{
     const { roles, board,id} = useParams();
 
-    const renderContent = (roles, board,id) => {
+    const renderContent = (roles, board, id) => {
         if (roles === "admin") {
            return board==="faq"?
            (

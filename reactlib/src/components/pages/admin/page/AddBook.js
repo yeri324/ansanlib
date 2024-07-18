@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./AddBook.css";
 import AdminHeader from '../common/AdminHeader';
-import AdminSide from '../common/AdminSide';
+import AdminSide from '../../admin/common/AdminSide';
 import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
 import Auth from '../../../helpers/Auth';
 import RedirectLogin from '../../../helpers/RedirectLogin';

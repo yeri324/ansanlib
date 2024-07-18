@@ -5,7 +5,7 @@ import ImgPreview from '../common/ImgPreview';
 import BoardFileLabel from '../common/BoardFileLabel';
 import '../../board/common/DetailForm.css'
 
-function UserNoticeDetailForm({id}) {
+function UserNoticeDetailForm({ id }) {
     const navigate = useNavigate();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
@@ -47,22 +47,26 @@ function UserNoticeDetailForm({id}) {
                 <form>
                     <div class='content-container'>
                         <div class='input-container'>
-                            <input type='text' name='title' value={title} readOnly/>
+                            <input type='text' name='title' value={title} readOnly />
                             <textarea type='text' name='content' value={content} readOnly />
                         </div>
-                        <div class='img-container'>
+                        <div class='img-container1'>
+                            <div class='img-pre'>
+                                {images.map(putImage => (
+                                    <ImgPreview key={putImage.id} putImage={putImage} board='notice' />
+                                ))}
+                            </div>
+                            <div class='file-uplo'>
                             {images.map(putImage => (
-                                <ImgPreview key={putImage.id} putImage={putImage} board='notice' />
-                            ))}
-                            {images.map(putImage => (
-                                <BoardFileLabel putImage={putImage}/>
+                                <BoardFileLabel putImage={putImage} />
                             ))}
                         </div>
-                        <button type="button" onClick={() => onGoBack()}>돌아가기</button>
                     </div>
-                </form>
             </div>
-        </div>
+            <button type="button" onClick={() => onGoBack()}>돌아가기</button>
+        </form>
+            </div >
+        </div >
     );
 };
 

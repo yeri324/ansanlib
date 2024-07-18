@@ -1,36 +1,7 @@
 import React from 'react';
-import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
+import useAuth from '../../../hooks/useAuth';
 
 function BoardItem({ item, onDetail, checkedList, checkHandler, }) {
-    // const { axios } = useAuth();
-    // // 이미지 미리보기 (필요할때 주석 해제하기)
-    // const [viewImg, setViewImg] = useState('');
-    // const getBoardImage = async () => {
-    //     console.log(faq.faqImgs[0].imgUrl);
-    //     axios(
-    //         {
-    //             url: `/${board}/getImg`,
-    //             method: 'post',
-    //             data: {
-    //                 imgUrl: board.boardImgs[0].imgUrl
-    //             },
-    //             baseURL: 'http://localhost:8090',
-    //             responseType: 'arraybuffer',
-    //         }
-    //     ).then((response) => {
-    //         const blob = new Blob([response.data], { type: 'image/jpeg' });
-    //         const imageUrl = URL.createObjectURL(blob);
-    //         setViewImg(imageUrl)
-    //     });
-    // }
-    // //페이지 로드될때 이미지 나오게하기
-    // useEffect(() => {
-    //     getFaqImage()
-    // }, [])
-    // {/* 이미지 미리보기 필요시 주석 해제  + 시간 아래에 넣기 */ }
-    // <td>
-    //         <img key={faq.faqImgs} src={viewImg} style={{ width: '100px', height: '100px' }} />
-    // </td>
 
     const { roles } = useAuth();
 

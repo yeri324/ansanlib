@@ -11,11 +11,9 @@ import com.ansanlib.entity.BookInterest;
 import com.ansanlib.entity.LibUser;
 
 public interface BookInterestRepository extends JpaRepository<BookInterest, Long> {
-//    @EntityGraph(attributePaths = {"book"})
-//    public List<BookInterest> findByLibUser(LibUser libUser);
 
-    @Query("select bi from BookInterest  bi join fetch bi.book b where bi.libUser=:libUser")
-    public List<BookInterest> findByLibUser(@Param("libUser") LibUser libUser);
+	@Query("select bi from BookInterest  bi join fetch bi.book b where bi.libUser=:libUser")
+	List<BookInterest> findByLibUser(@Param("libUser") LibUser libUser);
 
-    public int countBookInterestByLibUserAndBook(LibUser libUser, Book book);
+	int countBookInterestByLibUserAndBook(LibUser libUser, Book book);
 }

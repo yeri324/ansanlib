@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useLocation } from 'react';
+
+import React from 'react';
+
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import Header from './components/fragments/header/header';
 import Footer from './components/fragments/footer/footer';
@@ -22,26 +24,36 @@ import Home from './components/pages/security/pages/Home';
 import User from './components/pages/security/pages/User';
 
 
+
 import Admin from './components/pages/admin/common/Admin';
-import AdminFaqList from './components/pages/board/faq/AdminFaqList';
-import AdminFaqForm from './components/pages/board/faq/AdminFaqForm';
-import AddBook from './components/pages/admin/page/AddBook';
+
 import AdminBookList from './components/pages/admin/page/AdminBookList';
 import AdminUserList from './components/pages/admin/page/AdminUserList';
 import AdminUserDetail from './components/pages/admin/page/AdminUserDetail';
-import AdminBookRequest from './components/pages/admin/page/AdminBookRequest';
 import HolidayDetail from './components/pages/admin/modal/HolidayDetail';
+
 import Holiday from './components/pages/admin/page/Holiday';
 import HolidayList from './components/pages/admin/page/HolidayList';
 import HolidayNew from './components/pages/admin/modal/HolidayNew';
+import AddBook from './components/pages/admin/page/AddBook';
+import BookInterest from './components/pages/book/bookInterest/BookInterest';
+import AdminBookRequest from './components/pages/admin/page/AdminBookRequest';
 
 import { UseAuthBasic, UseAuthCheckAdmin, UseAuthCheckLogin } from './components/hooks/examples/useAuthExamples';
 import BoardList from './components/pages/board/page/BoardList';
 import BoardDetail from './components/pages/board/page/BoardDetail';
 import BoardForm from './components/pages/board/page/BoardForm';
 
+
 import AdminPopPage from './components/pages/admin/page/AdminPopPage';
 
+
+
+
+import ApiBookSearch from './components/pages/book/bookApi/ApiSearchPage';
+import AdminRecList from './components/pages/board/recboard/AdminRecList';
+import AdminRecForm from './components/pages/board/recboard/AdminRecForm';
+import UserRecList from './components/pages/board/recboard/UserRecList';
 
 
 function App() {
@@ -60,6 +72,9 @@ function App() {
                                 <Route path="/:roles/:board/list" element={<BoardList />} />
                                 <Route path="/admin/:board/form" element={<BoardForm />} />
                                 <Route path="/:roles/:board/detail/:id" element={<BoardDetail />} />
+                                <Route path="/admin/recboard/list" element={<AdminRecList />} />
+                                <Route path="/admin/recboard/form" element={<AdminRecForm />} />
+                                <Route path="/user/recboard/list" element={<UserRecList />} />
 
                                 <Route path="/admin" element={<Admin />} />
                                 <Route path="/admin/user/search" element={<AdminUserList />} />
@@ -70,17 +85,18 @@ function App() {
                                 <Route path="/admin/holiday/detail" element={<HolidayDetail />} />
                                 <Route path="/admin/book/new" element={<AddBook />} />
                                 <Route path="/admin/book/request" element={<AdminBookRequest />} />
-                                <Route path="/admin/faq/list" element={<AdminFaqList />} />
-
-                                <Route path="/admin/faq/new" element={<AdminFaqForm />} />
+                                
                                 <Route path="/admin/book/list" element={<AdminBookList />} />
                  
 
                                 <Route path="/admin/popup" element={<AdminPopPage />} />
 
 
+                                {/* <Route path="/" element={<BookSearch />} /> */}
                                 <Route path="/book/search" element={<SearchPage />} />
                                 <Route path="/book/detail/:id" element={<BookDetailPage />} />
+                                <Route path="/book/interest/:id" element={<BookInterest />} />
+                                <Route path="/bookapi/search" element={<ApiBookSearch />} />
 
                                 <Route path="/requestbook/new" element={<RequestBookForm />} />
                                 <Route path="/requestbook/list" element={<RequestBookList />} />

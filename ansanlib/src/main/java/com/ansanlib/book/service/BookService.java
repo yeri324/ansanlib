@@ -31,39 +31,10 @@ import lombok.RequiredArgsConstructor;
 public class BookService {
 
 	private final BookRepository bookRepository;
-	private final LibUserRepository libUserRepository;
 	private final BookImgRepository bookImgRepository;
-	//private final BookImgService bookImgService;
 	private final BookRepositoryCustom bookRepositoryCustom;
 	private final ModelMapper modelMapper;
-	
-//	// 새로운 책 등록
-//    public Long saveBook(BookFormDto bookFormDto, MultipartFile bookImgFileList, String email) throws Exception{
-//        LibUser finduser = libUserRepository.findByEmail(email);
-//        Book book = Book.builder()
-//                .title(bookFormDto.getTitle())
-//                .isbn(bookFormDto.getIsbn())
-//                .author(bookFormDto.getAuthor())
-//                .publisher(bookFormDto.getPublisher())
-//                .pub_date(bookFormDto.getPub_date())
-//                .bookDetail(bookFormDto.getBookDetail())
-//                .location(bookFormDto.getLocation())
-//                .count(0)
-//                .libUser(finduser)
-//                .status(BookStatus.AVAILABLE)
-//                .build();
-//
-//        bookRepository.save(book);
-//
-//        //이미지 등록
-//        BookImg bookImg = new BookImg();
-//        bookImg.setBook(book);
-//        bookImgService.saveBookImg(bookImg, bookImgFileList);
-//
-//        return book.getId();
-//    }
-	
-	
+		
     // 검색
     @Transactional(readOnly = true)
     public Page<Book> searchBookPageSimple(BookSearchCondition condition, Pageable pageable) {
@@ -101,33 +72,4 @@ public class BookService {
     public void updateImgUrl(Long id, String imgUrl) {
         bookImgRepository.updateImgUrl(id, imgUrl);
     }
-    
-//    @Transactional(readOnly = true)
-//    public BookFormDto getBookDtl(Long bookId){
-//        BookImg bookImgList = bookImgRepository.findById(bookId).get();
-//        BookImgDto bookImgDtoList = BookImgDto.of(bookImgList);
-//
-//        Book book = bookRepository.findById(bookId)
-//                .orElseThrow(EntityNotFoundException::new);
-//        BookFormDto bookFormDto = BookFormDto.of(book);
-//        bookFormDto.setBookImgDto(bookImgDtoList);
-//        return bookFormDto;
-//    }
-    
-   
-
-//    public Long updateBook(BookFormDto bookFormDto, List<MultipartFile> bookImgFileList) throws Exception{
-//        //상품 수정
-//        Book book = bookRepository.findById(bookFormDto.getId())
-//                .orElseThrow(EntityNotFoundException::new);
-//        book.updateBook(bookFormDto);
-//        Long bookImgId = bookFormDto.getBookImgId();
-//
-//        //이미지 등록
-//        for(int i=0;i<bookImgFileList.size();i++){
-//            bookImgService.updateBookImg(bookImgId, bookImgFileList.get(i));
-//        }
-//
-//        return book.getId();
-//    }
 }

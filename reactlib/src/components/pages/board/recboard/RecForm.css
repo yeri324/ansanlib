@@ -1,0 +1,98 @@
+.rec-form .reccreate-form {
+    width: 70%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.rec-form .reccreate-form h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.rec-form .all-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.rec-form .content-item input[type='text'],
+.rec-form .content-item textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.rec-form .content-item textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.rec-form .book-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.rec-form .leftside {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.rec-form .leftside>input {
+    flex: 1;
+    margin-right: 10px;
+    width: 95%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #f9f9f9;
+}
+
+.rec-form .rightside {
+    width: 100px;
+}
+
+.rec-form .rightside > button,
+.rec-form .all-item button[type='submit'] {
+    width: 100%;
+    padding: 10px;
+    background-color: #494949;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.rec-form>button[type='submit'] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.rec-form>button:hover {
+    opacity: 0.9;
+}
+
+.rec-form button:active {
+    transform: scale(0.98);
+}

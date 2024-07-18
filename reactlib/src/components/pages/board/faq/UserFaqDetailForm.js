@@ -5,7 +5,7 @@ import BoardFileLabel from '../common/BoardFileLabel';
 import ImgPreview from '../common/ImgPreview';
 import '../../board/common/DetailForm.css'
 
-function UserFaqDetailForm({id}) {
+function UserFaqDetailForm({ id }) {
     const navigate = useNavigate();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
@@ -46,20 +46,23 @@ function UserFaqDetailForm({id}) {
                 <form>
                     <div class='content-container'>
                         <div class='input-container'>
-                            <input type='text' name='title' value={title} readOnly/>
-                            <textarea type='text' name='content' value={content} readOnly/>
+                            <input type='text' name='title' value={title} readOnly />
+                            <textarea type='text' name='content' value={content} readOnly />
                         </div>
-                        <div class='img-container'>
-                            {images.map(putImage => (
-                                <ImgPreview key={putImage.id} putImage={putImage} board="faq" />
-                            ))}
-
-                            {images.map(putImage => (
-                                <BoardFileLabel putImage={putImage} />
-                            ))}
+                        <div class='img-container1'>
+                            <div class='img-pre'>
+                                {images.map(putImage => (
+                                    <ImgPreview key={putImage.id} putImage={putImage} board="faq" />
+                                ))}
+                            </div>
+                            <div class='file-uplo'>
+                                {images.map(putImage => (
+                                    <BoardFileLabel putImage={putImage} />
+                                ))}
+                            </div>
                         </div>
-                        <button type="button" onClick={() => onGoBack()}>돌아가기</button>
                     </div>
+                    <button type="button" onClick={() => onGoBack()}>돌아가기</button>
                 </form>
             </div >
         </div >
