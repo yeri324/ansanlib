@@ -40,7 +40,11 @@ public class FileService {
 
         // 파일 저장 위치
         String path = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static"
-                + File.separator + "images" + File.separator + foldername + File.separator + id.toString();
+                + File.separator + "images" + File.separator + foldername;
+        if(id!=null) {
+        	path += File.separator + id.toString();
+        }
+        
         File userImg = new File(path);
 
         if (!userImg.exists()) {

@@ -21,6 +21,7 @@ import About from './components/pages/security/pages/About';
 import Home from './components/pages/security/pages/Home';
 import User from './components/pages/security/pages/User';
 
+
 import Admin from './components/pages/admin/common/Admin';
 import AdminFaqList from './components/pages/board/faq/AdminFaqList';
 import AdminFaqForm from './components/pages/board/faq/AdminFaqForm';
@@ -38,6 +39,10 @@ import { UseAuthBasic, UseAuthCheckAdmin, UseAuthCheckLogin } from './components
 import BoardList from './components/pages/board/page/BoardList';
 import BoardDetail from './components/pages/board/page/BoardDetail';
 import BoardForm from './components/pages/board/page/BoardForm';
+
+import AdminPopPage from './components/pages/admin/AdminPopPage';
+
+
 
 function App() {
 
@@ -66,9 +71,14 @@ function App() {
                                 <Route path="/admin/book/new" element={<AddBook />} />
                                 <Route path="/admin/book/request" element={<AdminBookRequest />} />
                                 <Route path="/admin/faq/list" element={<AdminFaqList />} />
+
                                 <Route path="/admin/faq/new" element={<AdminFaqForm />} />
                                 <Route path="/admin/book/list" element={<AdminBookList />} />
                  
+
+                                <Route path="/admin/popup" element={<AdminPopPage />} />
+
+
                                 <Route path="/book/search" element={<SearchPage />} />
                                 <Route path="/book/detail/:id" element={<BookDetailPage />} />
 

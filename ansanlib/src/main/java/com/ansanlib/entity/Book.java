@@ -41,7 +41,6 @@ public class Book extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-    
     private String isbn; // 바코드
 
     private String title; // 제목

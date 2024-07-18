@@ -10,14 +10,14 @@
   /* border: 1px solid #ccc; */
 }
 
-.book-item {
+.trends-book-item {
   display: flex;
   flex: 0 0 auto;
   flex-direction: column;
   align-items: center;
 }
 
-.book-cover {
+.trends-book-cover {
   width: 170px;
   height: 220px;
   object-fit: cover;
@@ -26,13 +26,13 @@
   border-radius: 10px;
 }
 
-.book-title {
+.trends-book-title {
   text-align: center;
   font-size: 1.1em;
   color: #333;
 }
 
-/* .btn {  
+.btn_prev, .btn_next {
   position: absolute;
   transform: translate(0, -50%);
   top: 50%;
@@ -43,11 +43,12 @@
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
   border: none;
-} */
-.prev {
+}
+
+.btn_prev {
   left: 10px;
 }
-.next {
+.btn_next {
   right: 10px;
 }
 .prev:hover, .next:hover {

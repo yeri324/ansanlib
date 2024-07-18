@@ -1,0 +1,36 @@
+#popup {
+    position: absolute;
+    width: 360px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    text-align: center;
+}
+
+#popup img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #eee;
+}
+
+#popup button {
+    margin: 10px;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+#popup .btn_C {
+    background-color: #ccc;
+}
+
+#popup .btn_X {
+    width: 50px;
+    align-items: right;
+    background-color: #ccc;
+}
+
+#popup button:hover {
+    background-color: #ddd;
+}
