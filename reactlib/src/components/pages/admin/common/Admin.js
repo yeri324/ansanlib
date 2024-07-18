@@ -1,5 +1,4 @@
-// Admin.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AdminHeader from "./AdminHeader";
 import AdminSide from "./AdminSide";
 import './Admin.css';
@@ -12,14 +11,24 @@ import Auth from '../../../helpers/Auth';
 import RedirectLogin from '../../../helpers/RedirectLogin';
 import HolidayListTable from '../../admin/item/HolidayListTable';
 import AdminBookRequestTable from '../item/AdminBookRequestTable';
-import BestsellerBoard from '../../../fragments/home/Bestseller';
-import Notice from '../../../fragments/home/notice';
+import NewBooks from '../../../fragments/home/new';
+import Trends from '../../../fragments/home/Trends';
+import LibraryPage from '../../visit/LibraryPage';
+
 const Admin = () => {
   const { axios } = useAuth();
   const [date, setDate] = useState(new Date());
   const [showDetail, setShowDetail] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedHolidays, setSelectedHolidays] = useState([]);
+  const [holidays, setHolidays] = useState([]);
+  const [bookRequests, setBookRequests] = useState([]);
+  const [searchResult, setSearchResult] = useState([]);
+
+  useEffect(() => {
+    fetchHolidays(new Date());
+    fetchBookRequests();
+  }, []);
 
   const handleDateClick = (date) => {
     setSelectedDate(date);
@@ -31,7 +40,6 @@ const Admin = () => {
   const fetchHolidays = (date) => {
     console.log("Fetching holidays for date:", date);
 
-    // 서버에서 해당 날짜의 휴관일 정보를 가져오는 로직을 구현합니다.
     axios({
       url: '/api/admin/holiday/list',
       method: 'get',
@@ -40,11 +48,24 @@ const Admin = () => {
       }
     }).then((response) => {
       console.log("Fetched holidays:", response.data);
-      setSelectedHolidays(response.data.result); // 서버 응답 데이터 사용
+      setHolidays(response.data.result); // 서버 응답 데이터 사용
+      setSelectedHolidays(response.data.result); // 모달에 표시할 데이터 설정
     }).catch((error) => {
       console.error("Error fetching holidays:", error);
+      setHolidays([]); // 오류 발생 시 빈 배열로 설정
       setSelectedHolidays([]); // 오류 발생 시 빈 배열로 설정
     });
+  };
+
+  const fetchBookRequests = () => {
+    axios.get('/api/admin/book/request')
+      .then(response => {
+        setBookRequests(response.data.result);
+        setSearchResult(response.data.result.slice(0, 3)); // 상위 3개 항목만 표시
+      })
+      .catch(error => {
+        console.error('Error fetching book requests:', error);
+      });
   };
 
   const handleCloseModal = () => {
@@ -59,15 +80,14 @@ const Admin = () => {
       </div>
       <main className="admin-main-main">
         <div className="admin-main-body">
-          <div className="admin-main-dash-top">
-           
-            
-          </div>
+          <div className="admin-main-dash-top"></div>
           <div className="admin-main-dash-body">
-            <div className="admin-main-left" style={{ width: "20%" }}>
-              <div className="admin-left-box1 calendar-container">
+            <div className="admin-main-left" style={{ width: "25%" }}>
+              <div className='admin-left-box1'>
+                <h4>오늘은 &nbsp;<span>{date.toISOString().split('T')[0]}</span> &nbsp;입니다.</h4>
+              </div>
+              <div className="admin-left-box2 calendar-container">
                 <Calendar
-                
                   locale="en-US"
                   onChange={handleDateClick}
                   value={date}
@@ -78,50 +98,38 @@ const Admin = () => {
                   holidays={selectedHolidays}
                 />
               </div>
-              <div className="admin-left-box2">
-                <HolidayListTable excludedColumns={['delete']} />
-              </div>
               <div className="admin-left-box3">
-                <AdminBookRequestTable excludedColumns={['count']}
-                 />
+                <HolidayListTable holidays={holidays.slice(0, 3)} excludedColumns={['delete']} />
+              </div>
+              <div className="admin-left-box4">
+              <div className='admin-right-board' style={{ width: "25%" }}>
+                  <h3>신간도서</h3>
+                  <NewBooks />
+                </div>
               </div>
             </div>
-            <div className="admin-main-right" style={{ width: "80%" }}>
+            <div className="admin-main-right" style={{ width: "75%" }}>
               <div className="admin-right-box1">
-
                 <div className='admin-right-graph'>
-
-                  그래프1
+                  <LibraryPage />
                 </div>
-
                 <div className='admin-right-graph'>
-
                   그래프2
                 </div>
-
                 <div className='admin-right-graph'>
-
-
                   그래프3
                 </div>
-
-
-
               </div>
               <div className="admin-right-box2">
+                <div className='admin-right-board' style={{ width: "75%" }}>
+                  <h3>추천도서</h3>
+                  <Trends />
+                </div>
                 
-                <div className='admin-right-board'>
-
-                  <BestsellerBoard />
-                </div>
-
-                <div className='admin-right-board'>
-
-                게시판
-                </div>
               </div>
               <div className="admin-right-box3">
-                box3-faq공지사항팝업관린
+                <h3>희망도서신청</h3>
+                <AdminBookRequestTable searchResult={searchResult} />
               </div>
             </div>
           </div>

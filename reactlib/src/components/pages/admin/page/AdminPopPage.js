@@ -1,10 +1,11 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
-import PopupItem from "./PopupItem";
+import PopupItem from "../item/PopupItem";
 import './AdminPopup.css';
+
 import PopupNewForm from "./PopupNewForm";
-import AdminHeader from "./AdminHeader";
-import AdminSide from "./AdminSide";
+import AdminHeader from "../common/AdminHeader";
+import AdminSide from "../common/AdminSide";
 
 const AdminPopPage = () => {
     const [popupList, setPopupList] = useState([]);
@@ -36,6 +37,9 @@ const AdminPopPage = () => {
                     </div>
 
                     <div class="container">
+                    <button type="button" class="btn btn-primary" onClick={()=>setIsAddOpen(true)}>팝업 추가</button>
+                 
+                 {isAddOpen && <PopupNewForm setIsAddOpen={setIsAddOpen} />}
                         <table class="table table-bordered">
                             <thead class="thead-dark">
                                 <tr>
@@ -53,9 +57,7 @@ const AdminPopPage = () => {
                             </tbody>
                         </table>
              
-                        <button type="button" class="btn btn-primary" onClick={()=>setIsAddOpen(true)}>팝업 추가</button>
-                 
-                        {isAddOpen && <PopupNewForm setIsAddOpen={setIsAddOpen} />}
+                       
                     </div>
                     </div>
             </main>

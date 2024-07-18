@@ -21,7 +21,7 @@
 /*메인 폼 영역 */
 .admin-main-main>.admin-main-body {
   
-  padding: 20px;
+  
   border-radius: 15px;
 min-height: 850px;
   align-items: center;
@@ -32,8 +32,8 @@ min-height: 850px;
 }
 .admin-main-body > .admin-main-dash-top {
   width:100%;
-  height: 90px;
-  border: 1px solid darkblue;
+  height: 30px;
+  /* border: 1px solid darkblue; */
 
  }
 
@@ -41,28 +41,44 @@ min-height: 850px;
   width: 100%;
   display:flex; 
   flex-direction:row; 
-  border:1px solid rgb(100, 100, 8);
-   min-height: 850px;}
+  /* border:1px solid rgb(100, 100, 8); */
+   min-height: 850px;
+  
+  }
    
 
 
 
    .admin-main-left, .admin-main-right {
-    border: 1px solid saddlebrown;
-    width: 100%;
+    /* border: 1px solid saddlebrown; */
+    width: 100%; padding: 0px 30px;
+   
     
    }
 
+.admin-main-left {
+  border-right: 1px solid #eee;
+}
 
+  
 
 .admin-left-box1 {
-  background-color: aliceblue;
+  height: 80px;
+text-align: center;
+font-family: 'Noto Sans KR', sans-serif;
+padding: 20px;
+}
+
+
+.admin-left-box2 {
+  /* background-color: aliceblue; */
   height: 350px;
 }
 
 
 .calendar-container {
   width: 100%;
+  
   
   
 }
@@ -77,67 +93,106 @@ min-height: 850px;
 
 
 
-.admin-left-box2 {
-  border: 1px solid rgba(47, 95, 255, 0.295);
+.admin-left-box3 {
+ 
   font-size: 13px;
 margin-top: 10px;
-  background-color: rgb(238, 241, 204);
-  height: 300px;
+  /* background-color: rgb(238, 241, 204); */
+  height: 250px;
 }
 
 .admin-table {
   margin: 0 auto;
   width: 100%;
 }
-.admin-left-box2 > .admin-table th, tr , 
-.admin-left-box3 > .admin-table th, tr {
+.admin-left-box3 > .admin-table th, tr , 
+.admin-right-box3 > .admin-table th, tr {
   background-color: white;
+  border-bottom: 2px solid #ccc; /* 밑줄 스타일 추가 */
 }
 
 
-.admin-left-box3  {
-  font-size: 13px;
-  margin-top: 10px;
-  background-color: rgb(125, 190, 247);
-  height: 300px;
+.admin-left-box4  {
+  width: 100%;
+  background-color:  aliceblue;
+  height: 400px;
 }
 
+.admin-left-box4  > div {
+  width: 100%;
+}
 
 .admin-right-box1 {
-  background-color: rgba(241, 82, 156, 0.055);
-  height: 300px;
+  /* background-color: aliceblue; */
+  height: 200px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  padding: 20px;
 
   }
 
 
   .admin-right-graph {
-    border: 1px solid darkgreen;
+    /* border: 1px solid darkgreen; */
+    padding: 30px;
     width: 100%;
     margin:20px;
+    background-color:#152f50;
+    color: white;
+    border-radius: 30px;
   }
 
-.admin-right-box2 {
-  background-color: rgb(252, 233, 242);
-  height: 400px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
 
+
+
+  .admin-right-graph > div >h1 {   
+font-size: 20px;  
+  }
+.admin-right-graph > div > p  {
+  font-size: 16px;
 }
 
 
+.admin-right-box2 {
+
+  width: 100%;
+  /* background-color:  aliceblue; */
+  height: 400px;
+  padding-left:  30px;
+}
+
+
+.admin-right-box2 >trends-container {
+margin:  0 auto;
+    width: 100%;
+
+  }
 
 .admin-right-board{
-  border: 1px solid gold;
+  
   width: 50%;
  margin:20px;
 }
 
+
+
 .admin-right-box3 {
-  background-color: rgba(248, 125, 180, 0.329);
+  /* background-color:  aliceblue; */
   height: 300px;
 }
+
+
+.admin-right-box3 > h3 {
+ margin-left: 20px;
+}
+
+
+
+
+
+
+
+
+
 

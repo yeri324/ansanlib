@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import PopupForm from "./PopupForm";
+import PopupForm from "../page/PopupForm";
 
 const PopupItem = ({ popup }) => {
     const [isOpen, setIsOpen] = useState(false);

@@ -40,7 +40,7 @@ import BoardList from './components/pages/board/page/BoardList';
 import BoardDetail from './components/pages/board/page/BoardDetail';
 import BoardForm from './components/pages/board/page/BoardForm';
 
-import AdminPopPage from './components/pages/admin/AdminPopPage';
+import AdminPopPage from './components/pages/admin/page/AdminPopPage';
 
 
 

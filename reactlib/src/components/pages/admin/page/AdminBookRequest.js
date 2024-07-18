@@ -1,3 +1,4 @@
+// AdminBookRequest.js
 import React, { useEffect, useState } from 'react';
 
 import AdminBookRequestDetail from '../modal/AdminBookRequestDetail';
@@ -8,9 +9,9 @@ import { useNavigate } from 'react-router-dom';
 import moment from "moment";
 import DatePicker from "react-datepicker";
 
-
 import "react-datepicker/dist/react-datepicker.css"; // Include DatePicker CSS
 import AdminBookRequestTable from '../item/AdminBookRequestTable'; // 추가
+import AdminPagination from '../common/AdminPagination'; // 추가
 
 import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
 import Auth from '../../../helpers/Auth';
@@ -151,6 +152,7 @@ const AdminBookRequest = () => {
   if (error) {
     return <div>{error}</div>;
   }
+
   const handleRefresh = () => {
     fetchRequests();
   };
@@ -200,13 +202,17 @@ const AdminBookRequest = () => {
 
             <AdminBookRequestTable
               searchResult={searchResult}
-              currentPage={currentPage}
-              itemsPerPage={itemsPerPage}
               handleSort={handleSort}
               handleOpenModal={handleOpenModal}
-              totalPages={totalPages}
-              paginate={paginate}
             />
+
+            <div className="admin-pagination">
+              <AdminPagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                paginate={paginate}
+              />
+            </div>
 
             {isModalOpen && (
               <AdminBookRequestDetail
@@ -222,12 +228,13 @@ const AdminBookRequest = () => {
     </>
   );
 };
+
 export default function () {
   return (
     <>
       <RedirectLogin />
       <Auth loginStatus={LOGIN_STATUS.LOGGED_IN} roles={ROLES.ADMIN}>
-        <AdminBookRequest  />
+        <AdminBookRequest />
       </Auth>
     </>
   );

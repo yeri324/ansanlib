@@ -20,6 +20,7 @@ const AdminSide = () => {
           <ul className={`submenu ${openMenu === 'board' ? 'open' : ''}`}>
             <li><a href="/admin/faq/list" className="no-underline">FAQ</a></li>
             <li><a href="/admin/notice/list" className="no-underline">공지사항</a></li>
+            <li><a href="/admin/popup" className="no-underline">팝업</a></li>
       
           </ul>
         </li>
