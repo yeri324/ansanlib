@@ -19,19 +19,6 @@ const PopupNewForm = ({ handleOpen }) => {
     const [showWhiteScreen, setShowWhiteScreen] = useState(false);
     const navigate=useNavigate();
 
-    //위치선택 화면
-    const handleButtonClick = () => {
-        setShowWhiteScreen(true);
-    };
-
-    //위치선택
-    const handleScreenClick = (e) => {
-        if (showWhiteScreen) {
-            setPopupData({ ...popupData, xLoc: e.clientX, yLoc: e.clientY });
-            setShowWhiteScreen(false);
-        }
-        console.log(popupData);
-    };
 
     // 생성정보보내기
     const onCreate = (e) => {
@@ -61,11 +48,6 @@ const PopupNewForm = ({ handleOpen }) => {
         setPopupData({ ...popupData, [e.target.name]: e.target.value });
     };
 
-    //이미지변경
-    const onImgChange = (e) => {
-        setImage(e.target.files[0])
-    };
-
     //이미지 미리보기 설정
     const getPreviewImg = () => {
         if (image !== "") {
@@ -77,9 +59,29 @@ const PopupNewForm = ({ handleOpen }) => {
         }
     }
 
+    //이미지변경
+    const onImgChange = (e) => {
+        setImage(e.target.files[0])
+    };
+
     useEffect(() => {
         getPreviewImg()
     }, [image])
+
+    //팝업좌표선택 화면
+    const handleButtonClick = () => {
+        setShowWhiteScreen(true);
+    };
+
+    //좌표 선택
+    const handleScreenClick = (e) => {
+        if (showWhiteScreen) {
+            setPopupData({ ...popupData, xLoc: e.clientX, yLoc: e.clientY });
+            setShowWhiteScreen(false);
+        }
+        console.log(popupData);
+    };
+
 
     return (
         <div className="popupForm">

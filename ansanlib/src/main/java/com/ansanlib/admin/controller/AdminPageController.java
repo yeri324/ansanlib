@@ -43,7 +43,6 @@ public class AdminPageController {
 	//수정
 	@PutMapping
 	public ResponseEntity<String> updatePopup(@RequestParam(required = false) MultipartFile popupImg, AdminPopupDto popupDto){
-		System.out.println(popupImg+popupDto.getTitle()+"********");
 		return adminPageService.updatePopup(popupImg,popupDto);
 	}
 	

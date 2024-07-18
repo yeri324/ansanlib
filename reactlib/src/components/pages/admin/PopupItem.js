@@ -14,20 +14,20 @@ const PopupItem = ({ popup }) => {
     }
 
     const openForm = () => {
-        setIsOpen(true)
-    }
+        setIsOpen(true);
+    };
 
     return (
         <>
-            <tr onClick={()=>openForm}>
-                <td>{popup.title}</td>
-                <td>{popup.startDate}</td>
-                <td>{popup.endDate}</td>
-                <td>{popup.status}</td>
+            <tr>
+                <td  onClick={openForm}>{popup.title}</td>
+                <td  onClick={openForm}>{popup.startDate}</td>
+                <td  onClick={openForm}>{popup.endDate}</td>
+                <td  onClick={openForm}>{popup.status}</td>
                 <td><button value={popup.id} onClick={onDeletePop}>삭제</button></td>
             </tr>
 
-            {isOpen && (<PopupForm popup={popup} setIsOpen={setIsOpen} />)}
+            {isOpen &&(<PopupForm popup={popup} setIsOpen={setIsOpen} />)}
         </>
     )
 }

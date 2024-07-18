@@ -1,8 +1,5 @@
 #popup {
-    position: fixed;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: absolute;
     width: 360px;
     padding: 20px;
     background-color: white;

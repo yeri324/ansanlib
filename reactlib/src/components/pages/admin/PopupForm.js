@@ -10,18 +10,35 @@ const PopupForm = ({ popup, setIsOpen }) => {
     const [showWhiteScreen, setShowWhiteScreen] = useState(false);
     const navigate = useNavigate();
 
-    //위치선택 화면
-    const handleButtonClick = () => {
-        setShowWhiteScreen(true);
-    };
 
-    //위치선택
-    const handleScreenClick = (e) => {
-        if (showWhiteScreen) {
-            setPopItem({ ...popItem, xloc: e.clientX, yloc: e.clientY });
-            setShowWhiteScreen(false);
-        }
-    };
+    //팝업닫기
+    const onClosePopup = () => {
+        setIsOpen(false);
+    }
+
+     //데이터수정
+     const onUpdate = () => {
+        const formData = new FormData();
+        formData.append("id", popItem.id);
+        formData.append("title", popItem.title);
+        formData.append("startDate", popItem.startDate);
+        formData.append("endDate", popItem.endDate);
+        formData.append("status", popItem.status);
+        formData.append("xLoc", popItem.xloc);
+        formData.append("yLoc", popItem.yloc);
+        formData.append("popupImg", image);
+
+        axios.put('http://localhost:8090/admin/popup', formData,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then((response) => {
+                alert("수정이 완료되었습니다.");
+                window.location.reload(navigate('/admin/popup'));
+            });
+
+    }
 
     //팝업데이터 설정(이미지제외)
     const handleChange = (e) => {
@@ -29,21 +46,6 @@ const PopupForm = ({ popup, setIsOpen }) => {
             ...popItem,
             [e.target.name]: e.target.value,
         })
-    }
-
-    //이미지변경
-    const handleImgChange = (e) => {
-        setImage(e.target.files[0])
-    }
-
-
-    useEffect(() => {
-        getPopImage();
-    }, [image]);
-
-    //팝업닫기
-    const onClosePopup = () => {
-        setIsOpen(false);
     }
 
     //이미지 미리보기 설정
@@ -74,29 +76,27 @@ const PopupForm = ({ popup, setIsOpen }) => {
         }
     }
 
-    //데이터수정
-    const onUpdate = () => {
-        const formData = new FormData();
-        formData.append("id", popItem.id);
-        formData.append("title", popItem.title);
-        formData.append("startDate", popItem.startDate);
-        formData.append("endDate", popItem.endDate);
-        formData.append("status", popItem.status);
-        formData.append("xLoc", popItem.xloc);
-        formData.append("yLoc", popItem.yloc);
-        formData.append("popupImg", image);
-
-        axios.put('http://localhost:8090/admin/popup', formData,
-            {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            }).then((response) => {
-                alert("수정이 완료되었습니다.");
-                window.location.reload(navigate('/admin/popup'));
-            });
-      
+    //이미지변경
+    const handleImgChange = (e) => {
+        setImage(e.target.files[0])
     }
+
+    useEffect(() => {
+        getPopImage();
+    }, [image]);
+
+    //팝업좌표선택 화면
+    const handleButtonClick = () => {
+        setShowWhiteScreen(true);
+    };
+
+    //좌표 선택
+    const handleScreenClick = (e) => {
+        if (showWhiteScreen) {
+            setPopItem({ ...popItem, xloc: e.clientX, yloc: e.clientY });
+            setShowWhiteScreen(false);
+        }
+    };
 
     return (
         <div className="popupForm">
