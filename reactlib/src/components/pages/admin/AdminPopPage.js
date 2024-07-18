@@ -1,14 +1,14 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
 import PopupItem from "./PopupItem";
-import './Popup.css';
+import './AdminPopup.css';
 import PopupNewForm from "./PopupNewForm";
 import AdminHeader from "./AdminHeader";
 import AdminSide from "./AdminSide";
 
 const AdminPopPage = () => {
     const [popupList, setPopupList] = useState([]);
-    const [isOpen, setIsOpen] = useState(false);
+    const [isAddOpen, setIsAddOpen] = useState(false);
 
     const getPopupList = async () => {
         const response = await axios.get('/admin/popup')
@@ -16,9 +16,6 @@ const AdminPopPage = () => {
         setPopupList(response.data);
     }
 
-    const handleOpen = () => {
-        setIsOpen(!isOpen);
-    }
 
     useEffect(() => {
         getPopupList();
@@ -55,8 +52,10 @@ const AdminPopPage = () => {
                                 ))}
                             </tbody>
                         </table>
-                        <button type="button" class="btn btn-primary" onClick={handleOpen}>팝업 추가</button>
-                        {isOpen && <PopupNewForm handleOpen={handleOpen} />}
+             
+                        <button type="button" class="btn btn-primary" onClick={()=>setIsAddOpen(true)}>팝업 추가</button>
+                 
+                        {isAddOpen && <PopupNewForm setIsAddOpen={setIsAddOpen} />}
                     </div>
                     </div>
             </main>

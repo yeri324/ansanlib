@@ -19,7 +19,9 @@ const PopupItem = ({ popup }) => {
 
     return (
         <>
-            <tr  onClick={openForm}>
+        <tr onClick={openForm}>
+         {/* <div>
+             <tr className="popupItems" onClick={openForm}> */}
                 <td >{popup.title}</td>
                 <td  >{popup.startDate}</td>
                 <td  >{popup.endDate}</td>
@@ -28,6 +30,7 @@ const PopupItem = ({ popup }) => {
             </tr>
 
             {isOpen &&(<PopupForm popup={popup} setIsOpen={setIsOpen} />)}
+         {/* </div> */}
         </>
     )
 }

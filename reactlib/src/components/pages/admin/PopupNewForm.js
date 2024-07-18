@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 
-const PopupNewForm = ({ handleOpen }) => {
+const PopupNewForm = ({ setIsAddOpen }) => {
 
     const [popupData, setPopupData] = useState({
         title: "",
@@ -15,7 +15,7 @@ const PopupNewForm = ({ handleOpen }) => {
         yLoc: 250
     })
     const [image, setImage] = useState("");
-    const [previewImg, setPreviewImg] = useState([]);
+    const [previewImg, setPreviewImg] = useState("");
     const [showWhiteScreen, setShowWhiteScreen] = useState(false);
     const navigate=useNavigate();
 
@@ -84,49 +84,57 @@ const PopupNewForm = ({ handleOpen }) => {
 
 
     return (
-        <div className="popupForm">
-            <button onClick={handleOpen}>&times;</button>
-            <div className="formContainer">
-                <div className="formSection">
-                    <div>
-                        <label>title</label>
-                        <input type="text" name="title" onChange={onInputChange} />
-                    </div>
-                    <div>
-                        <label>startDate</label>
-                        <input type="date" value={popupData.startDate} name="startDate" onChange={onInputChange} />
-                    </div>
-
-                    <div>
-                        <label>endDate</label>
-                        <input type="date" value={popupData.endDate} name="endDate" onChange={onInputChange} />
-                    </div>
-                    <div>
-                        <input type="radio" name="status" id="DISPLAY" value="DISPLAY" checked={popupData.status === 'DISPLAY'} onChange={onInputChange} />
-                        <label htmlFor="DISPLAY">표시</label>
-                        <input type="radio" name="status" id="HIDDEN" value="HIDDEN" checked={popupData.status === 'HIDDEN'} onChange={onInputChange} />
-                        <label htmlFor="HIDDEN">숨김</label>
-                    </div>
-                    <div>
-
-                        {showWhiteScreen && (<div className="whiteScreen" onClick={handleScreenClick} />)}
-                        <div className="locationPoint">
-                            X: <input type="text" value={popupData.xLoc} readOnly />
-                            Y: <input type="text" value={popupData.yLoc} readOnly />
-                        </div>
-                        <button onClick={handleButtonClick}>위치 변경</button>
-                    </div>
-                </div>
-                <div className="formSection">
-                    <div>
-                        <img src={previewImg} style={{ width: '200px', height: '250px' }} />
-                        <input type="file" name='file' onChange={onImgChange} />
-                        <label>이미지</label>
-                    </div>
+        <div className="popupForm" style={{ border: "1px solid #888" }}>
+    <button className="closeButton" onClick={() => setIsAddOpen(false)}>&times;</button>
+    <div className="formContainer">
+        <div className="formSection">
+            <div className="divSec">
+                <label className="pop-label">제목</label>
+                <input type="text" className="form-control" name="title" onChange={onInputChange} />
+            </div>
+            <div className="divSec">
+                <label className="pop-label">시작일</label>
+                <input type="date" className="form-control" value={popupData.startDate} name="startDate" onChange={onInputChange} />
+            </div>
+            <div className="divSec">
+                <label className="pop-label">종료일</label>
+                <input type="date" className="form-control" value={popupData.endDate} name="endDate" onChange={onInputChange} />
+            </div>
+            <div className="divSec">
+                <label className="pop-label">상태</label>
+                <div className="form-check">
+                    <input type="radio" className="form-check-input" name="status" id="DISPLAY" value="DISPLAY" checked={popupData.status === 'DISPLAY'} onChange={onInputChange} />
+                    <label className="form-check-label" htmlFor="DISPLAY">표시</label>
+        
+                    <input type="radio" className="form-check-input" name="status" id="HIDDEN" value="HIDDEN" checked={popupData.status === 'HIDDEN'} onChange={onInputChange} />
+                    <label className="form-check-label" htmlFor="HIDDEN">숨김</label>
                 </div>
             </div>
-            <button onClick={onCreate}>추가</button>
+            <div className="divSec">
+                {showWhiteScreen && (<div className="whiteScreen" onClick={handleScreenClick} />)}
+                <div className="locationPoint">
+                    X: <input type="text" className="form-control" value={popupData.xLoc} readOnly />
+                    Y: <input type="text" className="form-control" value={popupData.yLoc} readOnly />
+                </div>
+                <button className="btn loc-btn" onClick={handleButtonClick}>위치 변경</button>
+            </div>
         </div>
+        <div className="formSection">
+            <div className="divSec">
+                <div className="pop-Img">
+                    <div className="img-fluid">
+                    <img src={previewImg}  alt="미리보기"  />
+                    </div>
+                    <input type="file" className="form-control-file" id="popImg" name="file" onChange={onImgChange} />
+                    <label htmlFor="popImg" className="pop-file-label">{image == ""?"이미지를 추가해주세요.":image.name}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div className="create-pop-button">
+        <button className="btn create-btn" onClick={onCreate}>추가</button>
+    </div>
+</div>
     )
 }
 

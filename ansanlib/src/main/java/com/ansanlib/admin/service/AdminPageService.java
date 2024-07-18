@@ -1,5 +1,6 @@
 package com.ansanlib.admin.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -53,7 +54,8 @@ public class AdminPageService {
 
 	// 조회(홈페이지용)
 	public ResponseEntity<List<Popup>> homePopupList() {
-		List<Popup> popuplist = popupRepository.findByStatus(PopupStatus.DISPLAY);
+		 LocalDate today = LocalDate.now();
+		List<Popup> popuplist = popupRepository.findByStartDateLessThanEqualAndEndDateGreaterThanEqualAndStatus(today,today,PopupStatus.DISPLAY);
 		return ResponseEntity.status(HttpStatus.OK).body(popuplist);
 	}
 
