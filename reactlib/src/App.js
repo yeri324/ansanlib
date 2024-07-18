@@ -39,6 +39,7 @@ import HolidayNew from './components/pages/admin/HolidayNew';
 import AddBook from './components/pages/admin/AddBook';
 
 import AdminBookRequest from './components/pages/admin/AdminBookRequest';
+import keywordCloud_bookId from './components/fragments/home/KeywordCloud_bookId';
 
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
                                 <Route path="/" element={<HomePage />} />
                                 <Route path="/fragments/header" element={<Header />} />
                                 <Route path="/fragments/footer" element={<Footer />} />
+                                <Route path="/fragments/home" element={<keywordCloud_bookId />} /> 
 
                                 <Route path="/admin/faq/list" element={<AdminFaqList />} />
                                 <Route path="/admin/faq/new" element={<AdminFaqForm />} />

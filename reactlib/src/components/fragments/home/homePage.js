@@ -13,6 +13,7 @@ import Bestseller from './Bestseller';
 import LibraryPage from '../../pages/visit/LibraryPage';
 import Popup from './popup';
 import KeywordCloud from './KeywordCloud';
+import KeywordCloud_bookId from './KeywordCloud_bookId';
 // import BookCloud from './bookCloud';
 // import StatisticsPage from '../../pages/visit/StatisticsPage';
 // import Calendar from 'react-calendar'
@@ -51,7 +52,8 @@ const HomePage = () => {
                 </div>
                 <div className="key-cloud">
                   <KeywordCloud />
-                </div>
+                </div> 
+                <KeywordCloud_bookId />
               </div>
               <div className="bottom-column">
                 <div className="notice-board">
