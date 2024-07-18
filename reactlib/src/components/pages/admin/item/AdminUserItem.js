@@ -1,5 +1,5 @@
 import React from 'react';
-import "./AdminPage.css";
+import "../page/AdminUserDetail";
 
 const AdminUserItem = ({ user, handleDetail }) => {
     return (

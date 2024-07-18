@@ -4,7 +4,7 @@ import Modal from 'react-modal';
 import Calendar from 'react-calendar'; 
 import './UserResItem.css';
 import moment from 'moment';
-import './AdminPage.css';
+
 import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
 import Auth from '../../../helpers/Auth';
 import RedirectLogin from '../../../helpers/RedirectLogin';

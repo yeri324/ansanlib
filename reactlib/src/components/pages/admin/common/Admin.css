@@ -30,3 +30,59 @@ min-height: 850px;
 
 
 }
+.admin-main-header {
+  display: flex;
+  flex-direction: row;
+  
+}
+
+
+.admin-main-visit {
+  width: 33%;
+  padding-top: 50px;
+  font-size: 1.2em;
+}
+
+.admin-main-title {
+  font-size: 1.5em;
+}
+.admin-dash{
+width: 100%;
+display: flex;
+display: row;
+border: 1px solid saddlebrown;
+
+}
+
+.admin-dash-left {
+  background-color: aquamarine;
+  padding-bottom:10px;
+  width: 25%;
+
+}
+
+/*left 전체박스 */
+.admin-dash-left-box {
+  width: 100%;
+  padding:10px;
+  height: 400px;
+  
+}
+
+
+
+
+
+.admin-dash-right {
+  background-color: skyblue;
+  width: 75%;
+}
+
+
+
+
+
+
+
+
+

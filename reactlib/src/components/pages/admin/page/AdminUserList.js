@@ -1,5 +1,5 @@
 import "./AdminPage.css";
-import AdminUserItem from './AdminUserItem';
+import AdminUserItem from '../item/AdminUserItem';
 import AdminHeader from "../common/AdminHeader";
 import AdminSide from "../common/AdminSide";
 import AdminPagination from "../common/AdminPagination";
@@ -10,10 +10,6 @@ import RedirectLogin from '../../../helpers/RedirectLogin';
 
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-
-
-
-
 
 const AdminUserList = () => {
   const { axios } = useAuth();
@@ -38,12 +34,23 @@ const AdminUserList = () => {
   };
 
   const onSearch = () => {
-    axios.post('/admin/user/search', {
+    axios.post(`/admin/user/search`, {
       searchBy: searchOption.searchBy,
       searchQuery: searchOption.searchQuery,
       selectRadio: searchOption.selectRadio,
     }).then((response) => {
       setSearchResult(response.data);
+    }).catch(err => {
+      console.error("Error fetching search results:", err.response ? err.response.data : err.message);
+      if (err.response) {
+        console.error('Status:', err.response.status);
+        console.error('Data:', err.response.data);
+        console.error('Headers:', err.response.headers);
+      } else if (err.request) {
+        console.error('Request:', err.request);
+      } else {
+        console.error('Error message:', err.message);
+      }
     });
   };
 
@@ -64,10 +71,7 @@ const AdminUserList = () => {
 
   return (
     <>
-
       <div className="admin-page">
-
-
         <div className="admin-base">
           <AdminHeader />
           <AdminSide />
@@ -77,14 +81,11 @@ const AdminUserList = () => {
             <div className="admin-page-title">
               <h1>회원목록</h1>
             </div>
-
-
             <div className="admin-page-search">
               <select name="searchBy" value={searchOption.searchBy} onChange={handleOnChange}>
                 <option value="userId">ID</option>
                 <option value="userName">이름</option>
               </select>
-
               <input type="text" name="searchQuery" value={searchOption.searchQuery} onChange={handleOnChange} />
               <input type="radio" id="all" name="selectRadio" value="all" checked={searchOption.selectRadio === "all"} onChange={handleOnChange} />
               <label htmlFor="all">all</label>
@@ -92,11 +93,8 @@ const AdminUserList = () => {
               <label htmlFor="penalty">penalty</label>
               <input type="radio" id="latefee" name="selectRadio" value="latefee" checked={searchOption.selectRadio === "latefee"} onChange={handleOnChange} />
               <label htmlFor="latefee">latefee</label>
-              <button type="button" class="btn btn-outline-dark" onClick={onSearch}>Search</button>
+              <button type="button" className="btn btn-outline-dark" onClick={onSearch}>Search</button>
             </div>
-
-
-
             <table className="admin-table">
               <thead>
                 <tr className="admin-th-tr">
@@ -117,14 +115,12 @@ const AdminUserList = () => {
                 ))}
               </tbody>
             </table>
-
-            <div className="admin-pagination" >
+            <div className="admin-pagination">
               <AdminPagination
                 currentPage={currentPage}
                 totalPages={totalPages}
                 paginate={paginate}
               />
-
             </div>
           </div>
         </main>
@@ -143,4 +139,3 @@ export default function () {
     </>
   );
 }
-
