@@ -7,15 +7,17 @@ import "./AdminPage.css";
 import { useNavigate } from 'react-router-dom';
 import moment from "moment";
 import DatePicker from "react-datepicker";
-import axios from 'axios';
 
 
 import "react-datepicker/dist/react-datepicker.css"; // Include DatePicker CSS
-import AdminPagination from '../common/AdminPagination';
+import AdminBookRequestTable from '../item/AdminBookRequestTable'; // 추가
+
+import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
+import Auth from '../../../helpers/Auth';
+import RedirectLogin from '../../../helpers/RedirectLogin';
 
 const AdminBookRequest = () => {
-
-
+  const { axios } = useAuth();
   const [requests, setRequests] = useState([]);
   const [groupedRequests, setGroupedRequests] = useState([]);
   const [error, setError] = useState(null);
@@ -155,7 +157,6 @@ const AdminBookRequest = () => {
 
   return (
     <>
-
       <div className="admin-page">
         <div className="admin-base">
           <AdminHeader />
@@ -194,43 +195,18 @@ const AdminBookRequest = () => {
                 />
               )}
               <button type="button" className="btn btn-outline-dark" onClick={handleSearch}>검색</button>
-              <button type="button" id="adminbtn" class="btn btn-outline-dark" onClick={handleRefresh}>새로고침</button>
+              <button type="button" id="adminbtn" className="btn btn-outline-dark" onClick={handleRefresh}>새로고침</button>
             </div>
 
-            <table className="admin-table">
-              <thead>
-                <tr className='admin-th-tr'>
-                  <th>No</th>
-                  <th className='sortable' onClick={() => handleSort('isbn')}>ISBN</th>
-                  <th className='sortable' onClick={() => handleSort('title')}>도서 제목</th>
-                  <th className='sortable' onClick={() => handleSort('author')}>작가</th>
-                  <th className='sortable' onClick={() => handleSort('publisher')}>출판사</th>
-                  <th className='sortable' onClick={() => handleSort('pub_year')}>출판년도</th>
-                  <th className='sortable' onClick={() => handleSort('count')}>신청 권수</th>
-                </tr>
-              </thead>
-              <tbody>
-                {searchResult.map((request, index) => (
-                  <tr key={index} onClick={() => handleOpenModal(request)} className='admin-td-tr'>
-                    <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
-                    <td>{request.isbn}</td>
-                    <td>{request.title}</td>
-                    <td>{request.author}</td>
-                    <td>{request.publisher}</td>
-                    <td>{request.pub_year}</td>
-                    <td>{request.count}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-
-            <div className="admin-pagination">
-              <AdminPagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                paginate={paginate}
-              />
-            </div>
+            <AdminBookRequestTable
+              searchResult={searchResult}
+              currentPage={currentPage}
+              itemsPerPage={itemsPerPage}
+              handleSort={handleSort}
+              handleOpenModal={handleOpenModal}
+              totalPages={totalPages}
+              paginate={paginate}
+            />
 
             {isModalOpen && (
               <AdminBookRequestDetail
@@ -246,4 +222,13 @@ const AdminBookRequest = () => {
     </>
   );
 };
-export default AdminBookRequest;
+export default function () {
+  return (
+    <>
+      <RedirectLogin />
+      <Auth loginStatus={LOGIN_STATUS.LOGGED_IN} roles={ROLES.ADMIN}>
+        <AdminBookRequest  />
+      </Auth>
+    </>
+  );
+}

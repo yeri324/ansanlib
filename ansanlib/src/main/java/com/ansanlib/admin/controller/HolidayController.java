@@ -45,8 +45,16 @@ public class HolidayController {
     
     
     @GetMapping("/list")
-    public ResponseEntity<CommonListResponse<List<Holiday>>> getAllHolidays() {
-        List<Holiday> holidays = holidayService.getAllHolidays();
+    public ResponseEntity<CommonListResponse<List<Holiday>>> getAllHolidays(@RequestParam(value = "date", required = false) String date) {
+        List<Holiday> holidays;
+        
+        if (date != null) {
+            LocalDate localDate = LocalDate.parse(date);
+            holidays = holidayService.getHolidaysByDate(localDate);
+        } else {
+            holidays = holidayService.getAllHolidays();
+        }
+
         for (Holiday h : holidays) {
             if (h.getLibrary() != null) {
                 System.out.println("Library ID: " + h.getLibrary().getId() + ", Library Number: " + h.getLibrary().getLibNum());

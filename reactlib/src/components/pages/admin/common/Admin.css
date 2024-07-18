@@ -21,7 +21,7 @@
 /*메인 폼 영역 */
 .admin-main-main>.admin-main-body {
   
-  padding: 20px 100px 20px 100px;
+  padding: 20px;
   border-radius: 15px;
 min-height: 850px;
   align-items: center;
@@ -30,59 +30,114 @@ min-height: 850px;
 
 
 }
-.admin-main-header {
+.admin-main-body > .admin-main-dash-top {
+  width:100%;
+  height: 90px;
+  border: 1px solid darkblue;
+
+ }
+
+ .admin-main-body > .admin-main-dash-body {
+  width: 100%;
+  display:flex; 
+  flex-direction:row; 
+  border:1px solid rgb(100, 100, 8);
+   min-height: 850px;}
+   
+
+
+
+   .admin-main-left, .admin-main-right {
+    border: 1px solid saddlebrown;
+    width: 100%;
+    
+   }
+
+
+
+.admin-left-box1 {
+  background-color: aliceblue;
+  height: 350px;
+}
+
+
+.calendar-container {
+  width: 100%;
+  
+  
+}
+
+/*캘린더 날짜*/
+.react-calendar__navigation button {
+  font-family: 'Noto Sans KR', sans-serif;
+  color: #162057; /* 원하는 색상 */
+  font-size: 16px;
+  font-weight: bold;
+}
+
+
+
+.admin-left-box2 {
+  border: 1px solid rgba(47, 95, 255, 0.295);
+  font-size: 13px;
+margin-top: 10px;
+  background-color: rgb(238, 241, 204);
+  height: 300px;
+}
+
+.admin-table {
+  margin: 0 auto;
+  width: 100%;
+}
+.admin-left-box2 > .admin-table th, tr , 
+.admin-left-box3 > .admin-table th, tr {
+  background-color: white;
+}
+
+
+.admin-left-box3  {
+  font-size: 13px;
+  margin-top: 10px;
+  background-color: rgb(125, 190, 247);
+  height: 300px;
+}
+
+
+.admin-right-box1 {
+  background-color: rgba(241, 82, 156, 0.055);
+  height: 300px;
   display: flex;
   flex-direction: row;
-  
-}
+  justify-content: space-around;
+
+  }
 
 
-.admin-main-visit {
-  width: 33%;
-  padding-top: 50px;
-  font-size: 1.2em;
-}
+  .admin-right-graph {
+    border: 1px solid darkgreen;
+    width: 100%;
+    margin:20px;
+  }
 
-.admin-main-title {
-  font-size: 1.5em;
-}
-.admin-dash{
-width: 100%;
-display: flex;
-display: row;
-border: 1px solid saddlebrown;
-
-}
-
-.admin-dash-left {
-  background-color: aquamarine;
-  padding-bottom:10px;
-  width: 25%;
-
-}
-
-/*left 전체박스 */
-.admin-dash-left-box {
-  width: 100%;
-  padding:10px;
+.admin-right-box2 {
+  background-color: rgb(252, 233, 242);
   height: 400px;
-  
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
 }
 
 
 
-
-
-.admin-dash-right {
-  background-color: skyblue;
-  width: 75%;
+.admin-right-board{
+  border: 1px solid gold;
+  width: 50%;
+ margin:20px;
 }
 
-
-
-
-
-
-
-
+.admin-right-box3 {
+  background-color: rgba(248, 125, 180, 0.329);
+  height: 300px;
+}
 

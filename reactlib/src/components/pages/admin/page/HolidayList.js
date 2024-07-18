@@ -227,14 +227,14 @@ const HolidayList = () => {
               </tbody>
             </table>
 
-          <div className="admin-pagination" >
+        
           <div className="admin-pagination">
               <AdminPagination
                 currentPage={currentPage}
                 totalPages={totalPages}
                 paginate={paginate}
               />
-            </div>
+ 
          
 
 </div>

@@ -1,3 +1,4 @@
+// HolidayDetail.js
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./AdminModal.css";
@@ -14,10 +15,10 @@ const HolidayDetail = ({ show, handleClose, holidays }) => {
             <button type="button" className="btn-close" aria-label="Close" onClick={handleClose}></button>
           </div>
           <div className="modal-body">
-            {holidays.length > 0 ? (
+            {holidays && holidays.length > 0 ? (
               <table className='table' id="admin-modal-table">
                 <thead>
-                  <tr >
+                  <tr>
                     <th>번호</th>
                     <th style={{ width: "30%" }}>도서관</th>
                     <th>날짜</th>
