@@ -4,6 +4,9 @@ import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
 import Auth from '../../../helpers/Auth';
 import RedirectLogin from '../../../helpers/RedirectLogin';
 import SearchModal from './SearchModal';
+import './RecForm.css';
+import AdminHeader from '../../admin/AdminHeader';
+import AdminSide from '../../admin/AdminSide';
 
 function AdminRecForm() {
   const { axios } = useAuth();
@@ -48,9 +51,20 @@ function AdminRecForm() {
   }
 
   return (
+    <div className="admin-page">
+            <div className="admin-base">
+                <AdminHeader />
+                <AdminSide />
+            </div>
+            <main className="admin-page-main">
+                <div className="admin-page-body popupPage">
+                    <div className="admin-page-title">
+                        <h1>추천 게시글 작성</h1>
+                    </div>
     <div class='rec-form'>
+      <div class='reccreate-form'>
       <form onSubmit={onCreate}>
-        <h3>글 등록하기</h3>
+        <div class='all-item'>
         <div class="content-item">
           <input id='title' type='text' name='title'
             placeholder={isTitleClicked === true ? "" : "제목을 작성해주세요."}
@@ -64,17 +78,26 @@ function AdminRecForm() {
             onChange={onInputChange} />
         </div>
         <div class='book-info'>
+          <div class = 'leftside'>
           <input type='text' name='book-title' value={selectBook.title} readOnly />
           <input type='text' name='book-author' value={selectBook.author} readOnly />
+          </div>
+          <div class='rightside'>
+          <button type='button' onClick={searchHandle}>도서 검색</button>
+          </div>
         </div>
-        <button type='button' onClick={searchHandle}>도서 검색</button>
         <button type='submit'>저장</button>
+        </div>
       </form>
+      </div>
       <div>
         {isOpen &&
           <SearchModal setIsOpen={setIsOpen} setSelectBook={setSelectBook} />
         }
       </div>
+    </div>
+    </div>
+    </main>
     </div>
   );
 }

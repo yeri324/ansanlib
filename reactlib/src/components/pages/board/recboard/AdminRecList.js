@@ -5,6 +5,9 @@ import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
 import Auth from '../../../helpers/Auth';
 import RedirectLogin from '../../../helpers/RedirectLogin';
 import AdminRecCard from './AdminRecCard';
+import AdminHeader from '../../admin/AdminHeader';
+import AdminSide from '../../admin/AdminSide';
+import './RecList.css';
 
 
 function AdminRecList() {
@@ -60,30 +63,47 @@ function AdminRecList() {
             )
             window.location.reload(navigate("/admin/recboard/list", { repalce: true }));
         }
-       }
+    }
 
     return (
-        <div class='rec-list'>
-        {searchResult.map((card)=>(
-            <div class='card'>
-           <AdminRecCard card={card} />
-           <button type='button' onClick={() => onDelete(card.id)}>삭제</button>
-           </div>
-        ))}
-         <button type='button' onClick={onCreate}>생성</button>
-          <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+        <div className="admin-page">
+            <div className="admin-base">
+                <AdminHeader />
+                <AdminSide />
+            </div>
+            <main className="admin-page-main">
+                <div className="admin-page-body popupPage">
+                    <div className="admin-page-title">
+                        <h1>추천 게시판 관리</h1>
+                    </div>
+                    <div class='all-reclist'>
+                        <div class='pg-msg'>총 {totalRecCount}건 / {totalPages} 페이지</div>
+                    <div class='cre-btn'>
+                    <button type='button' onClick={onCreate}>생성</button>
+                    </div>
+                    <div class='rec-list'>
+                        {searchResult.map((card) => (
+                            <div class='card'>
+                                <AdminRecCard card={card} />
+                                <button type='button' onClick={() => onDelete(card.id)}>삭제</button>
+                            </div>
+                        ))}
+                    </div>
+                    <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+                </div>
+                </div>
+            </main>
         </div>
-        
     );
 }
 
-export default function() {
+export default function () {
     return (
-      <>
-        <RedirectLogin />
-        <Auth loginStatus={LOGIN_STATUS.LOGGED_IN} roles={ROLES.ADMIN} >
-          <AdminRecList />
-        </Auth>
-      </>
+        <>
+            <RedirectLogin />
+            <Auth loginStatus={LOGIN_STATUS.LOGGED_IN} roles={ROLES.ADMIN} >
+                <AdminRecList />
+            </Auth>
+        </>
     );
-  };
+};

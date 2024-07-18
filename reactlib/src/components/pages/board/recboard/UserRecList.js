@@ -1,11 +1,11 @@
-import Card from 'react-bootstrap/Card';
 import React, { useEffect, useState, } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Pagination from '../common/Pagination';
 import axios from 'axios';
 import AdminRecCard from './AdminRecCard';
+import Header from '../../../fragments/header/header';
+import Footer from '../../../fragments/footer/footer';
 
-function UserRecList () {
+function UserRecList() {
     const [searchResult, setSearchResult] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -35,14 +35,22 @@ function UserRecList () {
         });
     }
 
-    return(
-        <div class='rec-list'>
-        {searchResult.map((card)=>(
-           <div class='card'>
-           <AdminRecCard card={card}/>
-       </div>
-        ))}
-          <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+    return (
+        <div>
+            <Header />
+        <div class='all-reclist'>
+            <div>
+            <div class='rec-list'>
+                {searchResult.map((card) => (
+                    <div class='card'>
+                        <AdminRecCard card={card} />
+                    </div>
+                ))}
+                </div>
+                <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+            </div>
+        </div>
+        <Footer />
         </div>
     );
 }

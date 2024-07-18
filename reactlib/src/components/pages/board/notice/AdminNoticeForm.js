@@ -73,7 +73,7 @@ function AdminNoticeForm() {
   return (
     <div>
       <div class="create-form">
-        <form onSubmit={onCreate}>
+        <form onSubmit={onCreate} class='form-list'>
           <h3>글 등록하기</h3>
           <div class="content-item">
             <input

@@ -35,16 +35,14 @@ function AdminRecCard({ card }) {
 
     return (
         <div class='card'>
-            <Card  style={{ width: '18rem' }}>
+            <Card>
                 <div onClick={onDetail}>
                 <div class='card-img'>
                     <Card.Img variant="top" src={viewImg} />
                 </div>
-                <Card.Body>
-                    <Card.Title>{card.title}</Card.Title>
-                    <Card.Text>
-                        {card.content}
-                    </Card.Text>
+                <Card.Body class='card-body'>
+                    <Card.Title class='title'>{card.title}</Card.Title>
+                    <Card.Text class='content'>{card.content}</Card.Text>
                 </Card.Body>
                 </div>
             </Card>
