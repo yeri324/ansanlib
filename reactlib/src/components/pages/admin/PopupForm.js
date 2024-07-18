@@ -16,8 +16,8 @@ const PopupForm = ({ popup, setIsOpen }) => {
         setIsOpen(false);
     }
 
-     //데이터수정
-     const onUpdate = () => {
+    //데이터수정
+    const onUpdate = () => {
         const formData = new FormData();
         formData.append("id", popItem.id);
         formData.append("title", popItem.title);
@@ -100,47 +100,50 @@ const PopupForm = ({ popup, setIsOpen }) => {
 
     return (
         <div className="popupForm">
-            <button onClick={onClosePopup}>&times;</button>
+            <button className="closeButton" onClick={onClosePopup}>&times;</button>
             <div className="formContainer">
                 <div className="formSection">
-                    <div>
-                        <label>title</label>
-                        <input type="text" name='title' value={popItem.title} onChange={handleChange} />
+                    <div className="divSec">
+                        <label className="pop-label">제목</label>
+                        <input type="text" className="form-control" name="title" value={popItem.title} onChange={handleChange} />
                     </div>
-                    <div>
-                        <label>startDate</label>
-                        <input type="date" name='startDate' value={popItem.startDate} onChange={handleChange} />
+                    <div className="divSec">
+                        <label className="pop-label">시작일</label>
+                        <input type="date" className="form-control" name="startDate" value={popItem.startDate} onChange={handleChange} />
                     </div>
-
-                    <div>
-                        <label>endDate</label>
-                        <input type="date" name='endDate' value={popItem.endDate} onChange={handleChange} />
+                    <div className="divSec">
+                        <label className="pop-label">종료일</label>
+                        <input type="date" className="form-control" name="endDate" value={popItem.endDate} onChange={handleChange} />
                     </div>
-                    <div>
-                        <input type="radio" name="status" id="DISPLAY" value="DISPLAY" checked={popItem.status === 'DISPLAY'} onChange={handleChange} />
-                        <label htmlFor="DISPLAY">표시</label>
-                        <input type="radio" name="status" id="HIDDEN" value="HIDDEN" checked={popItem.status === 'HIDDEN'} onChange={handleChange} />
-                        <label htmlFor="HIDDEN">숨김</label>
+                    <div className="divSec">
+                        <label className="form-check-label">상태:</label>
+                        <div className="form-check">
+                            <input type="radio" className="form-check-input" name="status" id="DISPLAY" value="DISPLAY" checked={popItem.status === 'DISPLAY'} onChange={handleChange} />
+                            <label className="form-check-label" htmlFor="DISPLAY">표시</label>
+                        </div>
+                        <div className="form-check">
+                            <input type="radio" className="form-check-input" name="status" id="HIDDEN" value="HIDDEN" checked={popItem.status === 'HIDDEN'} onChange={handleChange} />
+                            <label className="form-check-label" htmlFor="HIDDEN">숨김</label>
+                        </div>
                     </div>
-                    <div>
-
+                    <div className="divSec">
                         {showWhiteScreen && (<div className="whiteScreen" onClick={handleScreenClick} />)}
                         <div className="locationPoint">
-                            X: <input type="text" value={popItem.xloc} readOnly />
-                            Y: <input type="text" value={popItem.yloc} readOnly />
+                            X: <input type="text" className="form-control" value={popItem.xloc} readOnly />
+                            Y: <input type="text" className="form-control" value={popItem.yloc} readOnly />
                         </div>
-                        <button onClick={handleButtonClick}>위치 변경</button>
+                        <button className="btn btn-primary mt-2" onClick={handleButtonClick}>위치 변경</button>
                     </div>
                 </div>
                 <div className="formSection">
-                    <div>
-                        <img src={viewImg} style={{ width: '200px', height: '250px' }} />
-                        <input type="file" name='file' onChange={handleImgChange} />
-                        <label>{popup.imgName}</label>
+                    <div className="divSec">
+                        <img src={viewImg} className="img-fluid" alt="미리보기" />
+                        <input type="file" className="form-control-file mt-2" name="file" onChange={handleImgChange} />
+                        <label className="pop-label">{popup.imgName}</label>
                     </div>
                 </div>
             </div>
-            <button onClick={onUpdate}>수정하기</button>
+            <button className="btn btn-success mt-3" onClick={onUpdate}>수정하기</button>
         </div>
     )
 }

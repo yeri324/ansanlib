@@ -1,3 +1,27 @@
+.popupPage thead{
+    text-align: center;
+  
+}
+.popupPage th{
+    background-color: #d4e5f1;
+}
+
+.popupPage td{
+    height: 40px;
+    line-height: 40px;
+
+}
+
+.popupPage .btn{
+    background-color: #fff;
+    border: 1px solid #333;
+    color: #000;
+}
+
+.popupItems >td{
+    background-color: #000;
+}
+
 
 .whiteScreen {
     position: fixed;
@@ -15,6 +39,15 @@
     margin-right: 10px;
 }
 
+
+.formContainer{
+    display: flex;
+    padding: 10px;
+}
+.formContainer > .formSection{
+flex: 1;
+}
+
 .popupForm{
     position: fixed;
     top: 30%;
@@ -23,12 +56,23 @@
     border: 1px solid #333;
     padding: 20px;
     width: 600px;
-    
+    font-size: 13px;
 }
-.formContainer{
-    display: flex;
-    text-align: center;
+
+.popupForm .formSection{
+    padding: 10px;
 }
-.formContainer > .formSection{
-flex: 1;
+
+.popupForm .divSec{
+    margin-bottom: 8px;
+}
+
+.popupForm .divSec  .pop-label{
+    margin-left:5px;
+}
+
+.divSec > img{
+    border: 1px solid #eee;
+    width: 240px;
+    height: 315px;
 }

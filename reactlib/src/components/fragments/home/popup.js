@@ -56,7 +56,7 @@ const Popup = ({ popup }) => {
             left: `${popup.xloc}px`
           }}
         >
-          <img src={viewImg} alt={popup.title} style={{ width: '360px', height: '420px', border: '1px solid #333' }} />
+          <img src={viewImg} alt={popup.title} style={{ width: '360px', height: '420px' }} />
           <div>
             <button className="btn_C" onClick={handleHidePopup}>오늘 하루 동안 보지 않기</button>
             <button className="btn_X" onClick={closePopup}>X</button>
