@@ -1,12 +1,14 @@
-import axios from 'axios';
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BoardItem from '../common/BoardItem';
 import Pagination from '../common/Pagination';
-import {LoginContext} from "../../security/contexts/LoginContextProvider";
+import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
+import Auth from '../../../helpers/Auth';
+import RedirectLogin from '../../../helpers/RedirectLogin';
 import '../../board/common/List.css'
 
 function AdminNoticeList() {
+    const { axios } = useAuth();
     const [checkedList, setCheckedList] = useState([]);
     const [isChecked, setIsChecked] = useState(false);
     const navigate = useNavigate();
@@ -16,29 +18,34 @@ function AdminNoticeList() {
         searchQuery: "",
     });
 
-    // 로그인/인증 여부
-    const { isLogin, roles } = useContext(LoginContext);
-
-
     //페이징용 useState 
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [totalNoticeCount, setTotalNoticeCount] = useState(0);
     const noticePerPage = 8;
 
-    //리스트 읽기
+    const { loginStatus, roles } = useAuth();
+
+    //리스트 읽기 + 권한 여부 확인
     useEffect(() => {
-        // if (!isLogin && !roles.isAdmin) {
-        //     alert("관리자로 로그인 해주세요.")
-        //     navigate("/login")
-        //     return
-        // } 
+        //로그아웃됨.
+        if (loginStatus === LOGIN_STATUS.LOGGED_OUT) {
+            alert("로그인이 필요합니다.");
+            navigate("/login");
+            return;
+        } else if (loginStatus === LOGIN_STATUS.LOGGED_IN) {
+            //어드민인지 확인
+            if (roles !== ROLES.ADMIN) {
+                alert("권한이 없습니다.");
+                navigate(-1);
+            }
+        }
         onSearch(currentPage);
-    }, [currentPage]);
+    }, [loginStatus, currentPage]); //로그인 상태 변경시 useEffect 실행
 
     // 생성페이지 이동
     const onCreate = () => {
-        navigate('/admin/notice/new')
+        navigate('/admin/notice/form')
     }
 
     //상세페이지 이동
@@ -171,4 +178,13 @@ function AdminNoticeList() {
     );
 };
 
-export default AdminNoticeList;
+export default function () {
+    return (
+        <>
+            <RedirectLogin />
+            <Auth loginStatus={LOGIN_STATUS.LOGGED_IN}>
+                <AdminNoticeList />
+            </Auth>
+        </>
+    );
+};

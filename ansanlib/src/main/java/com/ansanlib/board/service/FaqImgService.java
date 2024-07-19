@@ -40,15 +40,13 @@ public class FaqImgService {
 		faqImgRepository.save(faqImg);
 	}
 
-	public void updateFaqImg(Long id, MultipartFile faqImgFile, Faq faq) throws Exception {
-
-		Optional<FaqImg> checkImg = faqImgRepository.findByFaq_IdAndId(faq.getId(), id);
-
-		if (checkImg.isEmpty()) {
-			saveFaqImg(faq, faqImgFile);
-		} else {
+	public void updateFaqImg(String id, MultipartFile faqImgFile, Faq faq) throws Exception {
+		
+		try {
+			Long imgId = Long.parseLong(id);
+			
 			// 기존 파일 조회
-			FaqImg faqImg = faqImgRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+			FaqImg faqImg = faqImgRepository.findById(imgId).orElseThrow(EntityNotFoundException::new);
 
 			// 기존 파일 삭제
 			if (StringUtils.hasText(faqImg.getImgName())) {
@@ -57,14 +55,17 @@ public class FaqImgService {
 
 			// 새파일 등록
 			Map<String, String> map = fileService.fileHandler(faqImgFile, "faq", faq.getId());
-
+			
 			String oriImgName = map.get("oriImgName");
 			String imgName = map.get("imgName");
 			String imgUrl = map.get("imgUrl");
 
 			faqImg.updateFaqImg(oriImgName, imgName, imgUrl);
+			
+			}catch(NumberFormatException e) {
+				saveFaqImg(faq, faqImgFile);
+			}		
 
-		}
 	}
 
 	public void deleteFaq(Long id) throws Exception{

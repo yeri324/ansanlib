@@ -6,14 +6,14 @@
     padding: 0;
 }
 
-.create-form form > h3 {
+.create-form .form-list > h3 {
     margin: 0 auto;
     margin-bottom: 10px;
     text-align: center;
 }
 
 /* Form Styles */
-.create-form form {
+.create-form .form-list {
     margin: 0 auto;
     text-align: center;
     justify-content: center;
@@ -25,31 +25,32 @@
 }
 
 
-.create-form form input,textarea {
+.create-form .form-list input,
+.create-form .form-list textarea {
     width: calc(70% - 22px);
     margin: 0 auto;
     padding: 10px;
-    margin-bottom: 10px;
+    margin: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 16px;
     font-family: Arial, sans-serif;
 }
 
-.create-form form input[type='file']{
+.create-form .form-list input[type='file']{
     margin-bottom: 2px;
 }
-.create-form form textarea{
+.create-form .form-list textarea{
     height:500px;
 }
 
-.create-form form input[type='text']::placeholder {
+.create-form .form-list input[type='text']::placeholder {
     color: #999;
     font-family: Arial, sans-serif;
 }
 
-.create-form form button[type='button'],
-.create-form form button[type='submit'] {
+.create-form .form-list button[type='button'],
+.create-form .form-list button[type='submit'] {
     display: inline-block;
     padding: 10px 20px;
     border: none;

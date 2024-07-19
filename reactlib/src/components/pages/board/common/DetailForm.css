@@ -1,12 +1,12 @@
 /* General Styles */
-.detail-form  {
+.detail-form {
     font-family: Arial, sans-serif;
     background-color: #f8f9fa;
     margin: 0;
     padding: 0;
 }
 
-.detail-form form > h3 {
+.detail-form form>h3 {
     margin: 0 auto;
     margin-bottom: 10px;
     text-align: center;
@@ -24,7 +24,7 @@
     margin-bottom: 20px;
 }
 
-.detail-form form input,textarea {
+.detail-form form input, .detail-form form textarea {
     width: calc(70% - 22px);
     margin: 0 auto;
     padding: 10px;
@@ -35,13 +35,14 @@
     font-family: Arial, sans-serif;
 }
 
-.detail-form form input[type='file']{
+.detail-form form input[type='file'] {
     width: calc(70% - 22px);
     margin: 0 auto;
     margin-bottom: 2px;
 }
-.detail-form form textarea{
-    height:500px;
+
+.detail-form form textarea {
+    height: 500px;
 }
 
 .detail-form form input[type='text']::placeholder {
@@ -59,7 +60,7 @@
     color: #fff;
     font-size: 16px;
     cursor: pointer;
-    margin: 10px;
+    margin: 5px;
 }
 
 .detail-form .img-upload {
@@ -70,37 +71,75 @@
     align-items: center;
 }
 
-.detail-form .img-upload label {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    font-size: 14px;
-    color: #333;
+.detail-form .img-upload input[type='file'] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
 }
 
-.detail-form .img-upload input[type='file'] {
-    padding: 5px;
-    font-size: 14px;
-    border: 1px solid #ccc;
+.detail-form .img-upload label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0px 5px 0px 16px;
+    margin: 5px 0;
     border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid #333;
+    text-align: left;
+}
+
+.detail-form .img-upload .file-label-text {
+    flex: 1;
+}
+
+.detail-form .img-upload button {
+    margin-left: auto;
+}
+
+.detail-form .img-upload button:hover {
+    background-color: #c82333;
+}
+
+.detail-form .img-container1 {
+    margin: 0 auto;
+    width: 70%;
+}
+
+.detail-form .img-container1 .file-uplo {
+    width: 100%;
 }
 
 /* 이미지 컨테이너 기본 스타일 */
-.detail-form .img-preview-container {
-    display: inline-block;
-    position: relative;
+.detail-form .img-container1 .img-pre {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 20px;
+   
 }
 
 .detail-form .img-preview {
-    width: 100px;
-    height: 100px;
+    text-align: center;
     transition: transform 0.3s ease;
     cursor: pointer;
     z-index: 1;
 }
 
+.detail-form .img-preview{
+    width: 100px;
+    height: 100px;
+}
+
 /* 호버 시 이미지 확대 */
-.detail-form .img-preview-container:hover .img-preview {
-    transform: scale(3); /* (x)배 확대 */
+.detail-form .img-preview:hover {
+    transform: scale(3);
+    /* (x)배 확대 */
     z-index: 3;
 }

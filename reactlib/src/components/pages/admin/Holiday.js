@@ -8,7 +8,7 @@ import HolidayNew from './HolidayNew';
 import HolidayDetail from './HolidayDetail';
 import AdminHeader from './AdminHeader';
 import AdminSide from './AdminSide';
-
+import { GlobalStyles } from './GlobalStyles';
 const Holiday = () => {
   const [getMoment, setMoment] = useState(moment());
   const today = getMoment;
@@ -96,65 +96,81 @@ const Holiday = () => {
 
   return (
     <>
-      <AdminHeader />
-      <div className="admin-main-container">
+           <GlobalStyles width="100vw" />
+    <div className="admin-holiday-page">
+      <div className="admin-base">
+        <AdminHeader />
         <AdminSide />
-        <div className="Holidaycontent">
-          <div className='holidayTitle'><h1>캘린더</h1></div>
-          <div className="control">
-            <div className="date-navigation">
-              <button type="button" class="btn btn-outline-dark" onClick={() => setMoment(getMoment.clone().subtract(1, 'month'))}>이전달</button>
-              <h4><span> {today.format('YYYY 년 MM 월')}</span> </h4>
-              <button  type="button" class="btn btn-outline-dark" onClick={() => setMoment(getMoment.clone().add(1, 'month'))}>다음달</button>
-            </div>
-          </div>
-
-          <div className="tablebuttons">
-              <button type="button" class="btn btn-outline-dark" onClick={() => navigate('/admin/holiday/list')}>목록보기</button>
-              <button type="button" class="btn btn-outline-dark" onClick={() => setShowModal(true)}>등록하기</button>
-            </div>
-
-
-          <div className="calendar">
-            <div className='calBody'>
-              <table className='tableheader'>
-                <thead>
-                  <tr>
-                    <th style={{width:"14%"}}>일</th>
-                    <th style={{width:"14%"}}>월</th>
-                    <th style={{width:"14%"}}>화</th>
-                    <th style={{width:"14%"}}>수</th>
-                    <th style={{width:"14%"}}>목</th>
-                    <th style={{width:"14%"}}>금</th>
-                    <th style={{width:"14%"}}>토</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {renderCalendar()}
-                </tbody>
-              </table>
-            </div>
-            {showModal && (
-              <HolidayNew
-                showModal={showModal}
-                handleCloseModal={() => {
-                  setShowModal(false);
-                  fetchHolidays(); // 새로고침
-                }}
-                selectedDate={selectedDate}
-                setSelectedDate={setSelectedDate}
-                districts={districts}
-              />
-            )}
-           
-            <HolidayDetail
-              show={showDetail}
-              handleClose={() => setShowDetail(false)}
-              holidays={selectedHolidays}
-            />
-          </div>
-        </div>
       </div>
+
+      <main className="admin-holiday-main">
+        <div className="admin-holiday-body">
+          <div className="admin-holiday-title">
+            <h1> 도서관 일정 </h1>
+          </div>
+
+
+          <div className="admin-holiday-month">
+
+            <button type="button" id="adminbtn" class="btn btn-outline-dark"  onClick={() => setMoment(getMoment.clone().subtract(1, 'month'))}>이전달</button>
+            <h4><span> {today.format('YYYY 년 MM 월')}</span> </h4>
+            <button type="button" id="adminbtn" class="btn btn-outline-dark"  onClick={() => setMoment(getMoment.clone().add(1, 'month'))}>다음달</button>
+          </div>
+
+
+          <div className="admin-holiday-btn">
+
+            <button type="button" id="adminbtn" class="btn btn-outline-dark"  onClick={() => navigate('/admin/holiday/list')}>목록보기</button>
+            <button type="button" id="adminbtn" class="btn btn-outline-dark"  onClick={() => setShowModal(true)}>등록하기</button>
+          </div>
+
+
+          <div className="admin-holiday-table">
+            <table className='admin-calendar-table'>
+              <thead>
+                <tr>
+                  <th style={{ width: "14%" }}>일</th>
+                  <th style={{ width: "14%" }}>월</th>
+                  <th style={{ width: "14%" }}>화</th>
+                  <th style={{ width: "14%" }}>수</th>
+                  <th style={{ width: "14%" }}>목</th>
+                  <th style={{ width: "14%" }}>금</th>
+                  <th style={{ width: "14%" }}>토</th>
+                </tr>
+              </thead>
+              <tbody>
+                {renderCalendar()}
+              </tbody>
+            </table>
+          </div>
+
+
+          {showModal && (
+            <HolidayNew
+              showModal={showModal}
+              handleCloseModal={() => {
+                setShowModal(false);
+                fetchHolidays(); // 새로고침
+              }}
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+              districts={districts}
+            />
+          )}
+
+          <HolidayDetail
+            show={showDetail}
+            handleClose={() => setShowDetail(false)}
+            holidays={selectedHolidays}
+          />
+
+
+
+
+
+        </div>
+      </main>
+    </div>
     </>
   );
 };

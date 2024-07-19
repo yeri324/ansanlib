@@ -1,29 +1,24 @@
-import axios from 'axios';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import {LoginContext} from "../../security/contexts/LoginContextProvider";
 import ImgPreview from '../common/ImgPreview';
-import BoardFileLabel from '../common/BoardFileLabel';
 import '../../board/common/DetailForm.css'
+import BoardImgList from '../common/BoardImgList';
+import useAuth from '../../../hooks/useAuth';
 
-function AdminNoticeDetailForm() {
+function AdminNoticeDetailForm({ id }) {
+    const { axios } = useAuth();
     const navigate = useNavigate();
-    const { id } = useParams();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [images, setImages] = useState([]);
+    const [count, setCount] = useState(1);
+    const [deleteImg, setDeleteImg] = useState([])
 
-    // 로그인/인증 여부
-    const { isLogin, roles } = useContext(LoginContext);
-
-
+    //권한 여부 확인
     useEffect(() => {
-        // if( !isLogin && !roles.isAdmin ) {
-        //     alert("관리자로 로그인 해주세요.", () => { navigate("/login") })
-        //                return
-        //         }
         getDataset();
     }, []);
+
 
     // 수정 제목, 내용
     const updateTitle = (e) => { setTitle(e.target.value) };
@@ -57,7 +52,9 @@ function AdminNoticeDetailForm() {
     // 파일 추가
     const handleAddImg = () => {
         if (images.length < 5) {
-            setImages([...images, { id: images.length + 1, file: null }]);
+            setImages([...images, { id: 'a' + count, file: null }]);
+            console.log('a' + count);
+            setCount(count + 1)
         }
     };
 
@@ -74,10 +71,9 @@ function AdminNoticeDetailForm() {
                     formData.append('noticeImgFile', image.file);
                 }
             });
-            if (formData.get("noticeImgFile") === null) console.log("널!");
-            for (let key of formData.keys()) {
-                console.log(key, ":", formData.get(key));
-            }
+            deleteImg.forEach((item) => {
+                formData.append('delImg', item);
+            });
             try {
                 axios.put(
                     'http://localhost:8090/admin/notice/update',
@@ -86,9 +82,7 @@ function AdminNoticeDetailForm() {
                         'Content-Type': 'multipart/form-data'
                     }
                 }
-                ).then(function (response) {
-                    console.log(response.data);
-                });
+                )
                 window.location.reload(navigate("/admin/notice/list", { replace: true }));
             } catch (error) {
                 console.error("There was an error uploading the data!", error);
@@ -115,18 +109,11 @@ function AdminNoticeDetailForm() {
 
     // 이미지 삭제
     const onImgDelete = (e) => {
-        console.log(e);
-        axios(
-            {
-                url: '/admin/notice/imgDelete',
-                method: 'delete',
-                data: {
-                    id: e.id,
-                },
-                baseURL: 'http://localhost:8090',
-            }
-        )
-        window.location.reload(navigate(`/admin/notice/detail/${id}`, { repalce: true }));
+        const filteredItems = images.filter(item => item !== e);
+        setImages(filteredItems)
+        if (typeof (e.id) === 'number') {
+            setDeleteImg([...deleteImg, e.id])
+        }
     }
 
     //목록으로가기
@@ -144,19 +131,12 @@ function AdminNoticeDetailForm() {
                             <input type='text' name='title' value={title} onChange={updateTitle} />
                             <textarea type='text' name='content' value={content} onChange={updateContent} />
                         </div>
-                        <div class='img-container'>
-                            {images.map(putImage => (
-                                <BoardFileLabel putImage={putImage} handleImgChange={handleImgChange} onImgDelete={onImgDelete} board='notice'/>
-                            ))}
-                            {images.map(putImage => (
-                                <ImgPreview key={putImage.id} putImage={putImage}  />
-                            ))}
-                        </div>
-                        {images.length < 5 && <button type="button" onClick={handleAddImg}>이미지추가</button>}
-                        <button type='submit' onClick={() => onUpdate()} >수정</button>
-                        <button type="button" onClick={() => onDelete()}>삭제</button>
-                        <button type="button" onClick={() => onGoBack()}>돌아가기</button>
+                        <BoardImgList images={images} ImgPreview={ImgPreview} handleImgChange={handleImgChange} onImgDelete={onImgDelete} />
                     </div>
+                    {images.length < 5 && <button type="button" onClick={handleAddImg}>이미지추가</button>}
+                    <button type='submit' onClick={() => onUpdate()} >수정</button>
+                    <button type="button" onClick={() => onDelete()}>삭제</button>
+                    <button type="button" onClick={() => onGoBack()}>돌아가기</button>
                 </form>
             </div>
         </div>

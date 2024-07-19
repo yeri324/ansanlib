@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Transactional
 public class NoticeService {
-	
+
 	private final NoticeRepository noticeRepository;
 	private final NoticeImgRepository noticeImgRepository;
 	private final NoticeImgService noticeImgService;
@@ -45,19 +45,31 @@ public class NoticeService {
 	}
 
 	// 수정하기
-	public Long updateNotice(NoticeFormDto noticeFormDto, List<MultipartFile> noticeImgFile, List<String> noticeImgFileId)
-			throws Exception {
+	public Long updateNotice(NoticeFormDto noticeFormDto, List<MultipartFile> noticeImgFile,
+			List<String> noticeImgFileId, List<String> delImg) throws Exception {
+
+		// 이미지삭제
+		if (delImg != null) {
+			delImg.forEach(imgId -> {
+				Long id = Long.parseLong(imgId);
+				try {
+					noticeImgService.deleteNotice(id);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			});
+		}
+
 		// 제목/내용수정
 		Notice notice = noticeRepository.findById(noticeFormDto.getId()).orElseThrow(EntityNotFoundException::new);
 		notice.updateNotice(noticeFormDto);
 
 		// 이미지수정
 		if (noticeImgFile != null) {
-			Map<Long, MultipartFile> fileMap = new HashMap<>();
+			Map<String, MultipartFile> fileMap = new HashMap<>();
 
-			noticeImgFileId.forEach(str -> {
-				Long key = Long.parseLong(str);
-				fileMap.put(key, noticeImgFile.get(noticeImgFileId.indexOf(str)));
+			noticeImgFileId.forEach(key -> {
+				fileMap.put(key, noticeImgFile.get(noticeImgFileId.indexOf(key)));
 			});
 
 			fileMap.forEach((key, value) -> {
@@ -76,12 +88,12 @@ public class NoticeService {
 	public void deleteNotice(Long id) {
 		noticeRepository.deleteById(id);
 	}
-	
+
 	public Notice getDetail(NoticeDto noticeDto) {
 		Notice notice = noticeRepository.findById(noticeDto.getId()).orElseThrow(EntityNotFoundException::new);
-		return 	notice;
+		return notice;
 	}
-	
+
 	// 기준 검색하기 or 전체 리스트 가져오기
 	public Page<Notice> ListNotice(NoticeDto noticeDto) {
 		Pageable pageable = PageRequest.of(noticeDto.getPage(), noticeDto.getSize(), Sort.by(Order.desc("regTime")));

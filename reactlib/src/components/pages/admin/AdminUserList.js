@@ -4,7 +4,8 @@ import axios from "axios";
 import AdminUserItem from './AdminUserItem';
 import AdminHeader from "./AdminHeader";
 import AdminSide from "./AdminSide";
-import "./Table.css";
+import { GlobalStyles } from "./GlobalStyles";
+import "./AdminPage.css";
 
 const AdminUserList = () => {
   const navigate = useNavigate();
@@ -54,18 +55,22 @@ const AdminUserList = () => {
 
   return (
     <>
-             <AdminHeader />
-      <div className="admin-main-container">
+    <GlobalStyles width="100vw" />
+    <div className="admin-page">
 
-        <div className="adminside">
-          <AdminSide />
-        </div>
 
-        <div className="admin-content">
-          <form className="admin-con">
-          <h1>회원 관리</h1>
+    <div className="admin-base">
+      <AdminHeader />
+      <AdminSide />
+    </div>
+    <main className="admin-page-main">
+      <div className="admin-page-body">
+        <div className="admin-page-title">
+            <h1>회원 관리</h1>
+          </div>
 
-          <div className="search-container">
+
+          <div className="admin-page-search">
             <select name="searchBy" value={searchOption.searchBy} onChange={handleOnChange}>
               <option value="userId">ID</option>
               <option value="userName">이름</option>
@@ -81,46 +86,62 @@ const AdminUserList = () => {
             <button type="button" class="btn btn-outline-dark" onClick={onSearch}>Search</button>
           </div>
 
-       
-          <table className='adminTable'>
-              <thead>
-                <tr className="admintr">
-                  <th style={{ width: '10%' }}>no</th>
-                  <th style={{ width: '20%' }}>아이디</th>
-                  <th style={{ width: '20%' }}>이름</th>
-                  <th style={{ width: '20%' }}>패널티</th>
-                  <th style={{ width: '20%' }}>연체료</th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentItems.map(user => (
-                  <AdminUserItem key={user.userId} user={user} handleDetail={handleDetail} />
-                ))}
-              </tbody>
-              </table>
-              </form>
 
-            <nav aria-label="Page navigation example">
-              <ul className="pagination">
-                <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-                  <button type="button" class="btn btn-outline-dark" className="page-link" onClick={() => paginate(currentPage - 1)}>&laquo;</button>
+
+          <table className="admin-table">
+            <thead>
+              <tr className="admin-th-tr">
+                <th style={{ width: '10%' }}>no</th>
+                <th style={{ width: '20%' }}>아이디</th>
+                <th style={{ width: '20%' }}>이름</th>
+                <th style={{ width: '20%' }}>패널티</th>
+                <th style={{ width: '20%' }}>연체료</th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentItems.map(user => (
+                <AdminUserItem key={user.userId} user={user} handleDetail={handleDetail} />
+              ))}
+            </tbody>
+          </table>
+
+          <div className="admin-pagination" >
+   <nav aria-label="Page navigation example">
+            <ul className="pagination" id="admin-pagination">
+              <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                <button type="button"  class="btn btn-outline-dark" className="page-link" onClick={() => paginate(currentPage - 1)} aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </button>
+              </li>
+              {Array.from({ length: totalPages }, (_, index) => (
+                <li key={index + 1} className={`page-item ${index + 1 === currentPage ? 'active' : ''}`}>
+                  <button type="button" class="btn btn-outline-dark" style={{backgroundColor:"#092a4bec"}} className="page-link" onClick={() => paginate(index + 1)}>
+                    {index + 1}
+                  </button>
                 </li>
-                {Array.from({ length: totalPages }, (_, i) => (
-                  <li key={i + 1} className={`page-item ${i + 1 === currentPage ? 'active' : ''}`}>
-                    <button type="button" class="btn btn-outline-dark" className="page-link" onClick={() => paginate(i + 1)}>
-                      {i + 1}
-                    </button>
-                  </li>
-                ))}
-                <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-                  <button type="button" class="btn btn-outline-dark"  className="page-link" onClick={() => paginate(currentPage + 1)}>&raquo;</button>
-                </li>
-              </ul>
-            </nav>
+              ))}
+              <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                <button type="button" class="btn btn-outline-dark" className="page-link" onClick={() => paginate(currentPage + 1)} aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </button>
+              </li>
+            </ul>
+          </nav>
+
+
+
           </div>
-        </div>
 
-    </>
+
+
+
+
+
+
+</div>
+    </main>
+</div>
+</>
   );
 };
 

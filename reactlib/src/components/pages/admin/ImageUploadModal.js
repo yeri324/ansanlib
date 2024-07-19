@@ -6,7 +6,7 @@ const ImageUploadModal = ({ isOpen, onRequestClose, handleImageChange }) => {
     <Modal isOpen={isOpen} onRequestClose={onRequestClose} contentLabel="이미지 업로드">
       <h2>이미지 업로드</h2>
       <input type="file" onChange={handleImageChange} multiple />
-      <button type="button" class="btn btn-light" onClick={onRequestClose}>닫기</button>
+      <button type="button" id="adminbtn" class="btn btn-outline-dark"  onClick={onRequestClose}>닫기</button>
     </Modal>
   );
 };

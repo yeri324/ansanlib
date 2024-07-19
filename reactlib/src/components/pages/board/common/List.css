@@ -1,11 +1,11 @@
 /* General Styles */
-.board-list {
+.board-list{
+    width: 100%;
     font-family: Arial, sans-serif;
     background-color: #f8f9fa;
     margin: 0;
     padding: 0;
 }
-
 .board-list .container {
     width: 70%;
     max-width: 1200px;
@@ -14,12 +14,12 @@
 }
 
 /* Page Title */
-.pagination .page-title {
+.board-list .board_page-title {
     text-align: center;
     margin-bottom: 20px;
 }
 
-.pagination .page-title h3 {
+.board-list .board_page-title h3 {
     font-size: 24px;
     color: #333;
 }
@@ -30,13 +30,13 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
-    width: 70%;
+    width: 85%;
     margin: 0 auto;
 }
 
 .board-list .search-wrap select,
 .board-list .search-wrap input[type="text"],
-.board-list .search-wrap button {
+.board-list .search-wrap .btn {
     margin: 0 5px;
     padding: 10px;
     font-size: 16px;
@@ -48,7 +48,7 @@
     flex: 1;
 }
 
-.board-list .search-wrap button {
+.board-list .search-wrap .btn[type='button'] {
     background-color: #343a40;
     color: white;
     border: none;
@@ -56,13 +56,13 @@
     cursor: pointer;
 }
 
-.board-list .search-wrap button:hover {
+.board-list .search-wrap .btn:hover {
     background-color: #495057;
 }
 
 /* FAQ Table */
 .board-list .list {
-    width: 50%;
+    width: 70%;
     margin: 0 auto;
 }
 
@@ -76,7 +76,7 @@
 
 .board-list .table th:nth-child(1),
 .board-list .table td:nth-child(1) {
-    width: 5%;
+    width: 7%;
 }
 
 .board-list .table th:nth-child(2),
@@ -86,7 +86,7 @@
 
 .board-list .table th:nth-child(3),
 .board-list .table td:nth-child(3) {
-    width: 12%;
+    width: 15%;
 }
 
 .board-list .table th:nth-child(4),
@@ -131,7 +131,7 @@
 }
 
 /* Pagination */
-.pagination {
+.board_pagination {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -140,11 +140,11 @@
     margin: 20px 0;
 }
 
-.pagination .page-item {
+.board_pagination .page-item {
     margin: 0 5px;
 }
 
-.pagination .page-link {
+.board_pagination .page-link {
     padding: 10px 15px;
     background-color: #495057;
     color: white;
@@ -153,12 +153,12 @@
     cursor: pointer;
 }
 
-.pagination .page-link:hover {
+.board_pagination .page-link:hover {
     background-color: #495057;
 }
 
 /* Total Count */
-.board-list .count_content {
+.board-list  .count_content {
     width: 75%;
     text-align: right;
     margin: 0 auto;
