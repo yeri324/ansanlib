@@ -16,34 +16,34 @@ const Header = () => {
     {
       menu: { title: "검색" },
       subs: [
-        { title: "통합검색", link: "/search/integrated" },
-        { title: "상세검색", link: "/search/advanced" },
-        { title: "추천도서", link: "/search/recommended" },
+        { title: "통합검색", link: "/book/search" },
+        { title: "상세검색", link: "/book/search" },
+        { title: "추천도서", link: "/user/recBoard/list" },
         { title: "신간도서", link: "/search/new" }
       ]
     },
     {
       menu: { title: "책읽는 안산" },
       subs: [
-        { title: "이달의 도서", link: "/reading/monthly" },
-        { title: "인기도서", link: "/reading/popular" },
-        { title: "추천게시판", link: "/reading/recommendations" }
+        { title: "이달의 도서", link: "/user/recBoard/list" },
+        { title: "인기도서", link: "/user/recBoard/list" },
+        { title: "추천게시판", link: "/user/recBoard/list" }
       ]
     },
     {
       menu: { title: "게시판" },
       subs: [
-        { title: "공지사항", link: "/board/announcements" },
-        { title: "FAQ", link: "/board/faq" }
+        { title: "공지사항", link: "/user/notice/list" },
+        { title: "FAQ", link: "/user/faq/list" }
       ]
     },
     {
       menu: { title: "나의 도서관" },
       subs: [
-        { title: "나만의 책장", link: "/mylibrary/bookshelf" },
-        { title: "예약/대출현황", link: "/mylibrary/status" },
-        { title: "정보수정", link: "/mylibrary/edit" },
-        { title: "희망도서", link: "/mylibrary/wishlist" }
+        { title: "나만의 책장", link: "/update" },
+        { title: "예약/대출현황", link: "/loanstatus" },
+        { title: "정보수정", link: "/update" },
+        { title: "희망도서", link: "/requestbook/new" }
       ]
     }
   ];
@@ -52,12 +52,12 @@ const Header = () => {
     <header>
       <div id="full_header">
         <div id="top_login">
-          <a className="enter">로그인</a><span> | </span>
-          <a className="join">회원가입</a>
+          <a className="enter" href="/login">로그인</a><span> | </span>
+          <a className="join" href="/join">회원가입</a>
         </div>
         <div id="header_menu">
           <div id="top_logo">
-            <Link to="/home">
+            <Link to="/">
               <img src={center_logo} alt="Center Logo" />
             </Link>
           </div>
