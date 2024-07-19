@@ -67,8 +67,13 @@ min-height: 850px;
 text-align: center;
 font-family: 'Noto Sans KR', sans-serif;
 padding: 20px;
+
 }
 
+.admin-left-box1 > h4 {
+  padding-bottom: 10px;
+  border-bottom: 2px solid #7e7c7c; /* 밑줄 스타일 추가 */
+}
 
 .admin-left-box2 {
   /* background-color: aliceblue; */
@@ -96,9 +101,9 @@ padding: 20px;
 .admin-left-box3 {
  
   font-size: 13px;
-margin-top: 10px;
+margin-top: 20px;
   /* background-color: rgb(238, 241, 204); */
-  height: 250px;
+  height: 300px;
 }
 
 .admin-table {
@@ -108,7 +113,8 @@ margin-top: 10px;
 .admin-left-box3 > .admin-table th, tr , 
 .admin-right-box3 > .admin-table th, tr {
   background-color: white;
-  border-bottom: 2px solid #ccc; /* 밑줄 스타일 추가 */
+  border-bottom: 2px solid #7e7c7c; /* 밑줄 스타일 추가 */
+  font-size: 16px;
 }
 
 
@@ -183,8 +189,9 @@ margin:  0 auto;
 }
 
 
-.admin-right-box3 > h3 {
- margin-left: 20px;
+.admin-right-box3 > h3 > a  {
+ margin-left: 60px;
+ color: inherit;
 }
 
 

@@ -19,27 +19,37 @@ const Admin = () => {
   const { axios } = useAuth();
   const [date, setDate] = useState(new Date());
   const [showDetail, setShowDetail] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedHolidays, setSelectedHolidays] = useState([]);
   const [holidays, setHolidays] = useState([]);
   const [bookRequests, setBookRequests] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
 
   useEffect(() => {
-    fetchHolidays(new Date());
+    fetchHolidays(date);
     fetchBookRequests();
-  }, []);
+  }, [date]);
 
   const handleDateClick = (date) => {
     setSelectedDate(date);
-    setDate(date);
     fetchHolidays(date);
     setShowDetail(true);
   };
 
   const fetchHolidays = (date) => {
-    console.log("Fetching holidays for date:", date);
+    // Utility function to adjust the date
+    const adjustDate = (date, days) => {
+      const result = new Date(date);
+      result.setDate(result.getDate() + days);
+      return result;
+    };
 
+    // Adjust the date by subtracting one day
+    const previousDate = adjustDate(date, +1);
+
+    console.log("Fetching holidays for date:", previousDate);
+
+    // Fetch holidays for the current date
     axios({
       url: '/api/admin/holiday/list',
       method: 'get',
@@ -47,12 +57,25 @@ const Admin = () => {
         date: date.toISOString().split('T')[0] // 날짜를 쿼리 파라미터로 전달
       }
     }).then((response) => {
-      console.log("Fetched holidays:", response.data);
-      setHolidays(response.data.result); // 서버 응답 데이터 사용
+      console.log("Fetched holidays for current date:", response.data);
+      setHolidays(response.data.result); // 현재 날짜의 휴일 목록 설정
+    }).catch((error) => {
+      console.error("Error fetching holidays for current date:", error);
+      setHolidays([]); // 오류 발생 시 빈 배열로 설정
+    });
+
+    // Fetch holidays for the previous date
+    axios({
+      url: '/api/admin/holiday/list',
+      method: 'get',
+      params: {
+        date: previousDate.toISOString().split('T')[0] // 날짜를 쿼리 파라미터로 전달
+      }
+    }).then((response) => {
+      console.log("Fetched holidays for previous date:", response.data);
       setSelectedHolidays(response.data.result); // 모달에 표시할 데이터 설정
     }).catch((error) => {
-      console.error("Error fetching holidays:", error);
-      setHolidays([]); // 오류 발생 시 빈 배열로 설정
+      console.error("Error fetching holidays for previous date:", error);
       setSelectedHolidays([]); // 오류 발생 시 빈 배열로 설정
     });
   };
@@ -89,7 +112,7 @@ const Admin = () => {
               <div className="admin-left-box2 calendar-container">
                 <Calendar
                   locale="en-US"
-                  onChange={handleDateClick}
+                  onClickDay={handleDateClick}
                   value={date}
                 />
                 <HolidayDetail
@@ -102,7 +125,7 @@ const Admin = () => {
                 <HolidayListTable holidays={holidays.slice(0, 3)} excludedColumns={['delete']} />
               </div>
               <div className="admin-left-box4">
-              <div className='admin-right-board' style={{ width: "25%" }}>
+                <div className='admin-right-board' style={{ width: "25%" }}>
                   <h3>신간도서</h3>
                   <NewBooks />
                 </div>
@@ -128,7 +151,7 @@ const Admin = () => {
                 
               </div>
               <div className="admin-right-box3">
-                <h3>희망도서신청</h3>
+                <h3><a href="admin/book/request">희망도서신청</a></h3>
                 <AdminBookRequestTable searchResult={searchResult} />
               </div>
             </div>

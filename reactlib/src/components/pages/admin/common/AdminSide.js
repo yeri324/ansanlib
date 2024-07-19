@@ -37,7 +37,8 @@ const AdminSide = () => {
           <ul className={`submenu ${openMenu === 'book' ? 'open' : ''}`}>
             <li><a href="/admin/book/new" className="no-underline">도서 등록</a></li>
             <li><a href="/admin/book/list" className="no-underline">도서 목록</a></li>
-            <li><a href="/admin/book/request" className="no-underline">희망도서 목록</a></li>
+            <li><a href="/admin/recboard/list" className="no-underline">추천 도서</a></li>
+            <li><a href="/admin/book/request" className="no-underline">희망 도서</a></li>
           
           </ul>
         </li>
