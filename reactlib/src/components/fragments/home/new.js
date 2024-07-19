@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import './new.css';
 import book1 from '../../images/cover/book1.jpg';
@@ -23,32 +23,51 @@ const booksData = [
 
 const NewBooks = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isResetting, setIsResetting] = useState(false);
+  const intervalRef = useRef(null);
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    intervalRef.current = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % booksData.length);
-    }, 3000);
+    }, 5000); // 5초마다 슬라이드 전환
 
-    return () => clearInterval(interval);
+    return () => clearInterval(intervalRef.current);
   }, []);
 
+  useEffect(() => {
+    if (currentIndex === 0 && isResetting) {
+      setIsResetting(false);
+    }
+  }, [currentIndex, isResetting]);
+
   const handlers = useSwipeable({
-    onSwipedLeft: () => setCurrentIndex((prevIndex) => (prevIndex + 1) % booksData.length),
-    onSwipedRight: () => setCurrentIndex((prevIndex) => (prevIndex - 1 + booksData.length) % booksData.length),
+    onSwipedLeft: () => handleNext(),
+    onSwipedRight: () => handlePrev(),
     preventDefaultTouchmoveEvent: true,
     trackMouse: true
   });
 
+  const handleNext = () => {
+    if (currentIndex === booksData.length - 1) {
+      setIsResetting(true);
+      setTimeout(() => {
+        setCurrentIndex(0);
+      }, 100);
+    } else {
+      setCurrentIndex((prevIndex) => prevIndex + 1);
+    }
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + booksData.length) % booksData.length);
+  };
+
   return (
     <div className="new-books-container">
       <div className="new-books-slider" {...handlers}>
-        <div className="new-books-slide-wrapper">
+        <div className={`new-books-slide-wrapper ${isResetting ? 'reset' : ''}`} style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
           {booksData.map((book, index) => (
-            <div
-              key={book.id}
-              className={`new-book-item ${index === currentIndex ? 'active' : ''}`}
-              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-            >
+            <div key={book.id} className="new-book-item">
               <img src={book.cover} alt={`Book ${book.id}`} className="new-book-cover" />
             </div>
           ))}
