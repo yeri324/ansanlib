@@ -27,6 +27,7 @@ function AdminRecForm() {
 
   // 글생성
   const onCreate = () => {
+    if(recData.title != null && recData.title != '' && recData.content != null && recData.content != '' && selectBook.id != null && selectBook.id != ''){
     axios(
       {
         url: '/admin/recboard/new',
@@ -43,7 +44,10 @@ function AdminRecForm() {
     }
     )
     window.location.reload(navigate("/admin/recboard/list", { replace: true }));
+  } else {
+    alert("제목, 내용, 도서검색은 필수사항입니다.");
   }
+}
 
   // 도서 검색
   const searchHandle = () => {
@@ -63,7 +67,7 @@ function AdminRecForm() {
                     </div>
     <div class='rec-form'>
       <div class='reccreate-form'>
-      <form onSubmit={onCreate}>
+      <form >
         <div class='all-item'>
         <div class="content-item">
           <input id='title' type='text' name='title'
@@ -86,7 +90,7 @@ function AdminRecForm() {
           <button type='button' onClick={searchHandle}>도서 검색</button>
           </div>
         </div>
-        <button type='submit'>저장</button>
+        <button type='button' onClick={onCreate}>저장</button>
         </div>
       </form>
       </div>

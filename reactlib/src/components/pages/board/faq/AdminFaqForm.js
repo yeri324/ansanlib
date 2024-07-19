@@ -39,6 +39,7 @@ function AdminFaqForm() {
 
   // 생성 정보 보내기
   const onCreate = (e) => {
+    if(faqData.title != null && faqData.title != '' && faqData.content != null && faqData.content != ''){
     e.preventDefault();
     const formData = new FormData();
 
@@ -58,7 +59,9 @@ function AdminFaqForm() {
     } catch (error) {
       console.error("There was an error uploading the data!", error);
     }
-
+  } else {
+    alert("제목과 내용은 필수사항입니다.");
+  }
   };
 
   // 이미지 삭제 버튼
@@ -70,7 +73,7 @@ function AdminFaqForm() {
   return (
     <div>
       <div class="create-form">
-        <form onSubmit={onCreate} class='form-list'>
+        <form class='form-list'>
           <h3>글 등록하기</h3>
           <div class="content-item">
             <input
@@ -98,7 +101,7 @@ function AdminFaqForm() {
             ))}
           </div>
           {images.length < 5 && <button type="button" onClick={handleAddImg}>이미지추가</button>}
-          <button type='submit'>저장</button>
+          <button type='button' onClick={onCreate}>저장</button>
         </form>
       </div>
     </div>
