@@ -33,7 +33,8 @@ body {
 .notice_full {
   display: flex;
   justify-content: center;
-  padding: 20px;
+  padding: 10px;
+  padding-right: 20px;
   background-color: #fff;
 }
 
@@ -41,9 +42,14 @@ body {
   display: flex;
   flex-direction: column;
   width: 100%;
-  width: 600px;
+  width: 550px;
   margin: 0 auto;
   border-radius: 4px;
+}
+
+.notice_tabs_wrapper {
+  display: flex;
+  align-items: center;
 }
 
 .notice_tabs {
@@ -51,6 +57,7 @@ body {
   list-style-type: none;
   margin: 0;
   padding: 0;
+  flex: 1;
 }
 
 .notice_tabs li {
@@ -70,13 +77,20 @@ body {
   font-weight: bold;
 }
 
-.notice_tabs li:hover {
-  background-color: var(--point_bg_04);
+.plus_button {
+  background-color: var(--sub_bg_03);
+  color: #fff;
+  border: none;
+  padding: 15px;
+  font-size: 20px;
+  cursor: pointer;
+  vertical-align: middle;
+  margin-top: 10px;
 }
 
 .notice_content {
   padding: 20px;
-  overflow-y: auto; 
+  overflow-y: auto;
 }
 
 .notice_content ul {
@@ -94,3 +108,4 @@ body {
 .notice_content li:hover {
   color: #007bff;
 }
+

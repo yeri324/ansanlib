@@ -45,6 +45,8 @@ public class BookFormDto {
     private BookImgDto bookImgDto;
 
     private Long bookImgId;
+    
+    private Long lib_num;
 
     private static ModelMapper modelMapper = new ModelMapper();
 

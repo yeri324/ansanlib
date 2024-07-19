@@ -1,0 +1,100 @@
+.findpw {
+    max-width: 70%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.findpw h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.findpw .findpw-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    
+}
+
+.findpw .findpw-form div {
+    margin-bottom: 10px;
+    text-align: center;
+    width: 60%;
+}
+
+.findpw .findpw-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #666;
+    text-align: left;
+}
+
+.findpw .findpw-form input {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.findpw .findpw-form button {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #3949ab;
+    color: #fff;
+    width: 45%;
+}
+
+.findpw .findpw-form button:hover {
+    background-color: #283593;
+}
+
+.findpw .popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 90%;
+    max-height: 90%;
+    overflow-y: auto;
+}
+
+.findpw .popup p {
+    margin-bottom: 10px;
+}
+
+.findpw .popup button {
+    padding: 8px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #3949ab;
+    color: #fff;
+}
+
+.findpw .popup button:hover {
+    background-color: #283593;
+}
+
+
+
+.findpw .link a {
+   text-decoration: none;
+   color: #666;
+   text-align: center;
+   margin-top: 20px;
+}

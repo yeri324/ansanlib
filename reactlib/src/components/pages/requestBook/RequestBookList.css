@@ -1,0 +1,68 @@
+/* requestBooksList.css */
+
+.request_books_list {
+    font-family: 'Noto Sans KR', sans-serif;
+    margin: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.request_books_list h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.request_books_list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.request_books_list li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.request_books_list li:last-child {
+    border-bottom: none;
+}
+
+.request_books_list input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.request_books_list .actions {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.request_books_list button {
+    margin: 5px;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.request_books_list button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.request_books_list button:hover {
+    background-color: #0056b3;
+}
+
+.error_message {
+    text-align: center;
+    color: red;
+    margin-top: 20px;
+}

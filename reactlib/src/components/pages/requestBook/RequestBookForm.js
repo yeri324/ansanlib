@@ -1,68 +1,51 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import useRealName from '../../hooks/useRealName';
+import useAuth, { LOGIN_STATUS } from '../../hooks/useAuth';
+import RedirectLogin from '../../helpers/RedirectLogin';
+import Auth from '../../helpers/Auth';
+import Header from '../../fragments/header/header';
+import Footer from '../../fragments/footer/footer';
+import Side from '../myPage/Side';
 
 const RequestBookForm = () => {
-  const navigate = useNavigate();
+  const name = useRealName();
+
+  const { axios } = useAuth();
 
   const [isbn, setIsbn] = useState('');
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [publisher, setPublisher] = useState('');
   const [pubDate, setPubDate] = useState('');
-  const [userId, setUserId] = useState(null);
-  const [userName, setUserName] = useState("");
-  const [libName, setLibName]  =useState('');
+  const [libName, setLibName] = useState('');
 
-  useEffect(()=>{
-    const memberData = JSON.parse(sessionStorage.getItem("member") ?? "null");
-    if(memberData?.userId){
-      setUserId(memberData?.userId);
-      setUserName(memberData?.name);
-    } else{
-        alert("로그인이 되어있지 않습니다.");
-        navigate("/login");
-    }
-  },[]);
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-  const requestBook = {
+    const requestBook = {
       isbn, title, author, publisher,
-      pubDate, userId: parseInt(userId), lib_name: libName
-  };
+      pubDate, lib_name: libName
+    };
+    console.log("Sending request with data:", requestBook);
 
-    axios.post('/api/requestbook', requestBook, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(response => {
-      console.log('Book request created:', response.data);
-      alert('신청되었습니다.');
-      setIsbn('');
-      setTitle('');
-      setAuthor('');
-      setPublisher('');
-      setPubDate('');
-      setUserId('');
-      setLibName('');
-    })
-    .catch(error => {
-      if(error.response){
+    try{
+      const response = await axios.post('/api/requestbook/create', requestBook);
+      alert("신청되었습니다.");
+      console.log('RequestBook created:', response.data);
+    } catch (error){
+      if(typeof error.response.data === "string"){
         alert(`에러 : ${error.response.data}`);
-      } else if(error.request){
-        alert('서버에 요청을 보내는 중 오류가 발생했습니다.');
-      } else{
+      } else {
         alert(`에러 : ${error.message}`);
       }
-    });
-  };
+
+      console.error('There was an error creating the requestBook!', error.response.data);
+    }
+  }
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2> {userName}의 도서신청</h2>
+      <h2> {name}의 도서신청</h2>
       <div>
         <label>도서 ISBN:</label>
         <input 
@@ -117,18 +100,21 @@ const RequestBookForm = () => {
           required 
         />
       </div>
-      {/*<div>
-        <label>User ID:</label>
-        <input 
-          type="text" 
-          value={userId} 
-          onChange={(e) => setUserId(e.target.value)} 
-          required 
-        />
-      </div>*/}
-      <button type="submit">Submit Request</button>
+      <button type="submit">신청하기</button>
     </form>
   );
 };
 
-export default RequestBookForm;
+export default function() {
+  return (
+    <>
+      <RedirectLogin />
+      <Auth loginStatus={LOGIN_STATUS.LOGGED_IN}>
+        <Header />
+        <RequestBookForm />
+        <Side />
+        <Footer />
+      </Auth>
+    </>
+  );
+};

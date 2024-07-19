@@ -31,10 +31,10 @@ public class AdminUserController {
 
 	// 모든 유저 가져오기
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ResponseEntity<List<LibUser>> userList() {
-		List<LibUser> userList = adminUserService.getUserList();
-		return ResponseEntity.ok(userList);
-	}
+	 public ResponseEntity<List<LibUser>> getUserList() {
+        List<LibUser> userList = adminUserService.getUserList();
+        return ResponseEntity.ok(userList);
+    }
 
 	// 검색으로 찾기
 	@PostMapping("/search")
@@ -46,13 +46,11 @@ public class AdminUserController {
 	}
 
 	// 유저정보 가져오기
-	@PostMapping("/detail")
-	public ResponseEntity getUserDetails(@RequestBody AdminDetailUserDto adminDetailUserDto) {
-
-		LibUser user = adminUserService.getUserById(adminDetailUserDto.getId());
-		return ResponseEntity.ok(user);
-
-	}
+	   @PostMapping("/detail")
+	    public ResponseEntity<LibUser> getUserDetails(@RequestBody AdminDetailUserDto adminDetailUserDto) {
+	        LibUser user = adminUserService.getUserById(adminDetailUserDto.getId());
+	        return ResponseEntity.ok(user);
+	    }
 
 	// 예약정보가져오기
 	@PostMapping("/getRes")

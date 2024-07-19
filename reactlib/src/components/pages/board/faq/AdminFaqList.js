@@ -1,10 +1,13 @@
-import '../../board/common/List.css'
+import '../../board/common/AdminForm.css'
 import axios from 'axios';
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BoardItem from '../common/BoardItem';
-import Pagination from '../common/Pagination';
+import AdminPagination from "../../admin/common/AdminPagination";
 import { LoginContext } from "../../security/contexts/LoginContextProvider";
+import AdminHeader from '../../admin/common/AdminHeader';
+import AdminSide from '../../admin/common/AdminSide';
+
 
 function AdminFaqList() {
     const [checkedList, setCheckedList] = useState([]);
@@ -30,10 +33,10 @@ function AdminFaqList() {
         console.log(isLogin, "**", !isLogin)
         console.log(roles.isAdmin, "**", !roles.isAdmin)
 
-        // if (!isLogin && !roles.isAdmin) {
-        //     alert("관리자로 로그인 해주세요.", () => { navigate("/login") })
-        //     return
-        // }
+        if (!isLogin && !roles.isAdmin) {
+            alert("관리자로 로그인 해주세요.", () => { navigate("/login") })
+            return
+        }
         onSearch(currentPage);
     }, [currentPage]);
 
@@ -125,50 +128,75 @@ function AdminFaqList() {
     };
 
     return (
-        <div>
-            <section class="board">
-                <div id="search">
-                    <div class="container">
-                        <div class="page-title">
-                            <h3>FAQ</h3>
-                        </div>
-                        <div class="search-wrap">
-                            <select name="searchBy" value={searchOption.searchBy} onChange={handleOnChange}>
-                                <option value="loginid">작성자</option>
-                                <option value="title">제목</option>
-                            </select>
-                            <input type="text" id="search" name="searchQuery" value={searchOption.searchQuery} onChange={handleOnChange} />
-                            <button class="btn btn-dark" onClick={onSearch}>검색</button>
-                        </div>
-                        <div className="count_content">
-                            총 {totalFaqCount}건 / {totalPages} 페이지
-                        </div>
+        <div className="admin-page">
+            <div className="admin-base">
+                <AdminHeader />
+                <AdminSide />
+            </div>
+    
+            <main className="admin-page-main">
+                <div className="admin-page-body">
+                    <div className="admin-page-title">
+                        <h1>FAQ 목록</h1>
                     </div>
-                </div>
-                <div class="list">
-                    <table class="table">
+                    <div className="admin-page-top">
+                    <div className="admin-page-count" style={{width:"25%"}}>
+                        총 {totalFaqCount}건 / {totalPages} 페이지
+                    </div>
+    
+                    <div className="admin-page-search" style={{width:"50%"}}>
+                        <select name="searchBy" value={searchOption.searchBy} onChange={handleOnChange}>
+                            <option value="loginid">작성자</option>
+                            <option value="title">제목</option>
+                        </select>
+                        <input type="text" id="search" name="searchQuery" value={searchOption.searchQuery} onChange={handleOnChange} />
+                        <button className="btn btn-outline-dark" onClick={() => onSearch(currentPage)}>검색</button>
+                    </div>
+                  
+                  
+                    <div className="admin-page-button" style={{width:"25%"}}>
+                        <button className="btn btn-outline-dark" onClick={onDelete}>삭제하기</button>
+                        <button  className="btn btn-outline-dark" onClick={onCreate}>작성하기</button>
+                    </div>
+                    </div>
+
+                    <table className="admin-table">
                         <thead>
-                            <tr>
-                                <th scope="col" class="th-num">번호</th>
-                                <th scope="col" class="th-title">제목</th>
-                                <th scope="col" class="th-loginid">작성자</th>
-                                <th scope="col" class="th-date">작성일</th>
-                                <th scope="col" class="th-check"> - </th>
+                            <tr className="admin-th-tr">
+                            <th scope="col" className="th-check" style={{width:"5%"}}>  </th>
+                                <th scope="col" className="th-num" style={{width:"10%"}}>번호</th>
+                                <th scope="col" className="th-title" style={{width:"40%"}}>제목</th>
+                                <th scope="col" className="th-loginid" style={{width:"10%"}}>작성자</th>
+                                <th scope="col" className="th-date" style={{width:"20%"}}>작성일</th>
+                              
                             </tr>
                         </thead>
-                        <tbody class="list_content">
+                        <tbody className="list_content">
                             {searchResult.map((faq) => (
-                                <BoardItem key={faq.id} item={faq} board='faq' checkedList={checkedList} checkHandler={checkHandler} onDetail={onDetail} />
+                                <BoardItem 
+                                    key={faq.id} 
+                                    item={faq} 
+                                    board="faq" 
+                                    checkedList={checkedList} 
+                                    checkHandler={checkHandler} 
+                                    onDetail={onDetail} 
+                                />
                             ))}
                         </tbody>
                     </table>
-                    <button onClick={onDelete}>삭제하기</button>
-                    <button onClick={onCreate}>작성하기</button>
+                    <div className="admin-pagination">
+                    <AdminPagination 
+                        currentPage={currentPage} 
+                        totalPages={totalPages} 
+                        paginate={setCurrentPage} 
+                    />
+                  
                 </div>
-            </section>
-            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
-        </div >
+    
+                
+                </div>
+            </main>
+        </div>
     );
 };
-
 export default AdminFaqList;

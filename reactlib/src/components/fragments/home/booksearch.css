@@ -1,47 +1,50 @@
-.search {
+#book-search-container {
     display: flex;
     flex: 1;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    padding: 20px;
-    width: 600px;
+    padding: 0;
+    margin: 0 auto;
+    width: 800px;
 }
 
-.search_navbar {
+#book-search-container .search_navbar {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.navbar_container {
+#book-search-container .navbar_container {
     width: 100%;
 }
-/* 검색 */
-.search_place {
+
+#book-search-container .search_place {
     flex: 1;
     padding: 15px;
     font-size: 18px;
     border: 1px solid #ccc;
     border-radius: 40px 0 0 40px;
     border-right: none;
-    max-width: 600px;
+    width: 500px;
+    max-width: 500px;
     box-sizing: border-box;
 }
-/* 버튼 */
-.search_btn {
+
+#book-search-container .search_btn {
     cursor: pointer;
-    /* 크기 */
     padding: 15px 35px; 
+    background-color: var(--sub_bg_03);
     border: 1px solid var(--sub_bg_03);
     border-radius: 0 40px 40px 0;
-    /* background-color: #bbb5aa; */
-    background-color: var(--sub_bg_03);
     color: white;
     font-size: 18px;
     transition: background-color 0.3s;
+    margin-left: -2px;
+    height: 65px;
+    line-height: 1.4;
+    justify-items: center;
 }
 
-.search_btn:hover {
-    /* background-color: #aab699; */
+#book-search-container .search_btn:hover {
     background-color: #cec7bb;
 }

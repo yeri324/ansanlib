@@ -22,5 +22,6 @@ public interface UserRepository extends JpaRepository<LibUser, Long> {
    //비번찾기
    Optional<LibUser> findByLoginidAndEmail(String loginid, String email);
 
- 
+   //회원 정보 수정
+   Optional<LibUser> findByUserId(long userId);
 }

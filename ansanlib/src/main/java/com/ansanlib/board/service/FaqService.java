@@ -10,6 +10,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -47,21 +49,32 @@ public class FaqService {
 	}
 
 	// 수정하기
-	public Long updateFaq(FaqFormDto faqFormDto, List<MultipartFile> faqImgFile, List<String> faqImgFileId)
-			throws Exception {
+	public Long updateFaq(FaqFormDto faqFormDto, List<MultipartFile> faqImgFile, List<String> faqImgFileId,
+			List<String> delImg) throws Exception {
+
+		// 이미지삭제
+		if (delImg != null) {
+			delImg.forEach(imgId -> {
+				Long id = Long.parseLong(imgId);
+				try {
+					faqImgService.deleteFaq(id);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			});
+		}
+
 		// 제목/내용수정
 		Faq faq = faqRepository.findById(faqFormDto.getId()).orElseThrow(EntityNotFoundException::new);
 		faq.updateFaq(faqFormDto);
 
 		// 이미지수정
 		if (faqImgFile != null) {
-			Map<Long, MultipartFile> fileMap = new HashMap<>();
+			Map<String, MultipartFile> fileMap = new HashMap<>();
 
-			faqImgFileId.forEach(str -> {
-				Long key = Long.parseLong(str);
-				fileMap.put(key, faqImgFile.get(faqImgFileId.indexOf(str)));
+			faqImgFileId.forEach(key -> {
+				fileMap.put(key, faqImgFile.get(faqImgFileId.indexOf(key)));
 			});
-
 
 			fileMap.forEach((key, value) -> {
 				try {
@@ -79,12 +92,12 @@ public class FaqService {
 	public void deleteFaq(Long id) {
 		faqRepository.deleteById(id);
 	}
-	
+
 	public Faq getDetail(FaqDto faqDto) {
 		Faq faq = faqRepository.findById(faqDto.getId()).orElseThrow(EntityNotFoundException::new);
-		return 	faq;
+		return faq;
 	}
-	
+
 	// 기준 검색하기 or 전체 리스트 가져오기
 	public Page<Faq> ListFaq(FaqDto faqDto) {
 		Pageable pageable = PageRequest.of(faqDto.getPage(), faqDto.getSize(), Sort.by(Order.desc("regTime")));
@@ -97,5 +110,5 @@ public class FaqService {
 			return faqRepository.findAll(pageable);
 		}
 	}
-	
+
 }

@@ -39,10 +39,9 @@ public class AdminUserService {
 	}
 
 	@Transactional(readOnly = true) 
-	public LibUser getUserById(Long id) {
-		return adminUserRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-		
-	}
+	 public LibUser getUserById(Long id) {
+        return adminUserRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
 	
 	@Transactional(readOnly = true) 
 	public List<Reservation> getReservation(AdminDetailUserDto adminDetailUserDto) {

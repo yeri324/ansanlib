@@ -1,0 +1,85 @@
+.login {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 70%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.login h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.login-form div {
+    margin-bottom: 10px;
+    /* text-align: left; */
+    width: 60%;
+}
+.login-form div label {
+    text-align: left;
+}
+
+
+.login-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #666;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.login-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.login-form button {
+    width: 45%;
+    padding: 10px 0;
+    background-color: #5c6bc0;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.login-form button:hover {
+    background-color: #3949ab;
+}
+
+.login-form button[type="submit"] {
+    background-color: #3949ab;
+}
+
+.login-form button[type="submit"]:hover {
+    background-color: #283593;
+}
+
+.login-form .link a {
+    text-decoration: none; /* 밑줄 제거 */
+    color: rgb(107, 107, 107); /* 색상 변경 */
+}
+
+.login-form .link a:hover {
+    color: #283593; /* 마우스 호버 시 색상 변경 */
+}

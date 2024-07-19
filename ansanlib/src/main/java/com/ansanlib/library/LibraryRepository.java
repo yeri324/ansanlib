@@ -12,6 +12,6 @@ public interface LibraryRepository extends JpaRepository<Library, Long> {
 	Library findByLibName(Library lib_name);
 
 	Optional<Library> findByLibNameAndLibNum(String libName, String libNum);
-
+	
 
 }

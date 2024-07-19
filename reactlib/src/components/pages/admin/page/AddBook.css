@@ -1,0 +1,96 @@
+.admin-page {
+    padding-top:7px;
+    width: 100%;
+    font-family: 'Noto Sans KR', sans-serif;
+    padding-bottom: 30px;
+    overflow: hidden; /* 메인 영역에 스크롤 바 추가 */
+  }
+
+
+
+  .admin-addBook-main {
+    margin-top: 100px;
+    margin-left: 270px;
+    padding-bottom: 30px;
+    width: 85%;
+    align-items: center;
+    height: calc(100vh - 100px); /* 전체 높이에서 여백을 뺀 높이 설정 */
+    overflow: hidden; /* 주의: 이 속성은 main 요소에 스크롤을 숨깁니다. */
+    overflow-y: auto; /* 세로 스크롤바 추가 */
+    background-color: hsla(45, 6%, 87%, 0.459);
+    min-height: 850px;
+  }
+
+/* 메인 폼 영역 */
+.admin-addBook-main>.admin-addBook-body {
+    padding: 20px 100px 20px 100px;
+    border-radius: 15px;
+  min-height: 850px;
+    align-items: center;
+    background-color: white;
+    margin: 0 auto;
+  
+  
+  }
+
+/* 폼 스타일 */
+.admin-addBook-body form {
+    width: 75%;
+    padding: 50px;
+    margin: 0 auto;
+}
+
+/* 제목, 검색창 가운데 정렬 */
+.admin-addBook-title {
+    text-align: center;
+    padding: 10px;
+}
+
+/* input-group 높이 고정 */
+ #admin-addBook-label {
+    margin-bottom: 10px;
+    height: 50px; /* 높이 고정 */
+   
+   
+}
+
+/* 레이블 너비 설정 */
+#admin-addBook-label {
+    width: 150px;
+    height: 50px;
+    text-align: center;
+    
+}
+
+
+
+#admin-addBook-input {
+    height: 50px;
+    padding-top:10px;
+  
+}
+
+
+
+
+#admin-addBook-textarea { height: 100px; }
+
+/* 입력 필드의 너비를 100%로 설정 */
+#admin-addBook-input
+#admin-addBook-label {
+    width: 100%;
+}
+
+/* 이미지 미리보기 */
+.img-thumbnail {
+    max-width: 200px;
+    margin-top: 10px;
+}
+
+
+.admin-addbook-button {
+ text-align: center;
+ padding: 30px;
+
+}
+

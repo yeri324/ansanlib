@@ -1,11 +1,11 @@
 import React from 'react';
 import './footer.css';
-import footer_logo from '../../images/logo/footer_logo.png'
+import footer_logo from '../../images/logo/footer_logo.png';
 
 const Footer = () => {
     return (
-        <div className="full_footer">
-            <div className="footer_content_container">
+        <div id="full_footer">
+            <div id="footer_content_container">
                 <div className="top">
                     <ul className="footer_menu">
                         <li className="menu_item">

@@ -1,0 +1,205 @@
+.admin-page {
+  padding-top:7px;
+  width: 100%;
+  font-family: 'Noto Sans KR', sans-serif;
+  padding-bottom: 30px;
+  overflow: hidden; /* 메인 영역에 스크롤 바 추가 */
+}
+
+.admin-main-main {
+  margin-top: 100px;
+  margin-left: 270px;
+  padding-bottom: 30px;
+  width: 85%;
+  align-items: center;
+  height: calc(100vh - 100px); /* 전체 높이에서 여백을 뺀 높이 설정 */
+  overflow: hidden; /* 주의: 이 속성은 main 요소에 스크롤을 숨깁니다. */
+  overflow-y: auto; /* 세로 스크롤바 추가 */
+  background-color: hsla(45, 6%, 87%, 0.459);
+}
+
+/*메인 폼 영역 */
+.admin-main-main>.admin-main-body {
+  
+  
+  border-radius: 15px;
+min-height: 850px;
+  align-items: center;
+  background-color: white;
+  margin: 0 auto;
+
+
+}
+.admin-main-body > .admin-main-dash-top {
+  width:100%;
+  height: 30px;
+  /* border: 1px solid darkblue; */
+
+ }
+
+ .admin-main-body > .admin-main-dash-body {
+  width: 100%;
+  display:flex; 
+  flex-direction:row; 
+  /* border:1px solid rgb(100, 100, 8); */
+   min-height: 850px;
+  
+  }
+   
+
+
+
+   .admin-main-left, .admin-main-right {
+    /* border: 1px solid saddlebrown; */
+    width: 100%; padding: 0px 30px;
+   
+    
+   }
+
+.admin-main-left {
+  border-right: 1px solid #eee;
+}
+
+  
+
+.admin-left-box1 {
+  height: 80px;
+text-align: center;
+font-family: 'Noto Sans KR', sans-serif;
+padding: 20px;
+
+}
+
+.admin-left-box1 > h4 {
+  padding-bottom: 10px;
+  border-bottom: 2px solid #7e7c7c; /* 밑줄 스타일 추가 */
+}
+
+.admin-left-box2 {
+  /* background-color: aliceblue; */
+  height: 350px;
+}
+
+
+.calendar-container {
+  width: 100%;
+  
+  
+  
+}
+
+/*캘린더 날짜*/
+.react-calendar__navigation button {
+  font-family: 'Noto Sans KR', sans-serif;
+  color: #162057; /* 원하는 색상 */
+  font-size: 16px;
+  font-weight: bold;
+}
+
+
+
+.admin-left-box3 {
+ 
+  font-size: 13px;
+margin-top: 20px;
+  /* background-color: rgb(238, 241, 204); */
+  height: 300px;
+}
+
+.admin-table {
+  margin: 0 auto;
+  width: 100%;
+}
+.admin-left-box3 > .admin-table th, tr , 
+.admin-right-box3 > .admin-table th, tr {
+  background-color: white;
+  border-bottom: 2px solid #7e7c7c; /* 밑줄 스타일 추가 */
+  font-size: 16px;
+}
+
+
+.admin-left-box4  {
+  width: 100%;
+  background-color:  aliceblue;
+  height: 400px;
+}
+
+.admin-left-box4  > div {
+  width: 100%;
+}
+
+.admin-right-box1 {
+  /* background-color: aliceblue; */
+  height: 200px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 20px;
+
+  }
+
+
+  .admin-right-graph {
+    /* border: 1px solid darkgreen; */
+    padding: 30px;
+    width: 100%;
+    margin:20px;
+    background-color:#152f50;
+    color: white;
+    border-radius: 30px;
+  }
+
+
+
+
+  .admin-right-graph > div >h1 {   
+font-size: 20px;  
+  }
+.admin-right-graph > div > p  {
+  font-size: 16px;
+}
+
+
+.admin-right-box2 {
+
+  width: 100%;
+  /* background-color:  aliceblue; */
+  height: 400px;
+  padding-left:  30px;
+}
+
+
+.admin-right-box2 >trends-container {
+margin:  0 auto;
+    width: 100%;
+
+  }
+
+.admin-right-board{
+  
+  width: 50%;
+ margin:20px;
+}
+
+
+
+.admin-right-box3 {
+  /* background-color:  aliceblue; */
+  height: 300px;
+}
+
+
+.admin-right-box3 > h3 > a  {
+ margin-left: 60px;
+ color: inherit;
+}
+
+
+
+
+
+
+
+
+
+

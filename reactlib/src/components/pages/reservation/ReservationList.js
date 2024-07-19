@@ -1,55 +1,37 @@
-import React, { useContext, useEffect, useState } from 'react';
-import axios from "../security/apis/api";
-import { useNavigate } from 'react-router-dom';
-import { LoginContext } from '../security/contexts/LoginContextProvider';
+import React, { useEffect, useState } from 'react';
 import useRealName from '../../hooks/useRealName';
+import useAuth, { LOGIN_STATUS } from '../../hooks/useAuth';
+import RedirectLogin from '../../helpers/RedirectLogin';
+import Auth from '../../helpers/Auth';
+import './ReservationList.css';
+import Header from '../../fragments/header/header';
+import Footer from '../../fragments/footer/footer';
+import Side from '../myPage/Side';
+
 
 const ReservationList = () => {
-    const navigate = useNavigate();
-
     const name = useRealName();
 
     const [reservations, setReservations] = useState([]);
     const [selectedReservations, setSelectedReservations] = useState([]); 
     const [isErrored, setErrored] = useState(false);
 
-    const { isLogin, roles, isLoginInProgress } = useContext(LoginContext);
-
-    useEffect(() => {
-        setErrored(!isLogin);
-    }, [isLogin]);
-
-    useEffect(() => {
-      //현재 로그인이 진행중인 경우 아무것도 실행하지 않음.
-      if(isLoginInProgress) return;
-      if(!isLogin) {
-        alert("로그인이 필요합니다.");
-        navigate("/login");
-        return;
-      } else if(!roles.isUser) {
-         alert("권한이 없습니다.");
-        navigate(-1);
-      }
-    }, [isLogin, roles]);
+    const { axios } = useAuth();
 
     const fetchReservations = async () => {
-        if(isLogin) {
-            try {
-                const response = await axios.get(`/api/reservations/get`); 
-                //예약 정보를 셋팅한다.
-                setReservations(response.data);
-            } catch (error) { //오류 발생시(서버에서 NOT_FOUND(404) 요청 받거나 기타 오류 등등..)
-                //오류 발생 플래그 true로 설정
-                setErrored(true);
-                console.error('Error fetching reservations:', error);
-            }
-        } else {
-            setReservations([]);
+        try {
+            const response = await axios.get(`/api/reservations/get`); 
+            //예약 정보를 셋팅한다.
+            setReservations(response.data);
+            setErrored(false);
+        } catch (error) { //오류 발생시(서버에서 NOT_FOUND(404) 요청 받거나 기타 오류 등등..)
+            //오류 발생 플래그 true로 설정
             setErrored(true);
+            console.error('Error fetching reservations:', error);
         }
     };
 
-    useEffect(() => { fetchReservations(); }, [isLogin]); //이부분은 의존성 배열인데, login 값이 변경될 때 마다 useEffect를 새로 실행하여 예약목록을 업데이트 하도록 함.
+    useEffect(() => { fetchReservations(); }, []); //이부분은 의존성 배열인데, 컴포넌트가 처음 랜더링될때 한번만 실행함.
 
     const handleSelectReservation = (reservationId) => {
         setSelectedReservations(prevSelected =>
@@ -76,26 +58,38 @@ const ReservationList = () => {
     const selectAll = () => setSelectedReservations(reservations.map(({id}) => id));
 
     return (
-        <div>
+        <div className="reservation_list">
             <h2>{name}의 예약 목록</h2>
-            <ul>
-                {reservations.map(reservation => (
-                    <li key={reservation.id}>
-                        <input
-                            type="checkbox"
-                            checked={selectedReservations.includes(reservation.id)}
-                            onChange={() => handleSelectReservation(reservation.id)}
-                        />
-                        <strong>책 제목:</strong> {reservation.book.title} <br />
-                        <strong>책 ISBN:</strong> {reservation.book.isbn} <br />
-                        <strong>시작 날짜:</strong> {reservation.startDate} <br />
-                        <strong>종료 날짜:</strong> {reservation.endDate}
-                    </li>
-                ))}
-            </ul>
-            {
-                !isErrored &&
-                <>
+            <table>
+                <thead>
+                    <tr>
+                        <th>책 제목</th>
+                        <th>책 ISBN</th>
+                        <th>시작 날짜</th>
+                        <th>종료 날짜</th>
+                        <th>선택</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {reservations.map(reservation => (
+                        <tr key={reservation.id}>
+                            <td>{reservation.book.title}</td>
+                            <td>{reservation.book.isbn}</td>
+                            <td>{reservation.startDate}</td>
+                            <td>{reservation.endDate}</td>
+                            <td>
+                                <input
+                                    type="checkbox"
+                                    checked={selectedReservations.includes(reservation.id)}
+                                    onChange={() => handleSelectReservation(reservation.id)}
+                                />
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+            {!isErrored && (
+                <div className="actions">
                     <button
                         onClick={selectAll}
                         disabled={selectedReservations.length === reservations.length}
@@ -114,12 +108,24 @@ const ReservationList = () => {
                     >
                         예약 삭제
                     </button>
-                </>
-
-            }
-            {isErrored && <h2>자료를 가져오지 못했습니다.</h2>}
+                </div>
+            )}
+            {isErrored && <h2 className="error_message">자료를 가져오지 못했습니다.</h2>}
         </div>
     );
 };
 
-export default ReservationList;
+export default function() {
+    return (
+      <>
+        <RedirectLogin />
+        <Auth loginStatus={LOGIN_STATUS.LOGGED_IN}>
+          <Header />
+          <ReservationList />
+          <Side />
+          <Footer />
+        </Auth>
+      </>
+    );
+};
+  

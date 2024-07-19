@@ -17,20 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.extern.java.Log;
 
 @Service
-@Log
 public class FileService {
 	
-	public String uploadFile(String uploadPath, String originalFileName, byte[] fileData) throws Exception{
-		UUID uuid = UUID.randomUUID();
-		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
-		String savedFileName = uuid.toString() + extension;
-		String fileUploadFullUrl = uploadPath + "/" + savedFileName;
-		FileOutputStream fos = new FileOutputStream(fileUploadFullUrl);
-		fos.write(fileData);
-		fos.close();
-		return savedFileName;
-	}
-	
+
 	//파일이미지 저장 (파일, 폴더이름, 게시글번호)
     public Map<String, String> fileHandler(MultipartFile file,String foldername,Long id) throws Exception {
 
@@ -40,7 +29,11 @@ public class FileService {
 
         // 파일 저장 위치
         String path = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static"
-                + File.separator + "images" + File.separator + foldername + File.separator + id.toString();
+                + File.separator + "images" + File.separator + foldername;
+        if(id!=null) {
+        	path += File.separator + id.toString();
+        }
+        
         File userImg = new File(path);
 
         if (!userImg.exists()) {

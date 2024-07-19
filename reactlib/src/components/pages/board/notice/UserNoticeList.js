@@ -69,7 +69,7 @@ function UserNoticeList() {
 
     return (
         <div>
-            <section class="board">
+            <section class="board-list">
                 <div id="search">
                     <div class="container">
                         <div class="page-title">
@@ -100,7 +100,12 @@ function UserNoticeList() {
                         </thead>
                         <tbody class="list_content">
                             {searchResult.map((notice) => (
-                                <BoardItem key={notice.id} item={notice} board='notice' onDetail={onDetail} />
+                                 <tr>
+                                 <td scope="col" class="th-num">{notice.id}</td>
+                                 <td scope="col" class="th-title" onClick={() => onDetail(notice)}>{notice.title}</td>
+                                 <td scope="col" class="th-loginid">{notice.createdBy}</td>
+                                 <td scope="col" class="th-loginid">{notice.updateTime.split('T')[0]}</td>
+                                 </tr>
                             ))}
                         </tbody>
                     </table>

@@ -3,8 +3,12 @@ package com.ansanlib.entity;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.ansanlib.constant.BookStatus;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,6 +44,7 @@ public class RequestBook extends BaseEntity {
 
 	
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="user_id")
     private LibUser libUser;
 

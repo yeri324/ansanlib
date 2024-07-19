@@ -1,20 +1,15 @@
 import React from 'react';
-import Header from '../components/Header/Header';
-import LoginContextConsumer from '../contexts/LoginContextConsumer';
 import FormLogin from '../components/Login/FormLogin';
+import Header from '../../../fragments/header/header';
+import Footer from "../../../fragments/footer/footer";
 
 const Login = () => {
 
     return (
         <>
             <Header />
-            <div className='container'>
-                {/* <h1>Login</h1>
-                <hr/>
-                <h2>로그인 페이지</h2>
-                <LoginContextConsumer/> */}
                 <FormLogin />
-            </div>
+            <Footer />
         </>
     )
 }
