@@ -6,7 +6,7 @@
     margin: 0;
     padding: 0;
 }
-.board-list .container {
+.board-list .b-container {
     width: 70%;
     max-width: 1200px;
     margin: 0 auto;
@@ -14,18 +14,18 @@
 }
 
 /* Page Title */
-.board-list .board_page-title {
+.board-list .bpage-title {
     text-align: center;
     margin-bottom: 20px;
 }
 
-.board-list .board_page-title h3 {
+.board-list .bpage-title h3 {
     font-size: 24px;
     color: #333;
 }
 
 /* Search Wrap */
-.board-list .search-wrap {
+.board-list .bsearch-wrap {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -34,21 +34,21 @@
     margin: 0 auto;
 }
 
-.board-list .search-wrap select,
-.board-list .search-wrap input[type="text"],
-.board-list .search-wrap .btn {
+.board-list .bsearch-wrap select,
+.board-list .bsearch-wrap input[type="text"],
+.board-list .bsearch-wrap .btn {
     margin: 0 5px;
     padding: 10px;
     font-size: 16px;
 }
 
-.board-list .search-wrap input[type="text"] {
+.board-list .bsearch-wrap input[type="text"] {
     border: 1px solid #ccc;
     border-radius: 4px;
     flex: 1;
 }
 
-.board-list .search-wrap .btn[type='button'] {
+.board-list .bsearch-wrap .btn[type='button'] {
     background-color: #343a40;
     color: white;
     border: none;
@@ -56,67 +56,66 @@
     cursor: pointer;
 }
 
-.board-list .search-wrap .btn:hover {
+.board-list .bsearch-wrap .btn:hover {
     background-color: #495057;
 }
 
-/* FAQ Table */
-.board-list .list {
+/* Table */
+.board-list .b-list {
     width: 70%;
     margin: 0 auto;
 }
 
-.board-list .table {
+.board-list .b-table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
 }
 
 /* 리스트 내부 비율 */
-
-.board-list .table th:nth-child(1),
-.board-list .table td:nth-child(1) {
+.board-list .b-table th:nth-child(1),
+.board-list .b-table td:nth-child(1) {
     width: 7%;
 }
 
-.board-list .table th:nth-child(2),
-.board-list .table td:nth-child(2) {
+.board-list .b-table th:nth-child(2),
+.board-list .b-table td:nth-child(2) {
     width: 30%;
 }
 
-.board-list .table th:nth-child(3),
-.board-list .table td:nth-child(3) {
+.board-list .b-table th:nth-child(3),
+.board-list .b-table td:nth-child(3) {
     width: 15%;
 }
 
-.board-list .table th:nth-child(4),
-.board-list .table td:nth-child(4) {
+.board-list .b-table th:nth-child(4),
+.board-list .b-table td:nth-child(4) {
     width: 10%;
 }
 
-.board-list .table th:nth-child(5),
-.board-list .table td:nth-child(5) {
+.board-list .b-table th:nth-child(5),
+.board-list .b-table td:nth-child(5) {
     width: 5%;
 }
 
-.board-list .table th,
-.board-list .table td {
+.board-list .b-table th,
+.board-list .b-table td {
     border: 1px solid #ddd;
     padding: 12px;
     text-align: center;
 }
 
-.board-list .table th {
+.board-list .b-table th {
     background-color: #f1f1f1;
     font-weight: bold;
 }
 
-.board-list .table tr:nth-child(even) {
+.board-list .b-table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
 /* Buttons */
-.board-list .list button {
+.board-list .b-list button {
     margin: 10px 5px;
     padding: 10px 15px;
     background-color: #343a40;
@@ -126,7 +125,7 @@
     cursor: pointer;
 }
 
-.board-list .list button:hover {
+.board-list .b-list button:hover {
     background-color: #343a40;
 }
 
@@ -140,11 +139,11 @@
     margin: 20px 0;
 }
 
-.board_pagination .page-item {
+.board_pagination .boardpage-item {
     margin: 0 5px;
 }
 
-.board_pagination .page-link {
+.board_pagination .boardpage-link {
     padding: 10px 15px;
     background-color: #495057;
     color: white;
@@ -153,15 +152,16 @@
     cursor: pointer;
 }
 
-.board_pagination .page-link:hover {
+.board_pagination .boardpage-link:hover {
     background-color: #495057;
 }
 
 /* Total Count */
-.board-list  .count_content {
+.board-list  .b-count_content {
     width: 75%;
     text-align: right;
     margin: 0 auto;
+    margin-left: 250px;
     margin-top: 20px;
     font-size: 16px;
 }
