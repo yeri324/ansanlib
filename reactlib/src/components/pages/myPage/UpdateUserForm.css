@@ -1,0 +1,58 @@
+.update_form {
+    margin-left: 220px; /* 사이드바 너비에 맞게 조정 */
+    padding: 20px;
+  }
+  
+  .update_center {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .base_info {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px; /* 입력 필드 사이의 간격 */
+    width: 60%;
+  }
+  
+  .base_info label {
+    text-align: right;
+    padding-right: 10px;
+    line-height: 2.5em;
+  }
+  
+  .base_info input[type="text"],
+  .base_info input[type="email"],
+  .base_info input[type="radio"],
+  .base_info .zonecode_view,
+  .base_info .address_btn {
+    width: 60%; /* 입력칸의 너비를 100%로 설정 */
+    padding: 8px; /* 내부 여백 설정 */
+    box-sizing: border-box; /* 내부 여백이 너비에 포함되도록 설정 */
+  }
+  
+  .base_info .address_btn {
+    width: auto; /* 버튼의 너비를 자동으로 설정 */
+  }
+  
+  .base_info .sms_agreement {
+    display: flex; /* 라디오 버튼과 라벨을 가로로 배치 */
+    align-items: center; /* 세로 중앙 정렬 */
+    margin-top: 10px; /* 위쪽 여백 설정 */
+  }
+  
+  .base_info .sms_agreement label {
+    margin-left: 10px; /* 라디오 버튼과 라벨 사이의 간격 조정 */
+  }
+  
+  #update_btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+  }
+  
+  .subtitle,
+  .base_info > * {
+    margin-top: 10px;
+  }
+  

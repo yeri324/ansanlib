@@ -3,6 +3,12 @@ import useRealName from '../../hooks/useRealName';
 import useAuth, { LOGIN_STATUS } from '../../hooks/useAuth';
 import Auth from '../../helpers/Auth';
 import RedirectLogin from '../../helpers/RedirectLogin';
+import Footer from '../../fragments/footer/footer';
+import '../../fragments/footer/footer.css';
+import Header from '../../fragments/header/header';
+import '../../fragments/header/header.css';
+import './ReservationForm.css';
+import Side from '../myPage/Side';
 
 const ReservationForm = () => {
   const name = useRealName();
@@ -35,19 +41,15 @@ const ReservationForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <h2>{name}의 도서예약</h2>
-      {/* <label>
-        User Id:
-        <input type="text" value={userId ?? ""} readOnly />
-      </label> */}
       <label>
-        Book Id:
+        도서 ID:
         <input type="text" value={bookId} onChange={(e) => setBookId(e.target.value)} required />
       </label>
       <label>
-        Reservation Date:
+        예약 날짜:
         <input type="datetime-local" value={reservationDate} onChange={(e) => setReservationDate(e.target.value)} required />
       </label>
-      <button type="submit">Reserve</button>
+      <button type="submit">예약하기</button>
     </form>
   );
 };
@@ -57,7 +59,10 @@ export default function() {
     <>
       <RedirectLogin />
       <Auth loginStatus={LOGIN_STATUS.LOGGED_IN}>
-        <ReservationForm />
+        <Header />
+          <ReservationForm />
+          <Side />
+        <Footer />
       </Auth>
     </>
   );
