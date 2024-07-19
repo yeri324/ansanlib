@@ -2,12 +2,15 @@
 
 .reservation_list {
     font-family: 'Noto Sans KR', sans-serif;
-    margin: 20px;
-    padding: 20px;
+    position: relative; /* 업데이트 폼을 사이드바 옆에 배치 */
+    margin-left: 250px; /* 사이드바 너비만큼 왼쪽 여백 추가 */
+    padding: 20px; /* 내부 여백 조정 */
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: calc(80% - 250px); /* 업데이트 폼 너비를 사이드바 제외한 나머지 공간으로 설정 */
+    box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
 }
 
 .reservation_list h2 {

@@ -39,18 +39,34 @@ const ReservationForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>{name}의 도서예약</h2>
-      <label>
-        도서 ID:
-        <input type="text" value={bookId} onChange={(e) => setBookId(e.target.value)} required />
-      </label>
-      <label>
-        예약 날짜:
-        <input type="datetime-local" value={reservationDate} onChange={(e) => setReservationDate(e.target.value)} required />
-      </label>
-      <button type="submit">예약하기</button>
-    </form>
+    <div className='reservation_form'>
+      <h2 className='reservation_form_title'>{name}님의 도서예약</h2>
+      <form onSubmit={handleSubmit} className='reservation_form_body'>
+        <div className='reservation_form_field'>
+          <label htmlFor='bookId'>도서 ID:</label>
+          <input
+            id='bookId'
+            type='text'
+            value={bookId}
+            onChange={(e) => setBookId(e.target.value)}
+            required
+          />
+        </div>
+        <div className='reservation_form_field'>
+          <label htmlFor='reservationDate'>예약 날짜:</label>
+          <input
+            id='reservationDate'
+            type='datetime-local'
+            value={reservationDate}
+            onChange={(e) => setReservationDate(e.target.value)}
+            required
+          />
+        </div>
+        <div className='reservation_form_button'>
+          <button type='submit'>예약하기</button>
+        </div>
+      </form>
+    </div>
   );
 };
 
