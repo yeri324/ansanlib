@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import './BookDetailPage.css'; // 스타일 파일을 임포트합니다.
+import Header from '../../../fragments/header/header';
+import Footer from '../../../fragments/footer/footer';
 
 const BookDetailPage = () => {
   const { id } = useParams();
@@ -62,6 +64,8 @@ const BookDetailPage = () => {
   };
 
   return (
+    <>
+    <Header />
     <main>
       <div className="breadcrumbs">
         <div className="page-header d-flex align-items-center">
@@ -73,15 +77,6 @@ const BookDetailPage = () => {
             </div>
           </div>
         </div>
-        <nav>
-          <div className="container">
-            <ol>
-              <li><a href="/">Home</a></li>
-              <li><a href={`/book/search`}>도서관 상세 검색</a></li>
-              <li>{book.title}</li>
-            </ol>
-          </div>
-        </nav>
       </div>
 
       <section className="sample-page">
@@ -106,7 +101,7 @@ const BookDetailPage = () => {
                 <p>저자 : 『{book.author}』</p>
                 <p>ISBN : 『{book.isbn}』</p>
                 <p>출판사 : 『{book.publisher}』 || 출판 날짜 : 『{book.pub_date}』 || 분류 코드 : 『{book.category_code}』</p>
-                <p>위치 : 『{book.lib_name}』</p>
+                <p>위치 : 『{book.libName}』</p>
               </div>
             </div>
           </div><br />
@@ -124,7 +119,7 @@ const BookDetailPage = () => {
               <tbody className="table-detail">
                 {bookList.map((relatedBook) => (
                   <tr key={relatedBook.id}>
-                    <td>{relatedBook.lib_name}</td>
+                    <td>{relatedBook.libName}</td>
                     <td>{relatedBook.status ?? '정보 없음'}</td>
                     <td>{relatedBook.returnDay}</td>
                     <td>
@@ -154,6 +149,8 @@ const BookDetailPage = () => {
         </div>
       </section>
     </main>
+    <Footer />
+    </>
   );
 };
 

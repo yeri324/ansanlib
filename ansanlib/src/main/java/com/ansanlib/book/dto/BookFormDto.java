@@ -40,7 +40,7 @@ public class BookFormDto {
     
     private BookStatus status;
 
-    private String location;
+    private String libName;
     
     private BookImgDto bookImgDto;
 

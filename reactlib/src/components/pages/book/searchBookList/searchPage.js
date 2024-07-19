@@ -3,6 +3,8 @@ import axios from 'axios';
 import './SearchPage.css'; // 스타일 파일을 임포트합니다.
 import Highlight from './Highlight'; // 하이라이트 컴포넌트를 임포트합니다.
 import AutoComplete from './AutoComplete'; // AutoComplete 컴포넌트를 임포트합니다.
+import Header from '../../../fragments/header/header';
+import Footer from '../../../fragments/footer/footer';
 
 const SearchPage = ({ isAuthenticated, isAnonymous }) => {
   const [formValues, setFormValues] = useState({
@@ -81,18 +83,9 @@ const SearchPage = ({ isAuthenticated, isAnonymous }) => {
 
 
   return (
+    <>
+    <Header />
     <main>
-      <div className="breadcrumbs">
-        <nav>
-          <div className="container">
-            <ol>
-              <li><a href="/">Home</a></li>
-              <li><a href={`/bookapi/search`}>네이버 API BOOK 검색</a></li>
-            </ol>
-          </div>
-        </nav>
-      </div>
-
       <section className="sample-page">
         <div className="content centered-content">
           <div className="accordion" id="accordionExample">
@@ -186,7 +179,7 @@ const SearchPage = ({ isAuthenticated, isAnonymous }) => {
                 </a>
                 <p><Highlight text={`저자 : 『${book.author}』   ||   ISBN : 『${book.isbn}』`} highlight={formValues.author} /></p>
                 <p><Highlight text={`출판사 : 『${book.publisher}』   ||   출판 날짜 : 『${book.pub_date}』   ||   분류 코드 : 『${book.category_code}』`} highlight={formValues.publisher} /></p>
-                <p>위치 : 『{book.lib_name}』</p>
+                <p>위치 : 『{book.libName}』</p>
               </div>
               <div className="row">
                 <p>{book.status}</p>
@@ -222,6 +215,8 @@ const SearchPage = ({ isAuthenticated, isAnonymous }) => {
         </div>
       </section>
     </main>
+    <Footer />
+    </>
   );
 };
 

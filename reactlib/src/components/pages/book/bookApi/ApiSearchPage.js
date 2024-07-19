@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import './ApiSearchPage.css';
+import Header from '../../../fragments/header/header';
+import Footer from '../../../fragments/footer/footer';
 
 const ApiBookSearch = () => {
 const [keyword, setKeyword] = useState('');
@@ -35,6 +37,9 @@ useEffect(() => {
 }, [fetchBooks, keyword, pageMaker.cri.page]);
 
 return (
+    <>
+    <Header />
+    
     <main>
     {/* Breadcrumbs */}
     <div className="breadcrumbs">
@@ -47,14 +52,6 @@ return (
             </div>
         </div>
         </div>
-        <nav>
-        <div className="container">
-            <ol>
-            <li><a href="/">홈</a></li>
-            <li><a href={`/book/search`}>도서관 상세 검색</a></li>
-            </ol>
-        </div>
-        </nav>
     </div>
     {/* End Breadcrumbs */}
 
@@ -158,6 +155,8 @@ return (
         </div>
     </section>
     </main>
+    <Footer />
+    </>
 );
 };
 

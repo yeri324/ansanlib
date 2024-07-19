@@ -28,7 +28,7 @@ public class BookDto {
 	private String category_code; 	// 분류 코드
 	private BookStatus status; 	// 대출 상태
 	private String bookDetail;  	// 책 설명
-	private String lib_name;    	// 위치
+	private String libName;    	// 위치
 	private BookImg bookImg;	// 책이미지
 	private List<BookListDto> relatedBooks;
 	private int count;
