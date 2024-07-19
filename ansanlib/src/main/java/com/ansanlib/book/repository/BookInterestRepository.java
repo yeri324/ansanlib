@@ -11,8 +11,8 @@ import com.ansanlib.entity.BookInterest;
 import com.ansanlib.entity.LibUser;
 
 public interface BookInterestRepository extends JpaRepository<BookInterest, Long> {
-	
-    @Query("select bi from BookInterest bi join fetch bi.book where bi.libUser = :libUser")
+
+    @Query("select bi from BookInterest bi join fetch bi.book b where bi.libUser = :libUser")
     List<BookInterest> findByLibUser(@Param("libUser") LibUser libUser);
 
     int countBookInterestByLibUserAndBook(LibUser libUser, Book book);

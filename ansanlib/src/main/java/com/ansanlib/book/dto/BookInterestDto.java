@@ -2,6 +2,7 @@ package com.ansanlib.book.dto;
 
 import com.ansanlib.constant.BookStatus;
 import com.ansanlib.entity.Book;
+import com.ansanlib.entity.BookImg;
 import com.ansanlib.entity.BookInterest;
 
 import lombok.AllArgsConstructor;
@@ -13,7 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter @Setter
 public class BookInterestDto {
-	private Long id;
+    private Long id;
     private String title;
     private String author;
     private String publisher;
@@ -21,20 +22,18 @@ public class BookInterestDto {
     private String categoryCode;
     private String libName;
     private BookStatus status;
-    private String bookImg;
+    private BookImg bookImg;
 
-    public static BookInterestDto fromEntity(BookInterest bookInterest) {
+    public BookInterestDto(BookInterest bookInterest) {
         Book book = bookInterest.getBook();
-        return new BookInterestDto(
-            bookInterest.getId(),
-            book.getTitle(),
-            book.getAuthor(),
-            book.getPublisher(),
-            book.getPub_date(),
-            book.getCategory_code(),
-            book.getLibName(),
-            book.getStatus(),
-            book.getBookImg() != null ? book.getBookImg().getImgUrl() : null
-        );
+        this.id = bookInterest.getId();
+        this.title = book.getTitle();
+        this.author = book.getAuthor();
+        this.publisher = book.getPublisher();
+        this.pubDate = book.getPub_date();
+        this.categoryCode = book.getCategory_code();
+        this.libName = book.getLibName();
+        this.status = book.getStatus();
+        this.bookImg = book.getBookImg();
     }
 }
