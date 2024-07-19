@@ -71,11 +71,11 @@ function UserNoticeList() {
         <div>
             <section class="board-list">
                 <div id="search">
-                    <div class="container">
-                        <div class="page-title">
+                    <div class="b-container">
+                        <div class="bpage-title">
                             <h3>공지사항</h3>
                         </div>
-                        <div class="search-wrap">
+                        <div class="bsearch-wrap">
                             <select name="searchBy" value={searchOption.searchBy} onChange={handleOnChange}>
                                 <option value="loginid">작성자</option>
                                 <option value="title">제목</option>
@@ -83,13 +83,13 @@ function UserNoticeList() {
                             <input type="text" id="search" name="searchQuery" value={searchOption.searchQuery} onChange={handleOnChange} />
                             <button class="btn btn-dark" onClick={onSearch}>검색</button>
                         </div>
-                        <div className="count_content">
+                        <div className="b-count_content">
                             총 {totalNoticeCount}건 / {totalPages} 페이지
                         </div>
                     </div>
                 </div>
-                <div class="list">
-                    <table class="table">
+                <div class="b-list">
+                    <table class="b-table">
                         <thead>
                             <tr>
                                 <th scope="col" class="th-num">번호</th>
@@ -100,12 +100,12 @@ function UserNoticeList() {
                         </thead>
                         <tbody class="list_content">
                             {searchResult.map((notice) => (
-                                 <tr>
-                                 <td scope="col" class="th-num">{notice.id}</td>
-                                 <td scope="col" class="th-title" onClick={() => onDetail(notice)}>{notice.title}</td>
-                                 <td scope="col" class="th-loginid">{notice.createdBy}</td>
-                                 <td scope="col" class="th-loginid">{notice.updateTime.split('T')[0]}</td>
-                                 </tr>
+                                <tr>
+                                    <td scope="col" class="th-num">{notice.id}</td>
+                                    <td scope="col" class="th-title" onClick={() => onDetail(notice)}>{notice.title}</td>
+                                    <td scope="col" class="th-loginid">{notice.createdBy}</td>
+                                    <td scope="col" class="th-loginid">{notice.updateTime.split('T')[0]}</td>
+                                </tr>
                             ))}
                         </tbody>
                     </table>
