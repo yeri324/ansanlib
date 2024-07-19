@@ -13,8 +13,8 @@ public class BookListDto {
 	
 	private Long id;
 	
-	private String location;		// 위치
-	private BookStatus Status;		// 대출상태
+	private String libName;		// 위치
+	private BookStatus status;		// 대출상태
 	private LoanStatus loanEnd;	// 반납예정일
 	
 }

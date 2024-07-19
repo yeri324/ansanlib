@@ -7,12 +7,10 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
-import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -41,6 +39,7 @@ public class Book extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+    
     private String isbn; // 바코드
 
     private String title; // 제목
@@ -50,7 +49,7 @@ public class Book extends BaseEntity {
     private String genre; // 장르
     private String category_code; // 분류코드
 
-
+    private String libName; // 위치
 
     @Lob
     @Column(columnDefinition = "TEXT")
@@ -64,9 +63,8 @@ public class Book extends BaseEntity {
     @JsonManagedReference
     private BookImg bookImg;
     
-    //외래키 연결 해제. 회원탈퇴시 직접 해제해줘야함.
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id", foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private LibUser libUser;
     
     @ManyToOne(fetch = FetchType.LAZY)
@@ -74,12 +72,7 @@ public class Book extends BaseEntity {
     @JsonIgnore
     private Library library;
     
-    private String libName;  //도서관이름   (location 대신 lib_name)
+    public void updateBook(BookFormDto itemFormDto){
 
-    
-
-
-
-
-
+    }
 }
