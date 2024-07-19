@@ -1,35 +1,44 @@
-import React from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import useAuth, { LOGIN_STATUS } from '../../hooks/useAuth';
+import RedirectLogin from '../../helpers/RedirectLogin';
+import Auth from '../../helpers/Auth';
 
 const DeleteUserForm = () => {
-    const navigate = useNavigate();
+  const { axios, logout } = useAuth();
 
-    const handleDeleteAccount = () =>{
-        if (window.confirm('정말로 회원 탈퇴를 하시겠습니까?')){
-          axios.post('api/user/delete')
-          .then(response =>{
-            alert('회원 탈퇴가 성공적으로 처리 되었습니다.');
-            sessionStorage.removeItem("member");
-            navigate('/home');
-          })
-          .catch(error => {
-            alert('회원 탈퇴중 오류가 발생했습니다.');
-            console.error(error);
-          });
+  const handleDeleteAccount = async () => {
+    if (window.confirm('정말로 회원 탈퇴를 하시겠습니까?')) {
+      try {
+        const response = await axios.delete('/users/delete');
+        if (response.status === 200) {
+          alert('회원 탈퇴가 성공적으로 처리 되었습니다.');
+          // sessionStorage.removeItem("member"); // 클라이언트 사이드에서의 추가 처리
+          logout(false); // 로그아웃 처리. 사용자에게 묻지 않음.
+        } else {
+          alert('회원 탈퇴 중 오류가 발생했습니다.');
         }
-    }; 
+      } catch (error) {
+        alert('회원 탈퇴 중 오류가 발생했습니다.');
+        console.error(error);
+      }
+    }
+  };
 
-    return(
-        <div className="delete_form">
-            <div className="title">
-                <h2>회원 탈퇴</h2>
-            </div>
-            <p>회원 탈퇴를 원하시면 아래 버튼을 클릭해주세요.</p>
-            <button onClick={handleDeleteAccount} className="delete_btn">회원 탈퇴</button>
-        </div>
-    );
-     
-}
+  return (
+    <div>
+      <h2>회원 탈퇴</h2>
+      <button onClick={handleDeleteAccount}>회원 탈퇴하기</button>
+    </div>
+  );
+};
 
-export default DeleteUserForm;
+export default function () {
+  return (
+    <>
+      <RedirectLogin />
+      <Auth loginStatus={LOGIN_STATUS.LOGGED_IN}>
+        <DeleteUserForm />
+      </Auth>
+    </>
+  );
+};

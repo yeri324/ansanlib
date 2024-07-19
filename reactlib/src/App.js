@@ -1,40 +1,59 @@
+
+import React from 'react';
+
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import Header from './components/fragments/header/header';
 import Footer from './components/fragments/footer/footer';
 import HomePage from './components/fragments/home/homePage';
-import AdminUserList from './components/pages/admin/AdminUserList';
-import AdminUserDetail from './components/pages/admin/AdminUserDetail';
+
 import ReservationForm from './components/pages/reservation/ReservationForm';
-import Admin from './components/pages/admin/Admin';
 import MyPage from './components/pages/myPage/MyPage';
 import ReservationList from './components/pages/reservation/ReservationList';
 import RequestBookForm from './components/pages/requestBook/RequestBookForm';
 import RequestBookList from './components/pages/requestBook/RequestBookList';
-import HolidayDetail from './components/pages/admin/HolidayDetail';
 import SearchPage from './components/pages/book/searchBookList/searchPage';
 import BookDetailPage from './components/pages/book/bookDetail/bookDetailPage';
 import LoanStatusList from './components/pages/loanStatus/LoanStatusList';
 import UpdateUserForm from './components/pages/myPage/UpdateUserForm';
 import DeleteUserForm from './components/pages/myPage/DeleteUserForm';
+
 import Login from './components/pages/security/pages/Login';
 import Find from './components/pages/security/pages/Find';
 import Join from './components/pages/security/pages/Join';
 import User from './components/pages/security/pages/User';
-import Holiday from './components/pages/admin/Holiday';
-import HolidayList from './components/pages/admin/HolidayList';
-import HolidayNew from './components/pages/admin/HolidayNew';
-import AddBook from './components/pages/admin/AddBook';
+
+
+
+import Admin from './components/pages/admin/common/Admin';
+
+import AdminBookList from './components/pages/admin/page/AdminBookList';
+import AdminUserList from './components/pages/admin/page/AdminUserList';
+import AdminUserDetail from './components/pages/admin/page/AdminUserDetail';
+import HolidayDetail from './components/pages/admin/modal/HolidayDetail';
+
+import Holiday from './components/pages/admin/page/Holiday';
+import HolidayList from './components/pages/admin/page/HolidayList';
+import HolidayNew from './components/pages/admin/modal/HolidayNew';
+import AddBook from './components/pages/admin/page/AddBook';
 import BookInterest from './components/pages/book/bookInterest/BookInterest';
-import AdminBookRequest from './components/pages/admin/AdminBookRequest';
+import AdminBookRequest from './components/pages/admin/page/AdminBookRequest';
+
 import { UseAuthBasic, UseAuthCheckAdmin, UseAuthCheckLogin } from './components/hooks/examples/useAuthExamples';
 import BoardList from './components/pages/board/page/BoardList';
 import BoardDetail from './components/pages/board/page/BoardDetail';
 import BoardForm from './components/pages/board/page/BoardForm';
-import BookSearch from './components/fragments/home/booksearch';
+
+
+import AdminPopPage from './components/pages/admin/page/AdminPopPage';
+
+
+
+
 import ApiBookSearch from './components/pages/book/bookApi/ApiSearchPage';
 import AdminRecList from './components/pages/board/recboard/AdminRecList';
 import AdminRecForm from './components/pages/board/recboard/AdminRecForm';
 import UserRecList from './components/pages/board/recboard/UserRecList';
+
 
 function App() {
 
@@ -65,6 +84,12 @@ function App() {
                                 <Route path="/admin/holiday/detail" element={<HolidayDetail />} />
                                 <Route path="/admin/book/new" element={<AddBook />} />
                                 <Route path="/admin/book/request" element={<AdminBookRequest />} />
+                                
+                                <Route path="/admin/book/list" element={<AdminBookList />} />
+                 
+
+                                <Route path="/admin/popup" element={<AdminPopPage />} />
+
 
                                 {/* <Route path="/" element={<BookSearch />} /> */}
                                 <Route path="/book/search" element={<SearchPage />} />

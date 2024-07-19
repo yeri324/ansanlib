@@ -71,7 +71,7 @@ const roles_from_context = (roles) => {
  * @property {Roles | null} roles - 현재 로그인된 사용자의 권한
  * @property {import("axios").AxiosInstance | null} axios - axios 인스턴스(Authorization 완료됨)
  * @property {((username: string, password: string) => void) | null} login - 로그인 함수. 로그인 되어있지 않은 경우에만 사용가능
- * @property {(() => void) | null} logout - 로그아웃 함수. 로그인되어 있는 경우에만 사용가능
+ * @property {((ask = true) => void) | null} logout - 로그아웃 함수. 기본적으로는 사용자에게 로그아웃 여부를 물으나, ask = false를 넘길시 묻지 않고 로그아웃 실행. 로그인되어 있는 경우에만 사용가능. 
  */
 
 /**
@@ -86,7 +86,7 @@ const useAuth = () => {
         roles,
         loginCheck: _,
         login,
-        logout
+        logout,
     } = useContext(LoginContext);
 
     const loginStatus = login_status_from_context(isLogin, isLoginInProgress);
@@ -97,7 +97,7 @@ const useAuth = () => {
         roles: loginStatus === LOGIN_STATUS.LOGGED_IN ? roles_from_context(roles) : null,
         axios: loginStatus === LOGIN_STATUS.LOGGED_IN ? authAxios : null,
         login: loginStatus === LOGIN_STATUS.LOGGED_OUT ? login : null,
-        logout: loginStatus == LOGIN_STATUS.LOGGED_IN ? logout : null,
+        logout: loginStatus == LOGIN_STATUS.LOGGED_IN ? (ask = true) => logout(!ask) : null,
     };
 }
 

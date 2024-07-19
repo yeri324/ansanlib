@@ -62,10 +62,10 @@ public class SecurityConfig {
 //                                            .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 //                                            .requestMatchers("/").permitAll()
 //                                            .requestMatchers("/login").permitAll()
-//                                            .requestMatchers("/users/**").permitAll()
+                                            .requestMatchers("/users/**").permitAll()
 //                                            .requestMatchers("/admin/**").hasRole("ADMIN")
-//                                        .requestMatchers("/api/reservations/**").hasAnyRole("USER", "ADMIN")
-//                                        .requestMatchers("/api/requestbook/**").hasAnyRole("USER", "ADMIN")
+                                        .requestMatchers("/api/reservations/**").hasAnyRole("USER", "ADMIN")
+                                        .requestMatchers("/api/requestbook/**").hasAnyRole("USER", "ADMIN")
                                             .anyRequest().permitAll())
 //                                            .anyRequest().authenticated() )
                                             ;

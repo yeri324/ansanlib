@@ -1,0 +1,34 @@
+.admin-pagination {
+  margin-top: 30px;
+  padding-top: 30px;
+  margin: 0 auto;
+}
+
+
+/*임시*/
+.page-item.active .btn-dark {
+  background-color: #343a40;
+  border-color: #343a40;
+}
+
+
+.btn-outline-dark .page-link {
+  color: #343a40;
+  background-color: #ffffff;
+  border: 1px solid #343a40;
+
+}
+
+.btn-outline-dark .page-link:hover {
+  color: #ffffff;
+  background-color: #343a40;
+  border: 1px solid #343a40;
+}
+
+
+
+.page-item > .active > .btn-outline-dark .page-link{
+  border-color: #343a40;
+  background-color: #343a40;
+  color: #ffffff;
+}

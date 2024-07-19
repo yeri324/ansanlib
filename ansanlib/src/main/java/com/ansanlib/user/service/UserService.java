@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,11 +15,18 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.ansanlib.book.repository.BookRepository;
+import com.ansanlib.entity.Faq;
 import com.ansanlib.entity.LibUser;
+import com.ansanlib.security.user.CustomUser;
 import com.ansanlib.user.dto.UserDto;
 import com.ansanlib.user.repository.UserRepository;
 
@@ -30,6 +39,7 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 
 	private final UserRepository userRepository;
+	private final BookRepository bookRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final AuthenticationManager authenticationManager;
 	private final MailService mailService;
@@ -87,25 +97,45 @@ public class UserService {
 	}
 
 	// 회원 삭제
-	public ResponseEntity<?> delete(Long userId) throws Exception {
-		try {
-			userRepository.deleteById(userId);
-			return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
-		}
+	@Transactional
+	public void deleteUser(Long userId) throws Exception {
+	    Optional<LibUser> optionalUser = userRepository.findById(userId);
+	    if (optionalUser.isPresent()) {
+	        try {
+	        	//사용자 삭제
+	            userRepository.deleteById(userId);
+	            //연결된 도서의 사용자 초기화
+	            bookRepository.resetUserFromBooks(userId);
+	        } catch (Exception e) {
+	        	e.printStackTrace();
+	            throw new Exception("회원 탈퇴 중 오류가 발생했습니다.");
+	        }
+	    } else {
+	        throw new Exception("삭제할 사용자를 찾을 수 없습니다.");
+	    }
 	}
 
-	// 회원 수정
-//	  public int update(UserDto userDto) throws Exception {
-//		  LibUser user = userRepository.findByLoginid(userDto.getLoginid()).orElseThrow(EntityNotFoundException::new);
-//	        // 비밀번호 암호화
-//	        String password = userDto.getPassword();
-//	        String encodedPw = passwordEncoder.encode(password);
-//	        userDto.setPassword(encodedPw);
-//	        
-//	        //추후수정
-//	    }
+	// 회원 정보 수정
+	@Transactional
+    public void updateUser(Long userId, UserDto userDto ) {
+        Optional<LibUser> optionalUser = userRepository.findById(userId);
+        if(optionalUser.isPresent()) {
+            LibUser libUser = optionalUser.get();
+            libUser.setName(userDto.getName());
+            if (userDto.getPassword() != null && !userDto.getPassword().isEmpty()) {
+                libUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
+            }
+            libUser.setName(userDto.getName());
+            libUser.setPhone(userDto.getPhone());
+            libUser.setAddress(userDto.getAddress());
+            libUser.setAddress2(userDto.getAddress2());
+            libUser.setEmail(userDto.getEmail());
+            libUser.setSms(userDto.getSms());
+            userRepository.save(libUser);
+        } else {
+            throw new RuntimeException("User not found with id : "+ userId);
+        }
+    }
 
 	// id 중복검사
 	public ResponseEntity<String> checkId(String loginid) {
@@ -200,39 +230,5 @@ public class UserService {
 		}
 	}
 
-//	// 메일보내~
-//	public void sendEmail(String to, String subject, String text) {
-//		SimpleMailMessage message = new SimpleMailMessage();
-//		message.setTo(to);
-//		message.setSubject(subject);
-//		message.setText(text);
-//		// mailSender.send(message);
-//	}
 
-//	// 비밀번호찾기 - findPw
-//	public String findPw(UserDto userDto) {
-//		Optional<LibUser> foundPw = userRepository.findByLoginidAndEmail(userDto.getLoginid(), userDto.getEmail());
-//
-//		if (foundPw.isPresent())
-//			;
-//		if (foundPw.isPresent()) {
-//			LibUser user = foundPw.get();
-//
-//			String tempPassword = generateTempPassword();
-//			System.out.println("임시 비밀번호: " + tempPassword); // 콘솔에 임시 비밀번호 출력
-//
-//			sendEmail(user.getEmail(), "[AnsanLibrary]임시비밀번호", "\n\n 안녕하세요. 임시비밀번호는 다음과 같습니다.\n\n" + tempPassword);
-//
-//			// 데베에 임시비밀번호 저장하는 로직 추가
-//			// String encodedPassword = tempPassword;
-//			String encodedPassword = passwordEncoder.encode(tempPassword);
-//			user.setPassword(encodedPassword);
-//			userRepository.save(user);
-//
-//			return user.getEmail();
-//		} else {
-//			return null;
-//		}
-//
-//	}
 }

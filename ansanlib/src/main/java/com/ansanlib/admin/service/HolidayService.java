@@ -61,6 +61,10 @@ public class HolidayService {
         }
     }
 
+    public List<Holiday> getHolidaysByDate(LocalDate date) {
+        return holidayRepository.findByHoliday(date);
+    }
+
 
 
     

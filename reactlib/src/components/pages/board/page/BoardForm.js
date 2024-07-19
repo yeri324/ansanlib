@@ -14,9 +14,9 @@ const BoardForm =()=>{
 
     return (
         <>
-            <Header />
+            {/* <Header /> */}
             {renderContent(board)}
-            <Footer />
+            {/* <Footer /> */}
         </>
     )
 }

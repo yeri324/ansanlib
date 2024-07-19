@@ -41,9 +41,9 @@ const BoardDetail = ()=>{
 
 return (
     <>
-    <Header />
+    {/* <Header /> */}
     { renderContent(roles, board,id)}
-    <Footer />
+    {/* <Footer /> */}
     </>
 )
 

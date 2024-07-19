@@ -8,8 +8,10 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -39,7 +41,8 @@ public class Notice extends BaseEntity{
     private List<NoticeImg> noticeImgs = new ArrayList<>();
     
     @ManyToOne
-    @JoinColumn(name="user_id")
+    //libUser와 외래키 연결 해제. 사용자가 회원탈퇴 시 지워지지 않도록 설정.
+    @JoinColumn(name="user_id", referencedColumnName = "user_id", foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     private LibUser libUser;
     
     public void updateNotice(NoticeFormDto noticeFormDto) {

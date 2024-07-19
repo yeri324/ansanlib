@@ -1,0 +1,151 @@
+.admin-page {
+  width: 100%;
+  font-family: 'Noto Sans KR', sans-serif;
+  padding-top:7px;
+  padding-bottom: 30px;
+  overflow: hidden; /* 메인 영역에 스크롤 바 추가 */
+}
+
+.admin-holiday-main {
+  margin-top: 100px;
+  margin-left: 270px;
+  padding-bottom: 30px;
+  width: 85%;
+  align-items: center;
+  height: calc(100vh - 100px); /* 전체 높이에서 여백을 뺀 높이 설정 */
+  overflow: hidden; /* 주의: 이 속성은 main 요소에 스크롤을 숨깁니다. */
+  overflow-y: auto; /* 세로 스크롤바 추가 */
+  background-color: hsla(45, 6%, 87%, 0.459);
+}
+
+.admin-holiday-main > .admin-holiday-body {
+  padding: 20px 100px 60px 100px;
+  border-radius: 15px;
+  
+
+  align-items: center;
+  background-color: white;
+  margin: 0 auto;
+}
+
+.admin-holiday-title {
+  text-align: center;
+  padding: 10px;
+}
+
+.admin-holiday-header {
+  display: flex;
+
+  align-items: center;
+  width: 70%;
+  padding-bottom: 20px;
+  margin:0 auto
+}
+
+.admin-holiday-month {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.admin-holiday-btn {
+  display: flex;
+
+  margin-left: auto; /* 오른쪽 정렬 */
+}
+
+
+.admin-holiday-table {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+
+}
+
+/*캘린더 */
+.admin-calendar-table {
+  width: 80%;
+  margin: 0 auto;
+
+  font-family: "Nanum Gothic", sans-serif;
+  border-collapse: collapse;
+ 
+}
+
+
+.admin-calendar-table th, .admin-calendar-table td {
+  border: 1px solid #eee;
+
+}
+
+
+.admin-calendar-table th {
+  text-align: center;
+  height: 50px;
+  background-color:#B0C4DE;
+}
+
+.admin-calendar-table td {
+  border: 1px solid #eee;
+  table-layout: fixed;
+  height: 120px; /* 높이를 100px로 고정 */
+  vertical-align: top; /* 내용을 상단에 정렬 */
+
+  
+}
+
+/*날짜 */
+.day {
+  vertical-align: top;
+  text-align: left;
+  padding: 5px;
+  color: black;
+}
+  
+/*해당 월이 아닌 날짜 */
+.not-current {
+  background-color: #c6cbd452;
+  color:#0611258e;
+}
+
+/*오늘!*/
+.today {
+  background-color: #93bcf136;
+  font-weight: bold;
+  color: #061a3d;
+
+  position: relative;
+}
+
+
+
+
+/*주말*/
+.weekend {
+  color: red;
+}
+
+
+/*휴관일 목록 */
+.holiday {
+
+    font-size: 0.8em;
+  background-color: #708090;
+  color: white;
+  
+}
+
+/*3개 이상이면 표시 */
+.more {
+  font-size: 0.8em;
+  color: blue;
+  cursor: pointer;
+}
+
+
+/*셀에 마우스 갖다대면 */
+.day:hover {
+  background-color:hsla(45, 6%, 87%, 0.459);
+}
