@@ -6,7 +6,7 @@ import Auth from '../../helpers/Auth';
 import Header from '../../fragments/header/header';
 import Footer from '../../fragments/footer/footer';
 import Side from '../myPage/Side';
-
+import './RequestBookForm.css';
 const RequestBookForm = () => {
   const name = useRealName();
 

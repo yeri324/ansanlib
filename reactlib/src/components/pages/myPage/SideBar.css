@@ -4,10 +4,9 @@
   top: 100px; /* 헤더 높이 조정 */
   left: 0; /* 왼쪽 가장자리에 배치 */
   width: 250px; /* 사이드바 너비 */
-  height: calc(100vh - 250px); /* 화면 높이에서 상하 여백을 제외한 높이 */
+  height: calc(80% - 250px); /* 화면 높이에서 상하 여백을 제외한 높이 */
   overflow-y: auto; /* 사이드바 내용이 길어질 경우 스크롤 */
   background-color: #f4f4f4; /* 배경색 (선택 사항) */
-  z-index: 1; /* 업데이트 폼보다 위에 오도록 설정 */
 }
 
 .sidebar h3 {
