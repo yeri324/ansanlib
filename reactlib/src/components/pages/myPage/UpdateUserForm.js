@@ -6,6 +6,7 @@ import { info, update } from '../security/apis/auth';
 import Header from '../../fragments/header/header';
 import Footer from '../../fragments/footer/footer';
 import Side from './Side';
+import './UpdateUserForm.css';
 
 const UpdateUserForm = () => {
   const { axios } = useAuth();
@@ -54,49 +55,55 @@ const UpdateUserForm = () => {
   };
 
   return (
-    <div className="update_form">
-      <div className="title">
-        <h2>회원 정보 수정</h2>
-      </div>
-      <form onSubmit={handleSubmit}>
-        <div className="update_center">
-          <div className="subtitle">
-            <div id="subtitle1">
-              <div>기본 정보 입력</div>
-              <span>*은 필수 입력 사항입니다.</span>
-            </div>
-            <div className="base_info">
-              <label htmlFor="name">* 이름</label>
-              <input name="name" value={userInfo.name} onChange={handleChange} /> <br/>
-
-              <label htmlFor="phone">* 휴대폰 번호</label>
-              <input type="text" name="phone" maxLength="13" value={userInfo.phone} onChange={handleChange} /><br/>
-
-              <label htmlFor="email">* 이메일</label>
-              <input className='email' name="email" value={userInfo.email} onChange={handleChange} /><br/>
-
-              <label>* 주소</label>
-              <div>
-                <div className='zonecode_view'>{userInfo.address}</div>
-                <button className='address_btn' type="button">우편번호 조회</button>
-              </div><br/>
-
-              <label>* 상세주소</label>
-              <input name="address2" value={userInfo.address2} onChange={handleChange} placeholder="상세주소 입력" /><br/>
-
-              <label>* 문자수신동의</label>
-              <div>
-                <input type="radio" name="sms" id="sms_yes" value="yes" checked={userInfo.sms === 'yes'} onChange={handleChange} />
-                <label htmlFor="sms_yes">동의</label>
-                <input type="radio" name="sms" id="sms_no" value="no" checked={userInfo.sms === 'no'} onChange={handleChange} />
-                <label htmlFor="sms_no">비동의</label><br/>
-              </div>
-            </div>
+    <div class="update_form">
+    <h2 class="form_title">회원 정보 수정</h2>
+    <form onSubmit={handleSubmit}>
+      <div class="form_section">
+        <h3 class="section_title">기본 정보 입력</h3>
+        <p class="required_notice">*은 필수 입력 사항입니다.</p>
+        
+        <div class="form_group">
+          <label htmlFor="name">* 이름</label>
+          <input type="text" id="name" name="name" value={userInfo.name} onChange={handleChange} />
+        </div>
+        
+        <div class="form_group">
+          <label htmlFor="phone">* 휴대폰 번호</label>
+          <input type="text" id="phone" name="phone" maxLength="13" value={userInfo.phone} onChange={handleChange} />
+        </div>
+        
+        <div class="form_group">
+          <label htmlFor="email">* 이메일</label>
+          <input type="email" id="email" name="email" value={userInfo.email} onChange={handleChange} />
+        </div>
+        
+        <div class="form_group address_group">
+          <label htmlFor="address">* 주소</label>
+          <div class="address_container">
+            <input type="text" id="address" name="address" value={userInfo.address} readOnly className="address_display" />
+            <button className="address_btn" type="button">우편번호 조회</button>
           </div>
         </div>
+        
+        <div class="form_group">
+          <label htmlFor="address2">* 상세주소</label>
+          <input type="text" id="address2" name="address2" value={userInfo.address2} onChange={handleChange} placeholder="상세주소 입력" />
+        </div>
+        
+        <div class="form_group sms_agreement">
+          <label> * 문자수신동의</label>
+          <div className="radio_group">
+            <input type="radio" id="sms_yes" name="sms" value="yes" checked={userInfo.sms === 'yes'} onChange={handleChange} />
+            <label htmlFor="sms_yes">동의</label>
+            <input type="radio" id="sms_no" name="sms" value="no" checked={userInfo.sms === 'no'} onChange={handleChange} />
+            <label htmlFor="sms_no">비동의</label>
+          </div>
+        </div>
+        
         <button type="submit" id="update_btn">정보 수정하기</button>
-      </form>
-    </div>
+      </div>
+    </form>
+  </div>
   );
 };
 
