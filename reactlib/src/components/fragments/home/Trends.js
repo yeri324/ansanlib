@@ -9,7 +9,6 @@ import book6 from '../../images/cover/book6.jpg';
 import book7 from '../../images/cover/book7.jpg';
 import book8 from '../../images/cover/book8.jpg';
 
-
 const booksData = [
   { id: 1, title: 'Book 1', cover: book1 },
   { id: 2, title: 'Book 2', cover: book2 },
@@ -34,31 +33,28 @@ const Trends = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // 다음 페이지
   const goToNextPage = () => {
     setCurrentPage((prevPage) => (prevPage + 1) % Math.ceil(booksData.length / itemsPerPage));
   };
 
-  // 이전 페이지
   const goToPrevPage = () => {
     setCurrentPage((prevPage) => (prevPage - 1 + Math.ceil(booksData.length / itemsPerPage)) % Math.ceil(booksData.length / itemsPerPage));
   };
 
-  // 시작 페이지 = 현재페이지 * 아이템갯수
   const startIndex = currentPage * itemsPerPage;
   const visibleBooks = booksData.slice(startIndex, startIndex + itemsPerPage);
 
   return (
-    <div className="trends-container">
+    <div id="trends" className="trends-container">
       {visibleBooks.map((book) => (
-        <div key={book.id} className="trends-book-item">
-          <img src={book.cover} alt={book.title} className="trends-book-cover" />
-          <h3 className="trends-book-title">{book.title}</h3>
+        <div key={book.id} className="book-item">
+          <img src={book.cover} alt={book.title} className="book-cover" />
+          <h3 className="book-title">{book.title}</h3>
         </div>
       ))}
       <div className="pagination">
-        <button className='btn_prev' onClick={goToPrevPage}>{'<'}</button>
-        <button className='btn_next' onClick={goToNextPage}>{'>'}</button>
+        <button className="btn_prev prev" onClick={goToPrevPage}>{'<'}</button>
+        <button className="btn_next next" onClick={goToNextPage}>{'>'}</button>
       </div>
     </div>
   );
