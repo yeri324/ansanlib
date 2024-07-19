@@ -21,9 +21,6 @@ import Login from './components/pages/security/pages/Login';
 import Find from './components/pages/security/pages/Find';
 import Join from './components/pages/security/pages/Join';
 import User from './components/pages/security/pages/User';
-
-
-
 import Admin from './components/pages/admin/common/Admin';
 
 import AdminBookList from './components/pages/admin/page/AdminBookList';
@@ -37,22 +34,18 @@ import HolidayNew from './components/pages/admin/modal/HolidayNew';
 import AddBook from './components/pages/admin/page/AddBook';
 import BookInterest from './components/pages/book/bookInterest/BookInterest';
 import AdminBookRequest from './components/pages/admin/page/AdminBookRequest';
-
 import { UseAuthBasic, UseAuthCheckAdmin, UseAuthCheckLogin } from './components/hooks/examples/useAuthExamples';
 import BoardList from './components/pages/board/page/BoardList';
 import BoardDetail from './components/pages/board/page/BoardDetail';
 import BoardForm from './components/pages/board/page/BoardForm';
-
-
 import AdminPopPage from './components/pages/admin/page/AdminPopPage';
-
-
-
-
 import ApiBookSearch from './components/pages/book/bookApi/ApiSearchPage';
 import AdminRecList from './components/pages/board/recboard/AdminRecList';
 import AdminRecForm from './components/pages/board/recboard/AdminRecForm';
 import UserRecList from './components/pages/board/recboard/UserRecList';
+
+import keywordCloud_bookId from './components/fragments/home/KeywordCloud_bookId';
+
 
 
 function App() {
@@ -67,6 +60,7 @@ function App() {
                                 <Route path="/" element={<HomePage />} />
                                 <Route path="/fragments/header" element={<Header />} />
                                 <Route path="/fragments/footer" element={<Footer />} />
+                                <Route path="/fragments/home" element={<keywordCloud_bookId />} /> 
 
                                 <Route path="/:roles/:board/list" element={<BoardList />} />
                                 <Route path="/admin/:board/form" element={<BoardForm />} />

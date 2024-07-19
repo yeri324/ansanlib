@@ -3,6 +3,7 @@
     margin: 0 auto;
     width: 100%;
     text-align: center;
+    max-width: 500px;
 }
 
 .new-books-slider {
@@ -10,31 +11,39 @@
     align-items: center;
     position: relative;
     overflow: hidden;
+    margin: 0 auto;
+    width: 72%;
 }
 
 .new-books-slide-wrapper {
     display: flex;
-    transition: transform 0.5s ease-in-out;
+    transition: transform 1.2s ease-in-out;
     width: 100%;
 }
 
+.new-books-slide-wrapper.reset {
+    transition: transform 1.5s ease-in-out; /* 처음으로 돌아갈 때의 전환 속도 */
+}
+
 .new-book-item {
-    min-width: 100%;
+    min-width: 100%; /* 슬라이드가 전체 화면의 100%를 차지하도록 설정 */
     box-sizing: border-box;
     padding: 10px;
     text-align: center;
 }
 
 .new-book-cover {
+    width: 100%;
+    max-width: 180px; 
     width: 180px;
-    height: 270px;
+    height: auto;
+    max-height: 270px;
     object-fit: cover;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .new-books-btn {
-    /* background-color: #none; */
     color: #333;
     border: none;
     border-radius: 5px;
@@ -59,5 +68,5 @@
 }
 
 .new-book-item.active {
-    transition: transform 0.5s ease-in-out;
+    transition: transform 1.2s ease-in-out;
 }

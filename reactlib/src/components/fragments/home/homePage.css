@@ -133,8 +133,8 @@
   .trend-h2, .lib-h2 {
     display: flex;
     position: relative;
-    margin-top: -10px;
-    margin-bottom: -20px;
+    margin-top: 15px;
+    margin-bottom: -10px;
     font-size: 18px;
     font-weight: 600;
   }
@@ -156,7 +156,7 @@
   .div-border > hr {
     border: 0;
     height: 12px;
-    background-color: #ddd;
+    background-color: #bbb;
   }
   
   .trend-list, .new-list, .lib-guide {

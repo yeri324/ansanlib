@@ -1,34 +1,39 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import './KeywordCloud.css';
 
+function KeywordCloud() {
+    const [imageSrc, setImageSrc] = useState('');
+    const [error, setError] = useState(null);
 
-const KeywordCloud = ({ bookId }) => {
-  const [keywords, setKeywords] = useState([]);
+    useEffect(() => {
+        fetch('http://127.0.0.1:5001/api/wordcloud', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'image/png'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.blob();
+            })
+            .then(imageBlob => {
+                const imageObjectURL = URL.createObjectURL(imageBlob);
+                setImageSrc(imageObjectURL);
+            })
+            .catch(error => {
+                setError(error);
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    }, []);
 
-  useEffect(() => {
-    const fetchKeywords = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8090/api/keywords/${bookId}`);
-        setKeywords(response.data);
-      } catch (error) {
-        console.error('키워드 불러오기 오류:', error);
-      }
-    };
-
-    fetchKeywords();
-  }, [bookId]);
-
-  return (
-    <div className="keyword_cloud">
-      {keywords.map((keyword, index) => (
-        <span key={index} className="keyword_key">
-          {keyword.keyword}
-        </span>
-      ))}
-    </div>
-  );
-};
+    return (
+        <div>
+            <h1>Keyword Cloud</h1>
+            {error && <p>Error loading image: {error.message}</p>}
+            {imageSrc && <img src={imageSrc} alt="Keyword Cloud" />}
+        </div>
+    );
+}
 
 export default KeywordCloud;
-

@@ -13,6 +13,7 @@ import Bestseller from './Bestseller';
 import LibraryPage from '../../pages/visit/LibraryPage';
 import Popup from './popup';
 import KeywordCloud from './KeywordCloud';
+import KeywordCloud_bookId from './KeywordCloud_bookId';
 // import BookCloud from './bookCloud';
 // import StatisticsPage from '../../pages/visit/StatisticsPage';
 // import Calendar from 'react-calendar'
@@ -56,9 +57,6 @@ const HomePage = () => {
                 <div className="book-search">
                   <BookSearch />
                 </div>
-                <div className="key-cloud">
-                  <KeywordCloud />
-                </div>
               </div>
               <div className="bottom-column">
                 <div className="notice-board">
@@ -86,11 +84,11 @@ const HomePage = () => {
               <div className="best-list">
                 <Bestseller />
               </div>
-              <div className="trend-h2"><h2>방문 통계</h2></div>
+              {/* <div className="trend-h2"><h2>방문 통계</h2></div>
               <div className="div-border"><hr /></div>
               <div className="total-visit">
                 <LibraryPage />
-              </div>
+              </div> */}
             </div>
             <div className="sub-content2">
               <div className="lib-h2"><h2>오시는 길</h2></div>

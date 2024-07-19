@@ -33,7 +33,8 @@ body {
 .notice_full {
   display: flex;
   justify-content: center;
-  padding: 20px;
+  padding: 10px;
+  padding-right: 20px;
   background-color: #fff;
 }
 
@@ -41,7 +42,7 @@ body {
   display: flex;
   flex-direction: column;
   width: 100%;
-  width: 600px;
+  width: 550px;
   margin: 0 auto;
   border-radius: 4px;
 }
