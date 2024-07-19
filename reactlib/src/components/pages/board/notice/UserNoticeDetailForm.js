@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams, } from 'react-router-dom';
+import { useNavigate, } from 'react-router-dom';
 import ImgPreview from '../common/ImgPreview';
 import BoardFileLabel from '../common/BoardFileLabel';
 import '../../board/common/DetailForm.css'
@@ -28,7 +28,6 @@ function UserNoticeDetailForm({ id }) {
                 baseURL: 'http://localhost:8090',
             }
         ).then((res) => {
-            console.log(res.data);
             setTitle(res.data.title);
             setContent(res.data.content);
             setImages(res.data.noticeImgs);
@@ -43,9 +42,9 @@ function UserNoticeDetailForm({ id }) {
 
     return (
         <div>
-            <div class='detail-form'>
+            <div class='board-detail-form'>
                 <form>
-                    <div class='content-container'>
+                    <div class='content-container1'>
                         <div class='input-container'>
                             <input type='text' name='title' value={title} readOnly />
                             <textarea type='text' name='content' value={content} readOnly />

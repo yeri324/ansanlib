@@ -1,19 +1,19 @@
 /* General Styles */
-.detail-form {
+.board-detail-form {
     font-family: Arial, sans-serif;
     background-color: #f8f9fa;
     margin: 0;
     padding: 0;
 }
 
-.detail-form form>h3 {
+.board-detail-form form>h3 {
     margin: 0 auto;
     margin-bottom: 10px;
     text-align: center;
 }
 
 /* Form Styles */
-.detail-form form {
+.board-detail-form form {
     margin: 0 auto;
     text-align: center;
     justify-content: center;
@@ -24,7 +24,7 @@
     margin-bottom: 20px;
 }
 
-.detail-form form input, .detail-form form textarea {
+.board-detail-form form input, .board-detail-form form textarea {
     width: calc(70% - 22px);
     margin: 0 auto;
     padding: 10px;
@@ -35,23 +35,23 @@
     font-family: Arial, sans-serif;
 }
 
-.detail-form form input[type='file'] {
+.board-detail-form form input[type='file'] {
     width: calc(70% - 22px);
     margin: 0 auto;
     margin-bottom: 2px;
 }
 
-.detail-form form textarea {
+.board-detail-form form textarea {
     height: 500px;
 }
 
-.detail-form form input[type='text']::placeholder {
+.board-detail-form form input[type='text']::placeholder {
     color: #999;
     font-family: Arial, sans-serif;
 }
 
-.detail-form form button[type='button'],
-.detail-form form button[type='submit'] {
+.board-detail-form form button[type='button'],
+.board-detail-form form button[type='submit'] {
     display: inline-block;
     padding: 10px 20px;
     border: none;
@@ -63,7 +63,7 @@
     margin: 5px;
 }
 
-.detail-form .img-upload {
+.board-detail-form .img-upload {
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -71,7 +71,7 @@
     align-items: center;
 }
 
-.detail-form .img-upload input[type='file'] {
+.board-detail-form .img-upload input[type='file'] {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -82,7 +82,7 @@
     border: 0;
 }
 
-.detail-form .img-upload label {
+.board-detail-form .img-upload label {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -95,29 +95,29 @@
     text-align: left;
 }
 
-.detail-form .img-upload .file-label-text {
+.board-detail-form .img-upload .file-label-text {
     flex: 1;
 }
 
-.detail-form .img-upload button {
+.board-detail-form .img-upload button {
     margin-left: auto;
 }
 
-.detail-form .img-upload button:hover {
+.board-detail-form .img-upload button:hover {
     background-color: #c82333;
 }
 
-.detail-form .img-container1 {
+.board-detail-form .img-container1 {
     margin: 0 auto;
     width: 70%;
 }
 
-.detail-form .img-container1 .file-uplo {
+.board-detail-form .img-container1 .file-uplo {
     width: 100%;
 }
 
 /* 이미지 컨테이너 기본 스타일 */
-.detail-form .img-container1 .img-pre {
+.board-detail-form .img-container1 .img-pre {
     display: flex;
     justify-content: center;
     width: 100%;
@@ -125,20 +125,20 @@
    
 }
 
-.detail-form .img-preview {
+.board-detail-form .img-preview {
     text-align: center;
     transition: transform 0.3s ease;
     cursor: pointer;
     z-index: 1;
 }
 
-.detail-form .img-preview{
+.board-detail-form .img-preview{
     width: 100px;
     height: 100px;
 }
 
 /* 호버 시 이미지 확대 */
-.detail-form .img-preview:hover {
+.board-detail-form .img-preview:hover {
     transform: scale(3);
     /* (x)배 확대 */
     z-index: 3;

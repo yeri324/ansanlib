@@ -1,5 +1,5 @@
 import React, { useState, useEffect, } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, } from 'react-router-dom';
 import ImgPreview from '../common/ImgPreview';
 import '../../board/common/DetailForm.css'
 import BoardImgList from '../common/BoardImgList';
@@ -123,10 +123,10 @@ function AdminNoticeDetailForm({ id }) {
 
     return (
         <div>
-            <div class='detail-form'>
+            <div class='board-detail-form'>
                 <form>
                     <h3>수정하기</h3>
-                    <div class='content-container'>
+                    <div class='content-container1'>
                         <div class='input-container'>
                             <input type='text' name='title' value={title} onChange={updateTitle} />
                             <textarea type='text' name='content' value={content} onChange={updateContent} />

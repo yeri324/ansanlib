@@ -4,8 +4,6 @@ import '../../board/common/DetailForm.css'
 import BoardImgList from '../common/BoardImgList';
 import useAuth from '../../../hooks/useAuth';
 
-
-
 function AdminFaqDetailForm({ id }) {
     const { axios } = useAuth();
     const navigate = useNavigate();
@@ -35,7 +33,6 @@ function AdminFaqDetailForm({ id }) {
                 baseURL: 'http://localhost:8090',
             }
         ).then((res) => {
-            console.log(res.data);
             setTitle(res.data.title);
             setContent(res.data.content);
             setImages(res.data.faqImgs);
@@ -124,10 +121,10 @@ function AdminFaqDetailForm({ id }) {
 
     return (
         <div>
-            <div class='detail-form'>
+            <div class='board-detail-form'>
                 <form>
                     <h3>수정하기</h3>
-                    <div class='content-container'>
+                    <div class='content-container1'>
                         <div class='input-container'>
                             <input type='text' name='title' value={title} onChange={updateTitle} />
                             <textarea type='text' name='content' value={content} onChange={updateContent} />

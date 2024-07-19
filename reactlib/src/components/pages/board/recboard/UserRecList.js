@@ -38,19 +38,19 @@ function UserRecList() {
     return (
         <div>
             <Header />
-        <div class='all-reclist'>
-            <div>
-            <div class='rec-list'>
-                {searchResult.map((card) => (
-                    <div class='card'>
-                        <AdminRecCard card={card} />
+            <div class='all-reclist'>
+                <div>
+                    <div class='rec-list'>
+                        {searchResult.map((card) => (
+                            <div class='card'>
+                                <AdminRecCard card={card} />
+                            </div>
+                        ))}
                     </div>
-                ))}
+                    <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
                 </div>
-                <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
             </div>
-        </div>
-        <Footer />
+            <Footer />
         </div>
     );
 }
