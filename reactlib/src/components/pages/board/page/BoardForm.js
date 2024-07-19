@@ -1,5 +1,3 @@
-import Footer from "../../../fragments/footer/footer";
-import Header from "../../../fragments/header/header";
 import { useParams } from "react-router-dom";
 import AdminFaqForm from "../faq/AdminFaqForm";
 import AdminNoticeForm from "../notice/AdminNoticeForm";
@@ -14,9 +12,7 @@ const BoardForm =()=>{
 
     return (
         <>
-            {/* <Header /> */}
             {renderContent(board)}
-            {/* <Footer /> */}
         </>
     )
 }

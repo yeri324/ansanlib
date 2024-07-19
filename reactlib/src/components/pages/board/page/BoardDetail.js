@@ -35,15 +35,15 @@ const BoardDetail = ()=>{
         )
             }
          else {
-            return board==="faq"?<UserFaqDetailForm id={id}/>:<UserNoticeDetailForm id={id}/>
+            return (<> <Header />
+                {board === "faq" ? <UserFaqDetailForm /> : <UserNoticeDetailForm />}
+                <Footer /></>)
         }
     };
 
 return (
     <>
-    {/* <Header /> */}
     { renderContent(roles, board,id)}
-    {/* <Footer /> */}
     </>
 )
 
