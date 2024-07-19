@@ -112,6 +112,9 @@
     width: 70%;
 }
 
+.detail-form .img-container1 .file-uplo {
+    width: 100%;
+}
 
 /* 이미지 컨테이너 기본 스타일 */
 .detail-form .img-container1 .img-pre {
@@ -122,9 +125,8 @@
    
 }
 
-.detail-form .img-preview-container {
-
-text-align: center;
+.detail-form .img-preview {
+    text-align: center;
     transition: transform 0.3s ease;
     cursor: pointer;
     z-index: 1;
@@ -136,7 +138,7 @@ text-align: center;
 }
 
 /* 호버 시 이미지 확대 */
-.detail-form .img-preview-container:hover .img-preview {
+.detail-form .img-preview:hover {
     transform: scale(3);
     /* (x)배 확대 */
     z-index: 3;
