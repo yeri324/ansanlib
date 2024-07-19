@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import './BookDetailPage.css'; // 스타일 파일을 임포트합니다.
 import Header from '../../../fragments/header/header';
 import Footer from '../../../fragments/footer/footer';
+import KeywordCloud_bookId from '../../../fragments/home/KeywordCloud_bookId';
 
 const BookDetailPage = () => {
   const { id } = useParams();
@@ -65,91 +66,94 @@ const BookDetailPage = () => {
 
   return (
     <>
-    <Header />
-    <main>
-      <div className="breadcrumbs">
-        <div className="page-header d-flex align-items-center">
-          <div className="container position-relative">
-            <div className="row d-flex justify-content-center">
-              <div className="col-lg-6 text-center">
-                <h2>도서 상세정보</h2>
+      <Header />
+      <main>
+        <div className="breadcrumbs">
+          <div className="page-header d-flex align-items-center">
+            <div className="container position-relative">
+              <div className="row d-flex justify-content-center">
+                <div className="col-lg-6 text-center">
+                  <h2>도서 상세정보</h2>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <section className="sample-page">
-        <div className="content centered-content">
-          {errorMessage && <p className="fieldError">{errorMessage}</p>}
+        <section className="sample-page">
+          <div className="content centered-content">
+            {errorMessage && <p className="fieldError">{errorMessage}</p>}
 
-          <div className="row g-0 book-detail-container">
-            <div className="col-md-4 img-container">
-              {book.bookImg ? (
-                <img 
-                  src={`http://localhost:8090/api/images/${book.bookImg.imgName}`} 
-                  alt={book.title} 
-                  className="img-fluid cover-img" 
-                />
-              ) : (
-                <div className="no-image">No Image</div>
-              )}
-            </div>
-            <div className="col-md-8 text-container">
-              <div className="book-detail left-align">
-                <h5 className="card-title">제목 : 『{book.title}』</h5>
-                <p>저자 : 『{book.author}』</p>
-                <p>ISBN : 『{book.isbn}』</p>
-                <p>출판사 : 『{book.publisher}』 || 출판 날짜 : 『{book.pub_date}』 || 분류 코드 : 『{book.category_code}』</p>
-                <p>위치 : 『{book.libName}』</p>
+            <div className="row g-0 book-detail-container">
+              <div className="col-md-4 img-container">
+                {book.bookImg ? (
+                  <img
+                    src={`http://localhost:8090/api/images/${book.bookImg.imgName}`}
+                    alt={book.title}
+                    className="img-fluid cover-img"
+                  />
+                ) : (
+                  <div className="no-image">No Image</div>
+                )}
               </div>
-            </div>
-          </div><br />
+              <div className="col-md-8 text-container">
+                <div className="book-detail left-align">
+                  <h5 className="card-title">제목 : 『{book.title}』</h5>
+                  <p>저자 : 『{book.author}』</p>
+                  <p>ISBN : 『{book.isbn}』</p>
+                  <p>출판사 : 『{book.publisher}』 || 출판 날짜 : 『{book.pub_date}』 || 분류 코드 : 『{book.category_code}』</p>
+                  <p>위치 : 『{book.libName}』</p>
+                </div>
+              </div>
+            </div><br />
 
-          <div className="row g-0 overflow-x-auto">
-            <table className="table full-width">
-              <thead className="table-dark">
-                <tr>
-                  <th>위치</th>
-                  <th>대출상태</th>
-                  <th>반납예정일</th>
-                  <th>서비스신청</th>
-                </tr>
-              </thead>
-              <tbody className="table-detail">
-                {bookList.map((relatedBook) => (
-                  <tr key={relatedBook.id}>
-                    <td>{relatedBook.libName}</td>
-                    <td>{relatedBook.status ?? '정보 없음'}</td>
-                    <td>{relatedBook.returnDay}</td>
-                    <td>
-                      <div className="card-body">
-                        <div className="row">
-                          <button disabled={relatedBook.status !== 'AVAILABLE'} onClick={alertLogin || (() => handleReservation(relatedBook.id))}>
-                            도서예약
-                          </button>
-                        </div>
-                        <div className="row">
-                          <button onClick={alertLogin || (() => handleInterest(relatedBook.id))}>
-                            관심도서담기
-                          </button>
-                        </div>
-                      </div>
-                    </td>
+            <div className="row g-0 overflow-x-auto">
+              <table className="table full-width">
+                <thead className="table-dark">
+                  <tr>
+                    <th>위치</th>
+                    <th>대출상태</th>
+                    <th>반납예정일</th>
+                    <th>서비스신청</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div><br />
+                </thead>
+                <tbody className="table-detail">
+                  {bookList.map((relatedBook) => (
+                    <tr key={relatedBook.id}>
+                      <td>{relatedBook.libName}</td>
+                      <td>{relatedBook.status ?? '정보 없음'}</td>
+                      <td>{relatedBook.returnDay}</td>
+                      <td>
+                        <div className="card-body">
+                          <div className="row">
+                            <button disabled={relatedBook.status !== 'AVAILABLE'} onClick={alertLogin || (() => handleReservation(relatedBook.id))}>
+                              도서예약
+                            </button>
+                          </div>
+                          <div className="row">
+                            <button onClick={alertLogin || (() => handleInterest(relatedBook.id))}>
+                              관심도서담기
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div><br />
 
-          <div className="row bookD">
-            <div><h3>책소개</h3></div>
-            <div className="left-align">{formatText(book.bookDetail)}</div>
+            <div className="row bookD">
+              <div><h3>책소개</h3></div>
+              <div className="left-align">{formatText(book.bookDetail)}</div>
+            </div>
+            <div className="key_wordcloud">
+              <KeywordCloud_bookId bookId={id} />
+            </div>
           </div>
-        </div>
-      </section>
-    </main>
-    <Footer />
+        </section>
+      </main>
+      <Footer />
     </>
   );
 };

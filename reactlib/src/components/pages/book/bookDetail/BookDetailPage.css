@@ -64,3 +64,15 @@
 .book-detail{
   font-size: 15px;
 }
+
+.key_wordcloud {
+  display: flex; /* Flexbox 사용 */
+  justify-content: center; /* 가로 중앙 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  margin: 0 auto;
+  padding: 20px 0;
+  text-align: center;
+}
