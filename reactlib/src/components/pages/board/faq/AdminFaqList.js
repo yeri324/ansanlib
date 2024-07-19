@@ -137,7 +137,7 @@ function AdminFaqList() {
             <main className="admin-page-main">
                 <div className="admin-page-body">
                     <div className="admin-page-title">
-                        <h1>FAQ 목록</h1>
+                        <h2>FAQ 목록</h2>
                     </div>
                     <div className="admin-page-top">
                     <div className="admin-page-count" style={{width:"25%"}}>

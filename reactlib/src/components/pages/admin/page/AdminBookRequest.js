@@ -167,7 +167,7 @@ const AdminBookRequest = () => {
         <main className="admin-page-main">
           <div className="admin-page-body">
             <div className="admin-page-title">
-              <h1>희망도서신청</h1>
+              <h2>희망도서신청</h2>
             </div>
 
             <div className="admin-page-search">

@@ -142,7 +142,7 @@ function AdminNoticeList() {
             <main className="admin-page-main">
                 <div className="admin-page-body">
                     <div className="admin-page-title">
-                        <h1>공지사항</h1>
+                        <h2>공지사항</h2>
                         {console.log(roles)}
                     </div>
                     <div className="admin-page-top">

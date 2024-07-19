@@ -20,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ansanlib.admin.service.AdminBookService;
 import com.ansanlib.book.dto.BookDto;
 import com.ansanlib.entity.Book;
+import com.ansanlib.entity.LoanStatus;
+import com.ansanlib.entity.RecBoard;
 import com.ansanlib.entity.RequestBook;
 import com.ansanlib.response.CommonListResponse;
 
@@ -40,7 +42,7 @@ public class AdminBookController {
 	
 	
 	
-	
+	//추추추가
 	   @PostMapping("/new")
 	    public ResponseEntity<?> createBook(@RequestPart("bookDto") BookDto bookDto,
 	                                        @RequestPart(value = "file", required = false) MultipartFile file) {
@@ -63,12 +65,13 @@ public class AdminBookController {
 	
 
 	
-	
+	//불러와 목록
 	@GetMapping("/list")
 	public List<Book> getBooks() {
 		return adminBookService.getAllBooks();
 	}
 
+	//히망도서 불러와~
 	@GetMapping("/request")
 	public ResponseEntity<CommonListResponse<List<RequestBook>>> getAllRequestBooks() {
 		List<RequestBook> requestBooks = adminBookService.getAllRequestBooks();
@@ -77,7 +80,7 @@ public class AdminBookController {
 	}
 
 	
-	
+	//책 권수 수정
 	 @PutMapping("/{id}")
 	 public ResponseEntity<Book> updateBookCount(@PathVariable Long id, @RequestBody BookDto bookDto) {
 	        Book updatedBook = adminBookService.updateBookCount(id, bookDto);
@@ -97,4 +100,20 @@ public class AdminBookController {
 	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete book");
 	        }
 	    }
+	 
+	 
+	 //추춴도서목록 불러오기
+	 @GetMapping("/rec")
+	 public List<RecBoard> getRecBoards() {
+	        return adminBookService.getRecBoards();
+	    }
+	 
+	 
+	 //대출도서 불러오기
+	 @GetMapping("/loanlist")
+	   public ResponseEntity<List<LoanStatus>> getAllLoans() {
+	        List<LoanStatus> loans = adminBookService.getAllLoanStatuses();
+	        return ResponseEntity.ok(loans);
+	    }
+
 }

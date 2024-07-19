@@ -33,7 +33,7 @@ const AdminPopPage = () => {
             <main className="admin-page-main">
                 <div className="admin-page-body popupPage">
                     <div className="admin-page-title">
-                        <h1>팝업 관리</h1>
+                        <h2>팝업 관리</h2>
                     </div>
 
                     <div class="container">

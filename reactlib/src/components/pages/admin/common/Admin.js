@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import AdminHeader from "./AdminHeader";
 import AdminSide from "./AdminSide";
 import './Admin.css';
-
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import HolidayDetail from '../modal/HolidayDetail';
@@ -11,9 +10,10 @@ import Auth from '../../../helpers/Auth';
 import RedirectLogin from '../../../helpers/RedirectLogin';
 import HolidayListTable from '../../admin/item/HolidayListTable';
 import AdminBookRequestTable from '../item/AdminBookRequestTable';
-import NewBooks from '../../../fragments/home/new';
-import Trends from '../../../fragments/home/Trends';
 import LibraryPage from '../../visit/LibraryPage';
+import AdminBookListTable from '../item/AdminBookListTable';
+import AdminRecBoardTable from '../item/AdminRecBoardTable';
+import AdminLoanTable from '../item/AdminLoanTable';
 
 const Admin = () => {
   const { axios } = useAuth();
@@ -24,59 +24,64 @@ const Admin = () => {
   const [holidays, setHolidays] = useState([]);
   const [bookRequests, setBookRequests] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
+  const [searchBook, setSearchBook] = useState([]);
+  const [searchLoan, setSearchLoan] = useState([]);
+  const [bookList, setBookList] = useState([]);
 
   useEffect(() => {
     fetchHolidays(date);
     fetchBookRequests();
+    fetchNewBooks();
+    fetchLoans(); // Fetch the loan data on component mount
   }, [date]);
 
   const handleDateClick = (date) => {
     setSelectedDate(date);
-    fetchHolidays(date);
+    fetchSelectedDateHolidays(date);
     setShowDetail(true);
   };
 
   const fetchHolidays = (date) => {
-    // Utility function to adjust the date
+    console.log("Fetching holidays for date:", date);
+
+    axios({
+      url: '/api/admin/holiday/list',
+      method: 'get',
+      params: {
+        date: date.toISOString().split('T')[0]
+      }
+    }).then((response) => {
+      console.log("Fetched holidays for current date:", response.data);
+      setHolidays(response.data.result);
+    }).catch((error) => {
+      console.error("Error fetching holidays for current date:", error);
+      setHolidays([]);
+    });
+  };
+
+  const fetchSelectedDateHolidays = (date) => {
     const adjustDate = (date, days) => {
       const result = new Date(date);
       result.setDate(result.getDate() + days);
       return result;
     };
 
-    // Adjust the date by subtracting one day
-    const previousDate = adjustDate(date, +1);
+    const nextDate = adjustDate(date, 1);
 
-    console.log("Fetching holidays for date:", previousDate);
+    console.log("Fetching holidays for selected date:", nextDate);
 
-    // Fetch holidays for the current date
     axios({
       url: '/api/admin/holiday/list',
       method: 'get',
       params: {
-        date: date.toISOString().split('T')[0] // 날짜를 쿼리 파라미터로 전달
+        date: nextDate.toISOString().split('T')[0]
       }
     }).then((response) => {
-      console.log("Fetched holidays for current date:", response.data);
-      setHolidays(response.data.result); // 현재 날짜의 휴일 목록 설정
+      console.log("Fetched holidays for selected date:", response.data);
+      setSelectedHolidays(response.data.result);
     }).catch((error) => {
-      console.error("Error fetching holidays for current date:", error);
-      setHolidays([]); // 오류 발생 시 빈 배열로 설정
-    });
-
-    // Fetch holidays for the previous date
-    axios({
-      url: '/api/admin/holiday/list',
-      method: 'get',
-      params: {
-        date: previousDate.toISOString().split('T')[0] // 날짜를 쿼리 파라미터로 전달
-      }
-    }).then((response) => {
-      console.log("Fetched holidays for previous date:", response.data);
-      setSelectedHolidays(response.data.result); // 모달에 표시할 데이터 설정
-    }).catch((error) => {
-      console.error("Error fetching holidays for previous date:", error);
-      setSelectedHolidays([]); // 오류 발생 시 빈 배열로 설정
+      console.error("Error fetching holidays for selected date:", error);
+      setSelectedHolidays([]);
     });
   };
 
@@ -84,10 +89,31 @@ const Admin = () => {
     axios.get('/api/admin/book/request')
       .then(response => {
         setBookRequests(response.data.result);
-        setSearchResult(response.data.result.slice(0, 3)); // 상위 3개 항목만 표시
+        setSearchResult(response.data.result.slice(0, 3));
       })
       .catch(error => {
         console.error('Error fetching book requests:', error);
+      });
+  };
+
+  const fetchNewBooks = () => {
+    axios.get('/api/admin/book/list')
+      .then(response => {
+        setBookList(response.data);
+        setSearchBook(response.data.slice(0, 3));
+      })
+      .catch(error => {
+        console.error('Error fetching books:', error);
+      });
+  };
+
+  const fetchLoans = () => {
+    axios.get('/api/admin/book/loanlist')
+      .then(response => {
+        setSearchLoan(response.data.slice(0,3));
+      })
+      .catch(error => {
+        console.error('Error fetching loan data:', error);
       });
   };
 
@@ -107,7 +133,7 @@ const Admin = () => {
           <div className="admin-main-dash-body">
             <div className="admin-main-left" style={{ width: "25%" }}>
               <div className='admin-left-box1'>
-                <h4>오늘은 &nbsp;<span>{date.toISOString().split('T')[0]}</span> &nbsp;입니다.</h4>
+                <h5>오늘은 &nbsp;<span>{date.toISOString().split('T')[0]}</span> &nbsp;입니다.</h5>
               </div>
               <div className="admin-left-box2 calendar-container">
                 <Calendar
@@ -124,35 +150,35 @@ const Admin = () => {
               <div className="admin-left-box3">
                 <HolidayListTable holidays={holidays.slice(0, 3)} excludedColumns={['delete']} />
               </div>
-              <div className="admin-left-box4">
-                <div className='admin-right-board' style={{ width: "25%" }}>
-                  <h3>신간도서</h3>
-                  <NewBooks />
-                </div>
-              </div>
             </div>
             <div className="admin-main-right" style={{ width: "75%" }}>
               <div className="admin-right-box1">
                 <div className='admin-right-graph'>
                   <LibraryPage />
                 </div>
-                <div className='admin-right-graph'>
-                  그래프2
+                <div className='admin-right-graph'>그래프2</div>
+                <div className='admin-right-graph'>그래프3</div>
+                <div className='admin-right-graph'>그래프4</div>
+              </div>
+              <div className="admin-right-box2">
+                <div className='admin-box2-table'>
+                  <h4><a href="admin/recboard/list">추천 도서</a></h4>
+                  <AdminRecBoardTable limit={3} />
                 </div>
-                <div className='admin-right-graph'>
-                  그래프3
+                <div className='admin-box2-table'>
+                  <h4><a href="admin/book/request">희망도서신청</a></h4>
+                  <AdminBookRequestTable searchResult={searchResult} excludedColumns={['']} />
                 </div>
               </div>
               <div className="admin-right-box2">
-                <div className='admin-right-board' style={{ width: "75%" }}>
-                  <h3>추천도서</h3>
-                  <Trends />
+                <div className='admin-box2-table'>
+                  <h4><a href="admin/book/list">신간 도서</a></h4>
+                  <AdminBookListTable books={searchBook} />
                 </div>
-                
-              </div>
-              <div className="admin-right-box3">
-                <h3><a href="admin/book/request">희망도서신청</a></h3>
-                <AdminBookRequestTable searchResult={searchResult} />
+                <div className='admin-box2-table'>
+                  <h4><a href="admin/user/search">대출 목록</a></h4>
+                  <AdminLoanTable loan={searchLoan} />
+                </div>
               </div>
             </div>
           </div>

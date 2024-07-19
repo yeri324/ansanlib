@@ -1,4 +1,6 @@
 import React from "react";
+import "../../admin/page/AdminPage.css";
+
 
 const HolidayListTable = ({
   holidays = [], // 기본값을 빈 배열로 설정

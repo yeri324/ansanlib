@@ -115,7 +115,7 @@ const Holiday = () => {
       <main className="admin-holiday-main">
         <div className="admin-holiday-body">
           <div className="admin-holiday-title">
-            <h1> 도서관 일정 </h1>
+            <h2> 도서관 일정 </h2>
           </div>
 
 

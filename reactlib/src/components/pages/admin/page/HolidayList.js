@@ -135,7 +135,7 @@ const HolidayList = () => {
       <main className="admin-page-main">
         <div className="admin-page-body">
           <div className="admin-page-title">
-            <h1>휴관일 목록</h1>
+            <h2>휴관일 목록</h2>
           </div>
           <div className="admin-page-top">
             <div style={{ width: "25%" }}></div>
@@ -180,7 +180,7 @@ const HolidayList = () => {
             holidays={currentItems}
             handleSort={handleSort}
             handleDelete={handleDelete}
-            excludedColumns={['delete']}
+            
           />
 
           <div className="admin-pagination">
