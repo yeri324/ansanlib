@@ -85,14 +85,14 @@ const SearchPage = ({ isAuthenticated, isAnonymous }) => {
   return (
     <>
     <Header />
-    <main>
+    <main className="bookSearch">
       <section className="sample-page">
         <div className="content centered-content">
           <div className="accordion" id="accordionExample">
             <div className="accordion-item">
               <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                 <div className="accordion-body sc">
-                  <form onSubmit={handleSearch} style={{ width: '100%' }}>
+                  <form onSubmit={handleSearch} className='Search'>
                     {[
                       { name: 'isbn', label: '책 제목', autocomplete: true },
                       { name: 'title', label: 'ISBN' },
@@ -133,7 +133,7 @@ const SearchPage = ({ isAuthenticated, isAnonymous }) => {
           <br />
           {errorMessage && <p className="fieldError">{errorMessage}</p>}
           <br />
-          <div className="row justify-content-center">
+          <div className="justify-content-center">
             <label htmlFor="sort">정렬 기준:</label>
             <select id="sort" value={sortCriteria} onChange={handleSortChange}>
               <option value="accuracy">정확도</option>
@@ -184,12 +184,12 @@ const SearchPage = ({ isAuthenticated, isAnonymous }) => {
               <div className="row">
                 <p>{book.status}</p>
                 <div className="buttons-container">
-                  <div className="row">
+                  <div className="row-bt">
                     <button onClick={isAnonymous ? handleAlertLogin : () => window.location.href = `/book/reservation/${book.id}`}>
                       도서예약
                     </button>
                   </div>
-                  <div className="row">
+                  <div className="row-bt">
                     <button onClick={isAnonymous ? handleAlertLogin : () => window.location.href = `/book/interest/${book.id}`}>
                       관심도서담기
                     </button>

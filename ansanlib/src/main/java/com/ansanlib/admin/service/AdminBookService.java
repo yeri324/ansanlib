@@ -40,7 +40,7 @@ public class AdminBookService {
 	        book.setPublisher(bookDto.getPublisher());
 	        book.setPub_date(bookDto.getPub_date());
 	        book.setCategory_code(bookDto.getCategory_code());
-	        book.setLocation(bookDto.getLocation());
+	        book.setLibName(bookDto.getLibName());
 	        book.setBookDetail(bookDto.getBookDetail());
 	    
 	        book.setCount(bookDto.getCount());

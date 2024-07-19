@@ -1,24 +1,24 @@
-.centered-content {
+.bookInterest .centered-content {
   text-align: center;
 }
 
-.bordered {
+.bookInterest .bordered {
   border: 1px solid black;
 }
 
-.full-width {
+.bookInterest .full-width {
   width: 100%;
 }
 
-.left-align {
+.bookInterest .left-align {
   text-align: left;
 }
 
-.cover-img {
+.bookInterest .cover-img {
   object-fit: cover;
 }
 
-.no-image {
+.bookInterest .no-image {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,22 +30,22 @@
   text-align: center;
 }
 
-.book-detail-container {
+.bookInterest .book-detail-container {
   display: flex;
   flex-direction: row;
 }
 
-.img-container {
+.bookInterest .img-container {
   flex: 1;
   max-width: 150px; /* 원하는 이미지 크기로 설정 */
 }
 
-.text-container {
+.bookInterest .text-container {
   flex: 2;
   padding-left: 20px; /* 이미지와 텍스트 사이에 여백 추가 */
 }
 
-.cover-img {
+.bookInterest .cover-img {
   width: 100%; /* 이미지 크기를 컨테이너에 맞춤 */
   height: auto; /* 비율에 맞게 높이를 조정 */
 }

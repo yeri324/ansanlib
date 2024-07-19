@@ -39,7 +39,7 @@ const BookInterest = () => {
   };
 
   return (
-    <main>
+    <main className="bookInterest">
       <div className="breadcrumbs">
         <div className="page-header d-flex align-items-center">
           <div className="container position-relative">

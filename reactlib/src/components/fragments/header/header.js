@@ -1,6 +1,7 @@
 import React from 'react';
 import './header.css';
 import center_logo from '../../images/logo/center_logo.png'
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const menus = [
@@ -15,8 +16,8 @@ const Header = () => {
     {
       menu: { title: "검색" },
       subs: [
-        { title: "통합검색" },
-        { title: "상세검색" },
+        { title: "상세검색", path: `/book/search` },
+        { title: "네이버 API 검색", path: `/bookapi/search` },
         { title: "추천도서" },
         { title: "신간도서" }
       ]
@@ -51,8 +52,8 @@ const Header = () => {
     <header>
       <div className="full_header">
         <div className="top_login">
-          <a className="enter" >로그인</a><t> | </t>
-          <a className="join" >회원가입</a>
+          <a href="/login" className="enter" >로그인</a><t> | </t>
+          <a href="/join" className="join" >회원가입</a>
         </div>
         <div className="header_menu">
           <div className="top_logo">
@@ -63,8 +64,14 @@ const Header = () => {
               <div key={index}>
                 <div>{menuItem.menu.title}</div>
                 <div className="sub_menu">
-                  {menuItem.subs.map((sub, subIndex) => (
-                    <div key={subIndex}>{sub.title}</div>
+                {menuItem.subs.map((sub, subIndex) => (
+                    sub.path ? (
+                      <div key={subIndex}>
+                        <Link to={sub.path}>{sub.title}</Link>
+                      </div>
+                    ) : (
+                      <div key={subIndex}>{sub.title}</div>
+                    )
                   ))}
                 </div>
               </div>

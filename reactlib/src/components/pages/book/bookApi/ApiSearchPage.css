@@ -1,4 +1,4 @@
-.bookapiimage{
+.ApiSearch .bookapiimage{
     width: 225px; /* 원하는 너비 */
     height: 280px; /* 원하는 높이 */
     overflow: hidden; /* 이미지가 컨테이너를 벗어나지 않도록 */
@@ -7,27 +7,27 @@
     justify-content: center;
 }
 
-.rounded-start{
+.ApiSearch .rounded-start{
     width: 100%; /* 이미지 너비를 컨테이너에 맞춤 */
     height: auto; /* 이미지 높이를 비율에 맞게 조정 */
 }
 
-.ApiBookContent{
+.ApiSearch .ApiBookContent{
     margin: 0 auto;
     text-align: center;
 }
 
-.ApiBookSearchDetail{
+.ApiSearch .ApiBookSearchDetail{
     padding-left: 300px;
     padding-right: 300px;
 }
 
-#ApiCollapseOne{
+.ApiSearch #ApiCollapseOne{
     padding-left: 200px;
     padding-right: 200px
 }
 
-.ApiBookDetail{
+.ApiSearch .ApiBookDetail{
     height: 280px;
     overflow: hidden;
 }

@@ -66,7 +66,7 @@ const BookDetailPage = () => {
   return (
     <>
     <Header />
-    <main>
+    <main className="bookDetail">
       <div className="breadcrumbs">
         <div className="page-header d-flex align-items-center">
           <div className="container position-relative">
@@ -106,8 +106,8 @@ const BookDetailPage = () => {
             </div>
           </div><br />
 
-          <div className="row g-0 overflow-x-auto">
-            <table className="table full-width">
+          <div className="row g-1 overflow-x-auto">
+            <table>
               <thead className="table-dark">
                 <tr>
                   <th>위치</th>
@@ -119,10 +119,10 @@ const BookDetailPage = () => {
               <tbody className="table-detail">
                 {bookList.map((relatedBook) => (
                   <tr key={relatedBook.id}>
-                    <td>{relatedBook.libName}</td>
-                    <td>{relatedBook.status ?? '정보 없음'}</td>
-                    <td>{relatedBook.returnDay}</td>
-                    <td>
+                    <td className="td1">{relatedBook.libName}</td>
+                    <td className="td2">{relatedBook.status ?? '정보 없음'}</td>
+                    <td className="td3">{relatedBook.returnDay}</td>
+                    <td className="td4">
                       <div className="card-body">
                         <div className="row">
                           <button disabled={relatedBook.status !== 'AVAILABLE'} onClick={alertLogin || (() => handleReservation(relatedBook.id))}>
