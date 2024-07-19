@@ -70,7 +70,11 @@ const BookInterest = () => {
               <div className="card mb-3" style={{ width: '100%' }} key={book.id}>
                 <div className="row g-0">
                   <div className="col-md-2" style={{ border: '1px solid black' }}>
-                    <img src={book.bookImg} className="img-fluid rounded-start" alt="책 이미지" style={{ height: '100%', width: '100%', objectFit: 'cover' }} />
+                  {book.bookImg ? (
+                  <img src={`http://localhost:8090/api/images/book/${book.bookImg.imgName}`} alt="책 이미지" className="img-fluid cover-img" />
+                ) : (
+                  <div className="no-image">No Image</div>
+                )}
                   </div>
                   <div className="col-md-5" style={{ border: '1px solid black' }}>
                     <div className="card-body">

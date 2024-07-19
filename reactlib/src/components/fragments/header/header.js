@@ -1,12 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './header.css';
-<<<<<<< HEAD
-import center_logo from '../../images/logo/center_logo.png'
-import { Link } from 'react-router-dom';
-=======
 import center_logo from '../../images/logo/center_logo.png';
->>>>>>> main
 
 const Header = () => {
   const menus = [
@@ -21,17 +16,10 @@ const Header = () => {
     {
       menu: { title: "검색" },
       subs: [
-<<<<<<< HEAD
-        { title: "상세검색", path: `/book/search` },
-        { title: "네이버 API 검색", path: `/bookapi/search` },
-        { title: "추천도서" },
-        { title: "신간도서" }
-=======
-        { title: "통합검색", link: "/book/search" },
+        { title: "네이버API검색", link: "/bookapi/search" },
         { title: "상세검색", link: "/book/search" },
         { title: "추천도서", link: "/user/recBoard/list" },
         { title: "신간도서", link: "/search/new" }
->>>>>>> main
       ]
     },
     {
@@ -62,17 +50,10 @@ const Header = () => {
 
   return (
     <header>
-<<<<<<< HEAD
-      <div className="full_header">
-        <div className="top_login">
-          <a href="/login" className="enter" >로그인</a><t> | </t>
-          <a href="/join" className="join" >회원가입</a>
-=======
       <div id="full_header">
         <div id="top_login">
           <a className="enter" href="/login">로그인</a><span> | </span>
           <a className="join" href="/join">회원가입</a>
->>>>>>> main
         </div>
         <div id="header_menu">
           <div id="top_logo">
@@ -85,21 +66,10 @@ const Header = () => {
               <div key={index}>
                 <div>{menuItem.menu.title}</div>
                 <div className="sub_menu">
-<<<<<<< HEAD
-                {menuItem.subs.map((sub, subIndex) => (
-                    sub.path ? (
-                      <div key={subIndex}>
-                        <Link to={sub.path}>{sub.title}</Link>
-                      </div>
-                    ) : (
-                      <div key={subIndex}>{sub.title}</div>
-                    )
-=======
                   {menuItem.subs.map((sub, subIndex) => (
                     <div key={subIndex}>
                       <Link to={sub.link}>{sub.title}</Link>
                     </div>
->>>>>>> main
                   ))}
                 </div>
               </div>

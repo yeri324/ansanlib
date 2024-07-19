@@ -6,6 +6,7 @@ import AutoComplete from './AutoComplete'; // AutoComplete 컴포넌트를 임�
 import Header from '../../../fragments/header/header';
 import Footer from '../../../fragments/footer/footer';
 
+
 const SearchPage = ({ isAuthenticated, isAnonymous }) => {
   const [formValues, setFormValues] = useState({
     title: '',
@@ -114,7 +115,7 @@ const SearchPage = ({ isAuthenticated, isAnonymous }) => {
                           <input
                             name={field.name}
                             type="text"
-                            className="form-control"
+                            className="searchForm"
                             aria-label="Input group example"
                             aria-describedby="btnGroupAddon2"
                             value={formValues[field.name] || ''}
@@ -124,7 +125,7 @@ const SearchPage = ({ isAuthenticated, isAnonymous }) => {
                       </div>
                     ))}
                     <br />
-                    <button className="btn btn-primary">Search</button>
+                    <button className="btn btn-primary">검색</button>
                   </form>
                 </div>
               </div>
@@ -168,7 +169,7 @@ const SearchPage = ({ isAuthenticated, isAnonymous }) => {
             <div className="card mb-3 full-width book-detail-container" key={index}>
               <div className="img-container">
                 {book.bookImg ? (
-                  <img src={`http://localhost:8090/api/images/${book.bookImg.imgName}`} alt="책 이미지" className="img-fluid cover-img" />
+                  <img src={`http://localhost:8090/images/book/${book.bookImg.imgName}`} alt="책 이미지" className="img-fluid cover-img" />
                 ) : (
                   <div className="no-image">No Image</div>
                 )}
@@ -185,12 +186,12 @@ const SearchPage = ({ isAuthenticated, isAnonymous }) => {
                 <p>{book.status}</p>
                 <div className="buttons-container">
                   <div className="row-bt">
-                    <button onClick={isAnonymous ? handleAlertLogin : () => window.location.href = `/book/reservation/${book.id}`}>
+                    <button disabled={book.status !== 'AVAILABLE'} onClick={() => window.location.href = `/reservation/new `}>
                       도서예약
                     </button>
                   </div>
                   <div className="row-bt">
-                    <button onClick={isAnonymous ? handleAlertLogin : () => window.location.href = `/book/interest/${book.id}`}>
+                    <button onClick={() => window.location.href = `/book/interest/list`}>
                       관심도서담기
                     </button>
                   </div>

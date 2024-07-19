@@ -34,28 +34,7 @@ public class AdminBookService {
 
 	@Autowired
 	private BookImgRepository bookImgRepository;
-	
-
-<<<<<<< HEAD
-	 public BookDto saveBook(BookDto bookDto, MultipartFile file) throws IOException {
-	       
-		 
-		 //도서등록
-	     Book book = new Book();
-	        book.setIsbn(bookDto.getIsbn());
-	        book.setTitle(bookDto.getTitle());
-	        book.setAuthor(bookDto.getAuthor());
-	        book.setPublisher(bookDto.getPublisher());
-	        book.setPub_date(bookDto.getPub_date());
-	        book.setCategory_code(bookDto.getCategory_code());
-	        book.setLibName(bookDto.getLibName());
-	        book.setBookDetail(bookDto.getBookDetail());
-	    
-	        book.setCount(bookDto.getCount());
-=======
->>>>>>> main
-
-	
+		
 	//도서-도서관 중복확인
 	 public boolean checkBookExists(String isbn, String libName) {
 	        return bookRepository.existsByIsbnAndLibName(isbn, libName); // lib_name 사용

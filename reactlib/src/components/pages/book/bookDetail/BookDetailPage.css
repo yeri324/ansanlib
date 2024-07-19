@@ -77,12 +77,13 @@
 
 .bookDetail .table-dark th{
   border: 1px solid black;
+  background: black;
 }
 
 .bookDetail .table-detail{
   border: 1px solid black;
 }
 
-.bookDetail .table-deatil td1{
+.bookDetail .table-deatil td2{
   border: 1px solid black;
 }

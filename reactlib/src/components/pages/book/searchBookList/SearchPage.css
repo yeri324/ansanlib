@@ -24,8 +24,8 @@
 
 .bookSearch .cover-img {
   object-fit: cover;
-  max-width: 150px;
-  max-height: 200px; /* 이미지의 최대 높이 설정 */
+  width: 160px;
+  height: 220px;
 }
 
 .bookSearch .no-image {
@@ -72,19 +72,36 @@
 
 .bookSearch .sc {
   padding: 10px;
-  margin-left: 100px;
-  margin-right: 100px;
+  margin-left: 250px;
+  margin-right: 250px;
 }
 
 .bookSearch #btnGroupAddon2{
+  width: 90px;
   height: 50px;
 }
 
-.bookSearch .form-control{
+.bookSearch .searchForm{
+  width: 600px;
   height: 50px;
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 10px 20px;
 }
 
 .bookSearch .justify-content-center{
   padding-left: 150px;
   padding-right: 150px;
+  padding-bottom: 20px;
+}
+
+.bookSearch .react-autosuggest__input {
+  width: 600px;
+  height: 50px;
+  padding: 10px 20px;
+  font-family: 'Arial, sans-serif';
+  font-weight: 300;
+  font-size: 16px;
+  border: 1px solid black;
+  border-radius: 4px;
 }

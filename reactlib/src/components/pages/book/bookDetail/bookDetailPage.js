@@ -33,7 +33,7 @@ const BookDetailPage = () => {
   };
 
   const handleReservation = (bookId) => {
-    axios.post(`http://localhost:8090/book/reservation/${bookId}`)
+    axios.post(`http://localhost:8090/reservation/new`)
       .then(response => {
         // 예약 성공 처리
       })
@@ -87,7 +87,7 @@ const BookDetailPage = () => {
             <div className="col-md-4 img-container">
               {book.bookImg ? (
                 <img 
-                  src={`http://localhost:8090/api/images/${book.bookImg.imgName}`} 
+                  src={`http://localhost:8090/images/book/${book.bookImg.imgName}`} 
                   alt={book.title} 
                   className="img-fluid cover-img" 
                 />
@@ -119,10 +119,10 @@ const BookDetailPage = () => {
               <tbody className="table-detail">
                 {bookList.map((relatedBook) => (
                   <tr key={relatedBook.id}>
-                    <td className="td1">{relatedBook.libName}</td>
-                    <td className="td2">{relatedBook.status ?? '정보 없음'}</td>
-                    <td className="td3">{relatedBook.returnDay}</td>
-                    <td className="td4">
+                    <td style={{border: "1px solid black"}}>{relatedBook.libName}</td>
+                    <td style={{border: "1px solid black"}}>{relatedBook.status ?? '정보 없음'}</td>
+                    <td style={{border: "1px solid black"}}>{relatedBook.returnDay}</td>
+                    <td style={{border: "1px solid black"}}>
                       <div className="card-body">
                         <div className="row">
                           <button disabled={relatedBook.status !== 'AVAILABLE'} onClick={alertLogin || (() => handleReservation(relatedBook.id))}>
