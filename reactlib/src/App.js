@@ -49,6 +49,8 @@ import Find from './components/pages/security/pages/Find';
 import Join from './components/pages/security/pages/Join';
 import User from './components/pages/security/pages/User';
 import { UseAuthBasic, UseAuthCheckAdmin, UseAuthCheckLogin } from './components/hooks/examples/useAuthExamples';
+import History from './components/fragments/home/History';
+import Organ from './components/fragments/home/Organ';
 
 function App() {
         
@@ -61,6 +63,10 @@ function App() {
                                 <Route path="/fragments/header" element={<Header />} />
                                 <Route path="/fragments/footer" element={<Footer />} />
                                 <Route path="/fragments/home" element={<keywordCloud_bookId />} />
+                                <Route path="/intro/history" element={<History />} />
+                                <Route path="/intro/organization" element={<Organ />} />
+                                
+                                
 
                                 {/* 게시판 */}
                                 <Route path="/:roles/:board/list" element={<BoardList />} />

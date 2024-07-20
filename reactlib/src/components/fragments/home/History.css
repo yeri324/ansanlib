@@ -1,0 +1,46 @@
+.page-header{
+  background-color: #ebe8e6;
+  width: 100%;
+  height: 100px;
+}
+.page-header .page-header-name{
+  line-height: 100px;
+  padding: 0 50px;
+}
+
+
+.history-page {
+  margin: 20px;
+}
+
+.history-page .buttons {
+  display: flex;
+  margin-bottom: 50px;
+}
+
+.history-page .buttons button {
+  background-color:  #ebe8e6;
+  border: none;
+  width: 110px;
+  height: 45px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 0 1px;
+}
+
+.history-page .buttons button.active {
+  background-color: #9daece;
+  color: white;
+}
+
+.history-page .image-container {
+  text-align: center;
+}
+
+.history-page .image-container img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  padding: 5px;
+}
