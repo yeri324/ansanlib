@@ -6,7 +6,9 @@ import Header from './components/fragments/header/header';
 import Footer from './components/fragments/footer/footer';
 import HomePage from './components/fragments/home/homePage';
 import keywordCloud_bookId from './components/fragments/home/KeywordCloud_bookId';
-
+import History from './components/fragments/home/History';
+import Organ from './components/fragments/home/Organ';
+import LibInfo from './components/fragments/home/LibInfo';
 // 도서검색
 import SearchPage from './components/pages/book/searchBookList/searchPage';
 import BookDetailPage from './components/pages/book/bookDetail/bookDetailPage';
@@ -49,8 +51,6 @@ import Find from './components/pages/security/pages/Find';
 import Join from './components/pages/security/pages/Join';
 import User from './components/pages/security/pages/User';
 import { UseAuthBasic, UseAuthCheckAdmin, UseAuthCheckLogin } from './components/hooks/examples/useAuthExamples';
-import History from './components/fragments/home/History';
-import Organ from './components/fragments/home/Organ';
 
 function App() {
         
@@ -65,6 +65,7 @@ function App() {
                                 <Route path="/fragments/home" element={<keywordCloud_bookId />} />
                                 <Route path="/intro/history" element={<History />} />
                                 <Route path="/intro/organization" element={<Organ />} />
+                                <Route path="/intro/library" element={<LibInfo />} />
                                 
                                 
 
