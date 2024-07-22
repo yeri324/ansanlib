@@ -2,12 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './header.css';
 import center_logo from '../../images/logo/center_logo.png';
-import { useNavigate } from "react-router-dom";
 import useAuth, { LOGIN_STATUS, ROLES } from "../../hooks/useAuth";
-import { useEffect } from "react";
+import { useContext,useEffect } from "react";
+import { LoginContext } from '../../pages/security/contexts/LoginContextProvider';
 
 const Header = () => {
-  const { loginStatus, userId, roles, } = useAuth();
+  const { logout } = useContext(LoginContext);
+  const { loginStatus, userId, loginId, roles, } = useAuth();
   const menus = [
     {
       menu: { title: "소개" },
@@ -52,12 +53,6 @@ const Header = () => {
     }
   ];
 
-
-  useEffect(() => {
-    console.log(loginStatus, userId, roles);
-  }, [loginStatus]); //로그인 상태 변경시 useEffect 실행
-
-
   return (
     <header>
       <div id="full_header">
@@ -65,8 +60,8 @@ const Header = () => {
           loginStatus === LOGIN_STATUS.LOGGED_IN ? (
             <>
               <div id="top_login">
-                <p className='userid'>{userId}님</p> <span> | </span>
-                <a className="enter" href="/login">로그아웃</a><span> | </span>
+                <p className='userid'>{ loginId}님</p> <span> | </span>
+                <button type='button' className="logout" onClick={()=>logout()}>로그아웃</button><span> | </span>
                 {roles === ROLES.ADMIN ? (
                   <a className="join" href="/admin">관리페이지</a>
                 ) : (
