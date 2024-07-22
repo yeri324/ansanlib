@@ -39,6 +39,9 @@ function UserRecList() {
         <div>
             <Header />
             <div class='all-reclist'>
+                <div class='boardrec-list'>
+                <h2>추천도서</h2>
+                </div>
                 <div>
                     <div class='rec-list'>
                         {searchResult.map((card) => (

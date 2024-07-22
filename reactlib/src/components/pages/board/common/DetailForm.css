@@ -6,7 +6,7 @@
     padding: 0;
 }
 
-.board-detail-form form>h3 {
+.board-detail-form form>h2 {
     margin: 0 auto;
     margin-bottom: 10px;
     text-align: center;
@@ -17,7 +17,6 @@
     margin: 0 auto;
     text-align: center;
     justify-content: center;
-    background: #ffffff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -142,4 +141,22 @@
     transform: scale(3);
     /* (x)배 확대 */
     z-index: 3;
+}
+
+.board-detail-form .bdetail-top{
+    display: flex;
+    justify-content: space-between;
+    width: calc(70% - 20px);
+    margin-bottom: 10px;
+    margin: 0 auto;
+}
+
+.board-detail-form .bdetail-top p {
+    flex: 0 1 200px;
+    padding: 5px;
+    font-size: 16px;
+}
+
+.board-detail-form h2 {
+    margin-bottom: 15px;
 }

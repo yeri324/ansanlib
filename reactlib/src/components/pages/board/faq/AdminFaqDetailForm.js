@@ -3,12 +3,16 @@ import { useNavigate, } from 'react-router-dom';
 import '../../board/common/DetailForm.css'
 import BoardImgList from '../common/BoardImgList';
 import useAuth from '../../../hooks/useAuth';
+import AdminHeader from '../../admin/common/AdminHeader';
+import AdminSide from '../../admin/common/AdminSide';
 
-function AdminFaqDetailForm({ id }) {
+function AdminFaqDetailForm({ id, }) {
     const { axios } = useAuth();
     const navigate = useNavigate();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const [createdBy, setCreatedBy] = useState('');
+    const [regDate, setRegDate] = useState();
     const [images, setImages] = useState([]);
     const [count, setCount] = useState(1);
     const [deleteImg, setDeleteImg] = useState([]);
@@ -35,6 +39,8 @@ function AdminFaqDetailForm({ id }) {
         ).then((res) => {
             setTitle(res.data.title);
             setContent(res.data.content);
+            setCreatedBy(res.data.modifiedBy);
+            setRegDate(res.data.updateTime.split('T')[0]);
             setImages(res.data.faqImgs);
         }
         )
@@ -120,24 +126,39 @@ function AdminFaqDetailForm({ id }) {
     };
 
     return (
-        <div>
-            <div class='board-detail-form'>
-                <form>
-                    <h3>수정하기</h3>
-                    <div class='content-container1'>
-                        <div class='input-container'>
-                            <input type='text' name='title' value={title} onChange={updateTitle} />
-                            <textarea type='text' name='content' value={content} onChange={updateContent} />
+        <div className="admin-page">
+            <div className="admin-base">
+                <AdminHeader />
+                <AdminSide />
+            </div>
+            <main className="admin-page-main">
+                <div className="admin-page-body">
+                    <div class='board-detail-form'>
+                        <div className="admin-page-title">
+                            <h2>FAQ</h2>
                         </div>
-                        <BoardImgList images={images} handleImgChange={handleImgChange} onImgDelete={onImgDelete} />
-                    </div>
-                    {images.length < 5 && <button type="button" onClick={handleAddImg}>이미지추가</button>}
-                    <button type='button' onClick={() => onUpdate()} >수정</button>
-                    <button type="button" onClick={() => onDelete()}>삭제</button>
-                    <button type="button" onClick={() => onGoBack()}>돌아가기</button>
-                </form>
-            </div >
-        </div >
+                        <form>
+                            <div class='bdetail-top'>
+                                <p style={{ textAlign: 'left' }}>번호 : {id}</p>
+                                <p>작성자 : {createdBy}</p>
+                                <p style={{ textAlign: 'right' }}>작성일 : {regDate}</p>
+                            </div>
+                            <div class='content-container1'>
+                                <div class='input-container'>
+                                    <input type='text' name='title' value={title} onChange={updateTitle} />
+                                    <textarea type='text' name='content' value={content} onChange={updateContent} />
+                                </div>
+                                <BoardImgList images={images} handleImgChange={handleImgChange} onImgDelete={onImgDelete} />
+                            </div>
+                            {images.length < 5 && <button type="button" onClick={handleAddImg}>이미지추가</button>}
+                            <button type='button' onClick={() => onUpdate()} >수정</button>
+                            <button type="button" onClick={() => onDelete()}>삭제</button>
+                            <button type="button" onClick={() => onGoBack()}>돌아가기</button>
+                        </form>
+                    </div >
+                </div >
+            </main>
+        </div>
     );
 };
 

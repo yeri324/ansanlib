@@ -9,12 +9,12 @@ const noticePosts = {
     { id: 4, title: '공지사항 4' },
     { id: 5, title: '공지사항 5' },
   ],
-  신간도서: [
-    { id: 1, title: '신간도서 1' },
-    { id: 2, title: '신간도서 2' },
-    { id: 3, title: '신간도서 3' },
-    { id: 4, title: '신간도서 4' },
-    { id: 5, title: '신간도서 5' },
+  FAQ: [
+    { id: 1, title: 'FAQ 1' },
+    { id: 2, title: 'FAQ 2' },
+    { id: 3, title: 'FAQ 3' },
+    { id: 4, title: 'FAQ 4' },
+    { id: 5, title: 'FAQ 5' },
   ],
   추천도서: [
     { id: 1, title: '추천도서 1' },
@@ -29,7 +29,7 @@ const noticePosts = {
 const Notice = () => {
   const [activeCategory, setActiveCategory] = useState('공지사항');
 
-  const categories = ['공지사항', '신간도서', '추천도서'];
+  const categories = ['공지사항', 'FAQ', '추천도서'];
 
   const handleCategoryClick = (category) => {
     setActiveCategory(category);
@@ -37,9 +37,9 @@ const Notice = () => {
 
   const handlePlusButtonClick = () => {
     const pageMapping = {
-      공지사항: '/공지사항',
-      신간도서: '/신간도서',
-      추천도서: '/추천도서'
+      공지사항: '/user/notice/list',
+      FAQ: '/user/faq/list',
+      추천도서: '/user/recboard/list'
     };
     window.location.href = pageMapping[activeCategory];
   };
