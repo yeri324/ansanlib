@@ -18,6 +18,7 @@ import com.ansanlib.book.repository.BookRepository;
 import com.ansanlib.book.service.FileService;
 import com.ansanlib.entity.Book;
 import com.ansanlib.entity.BookImg;
+import com.ansanlib.entity.Library;
 import com.ansanlib.entity.LoanStatus;
 import com.ansanlib.entity.RecBoard;
 import com.ansanlib.entity.RequestBook;
@@ -101,28 +102,52 @@ private LoanStatusRepository loanStatusRepository;
 	}
 
 	
-	//도서권수 수정
 	 @Transactional
-	    public Book updateBookCount(Long id, BookDto bookDto) {
-	        Book book = bookRepository.findById(id)
-	                .orElseThrow(() -> new IllegalArgumentException("Book not found with id: " + id));
-	        book.setCount(bookDto.getCount());
-	        return bookRepository.save(book);
-	    }
-	
-	
-	
-	
-	//삭제
-	 @Transactional
-	    public void deleteBookById(Long id) {
-	        Optional<Book> bookOptional = bookRepository.findById(id);
-	        if (bookOptional.isPresent()) {
-	            bookRepository.deleteById(id);
+	    public void addLib(Long bookId, BookDto bookDto) throws Exception {
+	        Optional<Book> optionalBook = bookRepository.findById(bookId);
+	        if (optionalBook.isPresent()) {
+	            Book book = optionalBook.get();
+	            Book newBook = new Book();
+	            newBook.setTitle(book.getTitle());
+	            newBook.setAuthor(book.getAuthor());
+	            newBook.setPublisher(book.getPublisher());
+	            newBook.setPub_date(book.getPub_date());
+	            newBook.setLibName(bookDto.getLibName());
+	            newBook.setCount(bookDto.getCount());
+
+	            newBook.setIsbn(book.getIsbn());
+	            bookRepository.save(newBook);
 	        } else {
-	            throw new IllegalArgumentException("Book not found with id: " + id);
+	            throw new Exception("Book not found");
 	        }
 	    }
+
+	//도서권수 수정
+	 public void editLib(Long bookId, BookDto bookDto) throws Exception {
+	        Optional<Book> optionalBook = bookRepository.findById(bookId);
+	        if (optionalBook.isPresent()) {
+	            Book book = optionalBook.get();
+	            book.setLibName(bookDto.getLibName());
+	            book.setCount(bookDto.getCount());
+	            bookRepository.save(book);
+	        } else {
+	            throw new Exception("Book not found");
+	        }
+	    }
+		
+		
+		
+		
+//		//삭제
+//		 @Transactional
+//		    public void deleteBookById(Long id) {
+//		        Optional<Book> bookOptional = bookRepository.findById(id);
+//		        if (bookOptional.isPresent()) {
+//		            bookRepository.deleteById(id);
+//		        } else {
+//		            throw new IllegalArgumentException("Book not found with id: " + id);
+//		        }
+//		    }
 
 	 
 	 // 메인 추천도서

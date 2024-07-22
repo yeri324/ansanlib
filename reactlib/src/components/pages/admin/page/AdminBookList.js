@@ -141,7 +141,7 @@ const AdminBookList = () => {
   };
 
   const refreshBookList = () => {
-    getBookList(); // Fetch the book list again
+    getBookList();
   };
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -210,7 +210,8 @@ const AdminBookList = () => {
 
             <AdminBookListTable
               books={filteredBookList}
-              handleSort={handleSort} // Pass handleSort correctly
+              onOpenModal={handleOpenModal}
+              onSort={handleSort}
               sortConfig={sortConfig}
             />
 
@@ -227,7 +228,7 @@ const AdminBookList = () => {
                 isOpen={isModalOpen}
                 onClose={handleCloseModal}
                 book={selectedBook}
-                refreshBookList={refreshBookList} // Pass the refresh callback
+                refreshBookList={refreshBookList}
               />
             )}
           </div>

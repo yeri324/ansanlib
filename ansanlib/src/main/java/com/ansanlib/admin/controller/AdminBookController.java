@@ -80,26 +80,45 @@ public class AdminBookController {
 	}
 
 	
-	//책 권수 수정
-	 @PutMapping("/{id}")
-	 public ResponseEntity<Book> updateBookCount(@PathVariable Long id, @RequestBody BookDto bookDto) {
-	        Book updatedBook = adminBookService.updateBookCount(id, bookDto);
-	        return ResponseEntity.ok(updatedBook);
-	    }
-	
-	
-	
-	
-	//삭제
-	 @DeleteMapping("/{id}")
-	    public ResponseEntity<String> deleteBook(@PathVariable Long id) {
+	 @PostMapping("/{bookId}/addLibrary")
+	    public ResponseEntity<?> addLibrary(@PathVariable Long bookId, @RequestBody BookDto bookDto) {
 	        try {
-	            adminBookService.deleteBookById(id);
-	            return ResponseEntity.ok("Book deleted successfully");
+	            adminBookService.addLib(bookId, bookDto);
+	            return ResponseEntity.ok().build();
 	        } catch (Exception e) {
-	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete book");
+	            e.printStackTrace();
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding library entry: " + e.getMessage());
 	        }
 	    }
+
+	//책 권수 수정
+	 @PutMapping("/{bookId}/updateLibrary")
+	    public ResponseEntity<?> editLibrary(@PathVariable Long bookId, @RequestBody BookDto bookDto) {
+	        try {
+	            adminBookService.editLib(bookId, bookDto);
+	            return ResponseEntity.ok().build();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error editing library entry: " + e.getMessage());
+	        }
+	    }
+		
+		
+		
+//		
+//		//삭제
+//		 @DeleteMapping("/{bookId}")
+//		    public ResponseEntity<String> deleteBook(@PathVariable Long id) {
+//		        try {
+//		            adminBookService.deleteBookById(id);
+//		            return ResponseEntity.ok("Book deleted successfully");
+//		        } catch (Exception e) {
+//		            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete book");
+//		        }
+//		    }
+		 
+	 
+	 
 	 
 	 
 	 //추춴도서목록 불러오기
@@ -115,5 +134,9 @@ public class AdminBookController {
 	        List<LoanStatus> loans = adminBookService.getAllLoanStatuses();
 	        return ResponseEntity.ok(loans);
 	    }
+	 
+	 
+	 
+	 
 
 }

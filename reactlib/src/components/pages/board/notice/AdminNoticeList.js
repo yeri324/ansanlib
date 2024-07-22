@@ -126,7 +126,7 @@ function AdminNoticeList() {
                 <div className="admin-page-body">
                     <div className="admin-page-title">
 
-                        <h2>공지사항</h2>
+                        <h2>공지 사항</h2>
                       
 
                     </div>

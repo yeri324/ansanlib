@@ -4,7 +4,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   background-color: rgba(0, 0, 0, 0.226);
   z-index: 1000;
   display: flex;
@@ -47,6 +47,15 @@
 
 }
 
+.modal-image {
+  text-align: center;
+  padding: 15px;
+}
+
+.modal-image img {
+  max-width: 100%;
+  height: auto;
+}
 
 
 /* 닫기 버튼

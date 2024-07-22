@@ -79,7 +79,7 @@ const AdminUserList = () => {
         <main className="admin-page-main">
           <div className="admin-page-body">
             <div className="admin-page-title">
-              <h2>회원목록</h2>
+              <h2>회원 조회</h2>
             </div>
             <div className="admin-page-search">
               <select name="searchBy" value={searchOption.searchBy} onChange={handleOnChange}>

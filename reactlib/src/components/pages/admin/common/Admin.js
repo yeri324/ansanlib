@@ -133,7 +133,7 @@ const Admin = () => {
           <div className="admin-main-dash-body">
             <div className="admin-main-left" style={{ width: "25%" }}>
               <div className='admin-left-box1'>
-                <h5>오늘은 &nbsp;<span>{date.toISOString().split('T')[0]}</span> &nbsp;입니다.</h5>
+                <h5>오늘은 &nbsp;<strong>{date.toISOString().split('T')[0]}</strong> &nbsp;입니다.</h5>
               </div>
               <div className="admin-left-box2 calendar-container">
                 <Calendar
@@ -148,8 +148,19 @@ const Admin = () => {
                 />
               </div>
               <div className="admin-left-box3">
+              <h4><a href="admin/holiday/list">휴관 도서관</a></h4>
                 <HolidayListTable holidays={holidays.slice(0, 3)} excludedColumns={['delete']} />
               </div>
+
+
+<div className='admin-left-box4'>
+
+</div>
+
+
+
+
+
             </div>
             <div className="admin-main-right" style={{ width: "75%" }}>
               <div className="admin-right-box1">
@@ -167,7 +178,7 @@ const Admin = () => {
                 </div>
                 <div className='admin-box2-table'>
                   <h4><a href="admin/book/request">희망도서신청</a></h4>
-                  <AdminBookRequestTable searchResult={searchResult} excludedColumns={['']} />
+                  <AdminBookRequestTable searchResult={searchResult} excludedColumns={['count']} />
                 </div>
               </div>
               <div className="admin-right-box2">
