@@ -14,6 +14,7 @@ function UserNoticeDetailForm({ id }) {
     const [images, setImages] = useState([]);
 
     useEffect(() => {
+
         getDataset();
     }, []);
 
