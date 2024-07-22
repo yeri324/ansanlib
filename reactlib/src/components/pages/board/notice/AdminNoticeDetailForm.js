@@ -126,7 +126,7 @@ function AdminNoticeDetailForm({ id }) {
             <div class='detail-form'>
                 <form>
                     <h3>수정하기</h3>
-                    <div class='content-container'>
+                    <div class='content-container1'>
                         <div class='input-container'>
                             <input type='text' name='title' value={title} onChange={updateTitle} />
                             <textarea type='text' name='content' value={content} onChange={updateContent} />

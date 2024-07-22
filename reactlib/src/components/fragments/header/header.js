@@ -2,8 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './header.css';
 import center_logo from '../../images/logo/center_logo.png';
+import { useNavigate } from "react-router-dom";
+import useAuth, { LOGIN_STATUS, ROLES } from "../../hooks/useAuth";
+import { useEffect } from "react";
 
 const Header = () => {
+  const { loginStatus, userId, roles, } = useAuth();
   const menus = [
     {
       menu: { title: "소개" },
@@ -48,13 +52,36 @@ const Header = () => {
     }
   ];
 
+
+  useEffect(() => {
+    console.log(loginStatus, userId, roles);
+  }, [loginStatus]); //로그인 상태 변경시 useEffect 실행
+
+
   return (
     <header>
       <div id="full_header">
-        <div id="top_login">
-          <a className="enter" href="/login">로그인</a><span> | </span>
-          <a className="join" href="/join">회원가입</a>
-        </div>
+        {
+          loginStatus === LOGIN_STATUS.LOGGED_IN ? (
+            <>
+              <div id="top_login">
+                <p className='userid'>{userId}님</p> <span> | </span>
+                <a className="enter" href="/login">로그아웃</a><span> | </span>
+                {roles === ROLES.ADMIN ? (
+                  <a className="join" href="/admin">관리페이지</a>
+                ) : (
+                  <a className="join" href="/update">마이페이지</a>
+                )}
+              </div>
+            </>
+          ) : (
+            <div id="top_login">
+              <a className="enter" href="/login">로그인</a><span> | </span>
+              <a className="join" href="/join">회원가입</a>
+            </div>
+          )
+        }
+
         <div id="header_menu">
           <div id="top_logo">
             <Link to="/">
