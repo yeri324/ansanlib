@@ -1,5 +1,4 @@
 import '../../board/common/AdminForm.css'
-import axios from 'axios';
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BoardItem from '../common/BoardItem';
@@ -7,9 +6,10 @@ import AdminPagination from "../../admin/common/AdminPagination";
 import { LoginContext } from "../../security/contexts/LoginContextProvider";
 import AdminHeader from '../../admin/common/AdminHeader';
 import AdminSide from '../../admin/common/AdminSide';
-
+import useAuth from '../../../hooks/useAuth';
 
 function AdminFaqList() {
+    const { axios } = useAuth();
     const [checkedList, setCheckedList] = useState([]);
     const [isChecked, setIsChecked] = useState(false);
     const navigate = useNavigate();
@@ -42,7 +42,7 @@ function AdminFaqList() {
 
     // 생성페이지 이동
     const onCreate = () => {
-        navigate('/admin/faq/new')
+        navigate('/admin/faq/form')
     }
 
     //상세페이지 이동

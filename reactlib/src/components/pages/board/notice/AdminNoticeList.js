@@ -2,9 +2,7 @@ import React, { useEffect, useState, } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BoardItem from '../common/BoardItem';
 import AdminPagination from "../../admin/common/AdminPagination";
-import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
-import Auth from '../../../helpers/Auth';
-import RedirectLogin from '../../../helpers/RedirectLogin';
+import useAuth from '../../../hooks/useAuth';
 import '../../board/common/AdminForm.css'
 import AdminHeader from '../../admin/common/AdminHeader';
 import AdminSide from '../../admin/common/AdminSide';
@@ -26,24 +24,10 @@ function AdminNoticeList() {
     const [totalNoticeCount, setTotalNoticeCount] = useState(0);
     const noticePerPage = 8;
 
-    const { loginStatus, roles } = useAuth();
-
-    //리스트 읽기 + 권한 여부 확인
+    //리스트 읽기
     useEffect(() => {
-        //로그아웃됨.
-        if (loginStatus === LOGIN_STATUS.LOGGED_OUT) {
-            alert("로그인이 필요합니다.");
-            navigate("/login");
-            return;
-        } else if (loginStatus === LOGIN_STATUS.LOGGED_IN) {
-            //어드민인지 확인
-            if (roles !== ROLES.ADMIN) {
-                alert("권한이 없습니다.");
-                navigate(-1);
-            }
-        }
         onSearch(currentPage);
-    }, [loginStatus, currentPage]); //로그인 상태 변경시 useEffect 실행
+    }, [currentPage]); 
 
     // 생성페이지 이동
     const onCreate = () => {
@@ -138,12 +122,13 @@ function AdminNoticeList() {
                 <AdminHeader />
                 <AdminSide />
             </div>
-
             <main className="admin-page-main">
                 <div className="admin-page-body">
                     <div className="admin-page-title">
+
                         <h2>공지사항</h2>
-                        {console.log(roles)}
+                      
+
                     </div>
                     <div className="admin-page-top">
                         <div className="admin-page-count" style={{ width: "25%" }}>
@@ -174,7 +159,6 @@ function AdminNoticeList() {
                                 <th scope="col" className="th-title" style={{ width: "40%" }}>제목</th>
                                 <th scope="col" className="th-loginid" style={{ width: "10%" }}>작성자</th>
                                 <th scope="col" className="th-date" style={{ width: "20%" }}>작성일</th>
-
                             </tr>
                         </thead>
                         <tbody class="list_content">
@@ -189,23 +173,11 @@ function AdminNoticeList() {
                             totalPages={totalPages}
                             paginate={setCurrentPage}
                         />
-
                     </div>
-
-
                 </div>
             </main>
         </div>
     );
 };
 
-export default function () {
-    return (
-        <>
-            <RedirectLogin />
-            <Auth loginStatus={LOGIN_STATUS.LOGGED_IN}>
-                <AdminNoticeList />
-            </Auth>
-        </>
-    );
-};
+export default AdminNoticeList;
