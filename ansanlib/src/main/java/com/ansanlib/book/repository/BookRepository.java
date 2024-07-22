@@ -50,6 +50,11 @@ public interface BookRepository extends JpaRepository<Book, Long>, BookRepositor
 		@Query("SELECT b FROM Book b WHERE REPLACE(b.title, ' ', '') LIKE %:query%")
 		List<Book> findByTitleIgnoringSpaces(String query);
 
+		Optional<Book> findByLibNameAndIsbn(String libName, String isbn);
+
+		
+
+
 
 
 	

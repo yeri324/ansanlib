@@ -24,6 +24,8 @@ import com.ansanlib.entity.RecBoard;
 import com.ansanlib.entity.RequestBook;
 import com.ansanlib.requestBook.repository.RequestBookRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class AdminBookService {
 
@@ -139,15 +141,13 @@ private LoanStatusRepository loanStatusRepository;
 		
 		
 //		//삭제
-//		 @Transactional
-//		    public void deleteBookById(Long id) {
-//		        Optional<Book> bookOptional = bookRepository.findById(id);
-//		        if (bookOptional.isPresent()) {
-//		            bookRepository.deleteById(id);
-//		        } else {
-//		            throw new IllegalArgumentException("Book not found with id: " + id);
-//		        }
-//		    }
+	 @Transactional
+	 public void deleteBookById(Long bookId) {
+	     // 먼저 자식 데이터 삭제
+	     recBoardRepository.deleteByBookNum(bookId);
+	     // 이후 부모 데이터 삭제
+	     bookRepository.deleteById(bookId);
+	 }
 
 	 
 	 // 메인 추천도서

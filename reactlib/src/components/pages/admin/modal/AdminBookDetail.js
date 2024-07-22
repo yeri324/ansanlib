@@ -17,16 +17,18 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
 
   if (!isOpen) return null;
 
-  const handleDelete = async (libName) => {
-    try {
-      const response = await axios.delete(`/api/admin/book/${book.id}/library/${libName}`);
-      console.log("Delete response:", response.data);
-      alert("삭제가 완료되었습니다.");
-      refreshBookList();
-      onClose();
-    } catch (error) {
-      console.error("Delete error:", error);
-      alert("삭제 할 수 없습니다. 다시 확인해주세요");
+  const handleDelete = async (bookId) => {
+    if (window.confirm("이 책과 관련된 모든 데이터를 삭제합니다. 삭제하시겠습니까?")) {
+      try {
+        const response = await axios.delete(`/api/admin/book/${bookId}`);
+        console.log("Delete response:", response.data);
+        alert("삭제가 완료되었습니다.");
+        refreshBookList(); // 도서 목록 새로고침
+        onClose(); // 모달 닫기
+      } catch (error) {
+        console.error("Delete error:", error.response ? error.response.data : error.message);
+        alert("삭제 할 수 없습니다. 다시 확인해주세요");
+      }
     }
   };
 
@@ -175,12 +177,13 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
                           </button>
                         )}
                       </td>
+
                       <td>
                         <button
                           type="button"
                           id="admin-modal-button"
                           className="btn btn-outline-dark"
-                          onClick={() => handleDelete(lib.libName)}
+                          onClick={() => handleDelete(book.id)} // book.id 전달
                         >
                           삭제
                         </button>

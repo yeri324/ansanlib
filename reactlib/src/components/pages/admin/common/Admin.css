@@ -81,7 +81,7 @@
   font-weight: bold;
 }
 
-.react-calendar__tile--now {
+.admin-left-box2 .react-calendar__tile--now {
   background: #fdc7a8 !important;
 
   box-shadow: 1px 1px 5px #faf2e2;

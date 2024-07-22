@@ -104,19 +104,23 @@ public class AdminBookController {
 	    }
 		
 		
-		
-//		
+			
 //		//삭제
-//		 @DeleteMapping("/{bookId}")
-//		    public ResponseEntity<String> deleteBook(@PathVariable Long id) {
-//		        try {
-//		            adminBookService.deleteBookById(id);
-//		            return ResponseEntity.ok("Book deleted successfully");
-//		        } catch (Exception e) {
-//		            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete book");
-//		        }
-//		    }
-		 
+	 @DeleteMapping("/{bookId}")
+	 public ResponseEntity<String> deleteBook(@PathVariable Long bookId) {
+	     try {
+	         System.out.println("Attempting to delete book with id: " + bookId);
+	         adminBookService.deleteBookById(bookId);
+	         System.out.println("Successfully deleted book with id: " + bookId);
+	         return ResponseEntity.ok("Book deleted successfully");
+	     } catch (Exception e) {
+	         e.printStackTrace();
+	         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete book: " + e.getMessage());
+	     }
+	 }
+	 
+
+
 	 
 	 
 	 
