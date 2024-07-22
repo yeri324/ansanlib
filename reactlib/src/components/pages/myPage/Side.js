@@ -15,7 +15,7 @@ const Side = () => {
   };
 
   return (
-    <div className="sidebar">
+    <div className="my-sidebar">
       <h3>사이드 메뉴</h3>
       <ul>
         <li>

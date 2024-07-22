@@ -1,143 +1,41 @@
-.reservation_form {
-  position: relative; /* 업데이트 폼을 사이드바 옆에 배치 */
-  margin-left: 250px; /* 사이드바 너비만큼 왼쪽 여백 추가 */
-  padding: 20px; /* 내부 여백 조정 */
-  width: calc(100% - 250px); /* 업데이트 폼 너비를 사이드바 제외한 나머지 공간으로 설정 */
-  max-width: 400px;
-  box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
-  height: 500px;
+.mypage-container .reservation_form {
+  margin: 30px auto;
+  width: 75%;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  padding: 50px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
   }
 
-  .reservation_form_title {
-    text-align: center;
-    margin-bottom: 15px; /* 제목과 폼 사이의 간격 */
-    font-size: 18px; /* 제목의 폰트 크기 조정 */
+  .reservation-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
   }
   
-  .reservation_form_body {
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    gap: 10px; /* 필드 사이의 간격 조정 */
-  }
-  
-  .reservation_form_field {
-    display: flex;
-    flex-direction: column;
-    gap: 5px; /* 레이블과 입력 필드 사이의 간격 조정 */
-  }
-  
-  .reservation_form_field label {
-    font-size: 14px; /* 레이블의 폰트 크기 조정 */
-  }
-  
-  .reservation_form_field input {
-    padding: 8px; /* 입력 필드의 내부 여백 조정 */
-    border: 1px solid #ccc;
+  .reservation-form input {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
     border-radius: 4px;
-    width: 100%; /* 입력 필드의 너비를 부모 요소에 맞춤 */
-    max-width: 300px; /* 입력 필드의 최대 너비를 부모 요소에 맞춤 */
-    box-sizing: border-box;
-    font-size: 14px; /* 입력 필드의 폰트 크기 조정 */
+    border: 1px solid #ccc;
+    margin-bottom: 30px;
   }
-  
-  .reservation_form_button {
-    display: flex;
-    justify-content: center;
+  .reservation-form .reservation-form-button{
+    text-align: center;
   }
-  
-  .reservation_form_button button {
-    padding: 8px 16px; /* 버튼의 내부 여백 조정 */
+
+  .reservation-form button {
+    background-color: #007bff;
+    width: 200px;
+    height: 45px;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
     border: none;
     border-radius: 4px;
-    background-color: #007bff;
-    color: white;
-    font-size: 14px; /* 버튼의 폰트 크기 조정 */
     cursor: pointer;
-    width: auto; /* 버튼의 너비를 자동으로 설정 */
-  }
-  
-  .reservation_form_button button:hover {
-    background-color: #0056b3;
-  }
-
-  .content-container {
-    display: flex;
-    flex: 1;
-  }
-  
-  .sidebar {
-    width: 200px;
-    background-color: #f0f0f0;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-  
-  .main-content {
-    flex: 1;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-  
-  .full_footer {
-    background-color: #f7f2eb;
-    padding: 20px 0;
-    display: flex;
-    align-items: flex-start;
-    text-align: center;
-    clear: both;
-  }
-  
-  .footer_content_container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .top {
-    margin-bottom: 30px;
-    text-align: center;
-  }
-  
-  .footer_menu {
-    margin: 0 auto;
-    padding: 0;
-    width: 100%;
-    list-style: none;
-    text-align: center;
-  }
-  
-  .footer_menu .menu_item {
-    display: inline;
-    margin: 0 15px;
-  }
-  
-  .footer_menu > .menu_item > .footer_link {
-    font-size: 14px;
-  }
-  
-  .footer_menu .menu_item .footer_link {
-    text-decoration: none;
-    color: #000;
-  }
-  
-  .bottom {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .bottom > .footer_logo {
-    width: 20vw;
-    flex-grow: 1;
-    text-align: center;
-  }
-  
-  .bottom > .footer_content {
-    width: 20vw;
-    flex-grow: 5;
-    text-align: center;
-    font-size: 13px;
-    color: gray;
+    margin-top: 10px;
   }
   

@@ -36,8 +36,12 @@ const LoanStatusList = ()=>{
     useEffect(()=>{ fetchLoanStatus(); }, []);
 
     return (
+      <div className="mypage-container">
+      <div className='mypage-header'>
+        <h2 className='mypage-header-name'>{name}의 대출 상태</h2>
+      </div>
+
         <div className="loan-status-container">
-          <h2>{name}의 대출 상태</h2>
           {loanStatuses.length > 0 ? (
             <ul>
               {loanStatuses.map(status => (
@@ -51,6 +55,7 @@ const LoanStatusList = ()=>{
           )}
           {isErrored && <p>오류가 발생했습니다. 나중에 다시 시도해 주세요.</p>}
         </div>
+        </div>
       );      
 }
 
@@ -59,10 +64,12 @@ export default function() {
       <>
         <RedirectLogin />
         <Auth loginStatus={LOGIN_STATUS.LOGGED_IN}>
-          <Header />
-          <LoanStatusList />
+        <Header />
+        <div className="MyPage-body">
           <Side />
-          <Footer />
+          <LoanStatusList />
+        </div>
+        <Footer />
         </Auth>
       </>
     );

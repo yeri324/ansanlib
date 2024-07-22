@@ -1,17 +1,14 @@
 /* requestBooksList.css */
-
-.request_books_list {
-    font-family: 'Noto Sans KR', sans-serif;
-    position: relative; /* 사이드바 옆에 배치 */
-    margin-left: 250px; /* 사이드바 너비만큼 왼쪽 여백 추가 */
-    padding: 20px; /* 내부 여백 조정 */
-    background-color: #fff;
+/* 전체 폼 스타일 */
+.mypage-container .request_books_list {
+    margin: 30px auto;
+    width: 75%;
     border: 1px solid #ddd;
+    background-color: #fff;
+    padding: 50px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: calc(90% - 250px); /*너비를 사이드바 제외한 나머지 공간으로 설정 */
-    box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
-}
+    }
 
 
 

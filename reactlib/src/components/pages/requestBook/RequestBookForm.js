@@ -44,7 +44,13 @@ const RequestBookForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+
+    <div className="mypage-container">
+    <div className='mypage-header'>
+      <h2 className='mypage-header-name'>회원 정보 수정</h2>
+    </div>
+
+    <form className='requestbookform' onSubmit={handleSubmit}>
       <h2> {name}의 도서신청</h2>
       <div>
         <label>도서 ISBN:</label>
@@ -102,6 +108,7 @@ const RequestBookForm = () => {
       </div>
       <button type="submit">신청하기</button>
     </form>
+    </div>
   );
 };
 
@@ -110,9 +117,11 @@ export default function() {
     <>
       <RedirectLogin />
       <Auth loginStatus={LOGIN_STATUS.LOGGED_IN}>
-        <Header />
-        <RequestBookForm />
-        <Side />
+      <Header />
+        <div className="MyPage-body">
+          <Side />
+          <RequestBookForm  />
+        </div>
         <Footer />
       </Auth>
     </>

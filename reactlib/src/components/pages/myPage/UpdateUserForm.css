@@ -1,200 +1,111 @@
-.form {
-  background-color: #fff;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 60%;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.form .update-title {
-  margin: 5px 0 0 20px;
-  color: #333;
-}
-
-.form .update-form {
+.mypage-container .update-form{
   margin: 30px auto;
-  text-align: center;
+  width: 75%;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  padding: 50px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
-.update-form>div {
-  display: flex;
-  flex-direction: column;
+.update-form .section_title {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.update-form .required_notice {
+  color: #ff0000;
+  font-size: 12px;
+  font-style: italic;
+  margin-left: 10px;
+}
+
+.update-form .form_field {
   margin-bottom: 15px;
 }
 
-.update-form>div>label,
-.update-form>div>input,
-.update-form>div>button,
-.update-form>div>select {
-  margin: 0 10px;
-  padding: 8px;
+.update-form .form_field label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
 }
-
-.update-form>div>label {
-  flex: 0 0.5 120px;
-  line-height: 28px;
-}
-
-.update-form>div>input,
-.update-form>div>select {
-  flex: 1;
-  margin-bottom: 20px;
-}
-
-.update-form>div>button {
-  flex: 0 1 170px;
-}
-
-.update-email>span {
-  line-height: 44px;
-}
-
-#email1{
-  width: 30%;
-}
-
-.update-form button {
-  padding: 8px 12px;
-  background-color: #5c6bc0;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  margin: 10px 0 auto;
-}
-
-.form .update-radio input {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
-}
-
-.form .update-radio .check-label {
+.update-form .email_input,
+.update-form .address_input,
+.update-form .radio_group{
   display: flex;
-  align-items: center;
-  width: 70%;
-  border-radius: 4px;
-  cursor: pointer;
-  border: 1px solid #333;
-  text-align: center;
-  display: inline-block;
-  font-size: 14px;
 }
 
-.update-radio input:checked+.check-label {
+.update-form .email_input > input,
+.update-form .email_input > select,
+.update-form .address_input > input{
+  flex: 1;
+  margin: 0 5px;
+}
+
+.update-form .email_input > button,
+.update-form .address_input > button{
+  flex: 0 0 150px;
+  margin: 0 5px;
+}
+
+.update-form .form_field input,
+.update-form .form_field select {
+  width:100%;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.update-form .form_field input[type="radio"] {
+  position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+.update-form .check-label{
+  width: 150px;
+  height: 44px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin: 0 5px;
+  line-height: 44px;
+  text-align: center;
+}
+.update-form .radio_group input:checked+.check-label {
   background-color: #5c6bc0;
   color: #fff;
   border: 1px solid #3c4ba0;
 }
 
-.daum-address-popup {
-  position: fixed;
-  top: 30%;
-  left: 30%;
-  background-color: #fff;
-  width: 500px;
-  max-width: 70%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
-  z-index: 100;
+.update-form .radio_group {
+  margin-top: 5px;
 }
-
-.daum-address-popup>div>#close-button {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 30px;
-  height: 30px;
-  line-height: 20px;
-  margin: 0 20px 0 0 ;
-  padding: 0;
-  font-size: 20px;
-  color: #222;
-  display: block;
-  z-index: 1000;
-  background-color: #fff;
-}
-
-.daum-address-popup>div {
-  margin-top: 20px;
+.update-form .button_align{
   width: 100%;
+  text-align: center;
 }
 
-.section_title {
-  font-size: 20px;
-  margin-bottom: 10px;
-  color: #333;
-}
-
-.required_notice {
-  color: #666;
-  font-size: 14px;
-  margin-bottom: 20px;
-}
-
-.address_container {
-  display: flex;
-  align-items: center;
-}
-
-.address_display {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-}
-
-.address_btn {
-  margin-left: 10px;
-  padding: 10px 20px;
-  background-color: #007BFF;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.address_btn:hover {
-  background-color: #0056b3;
-}
-
-.sms_agreement {
-  display: flex;
-  align-items: center;
-}
-
-.radio_group {
-  display: flex;
-  align-items: center;
-}
-
-.radio_group input[type="radio"] {
-  margin-right: 5px;
-}
-
-.radio_group label {
-  margin-right: 15px;
-  font-size: 16px;
-}
-
-.update-button {
-  height: 20px;
-  width: 150px;
-  padding: 8px 12px;
-  background-color: #5c6bc0;
+.update-form button {
+  background-color: #4CAF50;
   color: white;
+  padding: 10px 20px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
-  margin: 20px auto;
+  font-size: 16px;
+  margin-top: 20px;
 }
+
+.update-form .button_align > button{
+  width: 200px;
+  height: 50px;
+}
+.update-form button:hover {
+  background-color: #45a049;
+}
+
