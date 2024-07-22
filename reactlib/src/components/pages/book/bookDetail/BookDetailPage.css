@@ -66,9 +66,9 @@
 }
 
 .key_wordcloud {
-  display: flex; /* Flexbox 사용 */
-  justify-content: center; /* 가로 중앙 정렬 */
-  align-items: center; /* 세로 중앙 정렬 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   max-width: 300px;
   height: auto;
