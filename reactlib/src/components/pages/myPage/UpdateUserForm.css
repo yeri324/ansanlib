@@ -1,82 +1,152 @@
-.update_form {
-  position: relative; /* 업데이트 폼을 사이드바 옆에 배치 */
-  margin-left: 250px; /* 사이드바 너비만큼 왼쪽 여백 추가 */
-  padding: 20px; /* 내부 여백 조정 */
-  width: calc(100% - 250px); /* 업데이트 폼 너비를 사이드바 제외한 나머지 공간으로 설정 */
-  box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
-}
-  
-.form_title {
+.form {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 60%;
+  margin: 0 auto;
   text-align: center;
-  margin-bottom: 20px;
-  font-size: 24px;
+}
+
+.form .update-title {
+  margin: 5px 0 0 20px;
   color: #333;
 }
 
-/* 폼 섹션 제목 스타일 */
+.form .update-form {
+  margin: 30px auto;
+  text-align: center;
+}
+
+.update-form>div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.update-form>div>label,
+.update-form>div>input,
+.update-form>div>button,
+.update-form>div>select {
+  margin: 0 10px;
+  padding: 8px;
+}
+
+.update-form>div>label {
+  flex: 0 0.5 120px;
+  line-height: 28px;
+}
+
+.update-form>div>input,
+.update-form>div>select {
+  flex: 1;
+  margin-bottom: 20px;
+}
+
+.update-form>div>button {
+  flex: 0 1 170px;
+}
+
+.update-email>span {
+  line-height: 44px;
+}
+
+#email1{
+  width: 30%;
+}
+
+.update-form button {
+  padding: 8px 12px;
+  background-color: #5c6bc0;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin: 10px 0 auto;
+}
+
+.form .update-radio input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.form .update-radio .check-label {
+  display: flex;
+  align-items: center;
+  width: 70%;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 1px solid #333;
+  text-align: center;
+  display: inline-block;
+  font-size: 14px;
+}
+
+.update-radio input:checked+.check-label {
+  background-color: #5c6bc0;
+  color: #fff;
+  border: 1px solid #3c4ba0;
+}
+
+.daum-address-popup {
+  position: fixed;
+  top: 30%;
+  left: 30%;
+  background-color: #fff;
+  width: 500px;
+  max-width: 70%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  z-index: 100;
+}
+
+.daum-address-popup>div>#close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  line-height: 20px;
+  margin: 0 20px 0 0 ;
+  padding: 0;
+  font-size: 20px;
+  color: #222;
+  display: block;
+  z-index: 1000;
+  background-color: #fff;
+}
+
+.daum-address-popup>div {
+  margin-top: 20px;
+  width: 100%;
+}
+
 .section_title {
   font-size: 20px;
   margin-bottom: 10px;
   color: #333;
 }
 
-/* 필수 입력사항 안내 스타일 */
 .required_notice {
   color: #666;
   font-size: 14px;
   margin-bottom: 20px;
 }
 
-/* 폼 그룹 스타일 */
-.form_group {
-  margin-bottom: 20px;
-}
-
-/* 라벨 스타일 */
-.form_group label {
-  display: block;
-  font-size: 16px;
-  margin-bottom: 5px;
-  color: #333;
-}
-
-/* 입력 필드 스타일 */
-.form_group input[type="text"],
-.form_group input[type="email"],
-.form_group .address_btn {
-  width: 100%; /* 입력 필드 너비를 100%로 설정 */
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box; /* 패딩을 포함한 너비 계산 */
-  font-size: 16px;
-}
-
-/* 버튼 스타일 */
-#update_btn {
-  width: 100%;
-  padding: 15px;
-  background-color: #4CAF50; /* 버튼 색상 */
-  color: #fff; /* 버튼 글자 색상 */
-  border: none;
-  border-radius: 4px;
-  font-size: 18px;
-  cursor: pointer;
-  margin-top: 20px;
-}
-
-#update_btn:hover {
-  background-color: #45a049; /* 버튼 호버 색상 */
-}
-
-/* 주소 입력 필드와 버튼을 포함하는 컨테이너 스타일 */
 .address_container {
-  display: flex; /* Flexbox를 사용하여 가로로 배치 */
-  align-items: center; /* 세로 중앙 정렬 */
+  display: flex;
+  align-items: center;
 }
 
 .address_display {
-  flex: 1; /* 입력 필드가 가능한 모든 공간을 차지하도록 설정 */
+  flex: 1;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -97,7 +167,6 @@
   background-color: #0056b3;
 }
 
-/* SMS 동의 라디오 버튼 그룹 스타일 */
 .sms_agreement {
   display: flex;
   align-items: center;
@@ -116,5 +185,16 @@
   margin-right: 15px;
   font-size: 16px;
 }
-  
-  
+
+.update-button {
+  height: 20px;
+  width: 150px;
+  padding: 8px 12px;
+  background-color: #5c6bc0;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin: 20px auto;
+}
