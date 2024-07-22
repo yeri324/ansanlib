@@ -20,7 +20,7 @@ function UserRecList() {
     const onSearch = (page) => {
         axios(
             {
-                url: '/admin/recboard/list',
+                url: '/recboard/search',
                 method: 'post',
                 data: {
                     page: page - 1,
@@ -41,6 +41,7 @@ function UserRecList() {
             <div class='all-reclist'>
                 <div class='boardrec-list'>
                 <h2>추천도서</h2>
+                <div className='pg-msg'>총 {totalRecCount}건 / {totalPages} 페이지</div>
                 </div>
                 <div>
                     <div class='rec-list'>
