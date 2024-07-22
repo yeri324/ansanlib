@@ -37,7 +37,6 @@ const HomePage = () => {
     }
     ).then((res) => {
       setPopList(res.data);
-      console.log(res.data);
     })
   }
 
@@ -84,11 +83,11 @@ const HomePage = () => {
               <div className="best-list">
                 <Bestseller />
               </div>
-              {/* <div className="trend-h2"><h2>방문 통계</h2></div>
+              <div className="trend-h2"><h2>방문 통계</h2></div>
               <div className="div-border"><hr /></div>
               <div className="total-visit">
                 <LibraryPage />
-              </div> */}
+              </div>
             </div>
             <div className="sub-content2">
               <div className="lib-h2"><h2>오시는 길</h2></div>

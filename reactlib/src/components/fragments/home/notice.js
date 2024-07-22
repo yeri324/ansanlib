@@ -9,7 +9,6 @@ const Notice = () => {
   const [searchNotice, setSearchNotice] = useState([]);
   const [searchRec, setSearchRec] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchAll, setSearchAll] = useState({ searchNotice, searchFaq, searchRec });
   const boardPerPage = 5;
 
   const [activeCategory, setActiveCategory] = useState('공지사항');
