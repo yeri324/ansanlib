@@ -1,22 +1,33 @@
 /* SearchPage.css */
-.centered-content {
+.bookSearch .centered-content {
   text-align: center;
+  padding-left: 150px;
+  padding-right: 150px;
 }
 
-.full-width {
+.bookSearch .row{
+  width: 200px;
+  padding-top: 30px;
+}
+
+.bookSearch .Search{
   width: 100%;
 }
 
-.left-align {
+.bookSearch .full-width {
+  width: 100%;
+}
+
+.bookSearch .left-align {
   text-align: left;
 }
 
-.cover-img {
-  object-fit: cover;
-  max-width: 150px;
+.bookSearch .cover-img {
+  width: 160px;
+  height: 220px;
 }
 
-.no-image {
+.bookSearch .no-image {
   width: 100%;
   height: 100%;
   background-color: #eaeaea;
@@ -25,47 +36,70 @@
   justify-content: center;
 }
 
-.book-detail-container {
+.bookSearch .book-detail-container {
   display: flex;
-  align-items: center;
   margin-bottom: 20px; /* 각 책 정보 사이에 간격 추가 */
   padding: 10px;
-  border-top: 1px solid #000;
-  border-bottom: 1px solid #000; /* 각 책 정보 사이에 경계선 추가 */
+  border: 1px solid #000;
+  flex-direction: row; /* 가로 방향으로 배치 */
 }
 
-.img-container {
-  flex: 1;
+.bookSearch .img-container {
+  flex: 0 0 auto; /* 고정된 크기 사용 */
+  margin-right: 20px; /* 이미지와 텍스트 사이의 간격 추가 */
 }
 
-.text-container {
-  flex: 2;
-  padding-left: 20px; /* 이미지와 텍스트 사이에 여백 추가 */
+.bookSearch .text-container {
+  flex: 1; /* 텍스트 컨테이너가 남은 공간을 차지하도록 설정 */
   text-align: left;
+  padding-top: 20px;
 }
 
-.buttons-container {
+.bookSearch .buttons-container {
   margin-top: 10px;
 }
 
-.buttons-container button {
+.bookSearch .buttons-container button {
   margin-right: 5px;
+  width: 150px;
 }
 
-.bt {
+.bookSearch .bt {
   padding-bottom: 10px;
 }
 
-.sc {
+.bookSearch .sc {
   padding: 10px;
-  margin-left: 100px;
-  margin-right: 100px;
+  margin-left: 250px;
+  margin-right: 250px;
 }
 
-#btnGroupAddon2{
+.bookSearch #btnGroupAddon2{
+  width: 90px;
   height: 50px;
 }
 
-.form-control{
+.bookSearch .searchForm{
+  width: 600px;
   height: 50px;
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 10px 20px;
+}
+
+.bookSearch .justify-content-center{
+  padding-left: 150px;
+  padding-right: 150px;
+  padding-bottom: 20px;
+}
+
+.bookSearch .react-autosuggest__input {
+  width: 600px;
+  height: 50px;
+  padding: 10px 20px;
+  font-family: 'Arial, sans-serif';
+  font-weight: 300;
+  font-size: 16px;
+  border: 1px solid black;
+  border-radius: 4px;
 }

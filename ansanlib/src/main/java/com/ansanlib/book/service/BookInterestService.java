@@ -1,13 +1,12 @@
 package com.ansanlib.book.service;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ansanlib.book.dto.BookInterestDto;
 import com.ansanlib.book.repository.BookInterestRepository;
 import com.ansanlib.book.repository.BookRepository;
 import com.ansanlib.book.repository.LibUserRepository;
@@ -26,28 +25,27 @@ public class BookInterestService {
     private final LibUserRepository libUserRepository;
     private final BookRepository bookRepository;
 
-    // 관심도서 등록
-    public void insertBookInterest(String email, Long bid) {
-        LibUser libUser = libUserRepository.findByEmail(email);
-        Book book = bookRepository.findById(bid).orElseThrow(() -> new IllegalArgumentException("책을 찾을 수 없습니다."));
+    public Page<BookInterest> findBookInterestsByUserId(Long userId, Pageable pageable) {
+        LibUser libUser = libUserRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다: " + userId));
+        return bookInterestRepository.findByLibUser(libUser, pageable);
+    }
 
-        // 로그인한 유저가 이미 해당 도서를 관심도서로 등록하지 않은 경우에만 db에 저장
+    public void insertBookInterest(Long userId, Long bookId) {
+        LibUser libUser = libUserRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다: " + userId));
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 책을 찾을 수 없습니다: " + bookId));
+
         if (bookInterestRepository.countBookInterestByLibUserAndBook(libUser, book) == 0) {
             BookInterest bookInterest = new BookInterest(book, libUser, LocalDateTime.now());
             bookInterestRepository.save(bookInterest);
         }
     }
 
-    // 관심도서 삭제
     public void deleteBookInterest(Long id) {
-        BookInterest bookInterest = bookInterestRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("관심도서를 찾을 수 없습니다."));
+        BookInterest bookInterest = bookInterestRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 관심 도서를 찾을 수 없습니다: " + id));
         bookInterestRepository.delete(bookInterest);
-    }
-
-    // 관심도서 리스트 가져오기
-    public List<BookInterestDto> getBookInterestList(String email) {
-        LibUser libUser = libUserRepository.findByEmail(email);
-        List<BookInterest> bookInterests = bookInterestRepository.findByLibUser(libUser);
-        return bookInterests.stream().map(BookInterestDto::new).collect(Collectors.toList());
     }
 }

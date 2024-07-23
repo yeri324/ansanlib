@@ -34,10 +34,7 @@ public class AdminBookService {
 
 	@Autowired
 	private BookImgRepository bookImgRepository;
-	
-
-
-	
+		
 	//도서-도서관 중복확인
 	 public boolean checkBookExists(String isbn, String libName) {
 	        return bookRepository.existsByIsbnAndLibName(isbn, libName); // lib_name 사용

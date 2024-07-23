@@ -21,7 +21,7 @@ const Header = () => {
     {
       menu: { title: "검색" },
       subs: [
-        { title: "통합검색", link: "/book/search" },
+        { title: "네이버API검색", link: "/bookapi/search" },
         { title: "상세검색", link: "/book/search" },
         { title: "추천도서", link: "/user/recBoard/list" },
         { title: "신간도서", link: "/search/new" }

@@ -95,7 +95,7 @@ function App() {
                                 <Route path="/update" element={<UpdateUserForm />} />
                                 <Route path="/delete" element={<DeleteUserForm />} />
                                 <Route path="/loanstatus" element={<LoanStatusList />} />
-                                <Route path="/book/interest/:id" element={<BookInterest />} />
+                                <Route path="/book/interest/list" element={<BookInterest />} />
 
                                 {/* 검색 */}
                                 <Route path="/book/search" element={<SearchPage />} />

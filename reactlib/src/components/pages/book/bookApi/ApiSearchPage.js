@@ -40,7 +40,7 @@ return (
     <>
     <Header />
     
-    <main>
+    <main className="ApiSearch">
     {/* Breadcrumbs */}
     <div className="breadcrumbs">
         <div className="page-header d-flex align-items-center">
