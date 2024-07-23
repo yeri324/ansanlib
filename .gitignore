@@ -1,2 +1,3 @@
 /.metadata/
-/ansanlib/src/main/resources/
+/ansanlib/src/main/resources/static/images/
+**/application.properties
