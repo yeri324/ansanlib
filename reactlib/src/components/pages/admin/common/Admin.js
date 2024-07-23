@@ -177,14 +177,14 @@ const Admin = () => {
                   <AdminRecBoardTable limit={3} />
                 </div>
                 <div className='admin-box2-table'>
-                  <h4><a href="admin/book/request">희망도서신청</a></h4>
+                  <h4><a href="admin/book/request">희망 도서</a></h4>
                   <AdminBookRequestTable searchResult={searchResult} excludedColumns={['count']} />
                 </div>
               </div>
               <div className="admin-right-box2">
                 <div className='admin-box2-table'>
                   <h4><a href="admin/book/list">신간 도서</a></h4>
-                  <AdminBookListTable books={searchBook} />
+                  <AdminBookListTable books={searchBook} excludedColumns={['total_count','img']} />
                 </div>
                 <div className='admin-box2-table'>
                   <h4><a href="admin/user/search">대출 목록</a></h4>

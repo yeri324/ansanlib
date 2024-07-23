@@ -59,6 +59,8 @@ public interface BookRepository extends JpaRepository<Book, Long>, BookRepositor
 	    @Transactional
 	    @Query("UPDATE Book b SET b.count = :count WHERE b.libName = :libName AND b.title = :title")
 	    void updateBookCountByLibNameAndTitle(@Param("libName") String libName, @Param("title") String title, @Param("count") int count);
+
+		Optional<Book> findByLibNameAndTitle(String libName, String title);
 	}
 	  
 	    

@@ -1,6 +1,7 @@
 package com.ansanlib.admin.service;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -18,14 +19,10 @@ import com.ansanlib.book.repository.BookRepository;
 import com.ansanlib.book.service.FileService;
 import com.ansanlib.entity.Book;
 import com.ansanlib.entity.BookImg;
-import com.ansanlib.entity.Library;
 import com.ansanlib.entity.LoanStatus;
 import com.ansanlib.entity.RecBoard;
 import com.ansanlib.entity.RequestBook;
 import com.ansanlib.requestBook.repository.RequestBookRepository;
-
-import jakarta.persistence.EntityNotFoundException;
-
 @Service
 public class AdminBookService {
 
@@ -138,9 +135,24 @@ private LoanStatusRepository loanStatusRepository;
 		
 		
 //		//삭제
-	  @Transactional
-	    public void deleteBookByLibNameAndTitle(String libName, String title) {
-	        bookRepository.deleteByLibNameAndTitle(libName, title);
+	 @Transactional
+	    public void deleteBookByLibNameAndTitle(String libName, String title) throws Exception {
+	        Optional<Book> bookOptional = bookRepository.findByLibNameAndTitle(libName, title);
+	        if (bookOptional.isPresent()) {
+	            Book book = bookOptional.get();
+
+	            // 책 이미지 삭제 로직 추가
+	            if (book.getBookImg() != null && book.getBookImg().getImgName() != null) {
+	                String imgPath = Paths.get("src/main/resources/static/images/book_images",
+	                        String.valueOf(book.getId()), book.getBookImg().getImgName()).toString();
+	                fileService.deleteFile(imgPath);
+	            }
+
+	            // 책 삭제
+	            bookRepository.deleteByLibNameAndTitle(libName, title);
+	        } else {
+	            throw new IllegalArgumentException("Book not found with libName: " + libName + " and title: " + title);
+	        }
 	    }
 
 	 

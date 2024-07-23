@@ -1,8 +1,15 @@
 package com.ansanlib.admin.controller;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,19 +26,20 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ansanlib.admin.service.AdminBookService;
 import com.ansanlib.book.dto.BookDto;
+import com.ansanlib.book.service.FileService;
 import com.ansanlib.entity.Book;
 import com.ansanlib.entity.LoanStatus;
 import com.ansanlib.entity.RecBoard;
 import com.ansanlib.entity.RequestBook;
 import com.ansanlib.response.CommonListResponse;
-
 @RestController
 @RequestMapping("/api/admin/book")
 public class AdminBookController {
 
 	@Autowired
 	private AdminBookService adminBookService;
-
+	 @Autowired
+	    private FileService fileService; // fileService 주입
 	
 //도서-도서관 중복확인
 	   @GetMapping("/exists")
@@ -61,7 +69,6 @@ public class AdminBookController {
 	    }
 		
 	
-
 	
 
 	
@@ -109,20 +116,14 @@ public class AdminBookController {
 			
 //		//삭제
 	 @DeleteMapping("/delete")
-	  public ResponseEntity<String> deleteBook(
-			  
-	            @RequestParam String libName, 
-	            @RequestParam String title) {
-		 
+	 public ResponseEntity<String> deleteBook(@RequestParam String libName, @RequestParam String title) {
 	        try {
-	       	 System.out.println(libName);
-	    	 System.out.println(title);
 	            adminBookService.deleteBookByLibNameAndTitle(libName, title);
-	           
 	            return new ResponseEntity<>("Book deleted successfully", HttpStatus.OK);
-	            
 	        } catch (IllegalArgumentException e) {
 	            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+	        } catch (Exception e) {
+	            return new ResponseEntity<>("Error deleting book", HttpStatus.INTERNAL_SERVER_ERROR);
 	        }
 	    }
 	 
