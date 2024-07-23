@@ -8,10 +8,16 @@
   border-radius: 8px;
   }
 
+  .reservation_form .reservation-form-field{
+    width: 70%;
+    margin: 0 auto;
+  }
+
   .reservation-form label {
     display: block;
-    margin-bottom: 5px;
+    margin: 10px 0;
     font-weight: bold;
+
   }
   
   .reservation-form input {
@@ -20,7 +26,7 @@
     font-size: 16px;
     border-radius: 4px;
     border: 1px solid #ccc;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
   }
   .reservation-form .reservation-form-button{
     text-align: center;

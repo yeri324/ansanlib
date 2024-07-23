@@ -22,6 +22,7 @@ const ReservationList = () => {
         try {
             const response = await axios.get(`/api/reservations/get`);
             //예약 정보를 셋팅한다.
+            console.log(response.data)
             setReservations(response.data);
             setErrored(false);
         } catch (error) { //오류 발생시(서버에서 NOT_FOUND(404) 요청 받거나 기타 오류 등등..)

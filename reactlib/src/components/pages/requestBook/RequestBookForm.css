@@ -28,11 +28,13 @@
     display: block; /* 레이블을 블록으로 설정 */
     margin-bottom: 5px; /* 레이블과 입력 필드 사이의 간격 설정 */
     font-weight: bold; /* 레이블 글씨 굵게 설정 */
+    margin-top: 10px;
   }
   
   /* 입력 필드 스타일 */
   .requestbookform  input[type="text"],
-  .requestbookform  input[type="date"] {
+  .requestbookform  input[type="date"],
+  .requestbookform  select{
     width: 100%; /* 입력 필드 너비를 부모 요소에 맞게 설정 */
     padding: 10px; /* 입력 필드 내부 여백 설정 */
     border: 1px solid #ccc; /* 입력 필드 테두리 설정 */
@@ -50,6 +52,7 @@
     color: white; /* 버튼 글자색 설정 */
     font-size: 16px; /* 버튼 글자 크기 설정 */
     cursor: pointer; /* 마우스 커서 포인터로 변경 */
+    margin-top: 30px;
   }
   
   .requestbookform  button:hover {

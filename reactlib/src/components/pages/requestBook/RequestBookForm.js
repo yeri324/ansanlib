@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useRealName from '../../hooks/useRealName';
 import useAuth, { LOGIN_STATUS } from '../../hooks/useAuth';
 import RedirectLogin from '../../helpers/RedirectLogin';
@@ -18,6 +18,7 @@ const RequestBookForm = () => {
   const [publisher, setPublisher] = useState('');
   const [pubDate, setPubDate] = useState('');
   const [libName, setLibName] = useState('');
+  const libList = ['감골도서관','반월도서관','부곡도서관','본오도서관','상록수도서관', '상록어린이도서관', '성포도서관', '수암도서관', '관산도서관' ,'단원어린이도서관', '미디어도서관', '선부도서관', '원고잔도서관']
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -99,12 +100,11 @@ const RequestBookForm = () => {
       </div>
       <div>
         <label> 신청 할 도서관 :</label>
-        <input 
-          type="text" 
-          value={libName} 
-          onChange={(e) => setLibName(e.target.value)} 
-          required 
-        />
+        <select  onChange={(e) => setLibName(e.target.value)}>
+          {libList.map((item)=>(
+            <option value={item} >{item}</option>
+          ))}
+        </select>
       </div>
       <button type="submit">신청하기</button>
     </form>
