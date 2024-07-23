@@ -48,11 +48,10 @@ const RequestBookForm = () => {
 
     <div className="mypage-container">
     <div className='mypage-header'>
-      <h2 className='mypage-header-name'>회원 정보 수정</h2>
+      <h2 className='mypage-header-name'>{name}님의 도서신청</h2>
     </div>
 
     <form className='requestbookform' onSubmit={handleSubmit}>
-      <h2> {name}의 도서신청</h2>
       <div>
         <label>도서 ISBN:</label>
         <input 

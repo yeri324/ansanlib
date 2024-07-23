@@ -59,10 +59,9 @@ const RequestBookList = () => {
   return (
     <div className="mypage-container">
     <div className='mypage-header'>
-      <h2 className='mypage-header-name'>회원 정보 수정</h2>
+      <h2 className='mypage-header-name'>{name}님의 도서 신청 목록</h2>
     </div>
     <div className="request_books_list">
-        <h2>{name}의 도서 신청 목록</h2>
         <ul>
             {requestBooks.map(book => (
                 <li key={book.id}>
