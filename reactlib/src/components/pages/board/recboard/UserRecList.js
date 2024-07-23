@@ -20,7 +20,7 @@ function UserRecList() {
     const onSearch = (page) => {
         axios(
             {
-                url: '/admin/recboard/list',
+                url: '/recboard/search',
                 method: 'post',
                 data: {
                     page: page - 1,
@@ -38,19 +38,23 @@ function UserRecList() {
     return (
         <div>
             <Header />
-        <div class='all-reclist'>
-            <div>
-            <div class='rec-list'>
-                {searchResult.map((card) => (
-                    <div class='card'>
-                        <AdminRecCard card={card} />
-                    </div>
-                ))}
+            <div class='all-reclist'>
+                <div class='boardrec-list'>
+                <h2>추천도서</h2>
+                <div className='pg-msg'>총 {totalRecCount}건 / {totalPages} 페이지</div>
                 </div>
-                <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+                <div>
+                    <div class='rec-list'>
+                        {searchResult.map((card) => (
+                            <div class='card'>
+                                <AdminRecCard card={card} />
+                            </div>
+                        ))}
+                    </div>
+                    <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+                </div>
             </div>
-        </div>
-        <Footer />
+            <Footer />
         </div>
     );
 }

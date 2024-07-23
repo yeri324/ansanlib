@@ -137,3 +137,11 @@
   margin: 0 auto;
 }
 
+/* admin-top */
+.admin-page-top .admin-page-search input,
+.admin-page-top .admin-page-search select,
+.admin-page-top .admin-page-button button
+  {
+  margin: 5px;
+}
+

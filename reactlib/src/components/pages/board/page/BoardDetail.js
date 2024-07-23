@@ -5,14 +5,14 @@ import AdminFaqDetailForm from "../faq/AdminFaqDetailForm";
 import AdminNoticeDetailForm from "../notice/AdminNoticeDetailForm";
 import UserFaqDetailForm from "../faq/UserFaqDetailForm";
 import UserNoticeDetailForm from "../notice/UserNoticeDetailForm";
-import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
+import { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
 import Auth from '../../../helpers/Auth';
 import RedirectLogin from '../../../helpers/RedirectLogin';
 
 
 // 디테일폼 구분 (권한 + 게시판)
 const BoardDetail = ()=>{
-    const { roles, board,id} = useParams();
+    const { roles, board, id} = useParams();
 
     const renderContent = (roles, board, id) => {
         if (roles === "admin") {
@@ -36,7 +36,7 @@ const BoardDetail = ()=>{
             }
          else {
             return (<> <Header />
-                {board === "faq" ? <UserFaqDetailForm /> : <UserNoticeDetailForm />}
+                {board === "faq" ? <UserFaqDetailForm id={id}/> : <UserNoticeDetailForm id={id}/>}
                 <Footer /></>)
         }
     };
