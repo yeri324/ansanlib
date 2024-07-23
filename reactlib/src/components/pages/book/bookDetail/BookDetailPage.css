@@ -17,8 +17,7 @@
 }
 
 .bookDetail .cover-img {
-  object-fit: cover;  
-  max-width: 150px; /* 원하는 이미지 크기로 설정 */
+  object-fit: cover;
   margin: 0 auto; /* 이미지 중앙 정렬 */
 }
 
@@ -36,11 +35,13 @@
   align-items: center;
   justify-content: center;
   margin: 0 auto; /* 전체 컨테이너 중앙 정렬 */
+  border: 1px solid black;
 }
 
 .bookDetail .img-container {
   flex: 1;
   width: 150px;
+  border-right: 1px solid black;
 }
 
 .bookDetail .text-container {

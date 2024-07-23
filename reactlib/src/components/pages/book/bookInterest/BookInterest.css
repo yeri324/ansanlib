@@ -1,52 +1,87 @@
-.bookInterest .centered-content {
+.bookInterest {
+  padding: 20px;
+}
+
+.bookInterest .content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bookInterest .card {
+  margin: 15px 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+
+.bookInterest .card:hover {
+  transform: scale(1.02);
+}
+
+.bookInterest .row.g-0 {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+}
+
+.bookInterest .img-container {
+  overflow: hidden;
+  border-right: 1px solid #ddd;
+}
+
+.bookInterest .img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.bookInterest .card-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
 }
 
-.bookInterest .bordered {
-  border: 1px solid black;
+.bookInterest .card-title {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  font-weight: bold;
 }
 
-.bookInterest .full-width {
-  width: 100%;
+.bookInterest .card p {
+  margin: 5px 0;
 }
 
-.bookInterest .left-align {
-  text-align: left;
+.bookInterest .card button {
+  background-color: #007bff;
+  color: black;
+  border: none;
+  border: 3px solid black;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
-.bookInterest .cover-img {
-  object-fit: cover;
+.bookInterest .card button:hover {
+  background-color: #0056b3;
 }
 
 .bookInterest .no-image {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100%;
-  background-color: #f0f0f0;
-  color: #999;
-  font-size: 1.2rem;
-  text-align: center;
+  background-color: #f5f5f5;
+  color: #aaa;
+  font-size: 1rem;
 }
 
-.bookInterest .book-detail-container {
-  display: flex;
-  flex-direction: row;
+.bookInterest .message {
+  margin-top: 20px;
 }
-
-.bookInterest .img-container {
-  flex: 1;
-  max-width: 150px; /* 원하는 이미지 크기로 설정 */
-}
-
-.bookInterest .text-container {
-  flex: 2;
-  padding-left: 20px; /* 이미지와 텍스트 사이에 여백 추가 */
-}
-
-.bookInterest .cover-img {
-  width: 100%; /* 이미지 크기를 컨테이너에 맞춤 */
-  height: auto; /* 비율에 맞게 높이를 조정 */
-}
-
