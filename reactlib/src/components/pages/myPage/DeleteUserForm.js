@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import useAuth, { LOGIN_STATUS } from '../../hooks/useAuth';
 import RedirectLogin from '../../helpers/RedirectLogin';
 import Auth from '../../helpers/Auth';
+import Footer from '../../fragments/footer/footer';
+import '../../fragments/footer/footer.css';
+import Header from '../../fragments/header/header';
+import '../../fragments/header/header.css';
+import './DeleteUserForm.css';
 
 const DeleteUserForm = () => {
   const { axios, logout } = useAuth();
@@ -25,9 +30,13 @@ const DeleteUserForm = () => {
   };
 
   return (
-    <div>
-      <h2>회원 탈퇴</h2>
+    <div className="mypage-container">
+      <div className='mmypage-header'>
+        <h2 className='mypage-header-name'>회원 탈퇴 페이지</h2>
+      </div>
+      <div className='delete_form'>  
       <button onClick={handleDeleteAccount}>회원 탈퇴하기</button>
+      </div>
     </div>
   );
 };
@@ -37,7 +46,11 @@ export default function () {
     <>
       <RedirectLogin />
       <Auth loginStatus={LOGIN_STATUS.LOGGED_IN}>
-        <DeleteUserForm />
+        <Header />
+        <div className='Mypage-body'>
+          <DeleteUserForm />
+        </div>
+        <Footer />
       </Auth>
     </>
   );
