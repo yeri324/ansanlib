@@ -25,7 +25,7 @@ function AdminRecList() {
 
   const onSearch = (page) => {
     axios({
-      url: '/admin/recboard/list',
+      url: '/recboard/search',
       method: 'post',
       data: {
         page: page - 1,

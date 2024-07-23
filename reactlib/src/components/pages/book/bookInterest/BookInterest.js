@@ -1,100 +1,119 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './BookInterest.css';
+import Header from '../../../fragments/header/header';
+import Footer from '../../../fragments/footer/footer';
+import RedirectLogin from '../../../helpers/RedirectLogin';
+import Auth from '../../../helpers/Auth';
+import useAuth, { LOGIN_STATUS } from '../../../hooks/useAuth';
 
-const BookInterest = () => {
+const BookInterest = ({ userId }) => {
   const [bookInterestList, setBookInterestList] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    const fetchBookInterestList = async () => {
-      try {
-        const response = await axios.get('/api/book/interest/list');
-        console.log(response.data);  // API 호출 결과를 콘솔에 출력
-        setBookInterestList(response.data);
-      } catch (error) {
-        console.error('관심도서 리스트를 가져오는 중 오류 발생:', error);
-      }
-    };
+    if (userId) {
+      fetchBookInterestList(currentPage);
+    }
+  }, [userId, currentPage]);
 
-    fetchBookInterestList();
-  }, []);
-
-  const handleDeleteInterest = async (bookId) => {
+  const fetchBookInterestList = async (page) => {
     try {
-      await axios.delete(`/api/book/interest/${bookId}`);
-      setBookInterestList(prevList => prevList.filter(book => book.id !== bookId));
+      const response = await axios.get(`/api/book/interest/interests/${userId}`, {
+        params: { page, size: 10 }
+      });
+      setBookInterestList(response.data.bookInterests);
+      setCurrentPage(response.data.currentPage);
+      setTotalPages(response.data.totalPages);
     } catch (error) {
-      console.error('관심도서 삭제 중 오류 발생:', error);
+      console.error('Error fetching book interest list:', error);
+      setErrorMessage('관심도서 목록을 불러오는 중 오류가 발생했습니다.');
     }
   };
 
-  const handleAddInterest = async (bookId) => {
+  const handleDelete = async (id) => {
     try {
-      await axios.post(`/api/book/interest/${bookId}`);
-      const response = await axios.get('/api/book/interest/list');
-      setBookInterestList(response.data);
+      await axios.delete(`/api/book/interest/${id}`);
+      fetchBookInterestList(currentPage);
     } catch (error) {
-      console.error('관심도서 추가 중 오류 발생:', error);
+      console.error('Error deleting book interest:', error);
+    }
+  };
+
+  const handlePageChange = (newPage) => {
+    if (newPage >= 0 && newPage < totalPages) {
+      setCurrentPage(newPage);
     }
   };
 
   return (
-    <main>
-      <div className="breadcrumbs">
-        <div className="page-header d-flex align-items-center">
-          <div className="container position-relative">
-            <div className="row d-flex justify-content-center">
-              <div className="col-lg-6 text-center">
-                <h2>관심도서</h2>
-              </div>
-            </div>
-          </div>
-        </div>
-        <nav>
-          <div className="container">
-            <ol>
-              <li><a href="/">Home</a></li>
-              <li><a href="/libUser/mypage">마이페이지</a></li>
-              <li>관심도서</li>
-            </ol>
-          </div>
-        </nav>
-      </div>
-
-      <section className="sample-page">
+    <>
+      <RedirectLogin />
+      <Header />
+      <main className="bookInterest">
         <div className="content" style={{ textAlign: 'center' }}>
-          {bookInterestList.length === 0 ? (
-            <p>관심도서가 없습니다.</p>
-          ) : (
-            bookInterestList.map(book => (
-              <div className="card mb-3" style={{ width: '100%' }} key={book.id}>
+          {errorMessage && <p className="fieldError">{errorMessage}</p>}
+          {bookInterestList.length > 0 ? (
+            bookInterestList.map((bookInterest) => (
+              <div className="card mb-3" style={{ width: '100%' }} key={bookInterest.id}>
                 <div className="row g-0">
-                  <div className="col-md-2" style={{ border: '1px solid black' }}>
-                    <img src={book.bookImg} className="img-fluid rounded-start" alt="책 이미지" style={{ height: '100%', width: '100%', objectFit: 'cover' }} />
+                  <div className="col-md-2 img-container" style={{ border: '1px solid black' }}>
+                    {bookInterest.book.bookImg ? (
+                      <img src={`http://localhost:8090/images/book/${bookInterest.book.bookImg.imgName}`} alt="책 이미지" className="img-fluid cover-img" />
+                    ) : (
+                      <div className="no-image">No Image</div>
+                    )}
                   </div>
-                  <div className="col-md-5" style={{ border: '1px solid black' }}>
+                  <div className="col-md-6 text-center" style={{ border: '1px solid black' }}>
                     <div className="card-body">
-                      <h5 className="card-title">{book.title}</h5>
-                      <p>{book.author}</p>
-                      <p>{book.publisher} | {book.pubDate} | {book.categoryCode}</p>
-                      <p>{book.location}</p>
+                      <h5 className="card-title">제목 : 『{bookInterest.book.title}』</h5>
+                      <p>저자 : 『{bookInterest.book.author}』</p>
+                      <p>ISBN : 『{bookInterest.book.isbn}』</p>
+                      <p>출판사 : 『{bookInterest.book.publisher}』 || 출판 날짜 : 『{bookInterest.book.pub_date}』 || 분류 코드 : 『{bookInterest.book.category_code}』</p>
+                      <p>위치 : 『{bookInterest.book.libName}』</p>
                     </div>
                   </div>
-                  <div className="col-md-1" style={{ border: '1px solid black' }}>
-                    <p>{book.status}</p>
+                  <div className="col-md-2 d-flex align-items-center justify-content-center" style={{ border: '1px solid black' }}>
+                    <p>{bookInterest.book.status}</p>
                   </div>
-                  <div className="col-md-2" style={{ border: '1px solid black' }}>
-                    <button onClick={() => handleDeleteInterest(book.id)}>관심도서 삭제</button>
-                    <button onClick={() => handleAddInterest(book.id)}>관심도서 담기</button>
+                  <div className="col-md-2 d-flex align-items-center justify-content-center" style={{ border: '1px solid black' }}>
+                    <button onClick={() => handleDelete(bookInterest.id)}>관심도서 삭제</button>
                   </div>
                 </div>
               </div>
             ))
+          ) : (
+            <p>관심도서 목록이 없습니다.</p>
           )}
+          <div className="pagination">
+            <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 0}>
+              이전
+            </button>
+            <span>{currentPage + 1} / {totalPages}</span>
+            <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages - 1}>
+              다음
+            </button>
+          </div>
         </div>
-      </section>
-    </main>
+      </main>
+      <Footer />
+    </>
   );
 };
 
-export default BookInterest;
+const BookInterestWrapper = () => {
+  const { userId } = useAuth();
+
+  return (
+    <>
+      <RedirectLogin />
+      <Auth loginStatus={LOGIN_STATUS.LOGGED_IN}>
+        <BookInterest userId={userId} />
+      </Auth>
+    </>
+  );
+};
+
+export default BookInterestWrapper;

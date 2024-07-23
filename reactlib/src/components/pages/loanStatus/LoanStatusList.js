@@ -6,6 +6,7 @@ import useRealName from "../../hooks/useRealName";
 import Header from "../../fragments/header/header";
 import Footer from "../../fragments/footer/footer";
 import Side from "../myPage/Side";
+import './LoanStatusList.css';
 
 const LoanStatusList = ()=>{
     const name  = useRealName();
@@ -35,22 +36,27 @@ const LoanStatusList = ()=>{
     useEffect(()=>{ fetchLoanStatus(); }, []);
 
     return (
-        <div>
-            <h2> {name}의 대출 상태 </h2>
-            {loanStatuses.length > 0 ?(
-                 <ul>
-                 {loanStatuses.map(status=>(
-                     <li key={status.id}>
-                        책: {status.book.title}, 대출 시작 일자 :{new Date (status.loanStart).toLocaleDateString()}, 반납예정일 :{new Date(status.loanEnd).toLocaleDateString()}
-                     </li>
-                 ))}
-             </ul>
-            ) : (
-                <p>대출한 도서가 없습니다.</p> 
-            )}
-           {isErrored && <p>오류가 발생했습니다. 나중에 다시 시도해 주세요.</p>}
+      <div className="mypage-container">
+      <div className='mypage-header'>
+        <h2 className='mypage-header-name'>{name}의 대출 상태</h2>
+      </div>
+
+        <div className="loan-status-container">
+          {loanStatuses.length > 0 ? (
+            <ul>
+              {loanStatuses.map(status => (
+                <li key={status.id}>
+                  책: {status.book.title}, 대출 시작 일자: {new Date(status.loanStart).toLocaleDateString()}, 반납 예정일: {new Date(status.loanEnd).toLocaleDateString()}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>대출한 도서가 없습니다.</p>
+          )}
+          {isErrored && <p>오류가 발생했습니다. 나중에 다시 시도해 주세요.</p>}
         </div>
-    );
+        </div>
+      );      
 }
 
 export default function() {
@@ -58,10 +64,12 @@ export default function() {
       <>
         <RedirectLogin />
         <Auth loginStatus={LOGIN_STATUS.LOGGED_IN}>
-          <Header />
-          <LoanStatusList />
+        <Header />
+        <div className="MyPage-body">
           <Side />
-          <Footer />
+          <LoanStatusList />
+        </div>
+        <Footer />
         </Auth>
       </>
     );

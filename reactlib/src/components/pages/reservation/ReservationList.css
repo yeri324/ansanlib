@@ -1,72 +1,62 @@
 /* reservationList.css */
 
 .reservation_list {
-    font-family: 'Noto Sans KR', sans-serif;
-    margin: 20px;
-    padding: 20px;
-    background-color: #fff;
+    margin: 30px auto;
+    width: 75%;
     border: 1px solid #ddd;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.reservation_list h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
 
-.reservation_list table {
+table {
     width: 100%;
     border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #fff;
+  
+}
+
+thead {
+    background-color: #f2f2f2;
+}
+
+th,
+td {
+    padding: 12px 15px;
+    text-align: center;
+    font-size: 14px;
+}
+
+th {
+    font-weight: bold;
+    background-color: #f9f9f9;
+
+}
+
+.actions {
     margin-top: 20px;
 }
 
-.reservation_list th,
-.reservation_list td {
-    padding: 10px;
-    text-align: center;
-    border: 1px solid #ddd;
-}
-
-.reservation_list th {
-    background-color: #f0f0f0;
-    font-weight: bold;
-}
-
-.reservation_list td:first-child {
-    font-weight: bold;
-}
-
-.reservation_list tr:hover {
-    background-color: #f5f5f5;
-}
-
-.reservation_list .actions {
-    text-align: center;
-}
-
-.reservation_list button {
-    margin: 5px;
-    padding: 8px 16px;
-    background-color: #007bff;
-    color: #fff;
+.actions button {
+    padding: 10px 20px;
+    margin-right: 10px;
     border: none;
     border-radius: 4px;
+    background-color: #4CAF50;
+    color: white;
     cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
-.reservation_list button:disabled {
+.actions button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
 }
 
-.reservation_list button:hover {
-    background-color: #0056b3;
-}
-
 .error_message {
-    text-align: center;
     color: red;
+    font-size: 18px;
     margin-top: 20px;
 }

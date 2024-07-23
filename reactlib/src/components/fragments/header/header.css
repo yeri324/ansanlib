@@ -54,7 +54,8 @@ header {
 
 #top_login .enter,
 #top_login .join,
-#top_login .userid {
+#top_login .userid,
+#top_login .logout {
   margin: 12px;
   padding: 12px;
   cursor: pointer;
@@ -65,6 +66,12 @@ header {
 
 #top_login .userid{
   display: inline;
+}
+
+#top_login .logout{
+  border: none;
+  background-color: #fff;
+  font-weight: 600;
 }
 
 #top_login .enter:link,
@@ -78,14 +85,19 @@ header {
 #top_login .userid:link,
 #top_login .userid:visited,
 #top_login .userid:hover,
-#top_login .userid:active{
+#top_login .userid:active,
+#top_login .logout:link,
+#top_login .logout:visited,
+#top_login .logout:hover,
+#top_login .logout:active{
   text-decoration: none;
   color: inherit;
 }
 
 #top_login .enter:hover,
 #top_login .join:hover,
-#top_login .userid:hover {
+#top_login .userid:hover,
+#top_login .logout:hover {
   color: #007bff;
 }
 
