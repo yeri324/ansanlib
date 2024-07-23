@@ -92,32 +92,39 @@ public class AdminBookController {
 	    }
 
 	//책 권수 수정
-	 @PutMapping("/{bookId}/updateLibrary")
-	    public ResponseEntity<?> editLibrary(@PathVariable Long bookId, @RequestBody BookDto bookDto) {
+	 @PutMapping("/update")
+	    public ResponseEntity<String> updateLibrary(
+	            @RequestParam String libName, 
+	            @RequestParam String title, 
+	            @RequestParam int count) {
 	        try {
-	            adminBookService.editLib(bookId, bookDto);
-	            return ResponseEntity.ok().build();
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error editing library entry: " + e.getMessage());
+	            adminBookService.updateBookCountByLibNameAndTitle(libName, title, count);
+	            return new ResponseEntity<>("Library updated successfully", HttpStatus.OK);
+	        } catch (IllegalArgumentException e) {
+	            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 	        }
 	    }
 		
 		
 			
 //		//삭제
-	 @DeleteMapping("/{bookId}")
-	 public ResponseEntity<String> deleteBook(@PathVariable Long bookId) {
-	     try {
-	         System.out.println("Attempting to delete book with id: " + bookId);
-	         adminBookService.deleteBookById(bookId);
-	         System.out.println("Successfully deleted book with id: " + bookId);
-	         return ResponseEntity.ok("Book deleted successfully");
-	     } catch (Exception e) {
-	         e.printStackTrace();
-	         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete book: " + e.getMessage());
-	     }
-	 }
+	 @DeleteMapping("/delete")
+	  public ResponseEntity<String> deleteBook(
+			  
+	            @RequestParam String libName, 
+	            @RequestParam String title) {
+		 
+	        try {
+	       	 System.out.println(libName);
+	    	 System.out.println(title);
+	            adminBookService.deleteBookByLibNameAndTitle(libName, title);
+	           
+	            return new ResponseEntity<>("Book deleted successfully", HttpStatus.OK);
+	            
+	        } catch (IllegalArgumentException e) {
+	            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+	        }
+	    }
 	 
 
 

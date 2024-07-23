@@ -125,29 +125,23 @@ private LoanStatusRepository loanStatusRepository;
 	    }
 
 	//도서권수 수정
-	 public void editLib(Long bookId, BookDto bookDto) throws Exception {
-	        Optional<Book> optionalBook = bookRepository.findById(bookId);
-	        if (optionalBook.isPresent()) {
-	            Book book = optionalBook.get();
-	            book.setLibName(bookDto.getLibName());
-	            book.setCount(bookDto.getCount());
-	            bookRepository.save(book);
-	        } else {
-	            throw new Exception("Book not found");
-	        }
+	 @Transactional
+	    public void updateBookCountByLibNameAndTitle(String libName, String title, int count) {
+		 System.out.println(libName);
+		 System.out.println(count);
+	        bookRepository.updateBookCountByLibNameAndTitle(libName, title, count);
 	    }
+	 
+	 
 		
 		
 		
 		
 //		//삭제
-	 @Transactional
-	 public void deleteBookById(Long bookId) {
-	     // 먼저 자식 데이터 삭제
-	     recBoardRepository.deleteByBookNum(bookId);
-	     // 이후 부모 데이터 삭제
-	     bookRepository.deleteById(bookId);
-	 }
+	  @Transactional
+	    public void deleteBookByLibNameAndTitle(String libName, String title) {
+	        bookRepository.deleteByLibNameAndTitle(libName, title);
+	    }
 
 	 
 	 // 메인 추천도서

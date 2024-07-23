@@ -110,3 +110,7 @@ padding: 10px;
   padding: 10px;
 }
 
+.book-image {
+  width: 50px;
+  height: auto;
+}

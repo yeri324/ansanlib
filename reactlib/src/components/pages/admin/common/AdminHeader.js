@@ -30,7 +30,7 @@ const AdminHeader = () => {
             </div>
 
             <div className="header-section-side">
-                <p>관리자&nbsp; admin &nbsp; 님 &nbsp;| &nbsp;<a href="#" onClick={handleLogout}>로그아웃</a></p>
+                <p>관리자&nbsp; admin &nbsp; 님 &nbsp;| &nbsp;<a href="/login" onClick={handleLogout}>로그아웃</a></p>
             </div>
         </header>
     );

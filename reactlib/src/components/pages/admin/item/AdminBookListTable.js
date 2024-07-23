@@ -19,6 +19,7 @@ const AdminBookListTable = ({ books, onOpenModal, onSort, sortConfig }) => {
           <th className='sortable' onClick={() => handleSort('publisher')}>출판사</th>
           <th className='sortable' onClick={() => handleSort('pub_date')}>출판년도</th>
           <th>도서 수량</th>
+
         </tr>
       </thead>
       <tbody>
@@ -32,11 +33,12 @@ const AdminBookListTable = ({ books, onOpenModal, onSort, sortConfig }) => {
               <td>{book.publisher}</td>
               <td>{book.pub_date}</td>
               <td>{book.total_count}</td>
+             
             </tr>
           ))
         ) : (
           <tr>
-            <td colSpan="7">도서 목록이 없습니다</td>
+            <td colSpan="8">도서 목록이 없습니다</td>
           </tr>
         )}
       </tbody>

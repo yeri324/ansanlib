@@ -17,12 +17,19 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
 
   if (!isOpen) return null;
 
-  const handleDelete = async (bookId) => {
+  const handleDelete = async (libName, title) => {
     if (window.confirm("이 책과 관련된 모든 데이터를 삭제합니다. 삭제하시겠습니까?")) {
       try {
-        const response = await axios.delete(`/api/admin/book/${bookId}`);
+        console.log(libName, title);
+        const response = await axios.delete(`/api/admin/book/delete`, {
+          params: {
+            libName: libName,
+            title: title
+          }
+        });
+ 
         console.log("Delete response:", response.data);
-        alert("삭제가 완료되었습니다.");
+        alert(` ${title} - ${libName} -  삭제가 완료되었습니다.`);
         refreshBookList(); // 도서 목록 새로고침
         onClose(); // 모달 닫기
       } catch (error) {
@@ -47,19 +54,27 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
     }));
   };
 
-  const handleEditSave = async (libName) => {
+  const handleEditSave = async (libName, title) => {
     try {
-      const response = await axios.put(`/api/admin/book/${book.id}/updateLibrary`, {
-        libName: libName,
-        count: editedCounts[libName],
+      console.log('libName:', libName);
+      console.log('title:', title);
+      console.log('count:', editedCounts[libName]); // 디버깅을 위해 추가
+
+      const response = await axios.put('/api/admin/book/update', null, {
+        params: {
+          libName: libName,
+          title: title,
+          count: editedCounts[libName]
+        }
       });
-      console.log("Edit response:", response.data);
-      alert("수정이 완료되었습니다.");
+
+      console.log('Edit response:', response.data);
+      alert(`${title} - ${libName} - 수정이 완료되었습니다.`);
       setEditMode(null);
       refreshBookList();
     } catch (error) {
-      console.error("Edit error:", error);
-      alert("수정할 수 없습니다. 다시 확인해주세요");
+      console.error('Edit error:', error);
+      alert('수정할 수 없습니다. 다시 확인해주세요');
     }
   };
 
@@ -162,7 +177,7 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
                             type="button"
                             id="admin-modal-button"
                             className="btn btn-outline-dark"
-                            onClick={() => handleEditSave(lib.libName)}
+                            onClick={() => handleEditSave(lib.libName, book.title)}
                           >
                             저장
                           </button>
@@ -183,7 +198,7 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
                           type="button"
                           id="admin-modal-button"
                           className="btn btn-outline-dark"
-                          onClick={() => handleDelete(book.id)} // book.id 전달
+                          onClick={() => handleDelete(lib.libName, book.title)} // lib.libName과 book.title 전달
                         >
                           삭제
                         </button>
