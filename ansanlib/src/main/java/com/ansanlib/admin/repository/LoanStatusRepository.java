@@ -21,4 +21,11 @@ public interface LoanStatusRepository extends JpaRepository<LoanStatus, Long> {
 	 @Transactional
 	 @Query("DELETE FROM LoanStatus l WHERE l.libuser.userId = :userId")
 	 void deleteByLibUserId(@Param("userId") Long userId);
+	 
+	 
+	 
+	 //어드민메인 대출목록가져오기
+	 List<LoanStatus> findAll();
+	 
+	 
 }
