@@ -8,7 +8,7 @@ const Highlight = ({ text, highlight }) => {
 
   const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
   return (
-    <span>
+    <span className="High">
       {parts.map((part, index) =>
         part.toLowerCase() === highlight.toLowerCase() ? (
           <span key={index} className="highlight">{part}</span>
