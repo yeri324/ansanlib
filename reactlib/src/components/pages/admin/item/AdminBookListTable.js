@@ -39,7 +39,7 @@ const AdminBookListTable = ({ books, onOpenModal, onSort, sortConfig, excludedCo
       <tbody>
         {books.length > 0 ? (
           books.map((book, index) => (
-            <tr className='list admin-td-tr' key={index} onClick={() => onOpenModal(book)}>
+            <tr className='admin-td-tr' key={index} onClick={() => onOpenModal(book)}>
               <td>{index + 1}</td>
               {filteredColumns.map(column => (
                 <td key={column.key}>
@@ -48,7 +48,7 @@ const AdminBookListTable = ({ books, onOpenModal, onSort, sortConfig, excludedCo
                       <img 
                         src={`http://localhost:8090/images/book_images/${book.id}/${book.bookImg.imgName}`} 
                         alt="책 이미지" 
-                        className="admin-img-fluid cover-img" 
+                        className="admin-book-cover" 
                       />
                     ) : (
                       <div className="no-image">No Image</div>
