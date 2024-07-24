@@ -72,7 +72,7 @@ public class FaqController {
 		return resEntity;
 	}
 
-	// 글 삭제
+	// 삭제
 	@Secured("ROLE_ADMIN")
 	@DeleteMapping("/admin/faq/delete")
 	public void deleteFaq(@RequestBody FaqFormDto faqFormDto) {

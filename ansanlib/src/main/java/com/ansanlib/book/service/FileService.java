@@ -1,20 +1,16 @@
 package com.ansanlib.book.service;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
-
-import lombok.extern.java.Log;
 
 @Service
 public class FileService {
@@ -112,5 +108,15 @@ public class FileService {
 		}else {
 			System.out.println("파일이 존재하지 않습니다.");
 		}
+	}
+	
+	// 삭제 글 id에 해당하는 이미지 폴더 삭제
+	public void deleteFolder(Long id, String folderName) throws Exception{
+		String absolutePath = new File("").getAbsolutePath() + File.separator;
+		 String Fpath = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static"
+	                + File.separator + "images" + File.separator + folderName + File.separator + id;
+		 
+		File delFolder = new File(absolutePath + File.separator + Fpath);
+		delFolder.delete();
 	}
 }

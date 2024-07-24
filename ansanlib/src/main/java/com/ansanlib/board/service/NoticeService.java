@@ -3,6 +3,7 @@ package com.ansanlib.board.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,7 +18,11 @@ import com.ansanlib.board.dto.NoticeDto;
 import com.ansanlib.board.dto.NoticeFormDto;
 import com.ansanlib.board.repository.NoticeImgRepository;
 import com.ansanlib.board.repository.NoticeRepository;
+import com.ansanlib.book.service.FileService;
+import com.ansanlib.entity.Faq;
+import com.ansanlib.entity.FaqImg;
 import com.ansanlib.entity.Notice;
+import com.ansanlib.entity.NoticeImg;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +35,7 @@ public class NoticeService {
 	private final NoticeRepository noticeRepository;
 	private final NoticeImgRepository noticeImgRepository;
 	private final NoticeImgService noticeImgService;
+	private final FileService fileService;
 
 	// notice 추가
 	public Long createNotice(Notice notice, List<MultipartFile> noticeImgFile) throws Exception {
@@ -87,6 +93,19 @@ public class NoticeService {
 
 	// 삭제하기
 	public void deleteNotice(Long id) {
+		Optional<Notice> faq = noticeRepository.findById(id);
+		List<NoticeImg> imgs = faq.get().getNoticeImgs();
+		
+		if (imgs != null && imgs.size() != 0) {
+			try {
+				for (NoticeImg img : imgs) {
+					fileService.deleteFile(img.getImgUrl());
+				}
+				fileService.deleteFolder(id, "notice");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		noticeRepository.deleteById(id);
 	}
 

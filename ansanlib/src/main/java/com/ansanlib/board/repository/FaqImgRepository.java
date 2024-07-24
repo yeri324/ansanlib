@@ -12,4 +12,5 @@ public interface FaqImgRepository extends JpaRepository<FaqImg, Long> {
 	List<FaqImg> findByFaq_IdOrderByIdAsc(Long id);
 	
 	Optional<FaqImg> findByFaq_IdAndId(Long id,Long id2);
+
 }
