@@ -7,7 +7,7 @@ import RedirectLogin from '../../../helpers/RedirectLogin';
 import Auth from '../../../helpers/Auth';
 import useAuth, { LOGIN_STATUS } from '../../../hooks/useAuth';
 import KeywordCloud_bookId from '../../../fragments/home/KeywordCloud_bookId';
-
+import axios from 'axios';
 
 const BookDetailPage = () => {
   const { id } = useParams();
@@ -15,7 +15,8 @@ const BookDetailPage = () => {
   const [book, setBook] = useState({});
   const [bookList, setBookList] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
-  const { userId, axios } = useAuth();
+  const { userId,} = useAuth();
+  
 
   useEffect(() => {
     const fetchBookDetails = async () => {
@@ -70,8 +71,6 @@ const BookDetailPage = () => {
 
   return (
     <>
-
-      <RedirectLogin />
       <Header />
       <main className="bookDetail">
 
@@ -175,10 +174,8 @@ const BookDetailPage = () => {
 const BookDetailPageWrapper = () => {
   return (
     <>
-      <RedirectLogin />
-      <Auth loginStatus={LOGIN_STATUS.LOGGED_IN}>
+ 
         <BookDetailPage />
-      </Auth>
     </>
   );
 };

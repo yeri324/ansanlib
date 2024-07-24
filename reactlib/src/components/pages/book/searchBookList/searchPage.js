@@ -7,9 +7,10 @@ import Footer from '../../../fragments/footer/footer';
 import RedirectLogin from '../../../helpers/RedirectLogin';
 import Auth from '../../../helpers/Auth';
 import './SearchPage.css';
+import axios from 'axios';
 
 const SearchPage = () => {
-  const { userId, axios, loginStatus } = useAuth(); // useAuth 훅에서 userId와 axios를 가져옴
+  const { userId, } = useAuth(); // useAuth 훅에서 userId와 axios를 가져옴
 
   const [formValues, setFormValues] = useState({
     title: '',
@@ -98,7 +99,6 @@ const SearchPage = () => {
 
   return (
     <>
-      <RedirectLogin />
       <Header />
       <main className="bookSearch">
         <section className="sample-page">
@@ -235,13 +235,4 @@ const SearchPage = () => {
   );
 };
 
-export default function() {
-  return (
-    <>
-      <RedirectLogin />
-      <Auth loginStatus={LOGIN_STATUS.LOGGED_IN}>
-        <SearchPage />
-      </Auth>
-    </>
-  );
-};
+export default SearchPage;
