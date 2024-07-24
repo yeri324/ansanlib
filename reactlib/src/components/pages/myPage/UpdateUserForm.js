@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import useAuth, { LOGIN_STATUS } from '../../hooks/useAuth';
 import RedirectLogin from '../../helpers/RedirectLogin';
 import Auth from '../../helpers/Auth';
@@ -30,7 +30,8 @@ const EmailInput = ({
   );
 
   useEffect(() => {
-    !candidates.includes(domainPart) && setCustomDomain(true);
+    // !candidates.includes(domainPart) && setCustomDomain(true);
+    setCustomDomain(!candidates.includes(domainPart));
   }, [domainPart]);
 
   const onSelectionChanged = (value) => {
@@ -140,7 +141,7 @@ const UpdateUserForm = () => {
   //이메일 변경 체크
   // const isEmailUpdated = () => userInfo.email !== initialEmail;
 
-  
+
   // 이메일 중복 체크
   const onCheckEmail = async () => {
     if (userInfo.email1 === null || userInfo.email2 === "") {
