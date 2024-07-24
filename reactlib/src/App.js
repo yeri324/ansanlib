@@ -36,7 +36,6 @@ import AdminBookRequest from './components/pages/admin/page/AdminBookRequest';
 import MyPage from './components/pages/myPage/MyPage';
 import LoanStatusList from './components/pages/loanStatus/LoanStatusList';
 import UpdateUserForm from './components/pages/myPage/UpdateUserForm';
-import DeleteUserForm from './components/pages/myPage/DeleteUserForm';
 //예약
 import ReservationForm from './components/pages/reservation/ReservationForm';
 import ReservationList from './components/pages/reservation/ReservationList';
@@ -91,7 +90,6 @@ function App() {
                                 {/* 회원정보 */}
                                 <Route path="/mypage" element={<MyPage />} />
                                 <Route path="/update" element={<UpdateUserForm />} />
-                                <Route path="/delete" element={<DeleteUserForm />} />
                                 <Route path="/loanstatus" element={<LoanStatusList />} />
                                 <Route path="/book/interest/list" element={<BookInterest />} />
 
