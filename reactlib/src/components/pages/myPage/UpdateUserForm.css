@@ -99,6 +99,9 @@
   cursor: pointer;
   font-size: 16px;
   margin-top: 20px;
+
+  justify-self: flex-end;
+  align-self: flex-end;
 }
 
 .update-form button:disabled {
@@ -112,5 +115,35 @@
 }
 .update-form button:hover:not(:disabled) {
   background-color: #464797;
+}
+
+.update-form .email-input-outer {
+  display: flex;
+  flex-direction: column;
+}
+
+.update-form .email-input {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr auto 1fr;
+}
+
+.update-form .email-input.email-input.custom {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr 1fr;
+}
+
+.update-form .email-input .address-part {
+}
+
+.update-form .email-input .domain-part {
+}
+
+.update-form .email-input .at-symbol {
+  margin: 0.5rem;
+}
+
+.update-form .email-input .custom-domain-input{
+  margin-left: 0.5rem;
 }
 

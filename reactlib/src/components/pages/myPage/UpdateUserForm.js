@@ -44,8 +44,13 @@ const EmailInput = ({
     }
   };
 
+  const classList = {
+    "email-input": true,
+    "custom": isCustomDomain,
+  };
+
   return (
-    <div className="email-input">
+    <div className={Object.entries(classList).filter(([_key, val]) => val).map(([key, _val]) => key).join(" ")}>
       <input
         className="address-part"
         type="text"
@@ -234,7 +239,7 @@ const UpdateUserForm = () => {
 
           <div class="form_field">
             <label htmlFor="email">* 이메일</label>
-            <div class="email_input">
+            <div class="email-input-outer">
               {/* <input
                 id="email1"
                 type="text"
@@ -264,8 +269,8 @@ const UpdateUserForm = () => {
                 onChangeDomainPart={(s) => setUserInfo({ ...userInfo, email2: s })}
                 candidates={predefinedDomains}
               />
+              <button type="button" class="check-button" onClick={onCheckEmail} /*disabled={!isEmailUpdated()}*/>이메일 체크</button>
             </div>
-            <button type="button" onClick={onCheckEmail} /*disabled={!isEmailUpdated()}*/>이메일 체크</button>
           </div>
 
           <div class="form_field">
