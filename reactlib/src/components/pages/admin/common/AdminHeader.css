@@ -1,7 +1,7 @@
 .admin-header {
   font-family: 'Noto Sans KR', sans-serif;
   display: grid;
-  grid-template-columns: 10% 10% 60% 20%;
+  grid-template-columns: 20% 60% 20%;
   height: 80px;
   justify-content: space-between;
   align-items: center;
@@ -10,33 +10,30 @@
   width: 100%;
   background-color: #2C3E50;
   color: white;
-  padding: 10px 0;
+
   text-align: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 1000; /* 다른 요소들보다 위에 표시되도록 설정 */
-  
+
+  padding:  30px 20px;
 }
 
-.header-section {
-  width:90%;
-  margin: 0 auto;
+
+
+
+.admin-header-section-logo {
+margin-bottom:20px;
+
+}
+/* 
+.admin-header-section-logo  img {
+  background-color: rgb(255, 255, 255);
+  padding: 0 10px;
+  border-radius: 30px;
+} */
+
+.admin-header-section-logo  > a{
   padding-top: 20px;
-  font-size: 20px;
-
-}
-
-
-.header-section-logo p{
-padding-top: 20px;
-}
-
-.header-section-lib {
-  padding-top: 20px;
-}
-
-
-.header-section-lib p > a{
-  
   font-size: 20px; /* 적절한 폰트 크기로 설정 */
   font-weight: bold;
   text-decoration: none;
