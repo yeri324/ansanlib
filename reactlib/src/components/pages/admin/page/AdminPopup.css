@@ -7,10 +7,11 @@
 }
 
 .popupPage td{
-    height: 40px;
-    line-height: 40px;
     cursor: pointer;
-
+    height: 50px; /* Adjust this value to your preferred height */
+    vertical-align: middle; /* Ensure the text is vertically centered */
+    padding: 5px; /* Add padding for better spacing */
+    
 }
 
 .popupPage .btn{

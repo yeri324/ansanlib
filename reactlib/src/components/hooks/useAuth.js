@@ -83,6 +83,7 @@ const useAuth = () => {
         isLogin,
         isLoginInProgress,
         isUserId,
+        isLoginId,
         roles,
         loginCheck: _,
         login,
@@ -94,6 +95,7 @@ const useAuth = () => {
     return {
         loginStatus,
         userId: loginStatus === LOGIN_STATUS.LOGGED_IN ? isUserId : null,
+        loginId: loginStatus === LOGIN_STATUS.LOGGED_IN ? isLoginId : null,
         roles: loginStatus === LOGIN_STATUS.LOGGED_IN ? roles_from_context(roles) : null,
         axios: loginStatus === LOGIN_STATUS.LOGGED_IN ? authAxios : null,
         login: loginStatus === LOGIN_STATUS.LOGGED_OUT ? login : null,

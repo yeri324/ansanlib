@@ -200,7 +200,7 @@ const SearchPage = () => {
                   <p>{book.status}</p>
                   <div className="buttons-container">
                     <div className="row-bt">
-                      <button disabled={book.status !== 'AVAILABLE'} onClick={() => window.location.href = `/reservation/new`}>
+                      <button disabled={book.status !== 'AVAILABLE'} onClick={() => window.location.href = `/reservation/new?id=${encodeURIComponent(book.id)}&title=${encodeURIComponent(book.title)}`}>
                         도서예약
                       </button>
                     </div>

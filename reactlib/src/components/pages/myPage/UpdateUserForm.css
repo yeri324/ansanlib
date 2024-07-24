@@ -1,58 +1,116 @@
-.update_form {
-    margin-left: 220px; /* 사이드바 너비에 맞게 조정 */
-    padding: 20px;
-  }
-  
-  .update_center {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .base_info {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 20px; /* 입력 필드 사이의 간격 */
-    width: 60%;
-  }
-  
-  .base_info label {
-    text-align: right;
-    padding-right: 10px;
-    line-height: 2.5em;
-  }
-  
-  .base_info input[type="text"],
-  .base_info input[type="email"],
-  .base_info input[type="radio"],
-  .base_info .zonecode_view,
-  .base_info .address_btn {
-    width: 60%; /* 입력칸의 너비를 100%로 설정 */
-    padding: 8px; /* 내부 여백 설정 */
-    box-sizing: border-box; /* 내부 여백이 너비에 포함되도록 설정 */
-  }
-  
-  .base_info .address_btn {
-    width: auto; /* 버튼의 너비를 자동으로 설정 */
-  }
-  
-  .base_info .sms_agreement {
-    display: flex; /* 라디오 버튼과 라벨을 가로로 배치 */
-    align-items: center; /* 세로 중앙 정렬 */
-    margin-top: 10px; /* 위쪽 여백 설정 */
-  }
-  
-  .base_info .sms_agreement label {
-    margin-left: 10px; /* 라디오 버튼과 라벨 사이의 간격 조정 */
-  }
-  
-  #update_btn {
-    margin-top: 20px;
-    padding: 10px 20px;
-  }
-  
-  .subtitle,
-  .base_info > * {
-    margin-top: 10px;
-  }
-  
+.mypage-container .update-form{
+  margin: 30px auto;
+  width: 75%;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  padding: 60px 100px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.update-form .section_title {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.update-form .required_notice {
+  color: #ff0000;
+  font-size: 12px;
+  font-style: italic;
+  margin-left: 10px;
+}
+
+.update-form .form_field {
+  margin-bottom: 15px;
+}
+
+.update-form .form_field label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+.update-form .email_input,
+.update-form .address_input,
+.update-form .radio_group{
+  display: flex;
+}
+
+.update-form .email_input > input,
+.update-form .email_input > select,
+.update-form .address_input > input{
+  flex: 1;
+  margin: 0 5px;
+}
+
+.update-form .email_input > button,
+.update-form .address_input > button{
+  flex: 0 0 150px;
+  margin: 0 5px;
+}
+
+.update-form .form_field input,
+.update-form .form_field select {
+  width:100%;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.update-form .form_field input[type="radio"] {
+  position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+.update-form .check-label{
+  width: 150px;
+  height: 44px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin: 0 5px;
+  line-height: 44px;
+  text-align: center;
+}
+.update-form .radio_group input:checked+.check-label {
+  background-color: #5c6bc0;
+  color: #fff;
+  border: 1px solid #5c6bc0;
+}
+
+.update-form .radio_group {
+  margin-top: 5px;
+}
+.update-form .button_align{
+  width: 100%;
+  text-align: center;
+}
+
+.update-form button {
+  background-color: #5c6bc0;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.update-form button:disabled {
+  background-color: #969bb4;
+  cursor: none;
+}
+
+.update-form .button_align > button{
+  width: 200px;
+  height: 50px;
+}
+.update-form button:hover:not(:disabled) {
+  background-color: #464797;
+}
+

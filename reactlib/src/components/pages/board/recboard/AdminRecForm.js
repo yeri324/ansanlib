@@ -70,7 +70,7 @@ function AdminRecForm() {
       <main className="admin-page-main">
         <div className="admin-page-body popupPage">
           <div className="admin-page-title">
-            <h1>추천 게시글 작성</h1>
+            <h2>추천 게시글 작성</h2>
           </div>
           <div className='rec-form'>
             <div className='reccreate-form'>

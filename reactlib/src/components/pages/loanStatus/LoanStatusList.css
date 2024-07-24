@@ -1,0 +1,45 @@
+.mypage-container .loan-status-container{
+margin: 30px auto;
+width: 75%;
+border: 1px solid #ddd;
+background-color: #fff;
+padding: 50px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+border-radius: 8px;
+}
+
+.loan-status-container table{
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
+.loan-status-container thead {
+  border-bottom: 2px solid #4976f3;
+}
+
+.loan-status-container th,
+.loan-status-container td {
+  padding: 15px 15px;
+  text-align: center;
+  font-size: 14px;
+  border-top: 1px solid #eee;
+}
+
+
+.loan-status-container th {
+  font-weight: bold;
+
+}
+  
+  /* 오류 메시지 스타일 */
+  .loan-status-container p {
+    font-size: 16px; /* 폰트 크기 설정 */
+    color: #d9534f; /* 오류 메시지 색상 설정 */
+    text-align: center; /* 오류 메시지 중앙 정렬 */
+    margin: 0 auto; 
+  
+  }
+  

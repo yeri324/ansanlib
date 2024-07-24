@@ -1,14 +1,16 @@
 /* requestBooksList.css */
-
-.request_books_list {
-    font-family: 'Noto Sans KR', sans-serif;
-    margin: 20px;
-    padding: 20px;
-    background-color: #fff;
+/* 전체 폼 스타일 */
+.mypage-container .request_books_list {
+    margin: 30px auto;
+    width: 75%;
     border: 1px solid #ddd;
+    background-color: #fff;
+    padding: 50px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+    }
+
+
 
 .request_books_list h2 {
     text-align: center;
@@ -16,16 +18,18 @@
 }
 
 .request_books_list ul {
+    
     list-style-type: none;
     padding: 0;
 }
 
 .request_books_list li {
-    padding: 10px;
+    padding: 15px 10px;
     border-bottom: 1px solid #ddd;
     display: flex;
     flex-direction: column;
     gap: 5px;
+    position: relative;
 }
 
 .request_books_list li:last-child {
@@ -34,6 +38,9 @@
 
 .request_books_list input[type="checkbox"] {
     margin-right: 10px;
+    position:absolute;
+    top: 45%;
+    right: 10%;
 }
 
 .request_books_list .actions {
@@ -44,7 +51,7 @@
 .request_books_list button {
     margin: 5px;
     padding: 8px 16px;
-    background-color: #007bff;
+    background-color: #5c6bc0;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -58,7 +65,7 @@
 }
 
 .request_books_list button:hover {
-    background-color: #0056b3;
+    background-color: #464797;
 }
 
 .error_message {

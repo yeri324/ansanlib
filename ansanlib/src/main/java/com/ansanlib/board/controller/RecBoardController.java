@@ -19,7 +19,7 @@ import com.ansanlib.entity.RecBoard;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/admin/recboard")
+@RequestMapping
 @RequiredArgsConstructor
 public class RecBoardController {
 
@@ -27,27 +27,27 @@ public class RecBoardController {
 	
 	// 생성
 	@Secured("ROLE_ADMIN")
-	@PostMapping(value = "/new")
+	@PostMapping(value = "/admin/recboard/new")
 	public ResponseEntity<?> createRec(@RequestBody RecBoardDto recDto)throws Exception {
 		return recBoardService.createRec(recDto);
 	}
 	
 	// 도서검색
 	@Secured("ROLE_ADMIN")
-	@PostMapping(value = "/searchbook")
+	@PostMapping(value = "/admin/recboard/searchbook")
 	public ResponseEntity<List<Book>> bookList(@RequestBody RecBoardDto recDto) throws Exception {
 		return recBoardService.searchBook(recDto);
 	}
 	
 	// 리스트조회
-	@PostMapping(value = "/list")
+	@PostMapping(value = "/recboard/search")
 	public Page<RecBoard> getList(@RequestBody RecBoardDto recDto) throws Exception {
 		return recBoardService.getRec(recDto);
 	}
 	
 	// 삭제
 	@Secured("ROLE_ADMIN")
-	@DeleteMapping(value = "/delete")
+	@DeleteMapping(value = "/admin/recboard/delete")
 	public void deleteRec(@RequestBody RecBoardDto recDto) throws Exception {
 		recBoardService.deleteRec(recDto.getId());
 	}

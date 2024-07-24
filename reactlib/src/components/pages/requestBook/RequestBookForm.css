@@ -1,0 +1,60 @@
+/* 전체 폼 스타일 */
+.mypage-container .requestbookform {
+  margin: 30px auto;
+  width: 75%;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  padding: 50px 150px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  }
+
+  
+  /* 폼 제목 스타일 */
+ .requestbookform h2 {
+    font-size: 24px; /* 제목 글자 크기 설정 */
+    margin-bottom: 20px; /* 제목과 폼 필드 사이의 간격 설정 */
+    text-align: center; /* 제목 중앙 정렬 */
+  }
+  
+  /* 각 폼 필드의 스타일 */
+  .requestbookform  form > div {
+    margin-bottom: 12px; /* 필드 간의 간격 설정 */
+  }
+  
+  /* 레이블 스타일 */
+  .requestbookform  label {
+    display: block; /* 레이블을 블록으로 설정 */
+    margin-bottom: 5px; /* 레이블과 입력 필드 사이의 간격 설정 */
+    font-weight: bold; /* 레이블 글씨 굵게 설정 */
+    margin-top: 20px;
+  }
+  
+  /* 입력 필드 스타일 */
+  .requestbookform  input[type="text"],
+  .requestbookform  input[type="date"],
+  .requestbookform  select{
+    width: 100%; /* 입력 필드 너비를 부모 요소에 맞게 설정 */
+    padding: 10px; /* 입력 필드 내부 여백 설정 */
+    border: 1px solid #ccc; /* 입력 필드 테두리 설정 */
+    border-radius: 4px; /* 입력 필드 테두리 둥글게 설정 */
+    box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
+  }
+  
+  /* 버튼 스타일 */
+  .requestbookform  button {
+    width: 100%; /* 버튼 너비를 부모 요소에 맞게 설정 */
+    padding: 10px; /* 버튼 내부 여백 설정 */
+    border: none; /* 버튼 테두리 제거 */
+    border-radius: 4px; /* 버튼 테두리 둥글게 설정 */
+    background-color:  #5c6bc0; /* 버튼 배경색 설정 */
+    color: white; /* 버튼 글자색 설정 */
+    font-size: 16px; /* 버튼 글자 크기 설정 */
+    cursor: pointer; /* 마우스 커서 포인터로 변경 */
+    margin-top: 50px;
+  }
+  
+  .requestbookform  button:hover {
+    background-color: #464797; /* 버튼 호버 시 배경색 변경 */
+  }
+  

@@ -63,6 +63,7 @@ public class NoticeService {
 		// 제목/내용수정
 		Notice notice = noticeRepository.findById(noticeFormDto.getId()).orElseThrow(EntityNotFoundException::new);
 		notice.updateNotice(noticeFormDto);
+		
 
 		// 이미지수정
 		if (noticeImgFile != null) {

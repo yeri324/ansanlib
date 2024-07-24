@@ -1,7 +1,6 @@
 /* General Styles */
 .create-form {
     font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
     margin: 0;
     padding: 0;
 }
@@ -17,7 +16,6 @@
     margin: 0 auto;
     text-align: center;
     justify-content: center;
-    background: #ffffff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);

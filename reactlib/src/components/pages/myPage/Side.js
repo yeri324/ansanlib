@@ -15,7 +15,7 @@ const Side = () => {
   };
 
   return (
-    <div className="sidebar">
+    <div className="my-sidebar">
       <h3>사이드 메뉴</h3>
       <ul>
         <li>
@@ -23,7 +23,7 @@ const Side = () => {
         </li>
         <li onClick={toggleReservationSubmenu} className="has-submenu">
           예약
-          <span className="arrow">{showReservationSubmenu ? "▲" : "▼"}</span>
+          <span className="arrow">{showReservationSubmenu ? " ▲" : " ▼"}</span>
           {showReservationSubmenu && (
             <ul className="submenu">
               <li>
@@ -40,7 +40,7 @@ const Side = () => {
         </li>
         <li onClick={toggleRequestBookSubmenu} className="has-submenu">
           희망도서 신청
-          <span className="arrow">{showRequestBookSubmenu ? "▲" : "▼"}</span>
+          <span className="arrow">{showRequestBookSubmenu ? " ▲" : " ▼"}</span>
           {showRequestBookSubmenu && (
             <ul className="submenu">
               <li>

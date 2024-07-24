@@ -1,0 +1,82 @@
+
+
+.libInfo-page{
+    margin: 30px auto;
+    width: 80%;
+ 
+}
+
+
+.libInfo-page .info-select-btn >button{
+    background-color:  #ffffff;
+    border: 1px solid #c2bebb;
+    border-radius: 25px;
+    width: 200px;
+    height: 45px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 5px 10px;
+}
+
+.libInfo-page .info-select-btn >button.active{
+    background-color: #9daece;
+    border-color: #7a89a5;
+    color: white;
+ 
+}
+
+.libInfo-page .info-select-drop > select{
+    width: 220px;
+    height: 40px;
+    border: 1px solid #c2bebb;
+    margin: 20px 0 30px 40px;
+    padding-left: 15px;
+   
+}
+.libInfo-page .libMapImg{
+    margin-bottom: 50px;
+    position: relative;
+    height: 370px;
+    padding: 0;
+}
+
+.libInfo-page .libMapImg .ansanMap{
+    position: absolute;
+}
+.libInfo-page .libMapImg .locMark{
+    position: absolute;
+    width: 15px;
+    height: 15px;
+}
+
+.libInfo-page .libInfo{
+   margin-left: 20px;
+}
+.libInfo-page .libInfo  h3{
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.libInfo-page .libInfo span{
+    display: inline-block;
+    font-size: 18px;
+    color: #1b8fd3;
+    width: 90px;
+ }
+
+ .libInfo-page .libInfo a{
+    border: none;
+    width: 100px;
+    background-color: #f7ad0f;
+    height: 25px;
+    border-radius: 15px;
+    font-size: 12px;
+    color: #ffffff;
+    text-decoration: none;
+    display: inline-block;
+    line-height: 25px;
+    text-align: center;
+ }
+ 
+

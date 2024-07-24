@@ -1,23 +1,21 @@
-.trends-container {
+#trends {
   display: flex;
   flex-wrap: wrap;
-  /* overflow-x: auto; */
   position: relative;
   width: 100%;
   gap: 40px;
   padding: 20px;
   justify-content: center;
-  /* border: 1px solid #ccc; */
 }
 
-.book-item {
+#trends .book-item {
   display: flex;
   flex: 0 0 auto;
   flex-direction: column;
   align-items: center;
 }
 
-.book-cover {
+#trends .book-cover {
   width: 170px;
   height: 220px;
   object-fit: cover;
@@ -26,31 +24,29 @@
   border-radius: 10px;
 }
 
-.book-title {
+#trends .book-title {
   text-align: center;
-  font-size: 1.1em;
+  font-size: 15px;
   color: #333;
 }
 
-/* .btn {  
+#trends .pagination {
   position: absolute;
-  transform: translate(0, -50%);
-  top: 50%;
-  width: 30px; 
-  height: 50px;
-  padding: 10px;
-  cursor: pointer;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  border: none;
-} */
-.prev {
-  left: 10px;
-}
-.next {
-  right: 10px;
-}
-.prev:hover, .next:hover {
-  background-color: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  top: 40%;
+  display: flex;
+  justify-content: space-between;
 }
 
+#trends .btn_prev, #trends .btn_next {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+#trends .btn_prev:hover, #trends .btn_next:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
