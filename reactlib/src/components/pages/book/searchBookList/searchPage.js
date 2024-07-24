@@ -30,6 +30,7 @@ const SearchPage = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [sortCriteria, setSortCriteria] = useState('title'); // 기본 정렬 기준을 제목으로 설정
   const [sortOrder, setSortOrder] = useState('asc'); // 기본 정렬 순서를 오름차순으로 설정
+  const [searchClicked, setSearchClicked] = useState(false); // 검색 버튼 클릭 여부 상태 추가
 
   useEffect(() => {
     console.log("userId: ", userId);  // userId 출력
@@ -55,10 +56,11 @@ const SearchPage = () => {
         previous: data.previous,
         next: data.next
       });
+      setSearchClicked(true); // 검색 버튼 클릭 여부 업데이트
     } catch (error) {
       setErrorMessage('검색 중 오류가 발생했습니다.');
     }
-  }, [formValues, axios]);
+  }, [formValues]);
 
   // 책 목록 정렬 함수
   const sortBooks = (books, criteria, order) => {
@@ -80,11 +82,6 @@ const SearchPage = () => {
   };
 
   const sortedBookList = sortBooks(bookList, sortCriteria, sortOrder);
-
-  useEffect(() => {
-    // 초기 로드 시 데이터를 가져옵니다.
-    handleSearch();
-  }, [formValues, handleSearch]);
 
   // 관심도서 추가 API 호출 함수
   const handleAddToInterest = async (bookId) => {
@@ -164,69 +161,73 @@ const SearchPage = () => {
               </select>
             </div>
             <br />
-            <div className="pagination justify-content-center bt">
-              <button
-                onClick={() => handleSearch(null, pagination.previous)}
-                className={`btn btn-lg bi bi-caret-left-square-fill ${!pagination.hasPrev && 'disabled'}`}
-              >
-                이전
-              </button>
-              <button
-                onClick={() => handleSearch(null, pagination.next)}
-                className={`btn btn-lg bi bi-caret-right-square-fill ${!pagination.hasNext && 'disabled'}`}
-              >
-                다음
-              </button>
-            </div>
-            <br />
-            {sortedBookList.length > 0 ? sortedBookList.map((book, index) => (
-              <div className="card mb-3 full-width book-detail-container" key={index}>
-                <div className="img-container">
-                  {book.bookImg ? (
-                    <img src={`http://localhost:8090/images/book/${book.bookImg.imgName}`} alt="책 이미지" className="img-fluid cover-img" />
-                  ) : (
-                    <div className="no-image">No Image</div>
-                  )}
+            {searchClicked && (
+              <>
+                <div className="pagination justify-content-center bt">
+                  <button
+                    onClick={() => handleSearch(null, pagination.previous)}
+                    className={`btn btn-lg bi bi-caret-left-square-fill ${!pagination.hasPrev && 'disabled'}`}
+                  >
+                    이전
+                  </button>
+                  <button
+                    onClick={() => handleSearch(null, pagination.next)}
+                    className={`btn btn-lg bi bi-caret-right-square-fill ${!pagination.hasNext && 'disabled'}`}
+                  >
+                    다음
+                  </button>
                 </div>
-                <div className="text-container">
-                  <a href={`/book/detail/${book.id}`}>
-                    <h5 className="card-title"><Highlight text={`제목 : 『${book.title}』`} highlight={formValues.title} /></h5>
-                  </a>
-                  <p><Highlight text={`저자 : 『${book.author}』   ||   ISBN : 『${book.isbn}』`} highlight={formValues.author} /></p>
-                  <p><Highlight text={`출판사 : 『${book.publisher}』   ||   출판 날짜 : 『${book.pub_date}』   ||   분류 코드 : 『${book.category_code}』`} highlight={formValues.publisher} /></p>
-                  <p>위치 : 『{book.libName}』</p>
-                </div>
-                <div className="row">
-                  <p>{book.status}</p>
-                  <div className="buttons-container">
-                    <div className="row-bt">
-                      <button disabled={book.status !== 'AVAILABLE'} onClick={() => window.location.href = `/reservation/new?id=${encodeURIComponent(book.id)}&title=${encodeURIComponent(book.title)}`}>
-                        도서예약
-                      </button>
+                <br />
+                {sortedBookList.length > 0 ? sortedBookList.map((book, index) => (
+                  <div className="card mb-3 full-width book-detail-container" key={index}>
+                    <div className="img-container">
+                      {book.bookImg ? (
+                        <img src={`http://localhost:8090/images/book/${book.bookImg.imgName}`} alt="책 이미지" className="img-fluid cover-img" />
+                      ) : (
+                        <div className="no-image">No Image</div>
+                      )}
                     </div>
-                    <div className="row-bt">
-                      <button onClick={() => handleAddToInterest(book.id)}>
-                        관심도서담기
-                      </button>
+                    <div className="text-container">
+                      <a href={`/book/detail/${book.id}`}>
+                        <h5 className="card-title"><Highlight text={`제목 : 『${book.title}』`} highlight={formValues.title} /></h5>
+                      </a>
+                      <p><Highlight text={`저자 : 『${book.author}』   ||   ISBN : 『${book.isbn}』`} highlight={formValues.author} /></p>
+                      <p><Highlight text={`출판사 : 『${book.publisher}』   ||   출판 날짜 : 『${book.pub_date}』   ||   분류 코드 : 『${book.category_code}』`} highlight={formValues.publisher} /></p>
+                      <p>위치 : 『{book.libName}』</p>
+                    </div>
+                    <div className="row">
+                      <p>{book.status}</p>
+                      <div className="buttons-container">
+                        <div className="row-bt">
+                          <button disabled={book.status !== 'AVAILABLE'} onClick={() => window.location.href = `/reservation/new?id=${encodeURIComponent(book.id)}&title=${encodeURIComponent(book.title)}`}>
+                            도서예약
+                          </button>
+                        </div>
+                        <div className="row-bt">
+                          <button onClick={() => handleAddToInterest(book.id)}>
+                            관심도서담기
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
+                )) : <p>검색 결과가 없습니다.</p>}
+                <div className="pagination justify-content-center">
+                  <button
+                    onClick={() => handleSearch(null, pagination.previous)}
+                    className={`btn btn-lg bi bi-caret-left-square-fill ${!pagination.hasPrev && 'disabled'}`}
+                  >
+                    이전
+                  </button>
+                  <button
+                    onClick={() => handleSearch(null, pagination.next)}
+                    className={`btn btn-lg bi bi-caret-right-square-fill ${!pagination.hasNext && 'disabled'}`}
+                  >
+                    다음
+                  </button>
                 </div>
-              </div>
-            )) : <p>검색 결과가 없습니다.</p>}
-            <div className="pagination justify-content-center">
-              <button
-                onClick={() => handleSearch(null, pagination.previous)}
-                className={`btn btn-lg bi bi-caret-left-square-fill ${!pagination.hasPrev && 'disabled'}`}
-              >
-                이전
-              </button>
-              <button
-                onClick={() => handleSearch(null, pagination.next)}
-                className={`btn btn-lg bi bi-caret-right-square-fill ${!pagination.hasNext && 'disabled'}`}
-              >
-                다음
-              </button>
-            </div>
+              </>
+            )}
           </div>
         </section>
       </main>
