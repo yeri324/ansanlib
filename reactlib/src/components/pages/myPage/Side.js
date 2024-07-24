@@ -52,6 +52,9 @@ const Side = () => {
             </ul>
           )}
         </li>
+        <li>
+          <Link to="/book/interest/list">관심도서</Link>
+        </li>
       </ul>
     </div>
   );
