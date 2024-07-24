@@ -71,7 +71,7 @@ const ReservationList = () => {
                             <th>책 ISBN</th>
                             <th>시작 날짜</th>
                             <th>종료 날짜</th>
-                            <th>선택</th>
+                            <th style={{width:'60px'}}>선택</th>
                         </tr>
                     </thead>
                     <tbody>

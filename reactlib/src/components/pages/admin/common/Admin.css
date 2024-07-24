@@ -98,11 +98,11 @@
 
 
 .admin-left-box3>.admin-table th,
-tr,
+.admin-left-box3>.admin-table tr,
 .admin-right-box3>.admin-table th,
-tr,
+.admin-right-box3>.admin-table tr,
 .admin-right-box2>.admin-table th,
-tr {
+.admin-right-box2>.admin-table tr {
   background-color: hsla(42, 17%, 88%, 0.171);
   font-size: 14px;
   padding: 10px;

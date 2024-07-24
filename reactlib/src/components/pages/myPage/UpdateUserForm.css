@@ -3,7 +3,7 @@
   width: 75%;
   border: 1px solid #ddd;
   background-color: #fff;
-  padding: 50px;
+  padding: 60px 100px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
 }
@@ -79,7 +79,7 @@
 .update-form .radio_group input:checked+.check-label {
   background-color: #5c6bc0;
   color: #fff;
-  border: 1px solid #3c4ba0;
+  border: 1px solid #5c6bc0;
 }
 
 .update-form .radio_group {
@@ -91,7 +91,7 @@
 }
 
 .update-form button {
-  background-color: #4CAF50;
+  background-color: #5c6bc0;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -102,7 +102,7 @@
 }
 
 .update-form button:disabled {
-  background-color: rgb(98, 126, 99);
+  background-color: #969bb4;
   cursor: none;
 }
 
@@ -111,6 +111,6 @@
   height: 50px;
 }
 .update-form button:hover:not(:disabled) {
-  background-color: #45a049;
+  background-color: #464797;
 }
 
