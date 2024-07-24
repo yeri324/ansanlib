@@ -15,7 +15,7 @@ const predefinedDomains = [
   "gmail.com",
   "daum.net",
   "hanmail.net",
-  "name.com",
+  "nate.com",
 ];
 
 const EmailInput = ({
@@ -24,13 +24,13 @@ const EmailInput = ({
   onChangeAddressPart = () => { },
   onChangeDomainPart = () => { },
   candidates = [],
+  onCheckEmail = () => {} // 이메일 체크 함수
 }) => {
   const [isCustomDomain, setCustomDomain] = useState(
     candidates.includes(domainPart),
   );
 
   useEffect(() => {
-    // !candidates.includes(domainPart) && setCustomDomain(true);
     setCustomDomain(!candidates.includes(domainPart));
   }, [domainPart]);
 
@@ -78,7 +78,13 @@ const EmailInput = ({
           직접 입력
         </option>
       </select>
-
+      <button
+        type="button"
+        className='check-button'
+        onClick={onCheckEmail}
+      >
+        이메일 체크
+      </button>
     </div>
   );
 };
@@ -254,36 +260,14 @@ const UpdateUserForm = () => {
           <div class="form_field">
             <label htmlFor="email">* 이메일</label>
             <div class="email-input-outer">
-              {/* <input
-                id="email1"
-                type="text"
-                placeholder="이메일"
-                name="email1"
-                value={userInfo.email1}
-                onChange={handleChange}
-                disabled={inputDisable.isEmail}
-              />
-              <span>@</span>
-              <select
-                value={userInfo.email2}
-                name="email2"
-                disabled={inputDisable.isEmail}
-                onChange={handleChange}
-              >
-                <option value="naver.com">naver.com</option>
-                <option value="gmail.com">gmail.com</option>
-                <option value="daum.net">daum.net</option>
-                <option value="hanmail.net">hanmail.net</option>
-                <option value="nate.com">nate.com</option>
-              </select> */}
               <EmailInput
                 addressPart={userInfo.email1}
                 domainPart={userInfo.email2}
                 onChangeAddressPart={(s) => setUserInfo({ ...userInfo, email1: s })}
                 onChangeDomainPart={(s) => setUserInfo({ ...userInfo, email2: s })}
                 candidates={predefinedDomains}
+                onCheckEmail={onCheckEmail}
               />
-              <button type="button" class="check-button" onClick={onCheckEmail} /*disabled={!isEmailUpdated()}*/>이메일 체크</button>
             </div>
           </div>
 
