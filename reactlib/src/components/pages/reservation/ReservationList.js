@@ -61,7 +61,7 @@ const ReservationList = () => {
     return (
         <div className="mypage-container">
             <div className='mypage-header'>
-                <h2 className='mypage-header-name'>{name}의 예약 목록</h2>
+                <h2 className='mypage-header-name'>{name}님의 예약 목록</h2>
             </div>
             <div className="reservation_list">
                 <table>
