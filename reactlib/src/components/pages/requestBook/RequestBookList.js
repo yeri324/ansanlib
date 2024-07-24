@@ -95,6 +95,7 @@ const RequestBookList = () => {
                 </tbody>
             </table>
             {!isErrored && (
+              <div className='actions-container'>
                 <div className="actions">
                     <button
                         onClick={selectAll}
@@ -115,6 +116,7 @@ const RequestBookList = () => {
                         삭제
                     </button>
                 </div>
+              </div>  
             )}
             {isErrored && <h2 className="error_message">신청한 도서가 없습니다.</h2>}
         </div>
