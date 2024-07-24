@@ -86,8 +86,11 @@
   margin-top: 5px;
 }
 .update-form .button_align{
+display: flex; /* 플렉스박스 컨테이너로 변경 */
+  justify-content: center; /* 버튼들을 중앙 정렬 */
+  gap: 20px; /* 버튼 간의 간격을 설정 */
   width: 100%;
-  text-align: center;
+  margin-top: 20px; /* 상단 마진 추가 */
 }
 
 .update-form button {
@@ -122,28 +125,23 @@
   flex-direction: column;
 }
 
+
 .update-form .email-input {
   display: grid;
   width: 100%;
-  grid-template-columns: 1fr auto 1fr;
-}
-
-.update-form .email-input.email-input.custom {
-  display: grid;
   grid-template-columns: 1fr auto 1fr 1fr;
 }
 
-.update-form .email-input .address-part {
-}
-
-.update-form .email-input .domain-part {
-}
 
 .update-form .email-input .at-symbol {
   margin: 0.5rem;
 }
 
-.update-form .email-input .custom-domain-input{
+.update-form .email-input .custom-domain-input {
+  margin-right: 2rem;
+}
+
+.update-form .email-input .domain-select {
   margin-left: 0.5rem;
 }
 

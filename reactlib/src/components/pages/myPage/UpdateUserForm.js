@@ -44,13 +44,8 @@ const EmailInput = ({
     }
   };
 
-  const classList = {
-    "email-input": true,
-    "custom": isCustomDomain,
-  };
-
   return (
-    <div className={Object.entries(classList).filter(([_key, val]) => val).map(([key, _val]) => key).join(" ")}>
+    <div className="email-input">
       <input
         className="address-part"
         type="text"
@@ -58,6 +53,13 @@ const EmailInput = ({
         onChange={(e) => onChangeAddressPart(e.target.value)}
       />
       <span className="at-symbol">@</span>
+      <input
+        className="custom-domain-input"
+        type="text"
+        value={domainPart}
+        onChange={(e) => onChangeDomainPart(e.target.value)}
+        disabled={!isCustomDomain}
+      />
       <select
         className="domain-select"
         value={isCustomDomain ? "__customDomain" : domainPart}
@@ -76,20 +78,13 @@ const EmailInput = ({
           직접 입력
         </option>
       </select>
-      {isCustomDomain && (
-        <input
-          className="custom-domain-input"
-          type="text"
-          value={domainPart}
-          onChange={(e) => onChangeDomainPart(e.target.value)}
-        />
-      )}
+
     </div>
   );
 };
 
 const UpdateUserForm = () => {
-  const { axios } = useAuth();
+  const { axios, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [userInfo, setUserInfo] = useState({
     name: '',
@@ -200,6 +195,25 @@ const UpdateUserForm = () => {
     console.log(isOpen);
     console.log('toggleHandler 실행됨');
     setIsOpen(!isOpen); // isOpen 상태를 토글
+  };
+
+  //회원 탈퇴
+  const handleDeleteAccount = async () => {
+    if (window.confirm('정말로 회원 탈퇴를 하시겠습니까?')) {
+      try {
+        const response = await axios.delete('/users/delete');
+        if (response.status === 200) {
+          alert('회원 탈퇴가 성공적으로 처리 되었습니다.');
+          // sessionStorage.removeItem("member"); // 클라이언트 사이드에서의 추가 처리
+          logout(false); // 로그아웃 처리. 사용자에게 묻지 않음.
+        } else {
+          alert('회원 탈퇴 중 오류가 발생했습니다.');
+        }
+      } catch (error) {
+        alert('회원 탈퇴 중 오류가 발생했습니다.');
+        console.error(error);
+      }
+    }
   };
 
   return (
@@ -361,6 +375,7 @@ const UpdateUserForm = () => {
           </div>
           <div className='button_align'>
             <button className="button" type="submit">정보 수정하기</button>
+            <button className="button" onClick={handleDeleteAccount}>회원 탈퇴하기</button>
           </div>
         </div>
       </form>
