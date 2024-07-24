@@ -43,13 +43,21 @@ const LoanStatusList = ()=>{
 
         <div className="loan-status-container">
           {loanStatuses.length > 0 ? (
-            <ul>
+            
+              <table>
+                <thead>
+                <th>책</th>
+                <th>대출 시작일</th>
+                <th>반납 예정일</th>
+                </thead>
               {loanStatuses.map(status => (
-                <li key={status.id}>
-                  책: {status.book.title}, 대출 시작 일자: {new Date(status.loanStart).toLocaleDateString()}, 반납 예정일: {new Date(status.loanEnd).toLocaleDateString()}
-                </li>
+                <tr key={status.id}>
+                  <td>{status.book.title}</td>
+                  <td>{new Date(status.loanStart).toLocaleDateString()}</td>
+                  <td> {new Date(status.loanEnd).toLocaleDateString()}</td>
+                </tr>
               ))}
-            </ul>
+            </table>
           ) : (
             <p>대출한 도서가 없습니다.</p>
           )}

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState, } from 'react';
 import { useNavigate } from 'react-router-dom';
-import BoardItem from '../common/BoardItem';
 import Pagination from '../common/Pagination';
 import '../../board/common/List.css'
 
@@ -110,8 +109,8 @@ function UserNoticeList() {
                         </tbody>
                     </table>
                 </div>
+                <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
             </section>
-            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
         </div >
     );
 };

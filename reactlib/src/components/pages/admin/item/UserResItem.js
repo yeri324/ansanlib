@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+
 import Modal from 'react-modal';
 import Calendar from 'react-calendar'; 
 import './UserResItem.css';
 import moment from 'moment';
 
 import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
-import Auth from '../../../helpers/Auth';
-import RedirectLogin from '../../../helpers/RedirectLogin';
+
 
 const UserResItem = ({ res, onClickToCancelRes }) => {
     const { axios } = useAuth();

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams, } from 'react-router-dom';
+import { useNavigate, } from 'react-router-dom';
 import BoardFileLabel from '../common/BoardFileLabel';
 import ImgPreview from '../common/ImgPreview';
 import '../../board/common/DetailForm.css'
@@ -9,6 +9,8 @@ function UserFaqDetailForm({ id }) {
     const navigate = useNavigate();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const [createdBy, setCreatedBy] = useState('');
+    const [regDate, setRegDate] = useState();
     const [images, setImages] = useState([]);
 
     useEffect(() => {
@@ -27,9 +29,10 @@ function UserFaqDetailForm({ id }) {
                 baseURL: 'http://localhost:8090',
             }
         ).then((res) => {
-            console.log(res.data);
             setTitle(res.data.title);
             setContent(res.data.content);
+            setCreatedBy(res.data.modifiedBy);
+            setRegDate(res.data.updateTime.split('T')[0]);
             setImages(res.data.faqImgs);
         }
         )
@@ -42,9 +45,15 @@ function UserFaqDetailForm({ id }) {
 
     return (
         <div>
-            <div class='detail-form'>
+            <div class='board-detail-form'>
                 <form>
-                    <div class='content-container'>
+                    <h2>FAQ</h2>
+                    <div class='content-container1'>
+                        <div class='bdetail-top'>
+                            <p style={{ textAlign: 'left' }}>번호 : {id}</p>
+                            <p>작성자 : {createdBy}</p>
+                            <p style={{ textAlign: 'right' }}>작성일 : {regDate}</p>
+                        </div>
                         <div class='input-container'>
                             <input type='text' name='title' value={title} readOnly />
                             <textarea type='text' name='content' value={content} readOnly />

@@ -1,5 +1,6 @@
 package com.ansanlib.book.dto;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.ansanlib.constant.BookStatus;
@@ -32,6 +33,10 @@ public class BookDto {
 	private BookImg bookImg;	// 책이미지
 	private List<BookListDto> relatedBooks;
 	private int count;
+	public LocalDateTime getRegTime() {
+		
+		return null;
+	}
 
 	
 }

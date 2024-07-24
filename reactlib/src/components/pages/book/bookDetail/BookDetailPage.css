@@ -67,6 +67,7 @@
   font-size: 15px;
 }
 
+
 .bookDetail .card-body{
   margin: 0 auto;
   width: 150px;
@@ -85,6 +86,17 @@
   border: 1px solid black;
 }
 
-.bookDetail .table-deatil td2{
+.bookDetail .table-deatil .td2{
   border: 1px solid black;
+}
+.key_wordcloud {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  margin: 0 auto;
+  padding: 20px 0;
+  text-align: center;
 }

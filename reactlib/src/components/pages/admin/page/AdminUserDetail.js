@@ -122,7 +122,7 @@ const AdminUserDetail = () => {
                 <main className="admin-Userdetail-main">
                     <div className="admin-Userdetail-body">
                         <div className="admin-Userdetail-title">
-                            <h1> {userDetail.name} 님 상세 정보</h1>
+                            <h2> {userDetail.name} 님 회원 정보</h2>
                         </div>
                         <table className="admin-Userdetail-table">
                             <thead>

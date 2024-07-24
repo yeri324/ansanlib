@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
 import { useNavigate } from 'react-router-dom';
 import AdminHeader from '../common/AdminHeader';
 import AdminSide from '../common/AdminSide';
@@ -11,8 +10,7 @@ import AdminBookDetail from '../modal/AdminBookDetail';
 import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
 import Auth from '../../../helpers/Auth';
 import RedirectLogin from '../../../helpers/RedirectLogin';
-
-
+import AdminBookListTable from '../item/AdminBookListTable';
 
 const AdminBookList = () => {
   const { axios } = useAuth();
@@ -25,7 +23,6 @@ const AdminBookList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
-  const [selectedBooks, setSelectedBooks] = useState([]);
   const itemsPerPage = 10;
   const navigate = useNavigate();
 
@@ -41,7 +38,7 @@ const AdminBookList = () => {
 
   const getBookList = async () => {
     try {
-      const response = await axios.get('http://localhost:8090/api/admin/book/list');
+      const response = await axios.get('/api/admin/book/list');
       if (Array.isArray(response.data)) {
         groupBooks(response.data);
       } else {
@@ -103,7 +100,6 @@ const AdminBookList = () => {
     setSearchYear(null);
     setFilteredBookList(bookList.slice(0, itemsPerPage));
     setCurrentPage(1);
-    setSelectedBooks([]); // Clear the selected books
   };
 
   const handleKeyDown = (e) => {
@@ -144,20 +140,8 @@ const AdminBookList = () => {
     setSelectedBook(null);
   };
 
-  const handleCheckboxChange = (book) => {
-    setSelectedBooks(prevSelectedBooks => {
-      if (prevSelectedBooks.includes(book)) {
-        return prevSelectedBooks.filter(selectedBook => selectedBook !== book);
-      } else {
-        return [...prevSelectedBooks, book];
-      }
-    });
-  };
-
-
-
   const refreshBookList = () => {
-    getBookList(); // Fetch the book list again
+    getBookList();
   };
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -175,88 +159,62 @@ const AdminBookList = () => {
         <main className="admin-page-main">
           <div className="admin-page-body">
             <div className="admin-page-title">
-              <h1>도서 조회</h1>
+              <h2>도서 조회</h2>
             </div>
 
-<div className='admin-page-top'>
-  <div style={{width:"25%"}}></div>
-            <div className="admin-page-search"  style={{width:"50%"}}>
-              <select value={searchCriteria} onChange={(e) => setSearchCriteria(e.target.value)}>
-                <option value="title">도서 제목</option>
-                <option value="author">작가</option>
-                <option value="publisher">출판사</option>
-                <option value="date">출판 년도</option>
-              </select>
+            <div className='admin-page-top'>
+              <div style={{ width: "25%" }}></div>
+              <div className="admin-page-search" style={{ width: "50%" }}>
+                <select value={searchCriteria} onChange={(e) => setSearchCriteria(e.target.value)}>
+                  <option value="title">도서 제목</option>
+                  <option value="author">작가</option>
+                  <option value="publisher">출판사</option>
+                  <option value="date">출판 년도</option>
+                </select>
 
-              {searchCriteria !== 'date' && (
-                <input
-                  type="text"
-                  placeholder={`${searchCriteria === 'title'
+                {searchCriteria !== 'date' && (
+                  <input
+                    type="text"
+                    placeholder={`${searchCriteria === 'title'
                       ? '도서 제목'
                       : searchCriteria === 'author'
                         ? '작가'
                         : '출판사'
-                    }을 입력하세요`}
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                />
-              )}
-
-              {searchCriteria === 'date' && (
-                <DatePicker
-                  selected={searchYear}
-                  onChange={(date) => setSearchYear(date)}
-                  dateFormat="yyyy"
-                  showYearPicker
-                  placeholderText="날짜를 선택하세요"
-                  onKeyDown={handleKeyDown}
-                />
-              )}
-
-              <button type="button" className="btn btn-outline-dark" onClick={handleSearch}>검색</button>
-              <button type="button" className="btn btn-outline-dark" onClick={handleRefresh}>새로고침</button>
-            </div>
-
-            <div className="admin-page-button"  style={{width:"25%"}}>
-              <button type="button" className="btn btn-outline-dark" onClick={() => navigate('/admin/book/new')}>등록하기</button>
-              {/* <button type="button" className="btn btn-outline-dark" onClick={handleDelete}>삭제하기</button> */}
-            </div>
-            </div>
-            <table className="admin-table">
-              <thead>
-                <tr className="admin-th-tr">
-
-                  <th>No</th>
-                  <th className='sortable' onClick={() => handleSort('isbn')}>ISBN</th>
-                  <th className='sortable' onClick={() => handleSort('title')}>도서 제목</th>
-                  <th className='sortable' onClick={() => handleSort('author')}>작가</th>
-                  <th className='sortable' onClick={() => handleSort('publisher')}>출판사</th>
-                  <th className='sortable' onClick={() => handleSort('pub_date')}>출판년도</th>
-                  <th>도서 수량</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredBookList.length > 0 ? (
-                  filteredBookList.map((book, index) => (
-                    <tr className='list admin-td-tr' key={index} onClick={() => handleOpenModal(book)}>
-               
-                      <td >{(currentPage - 1) * itemsPerPage + index + 1}</td>
-                      <td >{book.isbn}</td>
-                      <td>{book.title}</td>
-                      <td >{book.author}</td>
-                      <td>{book.publisher}</td>
-                      <td >{book.pub_date}</td>
-                      <td >{book.total_count}</td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="8">도서 목록이 없습니다</td>
-                  </tr>
+                      }을 입력하세요`}
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                  />
                 )}
-              </tbody>
-            </table>
+
+                {searchCriteria === 'date' && (
+                  <DatePicker
+                    selected={searchYear}
+                    onChange={(date) => setSearchYear(date)}
+                    dateFormat="yyyy"
+                    showYearPicker
+                    placeholderText="날짜를 선택하세요"
+                    onKeyDown={handleKeyDown}
+                  />
+                )}
+
+                <button type="button" className="btn btn-outline-dark" onClick={handleSearch}>검색</button>
+                <button type="button" className="btn btn-outline-dark" onClick={handleRefresh}>새로고침</button>
+              </div>
+
+              <div className="admin-page-button" style={{ width: "25%" }}>
+                <button type="button" className="btn btn-outline-dark" onClick={() => navigate('/admin/book/new')}>등록하기</button>
+                {/* <button type="button" className="btn btn-outline-dark" onClick={handleDelete}>삭제하기</button> */}
+              </div>
+            </div>
+
+            <AdminBookListTable
+              books={filteredBookList}
+              onOpenModal={handleOpenModal}
+              onSort={handleSort}
+              sortConfig={sortConfig}
+            />
+
             <div className="admin-pagination">
               <AdminPagination
                 currentPage={currentPage}
@@ -270,7 +228,7 @@ const AdminBookList = () => {
                 isOpen={isModalOpen}
                 onClose={handleCloseModal}
                 book={selectedBook}
-                refreshBookList={refreshBookList} // Pass the refresh callback
+                refreshBookList={refreshBookList}
               />
             )}
           </div>
@@ -285,7 +243,7 @@ export default function () {
     <>
       <RedirectLogin />
       <Auth loginStatus={LOGIN_STATUS.LOGGED_IN} roles={ROLES.ADMIN}>
-        <AdminBookList  />
+        <AdminBookList />
       </Auth>
     </>
   );

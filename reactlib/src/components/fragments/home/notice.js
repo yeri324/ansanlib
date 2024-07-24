@@ -1,45 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './notice.css';
-
-const noticePosts = {
-  공지사항: [
-    { id: 1, title: '공지사항 1' },
-    { id: 2, title: '공지사항 2' },
-    { id: 3, title: '공지사항 3' },
-    { id: 4, title: '공지사항 4' },
-    { id: 5, title: '공지사항 5' },
-  ],
-  신간도서: [
-    { id: 1, title: '신간도서 1' },
-    { id: 2, title: '신간도서 2' },
-    { id: 3, title: '신간도서 3' },
-    { id: 4, title: '신간도서 4' },
-    { id: 5, title: '신간도서 5' },
-  ],
-  추천도서: [
-    { id: 1, title: '추천도서 1' },
-    { id: 2, title: '추천도서 2' },
-    { id: 3, title: '추천도서 3' },
-    { id: 4, title: '추천도서 4' },
-    { id: 5, title: '추천도서 5' }
-  ]
-};
-
+import axios from 'axios';
 
 const Notice = () => {
+  const navigate = useNavigate();
+  const [searchFaq, setSearchFaq] = useState([]);
+  const [searchNotice, setSearchNotice] = useState([]);
+  const [searchRec, setSearchRec] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const boardPerPage = 5;
+
   const [activeCategory, setActiveCategory] = useState('공지사항');
+  const categories = ['공지사항', 'FAQ', '추천도서'];
+  const cate2 = ['notice', 'faq', 'recboard'];
 
-  const categories = ['공지사항', '신간도서', '추천도서'];
+  //리스트 읽기
+  useEffect(() => {
+    onSearch(currentPage);
+  }, [currentPage]);
 
+  // 검색 리스트
+  const onSearch = async (page) => {
+    cate2.map((item) => {
+      axios(
+        {
+          url: `/${item}/search`,
+          method: 'post',
+          data: {
+            page: page - 1,
+            size: boardPerPage,
+          },
+          baseURL: 'http://localhost:8090',
+        }).then((response) => {
+          if (item === 'notice') {
+            setSearchNotice(response.data.content);
+          } else if (item === 'faq') {
+            setSearchFaq(response.data.content);
+          } else {
+            setSearchRec(response.data.content);
+          }
+        });
+    })
+  };
+
+  // 카테고리변경
   const handleCategoryClick = (category) => {
     setActiveCategory(category);
   };
 
+  // 게시판 바로이동(+)
   const handlePlusButtonClick = () => {
     const pageMapping = {
-      공지사항: '/공지사항',
-      신간도서: '/신간도서',
-      추천도서: '/추천도서'
+      공지사항: '/user/notice/list',
+      FAQ: '/user/faq/list',
+      추천도서: '/user/recboard/list'
     };
     window.location.href = pageMapping[activeCategory];
   };
@@ -53,8 +68,7 @@ const Notice = () => {
               <li
                 key={category}
                 className={activeCategory === category ? 'active' : ''}
-                onClick={() => handleCategoryClick(category)}
-              >
+                onClick={() => handleCategoryClick(category)}>
                 {category}
               </li>
             ))}
@@ -63,8 +77,12 @@ const Notice = () => {
         </div>
         <div className="notice_content">
           <ul>
-            {noticePosts[activeCategory].slice(0, 5).map(post => (
-              <li key={post.id}>{post.title}</li>
+            {activeCategory === '공지사항'? searchNotice.map((item) => (
+              <li key={item.id} onClick={() => navigate(`/user/notice/detail/${item.id}`)}>{item.title}</li>
+            )): activeCategory === 'FAQ'? searchFaq.map((item) => (
+              <li key={item.id} onClick={() => navigate(`/user/faq/detail/${item.id}`)}>{item.title}</li>
+            )): searchRec.map((item) => (
+              <li key={item.id} onClick={() => navigate(`/book/detail/${item.book.id}`)}>{item.title}</li>
             ))}
           </ul>
         </div>

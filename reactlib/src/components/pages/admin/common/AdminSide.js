@@ -10,8 +10,8 @@ const AdminSide = () => {
 
   return (
  
-    <div className="sidebar">
-          <div style={{paddingBottom:"10px"}}> <ul><a href="/admin" className="no-underline">홈페이지</a></ul></div> 
+    <div className="admin-sidebar">
+          <div> <ul><a href="/admin" className="no-underline">홈페이지</a></ul></div> 
       <ul>
 
         <li><a href="/admin/user/search" className="no-underline">회원관리</a></li>

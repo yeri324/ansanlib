@@ -11,51 +11,55 @@
 }
 
 
-table {
+.reservation_list table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
     background-color: #fff;
-  
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
 }
 
-thead {
-    background-color: #f2f2f2;
+.reservation_list thead {
+    border-bottom: 2px solid #4976f3;
 }
 
-th,
-td {
-    padding: 12px 15px;
+.reservation_list th,
+.reservation_list td {
+    padding: 15px 15px;
     text-align: center;
     font-size: 14px;
+    border-top: 1px solid #eee;
 }
 
-th {
+.reservation_list th {
     font-weight: bold;
-    background-color: #f9f9f9;
 
 }
 
-.actions {
+.reservation_list .actions {
     margin-top: 20px;
 }
 
-.actions button {
+.reservation_list .actions button {
     padding: 10px 20px;
     margin-right: 10px;
     border: none;
     border-radius: 4px;
-    background-color: #4CAF50;
+    background-color: #5c6bc0;
     color: white;
     cursor: pointer;
 }
+.reservation_list .actions button:hover {
+    background-color: #464797;
+}
 
-.actions button:disabled {
+
+.reservation_list .actions button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
 }
 
-.error_message {
+.reservation_list .error_message {
     color: red;
     font-size: 18px;
     margin-top: 20px;

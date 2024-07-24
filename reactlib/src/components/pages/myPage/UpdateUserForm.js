@@ -140,6 +140,7 @@ const UpdateUserForm = () => {
   //이메일 변경 체크
   // const isEmailUpdated = () => userInfo.email !== initialEmail;
 
+  
   // 이메일 중복 체크
   const onCheckEmail = async () => {
     if (userInfo.email1 === null || userInfo.email2 === "") {
