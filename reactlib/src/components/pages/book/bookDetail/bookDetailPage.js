@@ -3,9 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import './BookDetailPage.css'; // 스타일 파일을 임포트합니다.
 import Header from '../../../fragments/header/header';
 import Footer from '../../../fragments/footer/footer';
-import RedirectLogin from '../../../helpers/RedirectLogin';
-import Auth from '../../../helpers/Auth';
 import useAuth, { LOGIN_STATUS } from '../../../hooks/useAuth';
+import axios from 'axios';
 
 const BookDetailPage = () => {
   const { id } = useParams();
@@ -13,7 +12,7 @@ const BookDetailPage = () => {
   const [book, setBook] = useState({});
   const [bookList, setBookList] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
-  const { userId, axios } = useAuth();
+  const { userId } = useAuth();
 
   useEffect(() => {
     const fetchBookDetails = async () => {
@@ -68,7 +67,6 @@ const BookDetailPage = () => {
 
   return (
     <>
-      <RedirectLogin />
       <Header />
       <main className="bookDetail">
         <div className="breadcrumbs">
@@ -134,7 +132,7 @@ const BookDetailPage = () => {
                             </button>
                           </div> 
                           <div className="row">
-                            <button onClick={(() => handleInterest(relatedBook.id))}>
+                            <button onClick={(LOGIN_STATUS ==="LOGGED_IN")?() => handleInterest(relatedBook.id):alertLogin }>
                               관심도서담기
                             </button>
                           </div>
@@ -161,10 +159,8 @@ const BookDetailPage = () => {
 const BookDetailPageWrapper = () => {
   return (
     <>
-      <RedirectLogin />
-      <Auth loginStatus={LOGIN_STATUS.LOGGED_IN}>
+
         <BookDetailPage />
-      </Auth>
     </>
   );
 };

@@ -66,8 +66,6 @@ function App() {
                                 <Route path="/intro/history" element={<History />} />
                                 <Route path="/intro/organization" element={<Organ />} />
                                 <Route path="/intro/library" element={<LibInfo />} />
-                                
-                                
 
                                 {/* 게시판 */}
                                 <Route path="/:roles/:board/list" element={<BoardList />} />

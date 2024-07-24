@@ -33,20 +33,21 @@ const Header = () => {
       subs: [
         { title: "이달의 도서", link: "/user/recBoard/list" },
         { title: "인기도서", link: "/user/recBoard/list" },
-        { title: "추천게시판", link: "/user/recBoard/list" }
       ]
     },
     {
       menu: { title: "게시판" },
       subs: [
         { title: "공지사항", link: "/user/notice/list" },
-        { title: "FAQ", link: "/user/faq/list" }
+        { title: "FAQ", link: "/user/faq/list" },
+        { title: "추천게시판", link: "/user/recBoard/list" }
+
       ]
     },
     {
       menu: { title: "나의 도서관" },
       subs: [
-        { title: "나만의 책장", link: "/update" },
+        { title: "나만의 책장", link: "/book/interest/list" },
         { title: "예약/대출현황", link: "/loanstatus" },
         { title: "정보수정", link: "/update" },
         { title: "희망도서", link: "/requestbook/new" }

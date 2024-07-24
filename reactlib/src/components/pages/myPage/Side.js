@@ -21,6 +21,9 @@ const Side = () => {
         <li>
           <Link to="/update">회원정보수정</Link>
         </li>
+        <li>
+        <Link to="/book/interest/list">관심도서목록</Link>
+        </li>
         <li onClick={toggleReservationSubmenu} className="has-submenu">
           예약
           <span className="arrow">{showReservationSubmenu ? " ▲" : " ▼"}</span>

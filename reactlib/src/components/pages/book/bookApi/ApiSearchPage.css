@@ -1,33 +1,117 @@
-.ApiSearch .bookapiimage{
-    width: 225px; /* 원하는 너비 */
-    height: 280px; /* 원하는 높이 */
-    overflow: hidden; /* 이미지가 컨테이너를 벗어나지 않도록 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.ApiSearch .rounded-start{
-    width: 100%; /* 이미지 너비를 컨테이너에 맞춤 */
-    height: auto; /* 이미지 높이를 비율에 맞게 조정 */
-}
-
-.ApiSearch .ApiBookContent{
-    margin: 0 auto;
+.search-header{
     text-align: center;
+    padding: 40px;
+}
+
+.search-header .search-header-name{
+    font-weight: bold;
+}
+
+.ApiSearch{
+    width: 80%;
+    margin: 0 auto;
+    border: 1px solid #ddd;
+    padding: 30px;
+    border-radius: 10px;
+}
+.ApiSearch .search-form{
+    text-align: center;
+    padding: 0 200px;
+ }
+
+.ApiSearch .search-group .search-input{
+    width: 100%;
+    height: 40px;
+    margin-top: 10px;
+    padding-left: 15px;
+}
+
+.ApiSearch .search-form .search-button{
+    margin: 20px 0;
+    width: 250px;
+    height: 40px;
+    background-color: #099b10;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+}
+.ApiSearch .search-form .search-button:hover{
+    background-color: #018607;
 }
 
 .ApiSearch .ApiBookSearchDetail{
-    padding-left: 300px;
-    padding-right: 300px;
+    margin: 20px auto;
+    width: 80%;
+    display: flex;
+    justify-content: center;
 }
 
-.ApiSearch #ApiCollapseOne{
-    padding-left: 200px;
-    padding-right: 200px
+.ApiSearch .ApiBookSearchDetail  > div{
+    flex: 0 1 150px;
+    line-height: 40px;
+    text-align: right;
+    padding-right: 15px;
 }
 
-.ApiSearch .ApiBookDetail{
-    height: 280px;
-    overflow: hidden;
+.ApiSearch .ApiBookSearchDetail  > select{
+    margin: 0;
+    flex: 0 1 200px;
+    border: 1px solid #ddd;
+}
+
+.ApiSearch > h4{
+    margin: 30px 0 20px 0;
+    padding-left: 20px;
+}
+
+.ApiSearch .search-list{
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 30px 20px;
+    border-radius: 3px;
+}
+
+.search-list > .container .row{
+    display: flex;
+    height: 250px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin: 10px 0;
+}
+
+
+.search-list > .container .row .bookapiimage{
+    flex: 0 1 200px;
+    padding: 0;
+    height: 100%;
+}
+.search-list > .container .row .bookapiimage > img{
+    height: 100%;
+    width: 100%;
+}
+
+.search-list > .container .row .card-body{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 15px 30px;
+}
+
+.search-list > .container .row .card-body .card-title{
+    flex: 1;
+}
+
+.search-list .pagination .page-item > .page-link{
+    color: #099b10;
+}
+
+.search-list .pagination .active  {
+    background-color: #099b10;
+ 
+
+}
+
+.search-list .pagination .active .page-link  {
+color: #ffffff;
+border: 1px solid #099b10;
 }

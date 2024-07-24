@@ -96,7 +96,10 @@ const SearchPage = () => {
 
   return (
     <>
-      <Header />
+ <Header />
+            <div className='search-header'>
+                <h2 className='search-header-name'>상세검색</h2>
+            </div>
       <main className="bookSearch">
         <section className="sample-page">
           <div className="content centered-content">
