@@ -54,9 +54,25 @@ const ApiBookSearch = () => {
     return (
         <>
             <Header />
+<<<<<<< HEAD
+
+            <main className='ApiSearch'>
+                {/* Breadcrumbs */}
+                <div className="breadcrumbs">
+                    <div className="page-header d-flex align-items-center">
+                        <div className="container position-relative">
+                            <div className="row d-flex justify-content-center">
+                                <div className="col-lg-6 text-center">
+                                    <h2>네이버 API BOOK 검색</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+=======
             <main>
                 <div className="search-header">
                     <h2 className='search-header-name'>네이버 API BOOK 검색</h2>
+>>>>>>> fddb3aaffe33bf51ed32d0ea632ff294e3fd289c
                 </div>
                 <section className="ApiSearch">
                     <form className="search-form" onSubmit={handleSearch} >
