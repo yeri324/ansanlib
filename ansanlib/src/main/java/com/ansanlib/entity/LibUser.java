@@ -6,7 +6,6 @@ import com.ansanlib.constant.Gender;
 import com.ansanlib.constant.Role;
 import com.ansanlib.constant.UserStatus;
 import com.ansanlib.user.dto.UserDto;
-import com.ansanlib.user.dto.UserDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

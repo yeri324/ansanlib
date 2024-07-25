@@ -79,7 +79,7 @@ const AdminUserList = () => {
         <main className="admin-page-main">
           <div className="admin-page-body">
             <div className="admin-page-title">
-              <h1>회원목록</h1>
+              <h2>회원 조회</h2>
             </div>
             <div className="admin-page-search">
               <select name="searchBy" value={searchOption.searchBy} onChange={handleOnChange}>
@@ -101,12 +101,12 @@ const AdminUserList = () => {
                   <th style={{ width: '5%' }}>no</th>
                   <th style={{ width: '10%' }}>아이디</th>
                   <th style={{ width: '10%' }}>이름</th>
-                  <th style={{ width: '15%' }}>번호</th>
-                  <th style={{ width: '15%' }}>주소</th>
+                  <th style={{ width: '10%' }}>번호</th>
+                  <th style={{ width: '20%' }}>주소</th>
                   <th style={{ width: '15%' }}>상세주소</th>
                   <th style={{ width: '10%' }}>패널티</th>
                   <th style={{ width: '10%' }}>연체료</th>
-                  <th style={{ width: '10%' }}>문자수신</th>
+                  <th style={{ width: '5%' }}>문자</th>
                 </tr>
               </thead>
               <tbody>

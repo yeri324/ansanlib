@@ -1,15 +1,16 @@
 package com.ansanlib.user.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class MailService {
 	
-	@Autowired
-    private JavaMailSender javaMailSender; // 스프링에서 제공하는 JavaMailSender
+    private final JavaMailSender javaMailSender; // 스프링에서 제공하는 JavaMailSender
 
     public void sendResetPassword(String recipientEmail, String temporaryPassword) {
         SimpleMailMessage message = new SimpleMailMessage();

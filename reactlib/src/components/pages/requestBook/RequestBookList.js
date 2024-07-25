@@ -57,8 +57,11 @@ const RequestBookList = () => {
   const selectAll = () => setSelectedRequestBooks(requestBooks.map(({id}) => id));
 
   return (
+    <div className="mypage-container">
+    <div className='mypage-header'>
+      <h2 className='mypage-header-name'>{name}님의 도서 신청 목록</h2>
+    </div>
     <div className="request_books_list">
-        <h2>{name}의 도서 신청 목록</h2>
         <ul>
             {requestBooks.map(book => (
                 <li key={book.id}>
@@ -98,6 +101,7 @@ const RequestBookList = () => {
         )}
         {isErrored && <h2 className="error_message">신청한 도서가 없습니다.</h2>}
     </div>
+    </div>
 );
 };
 
@@ -106,9 +110,11 @@ export default function() {
     <>
       <RedirectLogin />
       <Auth loginStatus={LOGIN_STATUS.LOGGED_IN}>
-        <Header />
-        <RequestBookList />
-        <Side />
+      <Header />
+        <div className="MyPage-body">
+          <Side />
+          <RequestBookList  />
+        </div>
         <Footer />
       </Auth>
     </>

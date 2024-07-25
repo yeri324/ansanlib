@@ -240,7 +240,7 @@ const AddBook = ({ csrf = {} }) => {
             <main className="admin-addBook-main">
                 <div className="admin-addBook-body">
                     <div className="admin-addBook-title">
-                        <h1>도서 등록</h1>
+                        <h2>도서 등록</h2>
                     </div>
 
                     <form className="admin-addBook-form" onSubmit={handleSubmit}>

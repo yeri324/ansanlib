@@ -20,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ansanlib.admin.service.AdminBookService;
 import com.ansanlib.book.dto.BookDto;
 import com.ansanlib.entity.Book;
+import com.ansanlib.entity.LoanStatus;
+import com.ansanlib.entity.RecBoard;
 import com.ansanlib.entity.RequestBook;
 import com.ansanlib.response.CommonListResponse;
 
@@ -40,7 +42,7 @@ public class AdminBookController {
 	
 	
 	
-	
+	//추추추가
 	   @PostMapping("/new")
 	    public ResponseEntity<?> createBook(@RequestPart("bookDto") BookDto bookDto,
 	                                        @RequestPart(value = "file", required = false) MultipartFile file) {
@@ -63,12 +65,13 @@ public class AdminBookController {
 	
 
 	
-	
+	//불러와 목록
 	@GetMapping("/list")
 	public List<Book> getBooks() {
 		return adminBookService.getAllBooks();
 	}
 
+	//히망도서 불러와~
 	@GetMapping("/request")
 	public ResponseEntity<CommonListResponse<List<RequestBook>>> getAllRequestBooks() {
 		List<RequestBook> requestBooks = adminBookService.getAllRequestBooks();
@@ -77,24 +80,67 @@ public class AdminBookController {
 	}
 
 	
-	
-	 @PutMapping("/{id}")
-	 public ResponseEntity<Book> updateBookCount(@PathVariable Long id, @RequestBody BookDto bookDto) {
-	        Book updatedBook = adminBookService.updateBookCount(id, bookDto);
-	        return ResponseEntity.ok(updatedBook);
-	    }
-	
-	
-	
-	
-	//삭제
-	 @DeleteMapping("/{id}")
-	    public ResponseEntity<String> deleteBook(@PathVariable Long id) {
+	 @PostMapping("/{bookId}/addLibrary")
+	    public ResponseEntity<?> addLibrary(@PathVariable Long bookId, @RequestBody BookDto bookDto) {
 	        try {
-	            adminBookService.deleteBookById(id);
-	            return ResponseEntity.ok("Book deleted successfully");
+	            adminBookService.addLib(bookId, bookDto);
+	            return ResponseEntity.ok().build();
 	        } catch (Exception e) {
-	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete book");
+	            e.printStackTrace();
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding library entry: " + e.getMessage());
 	        }
 	    }
+
+	//책 권수 수정
+	 @PutMapping("/{bookId}/updateLibrary")
+	    public ResponseEntity<?> editLibrary(@PathVariable Long bookId, @RequestBody BookDto bookDto) {
+	        try {
+	            adminBookService.editLib(bookId, bookDto);
+	            return ResponseEntity.ok().build();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error editing library entry: " + e.getMessage());
+	        }
+	    }
+		
+		
+			
+//		//삭제
+	 @DeleteMapping("/{bookId}")
+	 public ResponseEntity<String> deleteBook(@PathVariable Long bookId) {
+	     try {
+	         System.out.println("Attempting to delete book with id: " + bookId);
+	         adminBookService.deleteBookById(bookId);
+	         System.out.println("Successfully deleted book with id: " + bookId);
+	         return ResponseEntity.ok("Book deleted successfully");
+	     } catch (Exception e) {
+	         e.printStackTrace();
+	         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete book: " + e.getMessage());
+	     }
+	 }
+	 
+
+
+	 
+	 
+	 
+	 
+	 //추춴도서목록 불러오기
+	 @GetMapping("/rec")
+	 public List<RecBoard> getRecBoards() {
+	        return adminBookService.getRecBoards();
+	    }
+	 
+	 
+	 //대출도서 불러오기
+	 @GetMapping("/loanlist")
+	   public ResponseEntity<List<LoanStatus>> getAllLoans() {
+	        List<LoanStatus> loans = adminBookService.getAllLoanStatuses();
+	        return ResponseEntity.ok(loans);
+	    }
+	 
+	 
+	 
+	 
+
 }

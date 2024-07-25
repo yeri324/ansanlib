@@ -1,34 +1,32 @@
-.admin-pagination {
-  margin-top: 30px;
-  padding-top: 30px;
-  margin: 0 auto;
+#admin-page-center {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
 
+#admin-page-item {
+  margin: 0 5px;
+}
 
-/*임시*/
-.page-item.active .btn-dark {
-  background-color: #343a40;
+#admin-pre, #admin-next {
+  cursor: pointer;
+}
+
+#admin-pre.disabled, #admin-next.disabled {
+  cursor: not-allowed;
+}
+
+#admin-page-center .page-item.active .page-link {
+  background-color: #3a424b;
   border-color: #343a40;
-}
+color: white;}
 
-
-.btn-outline-dark .page-link {
+#admin-page-center .page-link {
   color: #343a40;
-  background-color: #ffffff;
-  border: 1px solid #343a40;
-
 }
 
-.btn-outline-dark .page-link:hover {
-  color: #ffffff;
+#admin-page-center .page-link:hover {
+  color: #fff;
   background-color: #343a40;
-  border: 1px solid #343a40;
-}
-
-
-
-.page-item > .active > .btn-outline-dark .page-link{
   border-color: #343a40;
-  background-color: #343a40;
-  color: #ffffff;
 }

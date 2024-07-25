@@ -2,9 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './header.css';
 import center_logo from '../../images/logo/center_logo.png';
+import useAuth, { LOGIN_STATUS, ROLES } from "../../hooks/useAuth";
+import { useContext,useEffect } from "react";
+import { LoginContext } from '../../pages/security/contexts/LoginContextProvider';
 
 
 const Header = () => {
+  const { logout } = useContext(LoginContext);
+  const { loginStatus, userId, loginId, roles, } = useAuth();
   const menus = [
     {
       menu: { title: "소개" },
@@ -17,7 +22,7 @@ const Header = () => {
     {
       menu: { title: "검색" },
       subs: [
-        { title: "통합검색", link: "/book/search" },
+        { title: "네이버API검색", link: "/bookapi/search" },
         { title: "상세검색", link: "/book/search" },
         { title: "추천도서", link: "/user/recBoard/list" },
         { title: "신간도서", link: "/search/new" }
@@ -52,10 +57,27 @@ const Header = () => {
   return (
     <header>
       <div id="full_header">
-        <div id="top_login">
-          <a className="enter" href="/login">로그인</a><span> | </span>
-          <a className="join" href="/join">회원가입</a>
-        </div>
+        {
+          loginStatus === LOGIN_STATUS.LOGGED_IN ? (
+            <>
+              <div id="top_login">
+                <p className='userid'>{ loginId}님</p> <span> | </span>
+                <button type='button' className="logout" onClick={()=>logout()}>로그아웃</button><span> | </span>
+                {roles === ROLES.ADMIN ? (
+                  <a className="join" href="/admin">관리페이지</a>
+                ) : (
+                  <a className="join" href="/update">마이페이지</a>
+                )}
+              </div>
+            </>
+          ) : (
+            <div id="top_login">
+              <a className="enter" href="/login">로그인</a><span> | </span>
+              <a className="join" href="/join">회원가입</a>
+            </div>
+          )
+        }
+
         <div id="header_menu">
           <div id="top_logo">
             <Link to="/">

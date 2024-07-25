@@ -1,3 +1,13 @@
+.all-reclist {
+  background-color: #f8f9fa;
+}
+
+.boardrec-list > h2 {
+    margin: 0 auto;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
 .rec-list {
     display: flex;
     flex-wrap: wrap;

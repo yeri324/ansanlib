@@ -25,7 +25,7 @@ function AdminRecList() {
 
   const onSearch = (page) => {
     axios({
-      url: '/admin/recboard/list',
+      url: '/recboard/search',
       method: 'post',
       data: {
         page: page - 1,
@@ -72,11 +72,12 @@ function AdminRecList() {
       <main className="admin-page-main">
         <div className="admin-page-body popupPage">
           <div className="admin-page-title">
-            <h1>추천 도서 관리</h1>
+            <h2>추천 도서 관리</h2>
           </div>
           <div className='all-reclist' >
             <div className='pg-msg'>총 {totalRecCount}건 / {totalPages} 페이지</div>
             <div className='cre-btn'>
+           
               <button className="btn btn-outline-dark" onClick={onCreate}>생성</button>
             </div>
             <div className='rec-list'>

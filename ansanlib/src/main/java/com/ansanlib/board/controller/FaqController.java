@@ -36,7 +36,7 @@ public class FaqController {
 	private final FileService fileService;
 	private final FaqImgService faqImgService;
 
-	//생성
+	// 생성
 	@Secured("ROLE_ADMIN")
 	@PostMapping(value = "/admin/faq/new")
 	public ResponseEntity<String> createfaq(@RequestParam(required = false) List<MultipartFile> faqImgFile,
@@ -54,7 +54,7 @@ public class FaqController {
 		return resEntity;
 	}
 
-	//수정
+	// 수정
 	@Secured("ROLE_ADMIN")
 	@PutMapping(value = "/admin/faq/update")
 	public ResponseEntity<String> updateFaq(FaqFormDto faqFormDto,
@@ -72,7 +72,7 @@ public class FaqController {
 		return resEntity;
 	}
 
-	//글 삭제
+	// 글 삭제
 	@Secured("ROLE_ADMIN")
 	@DeleteMapping("/admin/faq/delete")
 	public void deleteFaq(@RequestBody FaqFormDto faqFormDto) {
@@ -91,48 +91,42 @@ public class FaqController {
 			}
 		}
 	}
-	
+
 	// 검색
 	@PostMapping("/faq/search")
 	public Page<Faq> searchUsers(@RequestBody FaqDto faqDto) {
-		
-		Page<Faq> faqs= faqService.ListFaq(faqDto);
-			System.out.println(faqs.getSize());
-			return faqs;
-		}
-	
-	//디테일 정보 가져오기
+		Page<Faq> faqs = faqService.ListFaq(faqDto);
+		return faqs;
+	}
+
+	// 디테일 정보 가져오기
 	@PostMapping("/faq/detail")
-	public ResponseEntity<String> detailFaq(@RequestBody FaqDto faqDto){
+	public ResponseEntity<String> detailFaq(@RequestBody FaqDto faqDto) {
 		ResponseEntity resEntity = null;
-		System.out.println(faqDto.getId());
 		Faq faq = faqService.getDetail(faqDto);
 		resEntity = new ResponseEntity(faq, HttpStatus.OK);
 		return resEntity;
-		
+
 	}
-	
-	//이미지 미리보기
+
+	// 이미지 미리보기
 	@PostMapping("/getImg")
-	public ResponseEntity<byte[]> getFaqImage(@RequestBody FaqImgDto faqImgDto){
-		
+	public ResponseEntity<byte[]> getFaqImage(@RequestBody FaqImgDto faqImgDto) {
 		try {
 			byte[] imgBytes = fileService.getImgByte(faqImgDto.getImgUrl());
-			
-			if(imgBytes!=null && imgBytes.length>0) {
+
+			if (imgBytes != null && imgBytes.length > 0) {
 				HttpHeaders headers = new HttpHeaders();
 				headers.setContentType(MediaType.IMAGE_JPEG);
-				return new ResponseEntity<>(imgBytes,headers,HttpStatus.OK);
-			}else {
+				return new ResponseEntity<>(imgBytes, headers, HttpStatus.OK);
+			} else {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return null;
 	}
-	
-	
+
 }

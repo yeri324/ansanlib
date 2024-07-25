@@ -34,7 +34,6 @@ const HomePage = () => {
     }
     ).then((res) => {
       setPopList(res.data);
-      console.log(res.data);
     })
   }
 

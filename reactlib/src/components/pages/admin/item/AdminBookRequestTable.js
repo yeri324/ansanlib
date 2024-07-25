@@ -1,5 +1,7 @@
 // AdminBookRequestTable.js
 import React from 'react';
+import "../../admin/page/AdminPage.css";
+import moment from 'moment'; // Ensure moment is imported
 
 const AdminBookRequestTable = ({
   searchResult = [], // 기본값을 빈 배열로 설정
@@ -14,7 +16,7 @@ const AdminBookRequestTable = ({
           <tr className='admin-th-tr'>
             <th>No</th>
             <th className='sortable' onClick={() => handleSort && handleSort('isbn')}>ISBN</th>
-            <th className='sortable' onClick={() => handleSort && handleSort('title')}>도서 제목</th>
+            <th className='sortable' onClick={() => handleSort && handleSort('title')}>도서</th>
             <th className='sortable' onClick={() => handleSort && handleSort('author')}>작가</th>
             <th className='sortable' onClick={() => handleSort && handleSort('publisher')}>출판사</th>
             <th className='sortable' onClick={() => handleSort && handleSort('pub_year')}>출판년도</th>
@@ -30,7 +32,7 @@ const AdminBookRequestTable = ({
                 <td>{request.title}</td>
                 <td>{request.author}</td>
                 <td>{request.publisher}</td>
-                <td>{request.pub_year}</td>
+                <td>{moment(request.pub_date).format('YYYY')}</td> {/* Format the date */}
                 <td>{request.count}</td>
               </tr>
             ))

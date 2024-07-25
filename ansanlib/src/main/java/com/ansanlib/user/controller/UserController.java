@@ -97,12 +97,12 @@ public class UserController {
 	public ResponseEntity<?> checkId(@RequestBody UserDto user) throws Exception {
 		return userService.checkId(user.getLoginid());
 	}
+	
 	// 중복 이메일 체크
 	@PostMapping("/check/email")
 	public ResponseEntity<?> checkEmail(@RequestBody UserDto user) throws Exception {
 		return userService.checkEmail(user.getEmail());
 	}
-
 
 	// 아이디 찾기
 	@PostMapping("/findId")

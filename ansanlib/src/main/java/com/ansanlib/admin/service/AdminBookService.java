@@ -10,15 +10,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ansanlib.admin.repository.LoanStatusRepository;
+import com.ansanlib.board.repository.RecBoardRepository;
 import com.ansanlib.book.dto.BookDto;
 import com.ansanlib.book.repository.BookImgRepository;
 import com.ansanlib.book.repository.BookRepository;
 import com.ansanlib.book.service.FileService;
 import com.ansanlib.entity.Book;
 import com.ansanlib.entity.BookImg;
+import com.ansanlib.entity.Library;
+import com.ansanlib.entity.LoanStatus;
+import com.ansanlib.entity.RecBoard;
 import com.ansanlib.entity.RequestBook;
-import com.ansanlib.library.LibraryRepository;
 import com.ansanlib.requestBook.repository.RequestBookRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class AdminBookService {
@@ -35,9 +41,14 @@ public class AdminBookService {
 	@Autowired
 	private BookImgRepository bookImgRepository;
 	
+@Autowired
+private RecBoardRepository recBoardRepository;
 
 
-	
+@Autowired
+private LoanStatusRepository loanStatusRepository;
+
+
 	//도서-도서관 중복확인
 	 public boolean checkBookExists(String isbn, String libName) {
 	        return bookRepository.existsByIsbnAndLibName(isbn, libName); // lib_name 사용
@@ -93,30 +104,63 @@ public class AdminBookService {
 	}
 
 	
-	//도서권수 수정
 	 @Transactional
-	    public Book updateBookCount(Long id, BookDto bookDto) {
-	        Book book = bookRepository.findById(id)
-	                .orElseThrow(() -> new IllegalArgumentException("Book not found with id: " + id));
-	        book.setCount(bookDto.getCount());
-	        return bookRepository.save(book);
-	    }
-	
-	
-	
-	
-	//삭제
-	 @Transactional
-	    public void deleteBookById(Long id) {
-	        Optional<Book> bookOptional = bookRepository.findById(id);
-	        if (bookOptional.isPresent()) {
-	            bookRepository.deleteById(id);
+	    public void addLib(Long bookId, BookDto bookDto) throws Exception {
+	        Optional<Book> optionalBook = bookRepository.findById(bookId);
+	        if (optionalBook.isPresent()) {
+	            Book book = optionalBook.get();
+	            Book newBook = new Book();
+	            newBook.setTitle(book.getTitle());
+	            newBook.setAuthor(book.getAuthor());
+	            newBook.setPublisher(book.getPublisher());
+	            newBook.setPub_date(book.getPub_date());
+	            newBook.setLibName(bookDto.getLibName());
+	            newBook.setCount(bookDto.getCount());
+
+	            newBook.setIsbn(book.getIsbn());
+	            bookRepository.save(newBook);
 	        } else {
-	            throw new IllegalArgumentException("Book not found with id: " + id);
+	            throw new Exception("Book not found");
 	        }
 	    }
 
+	//도서권수 수정
+	 public void editLib(Long bookId, BookDto bookDto) throws Exception {
+	        Optional<Book> optionalBook = bookRepository.findById(bookId);
+	        if (optionalBook.isPresent()) {
+	            Book book = optionalBook.get();
+	            book.setLibName(bookDto.getLibName());
+	            book.setCount(bookDto.getCount());
+	            bookRepository.save(book);
+	        } else {
+	            throw new Exception("Book not found");
+	        }
+	    }
+		
+		
+		
+		
+//		//삭제
+	 @Transactional
+	 public void deleteBookById(Long bookId) {
+	     // 먼저 자식 데이터 삭제
+	     recBoardRepository.deleteByBookNum(bookId);
+	     // 이후 부모 데이터 삭제
+	     bookRepository.deleteById(bookId);
+	 }
 
+	 
+	 // 메인 추천도서
+	    public List<RecBoard> getRecBoards() {
+	        return recBoardRepository.findAll();
+	    }
+
+	    
+	    //메인대출도서
+	    public List<LoanStatus> getAllLoanStatuses() {
+	        return loanStatusRepository.findAll();
+	    }
+	
 }
 	
 	

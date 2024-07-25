@@ -28,7 +28,6 @@
   margin: 0 auto;
 }
 
-
 .admin-page-title {
   text-align: center;
   font-size: 24px;
@@ -136,5 +135,13 @@
   flex-direction: row;
   padding-top: 20px;
   margin: 0 auto;
+}
+
+/* admin-top */
+.admin-page-top .admin-page-search input,
+.admin-page-top .admin-page-search select,
+.admin-page-top .admin-page-button button
+  {
+  margin: 5px;
 }
 

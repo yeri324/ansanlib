@@ -1,0 +1,27 @@
+.MyPage-body {
+    position: relative;
+    
+}
+.my-sidebar{
+    position: absolute;
+}
+.mypage-container{
+    margin-left: 200px;
+}
+.mypage-header {
+    border: 1px solid #ddd;
+    width: 60%;
+    margin: 20px auto;
+    height: 60px;
+    border-radius: 25px;
+    background-color: #f5f7f8;
+    text-align: center;
+  
+}
+
+.mypage-header h2{
+    line-height: 60px;
+}
+
+
+

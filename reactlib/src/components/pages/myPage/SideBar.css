@@ -1,52 +1,24 @@
-/* 기존 sidebar 스타일 */
-.sidebar {
-  width: 200px;
-  background-color: #f0f0f0;
-  padding: 20px;
-  box-sizing: border-box;
-  position: absolute; /* fixed에서 absolute로 변경 */
-  top: 100px; /* 헤더의 높이에 맞춰서 조정 */
-  bottom: 100px; /* 푸터의 높이에 맞춰서 조정 */
-  left: 0;
-  height: calc(100% - 200px); /* 헤더와 푸터의 높이를 뺀 값 */
-}
-
-.sidebar h3 {
+.my-sidebar{
+  margin: 90px 5%;
+  border:1px solid #dddddd;
+  border-radius: 10px;
+  padding: 30px;
+  width: 220px;
   text-align: center;
+  background-color: #f5f7f8;
+  height: 500px;
 }
 
-.sidebar ul {
-  list-style-type: none;
+.my-sidebar ul{
   padding: 0;
 }
 
-.sidebar li {
-  margin: 10px 0;
-  cursor: pointer; /* 서브메뉴가 있는 항목에 커서 표시 */
-  position: relative; /* 화살표 위치 조정 위해 추가 */
+.my-sidebar li{
+  margin: 20px 0;
+  font-size: 16px;
 }
-
-.sidebar li a {
+.my-sidebar li > a{
   text-decoration: none;
-  color: #000;
-}
-
-.sidebar li a:hover {
-  text-decoration: underline;
-}
-
-.submenu {
-  list-style-type: none;
-  padding-left: 20px;
-}
-
-.submenu li {
-  margin: 5px 0;
-  font-size: 0.9em; /* 서브메뉴 항목의 글씨 크기 작게 */
-}
-
-.has-submenu .arrow {
-  position: absolute;
-  right: 10px;
-  font-size: 0.8em; /* 화살표 크기 조정 */
+  color: black;
+  font-size: 16px;
 }

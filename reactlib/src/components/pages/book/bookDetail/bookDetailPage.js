@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import './BookDetailPage.css'; // 스타일 파일을 임포트합니다.
 import Header from '../../../fragments/header/header';
 import Footer from '../../../fragments/footer/footer';
+import RedirectLogin from '../../../helpers/RedirectLogin';
+import Auth from '../../../helpers/Auth';
+import useAuth, { LOGIN_STATUS } from '../../../hooks/useAuth';
 import KeywordCloud_bookId from '../../../fragments/home/KeywordCloud_bookId';
+
 
 const BookDetailPage = () => {
   const { id } = useParams();
@@ -12,6 +15,7 @@ const BookDetailPage = () => {
   const [book, setBook] = useState({});
   const [bookList, setBookList] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
+  const { userId, axios } = useAuth();
 
   useEffect(() => {
     const fetchBookDetails = async () => {
@@ -26,7 +30,7 @@ const BookDetailPage = () => {
     };
 
     fetchBookDetails();
-  }, [id]);
+  }, [id, axios]);
 
   const alertLogin = () => {
     alert('로그인 후 이용가능합니다.');
@@ -34,7 +38,7 @@ const BookDetailPage = () => {
   };
 
   const handleReservation = (bookId) => {
-    axios.post(`http://localhost:8090/book/reservation/${bookId}`)
+    axios.post(`http://localhost:8090/reservation/new`)
       .then(response => {
         // 예약 성공 처리
       })
@@ -43,14 +47,14 @@ const BookDetailPage = () => {
       });
   };
 
-  const handleInterest = (bookId) => {
-    axios.post(`http://localhost:8090/book/interest/${bookId}`)
-      .then(response => {
-        // 관심도서담기 성공 처리
-      })
-      .catch(error => {
-        console.error('관심도서담기 중 오류 발생:', error);
-      });
+  const handleInterest = async (bookId) => {
+    try {
+      await axios.post(`/api/book/interest/${userId}/${bookId}`);
+      alert('관심도서에 추가되었습니다.');
+    } catch (error) {
+      console.error('Error adding book to interest:', error);
+      alert('관심도서 추가 중 오류가 발생했습니다.');
+    }
   };
 
   // 줄바꿈 문자를 <br /> 태그로 변환하는 함수
@@ -66,8 +70,11 @@ const BookDetailPage = () => {
 
   return (
     <>
+
+      <RedirectLogin />
       <Header />
-      <main>
+      <main className="bookDetail">
+
         <div className="breadcrumbs">
           <div className="page-header d-flex align-items-center">
             <div className="container position-relative">
@@ -79,7 +86,6 @@ const BookDetailPage = () => {
             </div>
           </div>
         </div>
-
         <section className="sample-page">
           <div className="content centered-content">
             {errorMessage && <p className="fieldError">{errorMessage}</p>}
@@ -87,10 +93,11 @@ const BookDetailPage = () => {
             <div className="row g-0 book-detail-container">
               <div className="col-md-4 img-container">
                 {book.bookImg ? (
-                  <img
-                    src={`http://localhost:8090/api/images/${book.bookImg.imgName}`}
-                    alt={book.title}
-                    className="img-fluid cover-img"
+                  <img 
+                    src={`http://localhost:8090/images/book/${book.bookImg.imgName}`} 
+                    alt={book.title} 
+                    className="img-fluid cover-img" 
+
                   />
                 ) : (
                   <div className="no-image">No Image</div>
@@ -107,8 +114,11 @@ const BookDetailPage = () => {
               </div>
             </div><br />
 
+            <div className="row g-1 overflow-x-auto">
+
             <div className="row g-0 overflow-x-auto">
               <table className="table full-width">
+
                 <thead className="table-dark">
                   <tr>
                     <th>위치</th>
@@ -120,10 +130,12 @@ const BookDetailPage = () => {
                 <tbody className="table-detail">
                   {bookList.map((relatedBook) => (
                     <tr key={relatedBook.id}>
-                      <td>{relatedBook.libName}</td>
-                      <td>{relatedBook.status ?? '정보 없음'}</td>
-                      <td>{relatedBook.returnDay}</td>
-                      <td>
+
+                      <td style={{border: "1px solid black"}}>{relatedBook.libName}</td>
+                      <td style={{border: "1px solid black"}}>{relatedBook.status ?? '정보 없음'}</td>
+                      <td style={{border: "1px solid black"}}>{relatedBook.returnDay}</td>
+                      <td style={{border: "1px solid black"}}>
+
                         <div className="card-body">
                           <div className="row">
                             <button disabled={relatedBook.status !== 'AVAILABLE'} onClick={alertLogin || (() => handleReservation(relatedBook.id))}>
@@ -131,7 +143,8 @@ const BookDetailPage = () => {
                             </button>
                           </div>
                           <div className="row">
-                            <button onClick={alertLogin || (() => handleInterest(relatedBook.id))}>
+                            <button onClick={(() => handleInterest(relatedBook.id))}>
+
                               관심도서담기
                             </button>
                           </div>
@@ -150,6 +163,7 @@ const BookDetailPage = () => {
             <div className="key_wordcloud">
               <KeywordCloud_bookId bookId={id} />
             </div>
+</div>
           </div>
         </section>
       </main>
@@ -158,4 +172,15 @@ const BookDetailPage = () => {
   );
 };
 
-export default BookDetailPage;
+const BookDetailPageWrapper = () => {
+  return (
+    <>
+      <RedirectLogin />
+      <Auth loginStatus={LOGIN_STATUS.LOGGED_IN}>
+        <BookDetailPage />
+      </Auth>
+    </>
+  );
+};
+
+export default BookDetailPageWrapper;
