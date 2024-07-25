@@ -67,16 +67,6 @@ public class ReservationController {
 		return ResponseEntity.ok(reservationsDto);
 	}
 
-//	@GetMapping("/get/by-id/{reservationId}")
-//	public ResponseEntity<ReservationDto> getReservationById(@PathVariable Long reservationId) {
-//		Reservation reservation = reservationService.getReservationById(reservationId);
-//		if (reservation != null) {
-//			ReservationDto reservationDto = new ReservationDto(reservation);
-//			return ResponseEntity.ok(reservationDto);
-//		} else {
-//			return ResponseEntity.notFound().build();
-//		}
-//	}
 
 	@DeleteMapping("/delete/{reservationId}")
 	public ResponseEntity<?> deleteReservation(@AuthenticationPrincipal CustomUser user, @PathVariable Long reservationId) {

@@ -39,9 +39,6 @@ public class ReservationService {
 		Book book = new Book();
 		book.setId(bookId);
 		
-		//책 존재여부 확인
-		//TODO: 책 서비스 개발완료되면 작성하기.
-		
 		//사용자 존재여부 확인
 		//TODO: 사용자 서비스 개발완료되면 대체.
 		LibUser user;
