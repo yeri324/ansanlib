@@ -27,27 +27,30 @@ public class HolidayController {
     @Autowired
     private HolidayService holidayService;
 
-    //날짜 도서관 중복체크
+    // 날짜 도서관 중복 체크
     @GetMapping("/check")
     public ResponseEntity<Boolean> checkHoliday(@RequestParam("date") String date, @RequestParam("library") String library) {
         LocalDate localDate = LocalDate.parse(date);
         boolean exists = holidayService.checkHolidayExists(localDate, library);
         return ResponseEntity.ok(exists);
     }
-    
-    
-    //데이터 저장
+
+    // 데이터 저장
     @PostMapping("/new")
-    public Holiday createHoliday(@RequestBody HolidayDto holidayDto) {
-    	System.out.println(holidayDto.getLib_num()+"*"+holidayDto.getLib_name()+"*"+holidayDto.getHoliday()+"*");
-        return holidayService.saveHoliday(holidayDto);
+    public ResponseEntity<String> createHoliday(@RequestBody HolidayDto holidayDto) {
+        try {
+            holidayService.saveHoliday(holidayDto);
+            return ResponseEntity.ok("휴관일이 성공적으로 추가되었습니다.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
-    
-    
+
+    // 데이터 조회
     @GetMapping("/list")
     public ResponseEntity<CommonListResponse<List<Holiday>>> getAllHolidays(@RequestParam(value = "date", required = false) String date) {
         List<Holiday> holidays;
-        
+
         if (date != null) {
             LocalDate localDate = LocalDate.parse(date);
             holidays = holidayService.getHolidaysByDate(localDate);
@@ -57,18 +60,15 @@ public class HolidayController {
 
         for (Holiday h : holidays) {
             if (h.getLibrary() != null) {
-                System.out.println("Library ID: " + h.getLibrary().getId() + ", Library Number: " + h.getLibrary().getLibNum());
+                System.out.println("Library ID: " + h.getLibrary().getId() + ", Library Name: " + h.getLibrary().getLibName());
             } else {
                 System.out.println("Library is null for Holiday with id: " + h.getId());
             }
         }
         return ResponseEntity.ok().body(new CommonListResponse<>(holidays.size(), holidays));
     }
-    
-    
-    
-    
-    //데탸삭제
+
+    // 데이터 삭제
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteHoliday(@PathVariable Long id) {
         try {
@@ -78,6 +78,4 @@ public class HolidayController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete holiday");
         }
     }
-    
-    
 }
