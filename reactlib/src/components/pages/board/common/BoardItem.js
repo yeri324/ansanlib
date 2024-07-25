@@ -9,6 +9,7 @@ function BoardItem({ item, onDetail, checkedList, checkHandler, }) {
                 <td onClick={() => onDetail(item)}>{item.title}</td>
                 <td>{item.createdBy}</td>
                 <td>{item.updateTime.split('T')[0]}</td>
+                <td>{item.count}</td>
             </tr>
     );
 }

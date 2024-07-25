@@ -12,10 +12,11 @@ function UserNoticeDetailForm({ id }) {
     const [createdBy, setCreatedBy] = useState('');
     const [regDate, setRegDate] = useState();
     const [images, setImages] = useState([]);
+    const [viewCount, setViewCount] = useState();
 
     useEffect(() => {
-
         getDataset();
+        getCountView();
     }, []);
 
 
@@ -35,10 +36,29 @@ function UserNoticeDetailForm({ id }) {
             setContent(res.data.content);
             setCreatedBy(res.data.modifiedBy);
             setRegDate(res.data.updateTime.split('T')[0]);
+            setViewCount(res.data.count);
             setImages(res.data.noticeImgs);
         }
         )
     }
+
+    // 조회 수 카운트 (세기)
+    const getCountView = async () => {
+        try {
+            axios(
+                {
+                    url: '/notice/count',
+                    method: 'post',
+                    data: {
+                        id: id,
+                    },
+                    baseURL: 'http://localhost:8090',
+                }
+            )
+        } catch (error) {
+            console.error('에러 발생:', error);
+        }
+    };
 
     //목록으로가기
     const onGoBack = () => {
@@ -59,7 +79,7 @@ function UserNoticeDetailForm({ id }) {
                                     <th scope='row'>글 번호</th>
                                     <td>{id}</td>
                                     <th scope='row'>조회 수</th>
-                                    <td>0</td>
+                                    <td>{viewCount}</td>
                                 </tr>
                                 <tr>
                                     <th scope='row'>작성자</th>

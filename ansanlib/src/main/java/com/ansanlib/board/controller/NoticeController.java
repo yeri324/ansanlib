@@ -76,8 +76,6 @@ public class NoticeController {
 		return resEntity;
 	}
 	
-
-
 	// 글 삭제
 	@Secured("ROLE_ADMIN")
 	@DeleteMapping("/admin/notice/delete")
@@ -97,19 +95,7 @@ public class NoticeController {
 			}
 		}
 	}
-
-	// 이미지 삭제
-	@Secured("ROLE_ADMIN")
-	@DeleteMapping("/admin/notice/imgDelete")
-	public ResponseEntity<String> deleteImg(@RequestBody NoticeImgDto noticeImgDto) throws Exception {
-		ResponseEntity resEntity = null;
-		Long id = noticeImgDto.getId();
-		System.out.println(id);
-		noticeImgService.deleteNotice(id);
-		resEntity = new ResponseEntity("IMG DELETE_OK", HttpStatus.OK);
-		return resEntity;
-	}
-
+	
 	// 검색
 	@PostMapping("/notice/search")
 	public Page<Notice> searchUsers(@RequestBody NoticeDto noticeDto) {
@@ -128,5 +114,25 @@ public class NoticeController {
 		return resEntity;
 	}
 
+	// 조회 수 카운트
+	@PostMapping("/notice/count")
+	public ResponseEntity<String> countNotice(@RequestBody NoticeDto noticeDto) {
+		ResponseEntity resEntity = null;
+		Notice notice = noticeService.getCount(noticeDto);
+		resEntity = new ResponseEntity(notice, HttpStatus.OK);
+		return resEntity;
+	}
+	
+	// 이미지 삭제
+	@Secured("ROLE_ADMIN")
+	@DeleteMapping("/admin/notice/imgDelete")
+	public ResponseEntity<String> deleteImg(@RequestBody NoticeImgDto noticeImgDto) throws Exception {
+		ResponseEntity resEntity = null;
+		Long id = noticeImgDto.getId();
+		System.out.println(id);
+		noticeImgService.deleteNotice(id);
+		resEntity = new ResponseEntity("IMG DELETE_OK", HttpStatus.OK);
+		return resEntity;
+	}
 
 }

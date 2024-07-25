@@ -30,14 +30,17 @@
 
 .board-detail-form form input,
 .board-detail-form form textarea {
+    background-color: #FAFAF8;
     width: 100%;
     border: none;
     font-size: 16px;
     font-family: Arial, sans-serif;
 }
 
-.board-detail-form form input{
-    background-color: #FAFAF8;
+.board-detail-form form textarea{
+    border: 1px solid #999;
+    border-radius: 4px;
+    padding: 10px;
 }
 
 
@@ -77,6 +80,7 @@
 .input-container .userb-inputtable td {
     padding: 12px;
     border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;;
     text-align: left;
 }
 

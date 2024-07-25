@@ -16,7 +16,8 @@ function AdminNoticeDetailForm({ id }) {
     const [regDate, setRegDate] = useState();
     const [images, setImages] = useState([]);
     const [count, setCount] = useState(1);
-    const [deleteImg, setDeleteImg] = useState([])
+    const [deleteImg, setDeleteImg] = useState([]);
+    const [viewCount, setViewCount] = useState();
 
     //권한 여부 확인
     useEffect(() => {
@@ -45,6 +46,7 @@ function AdminNoticeDetailForm({ id }) {
             setContent(res.data.content);
             setCreatedBy(res.data.modifiedBy);
             setRegDate(res.data.updateTime.split('T')[0]);
+            setViewCount(res.data.count);
             setImages(res.data.noticeImgs);
         }
         )
@@ -147,7 +149,7 @@ function AdminNoticeDetailForm({ id }) {
                                             <th scope='row'>글 번호</th>
                                             <td>{id}</td>
                                             <th scope='row'>조회 수</th>
-                                            <td>0</td>
+                                            <td>{viewCount}</td>
                                         </tr>
                                         <tr>
                                             <th scope='row'>작성자</th>

@@ -113,6 +113,15 @@ public class FaqService {
 		return faq;
 	}
 
+	// 조회수 카운트
+	public Faq getCount(FaqDto faqDto) {
+		Faq faq = faqRepository.findById(faqDto.getId()).orElseThrow(EntityNotFoundException::new);
+		faq.setCount(faq.getCount() + 1);
+		faqRepository.save(faq);
+		return faq;
+	};
+	
+	
 	// 기준 검색하기 or 전체 리스트 가져오기
 	public Page<Faq> ListFaq(FaqDto faqDto) {
 		Pageable pageable = PageRequest.of(faqDto.getPage(), faqDto.getSize(), Sort.by(Order.desc("regTime")));
