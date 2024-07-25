@@ -47,7 +47,6 @@ function UserNoticeList() {
                 baseURL: 'http://localhost:8090',
             }
         ).then((response) => {
-            console.log(response.data);
             setSearchResult(response.data.content);
             setTotalPages(response.data.totalPages);
             setTotalNoticeCount(response.data.totalElements);
@@ -95,6 +94,7 @@ function UserNoticeList() {
                                 <th scope="col" class="th-title">제목</th>
                                 <th scope="col" class="th-loginid">작성자</th>
                                 <th scope="col" class="th-date">작성일</th>
+                                <th scope="col" class="th-num">조회수</th>
                             </tr>
                         </thead>
                         <tbody class="list_content">
@@ -104,6 +104,7 @@ function UserNoticeList() {
                                     <td scope="col" class="th-title" onClick={() => onDetail(notice)}>{notice.title}</td>
                                     <td scope="col" class="th-loginid">{notice.createdBy}</td>
                                     <td scope="col" class="th-loginid">{notice.updateTime.split('T')[0]}</td>
+                                    <td scope="col" class="th-num">{notice.count}</td>
                                 </tr>
                             ))}
                         </tbody>

@@ -34,6 +34,7 @@ public class Faq extends BaseEntity {
    
    private String title; //제목
    private String content; //내용
+   private int count; // 조회수
    
    @ManyToOne
    //외래키 연결 해제. faq를 작성한 사용자가 탈퇴해도 게시물은 유지.

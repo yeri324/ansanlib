@@ -106,9 +106,18 @@ public class FaqController {
 		Faq faq = faqService.getDetail(faqDto);
 		resEntity = new ResponseEntity(faq, HttpStatus.OK);
 		return resEntity;
-
 	}
-
+	
+	// 조회 수 카운트
+	@PostMapping("/faq/count")
+	public ResponseEntity<String> countFaq(@RequestBody FaqDto faqDto){
+		ResponseEntity resEntity = null;
+		Faq faq = faqService.getCount(faqDto);
+		resEntity = new ResponseEntity(faq, HttpStatus.OK);
+		return resEntity;
+	}
+	
+	
 	// 이미지 미리보기
 	@PostMapping("/getImg")
 	public ResponseEntity<byte[]> getFaqImage(@RequestBody FaqImgDto faqImgDto) {

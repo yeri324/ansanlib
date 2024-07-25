@@ -17,6 +17,7 @@ public class FaqDto {
     private Long id;
     private String title;
     private String content;
+    private int count;
     
     private int page;
     private int size;

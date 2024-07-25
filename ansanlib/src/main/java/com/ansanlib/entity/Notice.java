@@ -36,6 +36,8 @@ public class Notice extends BaseEntity{
     
     private String content; //내용
     
+    private int count; // 조회수
+    
     @JsonManagedReference
     @OneToMany(mappedBy = "notice", fetch=FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<NoticeImg> noticeImgs = new ArrayList<>();

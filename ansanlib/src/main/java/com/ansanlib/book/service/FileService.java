@@ -113,14 +113,9 @@ public class FileService {
 					System.out.println("폴더를 삭제하지 못했습니다.");
 				}
 			}
-			
-			
-			
 		} else {
 			System.out.println("파일이 존재하지 않습니다.");
 		}
-		
-
 	}
 	
 	// 삭제 글 id에 해당하는 이미지 폴더 삭제

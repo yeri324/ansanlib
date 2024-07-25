@@ -109,8 +109,17 @@ public class NoticeService {
 		noticeRepository.deleteById(id);
 	}
 
+	// 상세정보 가져오기
 	public Notice getDetail(NoticeDto noticeDto) {
 		Notice notice = noticeRepository.findById(noticeDto.getId()).orElseThrow(EntityNotFoundException::new);
+		return notice;
+	}
+	
+	// 조회수 카운트
+	public Notice getCount(NoticeDto noticeDto) {
+		Notice notice = noticeRepository.findById(noticeDto.getId()).orElseThrow(EntityNotFoundException::new);
+		notice.setCount(notice.getCount() + 1);
+		noticeRepository.save(notice);
 		return notice;
 	}
 
