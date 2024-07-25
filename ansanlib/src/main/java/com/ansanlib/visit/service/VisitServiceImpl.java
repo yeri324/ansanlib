@@ -1,5 +1,6 @@
 package com.ansanlib.visit.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -34,4 +35,14 @@ public class VisitServiceImpl implements VisitService {
         return visitRepository.count();
     }
 
+    
+    @Override
+    public long getVisitCountToday() {
+        LocalDate today = LocalDate.now();
+        LocalDateTime startOfDay = today.atStartOfDay();
+        LocalDateTime endOfDay = today.atTime(23, 59, 59);
+        return visitRepository.countByTimeStampBetween(startOfDay, endOfDay);
+    }
+    
+    
 }
