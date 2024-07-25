@@ -159,6 +159,7 @@ function AdminNoticeList() {
                                 <th scope="col" className="th-title" style={{ width: "40%" }}>제목</th>
                                 <th scope="col" className="th-loginid" style={{ width: "10%" }}>작성자</th>
                                 <th scope="col" className="th-date" style={{ width: "20%" }}>작성일</th>
+                                <th scope="col" class="th-num" style={{ width: "5%" }}>조회수</th>
                             </tr>
                         </thead>
                         <tbody class="list_content">

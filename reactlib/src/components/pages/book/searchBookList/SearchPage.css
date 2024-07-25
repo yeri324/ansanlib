@@ -70,6 +70,24 @@
   padding-left: 10px;
 }
 
+.bookSearch .react-autosuggest__suggestions-container{
+  position: relative;
+  z-index: 1000;
+  background-color: #fff;
+  padding: 0;
+}
+.bookSearch .react-autosuggest__suggestions-container ul {
+  margin: 0;
+  padding: 0;
+}
+
+.bookSearch .react-autosuggest__suggestions-container li{
+  border: 1px solid #bbb;
+ list-style: none;
+ margin: 0;
+ padding: 0;
+}
+
 .bookSearch .search-sort-select{
   text-align: center;
 }

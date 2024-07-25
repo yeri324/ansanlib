@@ -47,12 +47,10 @@ function UserFaqList() {
                 baseURL: 'http://localhost:8090',
             }
         ).then((response) => {
-            console.log(response.data);
             setSearchResult(response.data.content);
             setTotalPages(response.data.totalPages);
             setTotalFaqCount(response.data.totalElements);
         });
-
     }
 
     //기준검색
@@ -95,6 +93,7 @@ function UserFaqList() {
                                 <th scope="col" class="th-title">제목</th>
                                 <th scope="col" class="th-loginid">작성자</th>
                                 <th scope="col" class="th-date">작성일</th>
+                                <th scope="col" class="th-num">조회수</th>
                             </tr>
                         </thead>
                         <tbody class="list_content">
@@ -104,6 +103,7 @@ function UserFaqList() {
                                     <td scope="col" class="th-title" onClick={() => onDetail(faq)}>{faq.title}</td>
                                     <td scope="col" class="th-loginid">{faq.createdBy}</td>
                                     <td scope="col" class="th-loginid">{faq.updateTime.split('T')[0]}</td>
+                                    <td scope="col" class="th-num">{faq.count}</td>
                                 </tr>
                             ))}
                         </tbody>

@@ -98,6 +98,11 @@
     width: 5%;
 }
 
+.board-list .b-table th:nth-child(6),
+.board-list .b-table td:nth-child(6) {
+    width: 5%;
+}
+
 .board-list .b-table th,
 .board-list .b-table td {
     border: 1px solid #ddd;

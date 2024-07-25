@@ -70,7 +70,7 @@ private LoanStatusRepository loanStatusRepository;
 
 		if (file != null && !file.isEmpty()) {
 			try {
-				Map<String, String> fileData = fileService.fileHandler(file, "book_images", savedBook.getId());
+				Map<String, String> fileData = fileService.fileHandler(file, "book",null);
 				if (fileData != null) {
 					BookImg bookImg = new BookImg();
 					bookImg.setImgName(fileData.get("imgName"));

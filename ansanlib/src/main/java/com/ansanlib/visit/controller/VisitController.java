@@ -47,5 +47,13 @@ public class VisitController {
 	public ResponseEntity<List<Popup>> homePopupList(){
 		return adminPageService.homePopupList();
 	}
+    
+    @GetMapping("/visits/today")
+    public long getVisitCountToday() {
+        return visitService.getVisitCountToday();
+    }
+    
+    
+    
 	
 }
