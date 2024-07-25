@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.mail.Folder;
-
 @Service
 public class FileService {
 
@@ -123,5 +121,15 @@ public class FileService {
 		}
 		
 
+	}
+	
+	// 삭제 글 id에 해당하는 이미지 폴더 삭제
+	public void deleteFolder(Long id, String folderName) throws Exception{
+		String absolutePath = new File("").getAbsolutePath() + File.separator;
+		 String Fpath = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static"
+	                + File.separator + "images" + File.separator + folderName + File.separator + id;
+		 
+		File delFolder = new File(absolutePath + File.separator + Fpath);
+		delFolder.delete();
 	}
 }

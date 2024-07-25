@@ -72,8 +72,8 @@ const Notice = () => {
                 {category}
               </li>
             ))}
+            <button className="plus_button" onClick={handlePlusButtonClick}>+</button>
           </ul>
-          <button className="plus_button" onClick={handlePlusButtonClick}>+</button>
         </div>
         <div className="notice_content">
           <ul>

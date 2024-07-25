@@ -110,10 +110,6 @@
     font-weight: bold;
 }
 
-.board-list .b-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
 /* Buttons */
 .board-list .b-list button {
     margin: 10px 5px;
