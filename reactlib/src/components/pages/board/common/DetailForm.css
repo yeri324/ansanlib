@@ -6,9 +6,15 @@
     padding: 0;
 }
 
-.board-detail-form form>h2 {
+.user-board-detail {
+    width: 70%;
     margin: 0 auto;
-    margin-bottom: 10px;
+    padding: 0;
+}
+
+.board-detail-form form h2 {
+    margin: 0 auto;
+    margin-bottom: 15px;
     text-align: center;
 }
 
@@ -16,23 +22,24 @@
 .board-detail-form form {
     margin: 0 auto;
     text-align: center;
-    justify-content: center;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
 }
 
-.board-detail-form form input, .board-detail-form form textarea {
-    width: calc(70% - 22px);
-    margin: 0 auto;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+.board-detail-form form input,
+.board-detail-form form textarea {
+    width: 100%;
+    border: none;
     font-size: 16px;
     font-family: Arial, sans-serif;
 }
+
+.board-detail-form form input{
+    background-color: #FAFAF8;
+}
+
 
 .board-detail-form form input[type='file'] {
     width: calc(70% - 22px);
@@ -40,7 +47,7 @@
     margin-bottom: 2px;
 }
 
-.board-detail-form form textarea {
+.board-detail-form .input-container textarea {
     height: 500px;
 }
 
@@ -49,8 +56,52 @@
     font-family: Arial, sans-serif;
 }
 
-.board-detail-form form button[type='button'],
-.board-detail-form form button[type='submit'] {
+/* 제목 내용 등 정렬 */
+.b-inputtable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+
+}
+
+.bdetail-top .userb-inputtable {
+    width: 70%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+
+}
+
+.input-container .b-inputtable th,
+.input-container .b-inputtable td,
+.input-container .userb-inputtable th,
+.input-container .userb-inputtable td {
+    padding: 12px;
+    border-bottom: 1px solid #ccc;
+    text-align: left;
+}
+
+.input-container .b-inputtable th,
+.input-container .userb-inputtable th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+.b-inputtable tr th:nth-child(1),
+.b-inputtable tr td:nth-child(1),
+.userb-inputtable tr th:nth-child(1),
+.userb-inputtable tr td:nth-child(1) {
+    width: 25%;
+}
+
+.b-inputtable tr th:nth-child(2),
+.b-inputtable tr td:nth-child(2),
+.userb-inputtable tr th:nth-child(2),
+.userb-inputtable tr td:nth-child(2) {
+    width: 25%;
+}
+
+/* 버튼 스타일 */
+.board-detail-form form button[type='button'] {
     display: inline-block;
     padding: 10px 20px;
     border: none;
@@ -62,6 +113,7 @@
     margin: 5px;
 }
 
+/* 이미지 관련 스타일 */
 .board-detail-form .img-upload {
     margin: 0 auto;
     display: flex;
@@ -115,13 +167,12 @@
     width: 100%;
 }
 
-/* 이미지 컨테이너 기본 스타일 */
 .board-detail-form .img-container1 .img-pre {
     display: flex;
     justify-content: center;
     width: 100%;
     gap: 20px;
-   
+
 }
 
 .board-detail-form .img-preview {
@@ -131,7 +182,7 @@
     z-index: 1;
 }
 
-.board-detail-form .img-preview{
+.board-detail-form .img-preview {
     width: 100px;
     height: 100px;
 }
@@ -141,22 +192,4 @@
     transform: scale(3);
     /* (x)배 확대 */
     z-index: 3;
-}
-
-.board-detail-form .bdetail-top{
-    display: flex;
-    justify-content: space-between;
-    width: calc(70% - 20px);
-    margin-bottom: 10px;
-    margin: 0 auto;
-}
-
-.board-detail-form .bdetail-top p {
-    flex: 0 1 200px;
-    padding: 5px;
-    font-size: 16px;
-}
-
-.board-detail-form h2 {
-    margin-bottom: 15px;
 }
