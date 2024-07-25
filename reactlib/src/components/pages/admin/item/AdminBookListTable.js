@@ -46,7 +46,7 @@ const AdminBookListTable = ({ books, onOpenModal, onSort, sortConfig, excludedCo
                   {column.key === 'img' ? (
                     book.bookImg ? (
                       <img 
-                        src={`http://localhost:8090/images/book_images/${book.id}/${book.bookImg.imgName}`} 
+                        src={`http://localhost:8090/images/book/${book.bookImg.imgName}`} 
                         alt="책 이미지" 
                         className="admin-book-cover" 
                       />

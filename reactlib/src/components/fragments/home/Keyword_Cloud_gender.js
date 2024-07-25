@@ -1,28 +1,25 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function KeywordCloud_gender({ gender }) {
     const [imageSrc, setImageSrc] = useState('');
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetch(`http://127.0.0.1:5001/api/wordcloud/${gender}`, {
-            method: 'GET',
-            mode: 'cors'
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.blob();
-            })
-            .then(imageBlob => {
-                const imageObjectURL = URL.createObjectURL(imageBlob);
+        const fetchWordCloud = async () => {
+            try {
+                const response = await axios.get(`http://127.0.0.1:5001/api/wordcloud/${gender}`, {
+                    responseType: 'blob',
+                });
+                const imageObjectURL = URL.createObjectURL(response.data);
                 setImageSrc(imageObjectURL);
-            })
-            .catch(error => {
+            } catch (error) {
                 setError(error);
-                console.error('There was a problem with the fetch operation:', error);
-            });
+                console.error('There was a problem with the axios operation:', error);
+            }
+        };
+
+        fetchWordCloud();
     }, [gender]);
 
     return (

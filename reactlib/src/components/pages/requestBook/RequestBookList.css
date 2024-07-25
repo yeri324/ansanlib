@@ -1,70 +1,70 @@
-/* requestBooksList.css */
-/* 전체 폼 스타일 */
-.mypage-container .request_books_list {
+.request_books_list {
     margin: 30px auto;
     width: 75%;
     border: 1px solid #ddd;
     background-color: #fff;
-    padding: 50px;
+    padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    }
+    min-height: 500px;
+    position: relative; /* 하위 요소를 절대적으로 위치시키기 위한 설정 */
+}
 
-
-
-.request_books_list h2 {
-    text-align: center;
+.request_books_list table {
+    width: 100%;
+    border-collapse: collapse;
     margin-bottom: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
 }
 
-.request_books_list ul {
-    list-style-type: none;
-    padding: 0;
+.request_books_list thead {
+    border-bottom: 2px solid #4976f3;
 }
 
-.request_books_list li {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+.request_books_list th,
+.request_books_list td {
+    padding: 15px;
+    text-align: center;
+    font-size: 14px;
+    border-top: 1px solid #eee;
 }
 
-.request_books_list li:last-child {
-    border-bottom: none;
-}
-
-.request_books_list input[type="checkbox"] {
-    margin-right: 10px;
+.request_books_list th {
+    font-weight: bold;
 }
 
 .request_books_list .actions {
-    text-align: center;
-    margin-top: 20px;
+    position: absolute; /* 버튼들을 완전 하단에 위치시키기 위한 설정 */
+    bottom: 20px; /* 컨테이너 하단에서의 거리 설정 */
+    left: 50%; /* 수평 중앙 정렬을 위한 설정 */
+    transform: translateX(-50%); /* 정확한 중앙 정렬을 위한 설정 */
+    display: flex; /* Flexbox를 사용하여 버튼들을 수평으로 정렬합니다 */
+    gap: 10px; /* 버튼들 사이의 간격 설정 */
 }
 
-.request_books_list button {
-    margin: 5px;
-    padding: 8px 16px;
-    background-color: #007bff;
-    color: #fff;
+.request_books_list .actions button {
+    padding: 10px 20px;
     border: none;
     border-radius: 4px;
+    background-color: #5c6bc0;
+    color: white;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-.request_books_list button:disabled {
+.request_books_list .actions button:hover {
+    background-color: #464797;
+}
+
+.request_books_list .actions button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
 }
 
-.request_books_list button:hover {
-    background-color: #0056b3;
-}
-
-.error_message {
-    text-align: center;
+.request_books_list .error_message {
     color: red;
+    font-size: 18px;
     margin-top: 20px;
+    text-align: center;
 }

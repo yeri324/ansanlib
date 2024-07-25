@@ -61,7 +61,7 @@ const ReservationList = () => {
     return (
         <div className="mypage-container">
             <div className='mypage-header'>
-                <h2 className='mypage-header-name'>{name}의 예약 목록</h2>
+                <h2 className='mypage-header-name'>{name}님의 예약 목록</h2>
             </div>
             <div className="reservation_list">
                 <table>
@@ -71,7 +71,7 @@ const ReservationList = () => {
                             <th>책 ISBN</th>
                             <th>시작 날짜</th>
                             <th>종료 날짜</th>
-                            <th>선택</th>
+                            <th style={{width:'60px'}}>선택</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -93,25 +93,27 @@ const ReservationList = () => {
                     </tbody>
                 </table>
                 {!isErrored && (
-                    <div className="actions">
-                        <button
-                            onClick={selectAll}
-                            disabled={selectedReservations.length === reservations.length}
-                        >
-                            전체 선택
-                        </button>
-                        <button
-                            onClick={deselectAll}
-                            disabled={selectedReservations.length === 0}
-                        >
-                            전체 선택해제
-                        </button>
-                        <button
-                            onClick={handleDeleteReservations}
-                            disabled={selectedReservations.length === 0}
-                        >
-                            예약 삭제
-                        </button>
+                    <div className='actions-container'>
+                        <div className="actions">
+                            <button
+                                onClick={selectAll}
+                                disabled={selectedReservations.length === reservations.length}
+                            >
+                                전체 선택
+                            </button>
+                            <button
+                                onClick={deselectAll}
+                                disabled={selectedReservations.length === 0}
+                            >
+                                전체 선택해제
+                            </button>
+                            <button
+                                onClick={handleDeleteReservations}
+                                disabled={selectedReservations.length === 0}
+                            >
+                                예약 삭제
+                            </button>
+                        </div>
                     </div>
                 )}
                 {isErrored && <h2 className="error_message">자료를 가져오지 못했습니다.</h2>}

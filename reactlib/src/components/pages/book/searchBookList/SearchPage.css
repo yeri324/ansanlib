@@ -1,105 +1,235 @@
-/* SearchPage.css */
+.bookSearch {
+  padding: 20px;
+}
+
+.bookSearch .search-page {
+    width: 80%;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    padding: 30px;
+    border-radius: 10px;
+}
+
 .bookSearch .centered-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.bookSearch .search-form{
   text-align: center;
-  padding-left: 150px;
-  padding-right: 150px;
+  padding: 0 200px;
 }
 
-.bookSearch .row{
-  width: 200px;
-  padding-top: 30px;
+.bookSearch .content {
+  max-width: 80%;
+  margin: 0 auto;
 }
-
 .bookSearch .Search{
-  width: 100%;
+ width: 100%;
 }
 
-.bookSearch .full-width {
-  width: 100%;
-}
-
-.bookSearch .left-align {
-  text-align: left;
-}
-
-.bookSearch .cover-img {
-  width: 160px;
-  height: 220px;
-}
-
-.bookSearch .no-image {
-  width: 100%;
-  height: 100%;
-  background-color: #eaeaea;
+.bookSearch .input-group {
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
+}
+
+.bookSearch .input-text {
+  min-width: 120px; /* 필요에 따라 조정 */
+  text-align: center;
+  background-color: #dfe3ec;
+  font-weight: bold;
+  height: 42px;
+  line-height: 42px;
+  border: 1px solid #ccc;
+  border-radius: 6px 0 0 6px;
+}
+
+.bookSearch .input-group input[type="text"], 
+.bookSearch .input-group select{
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 0 6px 6px 0;
+  height: 42px;
+
+}
+
+.bookSearch .input-group > .react-autosuggest__container{
+  flex: 1;
+  border: none;
+  border-end-end-radius: 4px;
+  height: 42px;
+}
+
+.bookSearch .input-group > .react-autosuggest__container input{
+  border: 1px solid #ccc;
+  width: 100%;
+  padding-left: 10px;
+}
+
+.bookSearch .search-sort-select{
+  text-align: center;
+}
+
+.bookSearch .search-btn{
+  width: 40%;
+  height: 45px;
+  background-color: #396bd6;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+.bookSearch .search-sort-select{
+  margin: 20px auto;
+  width: 80%;
+  display: flex;
   justify-content: center;
 }
 
-.bookSearch .book-detail-container {
+.bookSearch .search-sort-select >label{
+flex: 0 1 150px;
+line-height: 40px;
+text-align: right;
+padding-right: 15px;
+}
+
+.bookSearch .search-sort-select > select{
+margin: 0;
+flex: 0 1 200px;
+border: 1px solid #ccc;
+}
+
+.bookSearch .search-list{
+  width: 100%;
+  border: 1px solid #ccc;
+  padding: 30px 20px;
+  border-radius: 3px;
+  text-align: center;
+}
+
+.bookSearch .search-list .search-pagination{
+  text-align: center;
+}
+
+.bookSearch .search-list .search-pagination > .btn{
+  border: 1px solid #202e50;
+  color: #202e50;
+  margin: 0 10px ;
+}
+
+.bookSearch .search-list .search-pagination > .btn:hover{
+  border: 1px solid  #396bd6;
+  background-color: #396bd6;
+  color: #fff;
+  margin: 0 10px ;
+}
+
+.bookSearch .result-card{
   display: flex;
-  margin-bottom: 20px; /* 각 책 정보 사이에 간격 추가 */
-  padding: 10px;
-  border: 1px solid #000;
-  flex-direction: row; /* 가로 방향으로 배치 */
+  height: 250px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin: 10px 0;
+  padding: 0;
+}
+
+.bookSearch .result-card .img-container{
+  flex: 0 1 200px;
+    padding: 0;
+    height: 100%;
+}
+
+.bookSearch .result-card .img-container img{
+  height: 100%;
+  width: 100%;
+}
+.bookSearch .result-card .text-container{
+  flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 15px 30px;
+}
+.bookSearch .result-card .text-container >a,
+.bookSearch .result-card .text-container >p{
+  flex: 1;
+}
+
+.bookSearch .result-card .card-row{
+  flex: 0 1 200px;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.bookSearch .result-card .card-row >p{
+  flex: 2;
+  padding-top: 30px;
+}
+
+.bookSearch .result-card .card-row > button{
+  flex: 0 0 40px;
+  margin: 0px 20px 40px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #396bd6;
+  color: #fff;
+}
+
+
+.bookSearch .result-card .card-row > button:hover,
+.bookSearch .search-btn:hover{
+  background-color: #214ead;
+}
+
+.bookSearch .result-card .card-row > button:disabled{
+  background-color: #99a6c2;
+}
+
+.bookSearch .result-card {
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  cursor: pointer;
 }
 
 .bookSearch .img-container {
-  flex: 0 0 auto; /* 고정된 크기 사용 */
-  margin-right: 20px; /* 이미지와 텍스트 사이의 간격 추가 */
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.bookSearch .cover-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
 }
 
 .bookSearch .text-container {
-  flex: 1; /* 텍스트 컨테이너가 남은 공간을 차지하도록 설정 */
+  padding: 10px 20px 10px 10px;
   text-align: left;
-  padding-top: 20px;
 }
 
-.bookSearch .buttons-container {
+.bookSearch .text-container h5>span,
+.bookSearch .text-container a{
+  color: #000;
+text-decoration: none;
+margin: 10px 0;
+}
+
+
+.bookSearch .fieldError {
+  color: red;
   margin-top: 10px;
 }
 
-.bookSearch .buttons-container button {
-  margin-right: 5px;
-  width: 150px;
+
+.bookSearch .disabled {
+  pointer-events: none;
+  opacity: 0.5;
 }
 
-.bookSearch .bt {
-  padding-bottom: 10px;
-}
-
-.bookSearch .sc {
-  padding: 10px;
-  margin-left: 250px;
-  margin-right: 250px;
-}
-
-.bookSearch #btnGroupAddon2{
-  width: 90px;
-  height: 50px;
-}
-
-.bookSearch .searchForm{
-  width: 600px;
-  height: 50px;
-  border: 1px solid black;
-  border-radius: 4px;
-  padding: 10px 20px;
-}
-
-.bookSearch .justify-content-center{
-  padding-left: 150px;
-  padding-right: 150px;
-  padding-bottom: 20px;
-}
-
-.bookSearch .react-autosuggest__input {
-  width: 600px;
-  height: 50px;
-  padding: 10px 20px;
-  font-family: 'Arial, sans-serif';
-  font-weight: 300;
-  font-size: 16px;
-  border: 1px solid black;
-  border-radius: 4px;
-}
