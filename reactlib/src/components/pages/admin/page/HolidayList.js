@@ -11,12 +11,11 @@ import "./AdminPage.css";
 import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
 import Auth from '../../../helpers/Auth';
 import RedirectLogin from '../../../helpers/RedirectLogin';
+import HolidayNew from '../modal/HolidayNew';
 
 const HolidayList = () => {
   const { axios } = useAuth();
   const [holidays, setHolidays] = useState([]);
-  const [HolidayNew, setHolidayNew]=useState([]);
-  const [ districts,setDistricts]=useState([]);
   const [searchResult, setSearchResult] = useState([]);
   const [originalResult, setOriginalResult] = useState([]); // 원본 데이터 저장
   const [showModal, setShowModal] = useState(false);
@@ -28,6 +27,11 @@ const HolidayList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   const navigate = useNavigate();
+  const districts = {
+    '상록구': ['감골도서관', '반월도서관', '부곡도서관', '본오도서관', '상록수도서관', '상록어린이도서관', '성포도서관', '수암도서관'],
+    '단원구': ['관산도서관', '단원어린이도서관', '미디어도서관', '선부도서관', '원고잔도서관',]
+  };
+  
   useEffect(() => {
     fetchHolidays();
   }, []);

@@ -56,7 +56,7 @@ public class HolidayController {
             holidays = holidayService.getHolidaysByDate(localDate);
         } else {
             holidays = holidayService.getAllHolidays();
-        }
+        }	
 
         for (Holiday h : holidays) {
             if (h.getLibrary() != null) {
