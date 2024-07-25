@@ -134,19 +134,37 @@ function AdminFaqDetailForm({ id, }) {
             <main className="admin-page-main">
                 <div className="admin-page-body">
                     <div class='board-detail-form'>
+                        <form>
                         <div className="admin-page-title">
                             <h2>FAQ</h2>
                         </div>
-                        <form>
-                            <div class='bdetail-top'>
-                                <p style={{ textAlign: 'left' }}>번호 : {id}</p>
-                                <p>작성자 : {createdBy}</p>
-                                <p style={{ textAlign: 'right' }}>작성일 : {regDate}</p>
-                            </div>
                             <div class='content-container1'>
                                 <div class='input-container'>
-                                    <input type='text' name='title' value={title} onChange={updateTitle} />
-                                    <textarea type='text' name='content' value={content} onChange={updateContent} />
+                                    <table class='b-inputtable'>
+                                        <tr>
+                                            <th scope='row'>글 번호</th>
+                                            <td>{id}</td>
+                                            <th scope='row'>조회 수</th>
+                                            <td>0</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope='row'>작성자</th>
+                                            <td>{createdBy}</td>
+                                            <th scope='row'>작성일</th>
+                                            <td>{regDate}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope='row'>제목</th>
+                                            <td colSpan="3">
+                                                <input type='text' name='title' value={title} onChange={updateTitle} />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colSpan='4'>
+                                                <textarea type='text' name='content' value={content} onChange={updateContent} />
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
                                 <BoardImgList images={images} handleImgChange={handleImgChange} onImgDelete={onImgDelete} />
                             </div>

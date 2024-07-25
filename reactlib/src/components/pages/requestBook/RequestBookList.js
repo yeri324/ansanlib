@@ -58,51 +58,70 @@ const RequestBookList = () => {
 
   return (
     <div className="mypage-container">
-    <div className='mypage-header'>
-      <h2 className='mypage-header-name'>{name}님의 도서 신청 목록</h2>
+        <div className='mypage-header'>
+            <h2 className='mypage-header-name'>{name}님의 도서 신청 목록</h2>
+        </div>
+        <div className="request_books_list">
+            <table>
+                <thead>
+                    <tr>
+                        <th>책 제목</th>
+                        <th>저자</th>
+                        <th>ISBN</th>
+                        <th>출판사</th>
+                        <th>출판일</th>
+                        <th>신청한 도서관</th>
+                        <th style={{ width: '60px' }}>선택</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {requestBooks.map(book => (
+                        <tr key={book.id}>
+                            <td>{book.title}</td>
+                            <td>{book.author}</td>
+                            <td>{book.isbn}</td>
+                            <td>{book.publisher}</td>
+                            <td>{new Date(book.pub_date).toLocaleDateString()}</td>
+                            <td>{book.lib_name}</td>
+                            <td>
+                                <input
+                                    type="checkbox"
+                                    checked={selectedRequestBooks.includes(book.id)}
+                                    onChange={() => handleSelectRequestBook(book.id)}
+                                />
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+            {!isErrored && (
+              <div className='actions-container'>
+                <div className="actions">
+                    <button
+                        onClick={selectAll}
+                        disabled={selectedRequestBooks.length === requestBooks.length}
+                    >
+                        전체 선택
+                    </button>
+                    <button
+                        onClick={deselectAll}
+                        disabled={selectedRequestBooks.length === 0}
+                    >
+                        전체 선택해제
+                    </button>
+                    <button
+                        onClick={handleDeleteRequestBook}
+                        disabled={selectedRequestBooks.length === 0}
+                    >
+                        삭제
+                    </button>
+                </div>
+              </div>  
+            )}
+            {isErrored && <h2 className="error_message">신청한 도서가 없습니다.</h2>}
+        </div>
     </div>
-    <div className="request_books_list">
-        <ul>
-            {requestBooks.map(book => (
-                <li key={book.id}>
-                    <input
-                        type="checkbox"
-                        checked={selectedRequestBooks.includes(book.id)}
-                        onChange={() => handleSelectRequestBook(book.id)}
-                    />
-                    책 제목: {book.title} <br/>
-                    저자: {book.author} (ISBN: {book.isbn})<br />
-                    출판사: {book.publisher}, 출판일: {new Date(book.pub_date).toLocaleDateString()}<br />
-                    신청 한 도서관: {book.lib_name}
-                </li>
-            ))}
-        </ul>
-        {!isErrored && (
-            <div className="actions">
-                <button 
-                    onClick={selectAll}
-                    disabled={selectedRequestBooks.length === requestBooks.length}
-                >
-                    전체 선택
-                </button>
-                <button 
-                    onClick={deselectAll}
-                    disabled={selectedRequestBooks.length === 0}
-                >
-                    전체 선택해제
-                </button>
-                <button 
-                    onClick={handleDeleteRequestBook}
-                    disabled={selectedRequestBooks.length === 0}
-                >
-                    삭제
-                </button>
-            </div>
-        )}
-        {isErrored && <h2 className="error_message">신청한 도서가 없습니다.</h2>}
-    </div>
-    </div>
-);
+  );  
 };
 
 export default function() {

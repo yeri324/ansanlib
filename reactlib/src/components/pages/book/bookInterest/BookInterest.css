@@ -1,15 +1,17 @@
-.bookInterest {
-  padding: 20px;
+
+.mypage-container .bookInterest{
+  margin: 30px auto;
+  width: 75%;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  padding: 50px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
-.bookInterest .content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
 .bookInterest .card {
-  margin: 15px 0;
+  margin-bottom: 15px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -20,68 +22,75 @@
   transform: scale(1.02);
 }
 
-.bookInterest .row.g-0 {
+.bookInterest .row {
   display: flex;
-  flex-wrap: nowrap;
-  align-items: stretch;
+  cursor: pointer;
 }
 
-.bookInterest .img-container {
-  overflow: hidden;
-  border-right: 1px solid #ddd;
+.bookInterest .row .img-container{
+  flex: 0 1 180px;
+  min-height: 200px;
 }
-
-.bookInterest .img-container img {
-  width: 100%;
+.bookInterest .row .img-container > img{
   height: 100%;
-  object-fit: contain;
+}
+.bookInterest .row .text-center{
+  flex: 1;
 }
 
-.bookInterest .card-body {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+.bookInterest .row .text-center > .card-body{
+display: flex;
+flex-direction: column;
+height: 100%;
 }
 
-.bookInterest .card-title {
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-  font-weight: bold;
+.bookInterest .card-body > h5,
+.bookInterest .card-body > p{
+  flex: 1;
+  margin: 10px 0 ;
 }
 
-.bookInterest .card p {
-  margin: 5px 0;
+.bookInterest .row .delButton{
+  flex: 0 0.5 150px;
 }
 
 .bookInterest .card button {
-  background-color: #007bff;
-  color: black;
+  background-color: #e93030;
+  color: #fff;
   border: none;
-  border: 3px solid black;
-  padding: 10px 20px;
+  height: 100%;
+  width: 100%;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
 .bookInterest .card button:hover {
-  background-color: #0056b3;
+  background-color: #c91d1d;
 }
 
-.bookInterest .no-image {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  background-color: #f5f5f5;
-  color: #aaa;
-  font-size: 1rem;
+.bookInterest .interest_pagination{
+  margin-top: 35px;
+  text-align: center;
 }
 
-.bookInterest .message {
-  margin-top: 20px;
+.bookInterest .interest_pagination > span{
+  font-size: 20px;
+  display: inline-block;
+  margin: 0 20px;
+}
+
+.bookInterest .interest_pagination > button{
+  background-color: #d3d3d3;
+  border: none;
+  color: #000000;
+  border-radius: 5px;
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
+}
+
+.bookInterest .interest_pagination > button:hover{
+  background-color: #aeb0be;
+
 }

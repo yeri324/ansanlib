@@ -54,99 +54,70 @@ const ApiBookSearch = () => {
     return (
         <>
             <Header />
-
             <main>
-                {/* Breadcrumbs */}
-                <div className="breadcrumbs">
-                    <div className="page-header d-flex align-items-center">
-                        <div className="container position-relative">
-                            <div className="row d-flex justify-content-center">
-                                <div className="col-lg-6 text-center">
-                                    <h2>네이버 API BOOK 검색</h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div className="search-header">
+                    <h2 className='search-header-name'>네이버 API BOOK 검색</h2>
                 </div>
-                {/* End Breadcrumbs */}
-
-                <section className="sample-page">
-                    <div className="ApiBookContent">
-                        <div className="accordion" id="accordionExample">
-                            <div className="accordion-item">
-
-                                <div id="ApiCollapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                    <div className="accordion-body">
-                                        <form onSubmit={handleSearch} style={{ width: '100%' }}>
-                                            <div className="input-group">
-                                                <div className="input-group-text" id="btnGroupAddon2">책이름</div>
-                                                <input value={keyword} onChange={(e) => setKeyword(e.target.value)} name="keyword" type="text" className="form-control" aria-label="Input group example" aria-describedby="btnGroupAddon2" />
-                                            </div><br />
-                                            <button className="btn btn-success">네이버 책 API 검색</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><br />
-                        <div className="ApiBookSearchDetail">
-                            <h2>{`'${keyword}' 검색 결과 ${books.total}건 검색`}</h2>
-                            <div className="input-group">
-                                <div className="input-group-text" id="btnGroupAddon2">정렬 기준</div>
-                                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="form-control">
-                                    <option value="title">제목</option>
-                                    <option value="author">저자</option>
-                                    <option value="publisher">출판사</option>
-                                    <option value="pubdate">출판일</option>
-                                    <option value="discount">가격</option>
-                                </select>
-                            </div><br />
-
-                            <div className="input-group">
-                                <div className="input-group-text" id="btnGroupAddon2">정렬 순서</div>
-                                <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)} className="form-control">
-                                    <option value="asc">오름차순</option>
-                                    <option value="desc">내림차순</option>
-                                </select>
-                            </div><br />
+                <section className="ApiSearch">
+                    <form className="search-form" onSubmit={handleSearch} >
+                        <div className="search-group">
+                            <div className="search-group-text">네이버 API 검색</div>
+                            <input value={keyword} onChange={(e) => setKeyword(e.target.value)} name="keyword" type="text" className="search-input" aria-label="Input group example" aria-describedby="btnGroupAddon2" />
                         </div>
-                        <div>
-                            <nav aria-label="Page navigation example" style={{ display: books.total > 0 ? 'block' : 'none' }}>
-                                <ul className="pagination justify-content-center">
-                                    <li className="page-item">
-                                        <button className="page-link" onClick={() => { setPageMaker((prev) => ({ ...prev, cri: { page: pageMaker.startPage - 1 } })); fetchBooks(pageMaker.startPage - 1); }} disabled={!pageMaker.isPrev}>이전</button>
+                        <button className="search-button">검색</button>
+                    </form>
+                    <div className="ApiBookSearchDetail">
+
+                        <div className="search-group-text">정렬 기준 : </div>
+                        <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="search-input">
+                            <option value="title">제목</option>
+                            <option value="author">저자</option>
+                            <option value="publisher">출판사</option>
+                            <option value="pubdate">출판일</option>
+                            <option value="discount">가격</option>
+                        </select>
+                        <div className="search-group-text">정렬 순서 : </div>
+                        <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)} className="search-input">
+                            <option value="asc">오름차순</option>
+                            <option value="desc">내림차순</option>
+                        </select>
+                    </div>
+                    <h4>{`'${keyword}' 검색 결과 ${books.total}건 검색`}</h4>
+                    <div className='search-list'>
+                        <nav aria-label="Page navigation example" >
+                            <ul className="pagination justify-content-center">
+                                <li className="page-item">
+                                    <button className="page-link" onClick={() => { setPageMaker((prev) => ({ ...prev, cri: { page: pageMaker.startPage - 1 } })); fetchBooks(pageMaker.startPage - 1); }} disabled={!pageMaker.isPrev}>이전</button>
+                                </li>
+                                {Array.from({ length: pageMaker.endPage - pageMaker.startPage + 1 }, (_, i) => (
+                                    <li key={i} className={`page-item ${pageMaker.cri.page === pageMaker.startPage + i ? 'active' : ''}`}>
+                                        <button className="page-link" onClick={() => { setPageMaker((prev) => ({ ...prev, cri: { page: pageMaker.startPage + i } })); fetchBooks(pageMaker.startPage + i); }}>{pageMaker.startPage + i}</button>
                                     </li>
-                                    {Array.from({ length: pageMaker.endPage - pageMaker.startPage + 1 }, (_, i) => (
-                                        <li key={i} className={`page-item ${pageMaker.cri.page === pageMaker.startPage + i ? 'active' : ''}`}>
-                                            <button className="page-link" onClick={() => { setPageMaker((prev) => ({ ...prev, cri: { page: pageMaker.startPage + i } })); fetchBooks(pageMaker.startPage + i); }}>{pageMaker.startPage + i}</button>
-                                        </li>
-                                    ))}
-                                    <li className="page-item">
-                                        <button className="page-link" onClick={() => { setPageMaker((prev) => ({ ...prev, cri: { page: pageMaker.endPage + 1 } })); fetchBooks(pageMaker.endPage + 1); }} disabled={!pageMaker.isNext}>다음</button>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
+                                ))}
+                                <li className="page-item">
+                                    <button className="page-link" onClick={() => { setPageMaker((prev) => ({ ...prev, cri: { page: pageMaker.endPage + 1 } })); fetchBooks(pageMaker.endPage + 1); }} disabled={!pageMaker.isNext}>다음</button>
+                                </li>
+                            </ul>
+                        </nav>
+
 
                         <div className="container">
                             {books.items.map((book, index) => (
-                                <div key={index} className="card mb-3" style={{ width: '100%' }}>
-                                    <div className="row ApiBookDetail">
-                                        <div className="col-md-4 bookapiimage">
-                                            <img src={book.image} className="img-fluid rounded-start" alt="책 이미지" />
-                                        </div>
-                                        <div className="col-md-8">
-                                            <div className="card-body" style={{ textAlign: 'left' }}>
-                                                <h5 className="card-title" style={{ fontSize: '1.3rem' }}>{book.title}</h5>
-                                                <p className="card-title" style={{ fontSize: '1rem' }}>{`ISBN : ${book.isbn}`}</p>
-                                                <p className="card-title" style={{ fontSize: '1rem' }}>{`저자 : ${book.author}`}</p>
-                                                <p className="card-title" style={{ fontSize: '1rem' }}>{`출판사 : ${book.publisher}`}</p>
-                                                <p className="card-title" style={{ fontSize: '1rem' }}>{`출판일 : ${book.pubdate}`}</p>
-                                                <p className="card-title" style={{ fontSize: '1rem' }}>{`가격 : ${book.discount}`}</p>
-                                                <a target="_blank" rel="noopener noreferrer" href={book.link}>자세히 보기</a>
-                                            </div>
-                                        </div>
+                                <div key={index} className="row" style={{ width: '100%' }}>
+                                    <div className="bookapiimage">
+                                        <img src={book.image} className="img-fluid rounded-start" alt="책 이미지" />
+                                    </div>
+                                    <div className="card-body">
+                                        <h5 className="card-title" style={{ fontWeight: 'bold' }}>{book.title}</h5>
+                                        <p className="card-title">{`ISBN : ${book.isbn}`}</p>
+                                        <p className="card-title">{`저자 : ${book.author}`}</p>
+                                        <p className="card-title">{`출판사 : ${book.publisher}`}</p>
+                                        <p className="card-title">{`출판일 : ${book.pubdate}`}</p>
+                                        <p className="card-title">{`가격 : ${book.discount}`}</p>
+                                        <a target="_blank" rel="noopener noreferrer" href={book.link}>자세히 보기</a>
                                     </div>
                                 </div>
+
                             ))}
                         </div>
 
@@ -167,14 +138,15 @@ const ApiBookSearch = () => {
                                 </ul>
                             </nav>
                         </div>
-                        <div className="key_word_cloud_gender">
-                            <h1>Keyword Clouds for Genders</h1>
-                            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-                                <KeywordCloud_gender gender="MALE" />
-                                <KeywordCloud_gender gender="FEMALE" />
-                            </div>
-                        </div> <br />
                     </div>
+                    <div className="key_word_cloud_gender">
+                        <h1>Keyword Clouds for Genders</h1>
+                        <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                            <KeywordCloud_gender gender="MALE" />
+                            <KeywordCloud_gender gender="FEMALE" />
+                        </div>
+                    </div> <br />
+
                 </section>
             </main>
             <Footer />

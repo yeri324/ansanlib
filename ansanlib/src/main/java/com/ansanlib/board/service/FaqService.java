@@ -10,8 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,7 +18,9 @@ import com.ansanlib.board.dto.FaqDto;
 import com.ansanlib.board.dto.FaqFormDto;
 import com.ansanlib.board.repository.FaqImgRepository;
 import com.ansanlib.board.repository.FaqRepository;
+import com.ansanlib.book.service.FileService;
 import com.ansanlib.entity.Faq;
+import com.ansanlib.entity.FaqImg;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +33,7 @@ public class FaqService {
 	private final FaqRepository faqRepository;
 	private final FaqImgRepository faqImgRepository;
 	private final FaqImgService faqImgService;
+	private final FileService fileService;
 
 	// faq추가
 	public Long createFaq(Faq faq, List<MultipartFile> faqImgFile) throws Exception {
@@ -90,9 +91,23 @@ public class FaqService {
 
 	// 삭제하기
 	public void deleteFaq(Long id) {
+		Optional<Faq> faq = faqRepository.findById(id);
+		List<FaqImg> imgs = faq.get().getFaqImgs();
+		
+		if (imgs != null && imgs.size() != 0) {
+			try {
+				for (FaqImg img : imgs) {
+					fileService.deleteFile(img.getImgUrl());
+				}
+				fileService.deleteFolder(id, "faq");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		faqRepository.deleteById(id);
 	}
 
+	// 상세정보 가져오기
 	public Faq getDetail(FaqDto faqDto) {
 		Faq faq = faqRepository.findById(faqDto.getId()).orElseThrow(EntityNotFoundException::new);
 		return faq;

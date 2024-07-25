@@ -6,6 +6,7 @@
   padding: 50px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
+  min-height: 500px;
   }
 
   .reservation_form .reservation-form-field{
@@ -33,7 +34,7 @@
   }
 
   .reservation-form button {
-    background-color: #007bff;
+    background-color: #5c6bc0;
     width: 200px;
     height: 45px;
     color: #fff;
@@ -43,5 +44,10 @@
     border-radius: 4px;
     cursor: pointer;
     margin-top: 10px;
+  }
+
+  
+  .reservation-form button:hover{
+    background-color: #464797
   }
   

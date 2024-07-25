@@ -3,11 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import './BookDetailPage.css'; // 스타일 파일을 임포트합니다.
 import Header from '../../../fragments/header/header';
 import Footer from '../../../fragments/footer/footer';
-import RedirectLogin from '../../../helpers/RedirectLogin';
-import Auth from '../../../helpers/Auth';
 import useAuth, { LOGIN_STATUS } from '../../../hooks/useAuth';
-import KeywordCloud_bookId from '../../../fragments/home/KeywordCloud_bookId';
-
+import axios from 'axios';
 
 const BookDetailPage = () => {
   const { id } = useParams();
@@ -15,7 +12,7 @@ const BookDetailPage = () => {
   const [book, setBook] = useState({});
   const [bookList, setBookList] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
-  const { userId, axios } = useAuth();
+  const { userId } = useAuth();
 
   useEffect(() => {
     const fetchBookDetails = async () => {
@@ -70,11 +67,8 @@ const BookDetailPage = () => {
 
   return (
     <>
-
-      <RedirectLogin />
       <Header />
       <main className="bookDetail">
-
         <div className="breadcrumbs">
           <div className="page-header d-flex align-items-center">
             <div className="container position-relative">
@@ -86,6 +80,7 @@ const BookDetailPage = () => {
             </div>
           </div>
         </div>
+
         <section className="sample-page">
           <div className="content centered-content">
             {errorMessage && <p className="fieldError">{errorMessage}</p>}
@@ -97,7 +92,6 @@ const BookDetailPage = () => {
                     src={`http://localhost:8090/images/book/${book.bookImg.imgName}`} 
                     alt={book.title} 
                     className="img-fluid cover-img" 
-
                   />
                 ) : (
                   <div className="no-image">No Image</div>
@@ -115,10 +109,7 @@ const BookDetailPage = () => {
             </div><br />
 
             <div className="row g-1 overflow-x-auto">
-
-            <div className="row g-0 overflow-x-auto">
-              <table className="table full-width">
-
+              <table>
                 <thead className="table-dark">
                   <tr>
                     <th>위치</th>
@@ -130,21 +121,18 @@ const BookDetailPage = () => {
                 <tbody className="table-detail">
                   {bookList.map((relatedBook) => (
                     <tr key={relatedBook.id}>
-
                       <td style={{border: "1px solid black"}}>{relatedBook.libName}</td>
                       <td style={{border: "1px solid black"}}>{relatedBook.status ?? '정보 없음'}</td>
                       <td style={{border: "1px solid black"}}>{relatedBook.returnDay}</td>
                       <td style={{border: "1px solid black"}}>
-
                         <div className="card-body">
                           <div className="row">
-                            <button disabled={relatedBook.status !== 'AVAILABLE'} onClick={alertLogin || (() => handleReservation(relatedBook.id))}>
+                            <button disabled={relatedBook.status !== 'AVAILABLE'} onClick={() => window.location.href = `/reservation/new?id=${encodeURIComponent(book.id)}&title=${encodeURIComponent(book.title)}`}>
                               도서예약
                             </button>
-                          </div>
+                          </div> 
                           <div className="row">
-                            <button onClick={(() => handleInterest(relatedBook.id))}>
-
+                            <button onClick={(LOGIN_STATUS ==="LOGGED_IN")?() => handleInterest(relatedBook.id):alertLogin }>
                               관심도서담기
                             </button>
                           </div>
@@ -160,10 +148,6 @@ const BookDetailPage = () => {
               <div><h3>책소개</h3></div>
               <div className="left-align">{formatText(book.bookDetail)}</div>
             </div>
-            <div className="key_wordcloud">
-              <KeywordCloud_bookId bookId={id} />
-            </div>
-</div>
           </div>
         </section>
       </main>
@@ -175,10 +159,8 @@ const BookDetailPage = () => {
 const BookDetailPageWrapper = () => {
   return (
     <>
-      <RedirectLogin />
-      <Auth loginStatus={LOGIN_STATUS.LOGGED_IN}>
+
         <BookDetailPage />
-      </Auth>
     </>
   );
 };

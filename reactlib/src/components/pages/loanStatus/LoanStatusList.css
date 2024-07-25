@@ -6,29 +6,34 @@ background-color: #fff;
 padding: 50px;
 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 border-radius: 8px;
+min-height: 500px;
+}
+
+.loan-status-container table{
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
+.loan-status-container thead {
+  border-bottom: 2px solid #4976f3;
+}
+
+.loan-status-container th,
+.loan-status-container td {
+  padding: 15px 15px;
+  text-align: center;
+  font-size: 14px;
+  border-top: 1px solid #eee;
 }
 
 
-  
-  /* 목록 스타일 */
-  .loan-status-container ul {
-    list-style-type: none; /* 기본 목록 스타일 제거 */
-    padding: 0; /* 패딩 제거 */
-    margin: 0; /* 마진 제거 */
-  }
-  
-  /* 목록 항목 스타일 */
-  .loan-status-container li {
-    padding: 10px 0; /* 항목 간의 여백 설정 */
-    border-bottom: 1px solid #ddd; /* 항목 간의 구분선 설정 */
-    color: #555; /* 텍스트 색상 설정 */
-    text-align: center;
-  }
-  
-  /* 마지막 항목의 구분선 제거 */
-  .loan-status-container li:last-child {
-    border-bottom: none; /* 마지막 항목은 구분선 제거 */
-  }
+.loan-status-container th {
+  font-weight: bold;
+
+}
   
   /* 오류 메시지 스타일 */
   .loan-status-container p {

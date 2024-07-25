@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useRealName from '../../hooks/useRealName';
 import useAuth, { LOGIN_STATUS } from '../../hooks/useAuth';
 import Auth from '../../helpers/Auth';
@@ -9,6 +9,7 @@ import Header from '../../fragments/header/header';
 import '../../fragments/header/header.css';
 import './ReservationForm.css';
 import Side from '../myPage/Side';
+import { useSearchParams } from 'react-router-dom';
 
 const ReservationForm = () => {
   const name = useRealName();
@@ -16,7 +17,21 @@ const ReservationForm = () => {
   const { axios } = useAuth();
 
   const [bookId, setBookId] = useState('');
+  const [title, setTitle] = useState('');
   const [reservationDate, setReservationDate] = useState('');
+  const [editable, setEditable] = useState(true);
+
+  //id, title Query parameter 처리
+  const [searchParams, _setSearchParams] = useSearchParams();
+  useEffect(() => {
+    const bookId = searchParams.get("id");
+    const bookTitle = searchParams.get("title");
+    if(bookId && bookTitle) {
+      setBookId(bookId);
+      setTitle(bookTitle);
+      setEditable(false);
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -52,8 +67,20 @@ const ReservationForm = () => {
                 type='text'
                 value={bookId}
                 onChange={(e) => setBookId(e.target.value)}
+                disabled={!editable}
                 required
               />
+            </div>
+            <div className='reservation-form-field'>
+                <label htmlFor='title'>도서 제목</label>
+                <input 
+                  id = 'title'
+                  type='text'
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  disabled={!editable}
+                  required
+                />
             </div>
             <div className='reservation-form-field'>
               <label htmlFor='reservationDate'>예약 날짜:</label>

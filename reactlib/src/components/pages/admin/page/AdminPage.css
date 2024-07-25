@@ -66,7 +66,7 @@ min-height: 800px;
 
 
 /*테이블 열 */
-.admin-th-tr{
+.admin-th-tr th{
   height: 40px;
   text-align: center;
   background-color: #B0C4DE;
@@ -110,3 +110,7 @@ padding: 10px;
   padding: 10px;
 }
 
+.admin-book-cover {
+  width: 130px;
+  height: 170px;
+}

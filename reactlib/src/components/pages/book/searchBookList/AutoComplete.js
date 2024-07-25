@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Autosuggest from 'react-autosuggest';
 import axios from 'axios';
+import classNames from 'classnames';
 
 const AutoComplete = ({ name, value, onChange, label }) => {
   const [suggestions, setSuggestions] = useState([]);
@@ -33,6 +34,7 @@ const AutoComplete = ({ name, value, onChange, label }) => {
 
   const inputProps = {
     placeholder: `Search ${label}`,
+    className:'searchForm',
     value,
     onChange: (e, { newValue }) => onChange(e, { newValue, name })
   };

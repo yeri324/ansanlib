@@ -23,7 +23,7 @@ const Side = () => {
         </li>
         <li onClick={toggleReservationSubmenu} className="has-submenu">
           예약
-          <span className="arrow">{showReservationSubmenu ? "▲" : "▼"}</span>
+          <span className="arrow">{showReservationSubmenu ? " ▲" : " ▼"}</span>
           {showReservationSubmenu && (
             <ul className="submenu">
               <li>
@@ -39,8 +39,8 @@ const Side = () => {
           <Link to="/loanstatus">대출</Link>
         </li>
         <li onClick={toggleRequestBookSubmenu} className="has-submenu">
-          희망도서 신청
-          <span className="arrow">{showRequestBookSubmenu ? "▲" : "▼"}</span>
+          희망도서
+          <span className="arrow">{showRequestBookSubmenu ? " ▲" : " ▼"}</span>
           {showRequestBookSubmenu && (
             <ul className="submenu">
               <li>
@@ -51,6 +51,9 @@ const Side = () => {
               </li>
             </ul>
           )}
+        </li>
+        <li>
+          <Link to="/book/interest/list">관심도서</Link>
         </li>
       </ul>
     </div>
