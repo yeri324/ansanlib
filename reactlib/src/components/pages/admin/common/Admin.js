@@ -14,6 +14,8 @@ import LibraryPage from '../../visit/LibraryPage';
 import AdminBookListTable from '../item/AdminBookListTable';
 import AdminRecBoardTable from '../item/AdminRecBoardTable';
 import AdminLoanTable from '../item/AdminLoanTable';
+import ansanMap from '../../../images/libInfo/map.png';
+import locMark from '../../../images/libInfo/location.png';
 
 const Admin = () => {
   const { axios } = useAuth();
@@ -27,12 +29,14 @@ const Admin = () => {
   const [searchBook, setSearchBook] = useState([]);
   const [searchLoan, setSearchLoan] = useState([]);
   const [bookList, setBookList] = useState([]);
+  const [todayVisits, setTodayVisits] = useState(0); // 오늘의 방문자 수 상태 추가
 
   useEffect(() => {
     fetchHolidays(date);
     fetchBookRequests();
     fetchNewBooks();
     fetchLoans(); // Fetch the loan data on component mount
+    fetchTodayVisits(); // Fetch today's visit count on component mount
   }, [date]);
 
   const handleDateClick = (date) => {
@@ -117,6 +121,16 @@ const Admin = () => {
       });
   };
 
+  const fetchTodayVisits = () => {
+    axios.get('/api/visits/today')
+      .then(response => {
+        setTodayVisits(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching today\'s visits:', error);
+      });
+  };
+
   const handleCloseModal = () => {
     setShowDetail(false);
   };
@@ -148,28 +162,21 @@ const Admin = () => {
                 />
               </div>
               <div className="admin-left-box3">
-              <h4><a href="admin/holiday/list">휴관 도서관</a></h4>
+                <h4><a href="admin/holiday/list">휴관 도서관</a></h4>
                 <HolidayListTable holidays={holidays.slice(0, 3)} excludedColumns={['delete']} />
               </div>
-
-
-<div className='admin-left-box4'>
-
-</div>
-
-
-
-
-
             </div>
             <div className="admin-main-right" style={{ width: "75%" }}>
               <div className="admin-right-box1">
                 <div className='admin-right-graph'>
                   <LibraryPage />
                 </div>
-                <div className='admin-right-graph'>그래프2</div>
-                <div className='admin-right-graph'>그래프3</div>
-                <div className='admin-right-graph'>그래프4</div>
+                <div className='admin-right-graph'>
+                  <strong>오늘의 방문자 수는</strong>
+                  <br/> {todayVisits} 명 입니다.
+                </div>
+                <div className='admin-right-graph'>준비중입니다.</div>
+                <div className='admin-right-graph'>준비중입니다.</div>
               </div>
               <div className="admin-right-box2">
                 <div className='admin-box2-table'>
@@ -177,14 +184,14 @@ const Admin = () => {
                   <AdminRecBoardTable limit={3} />
                 </div>
                 <div className='admin-box2-table'>
-                  <h4><a href="admin/book/request">희망도서신청</a></h4>
+                  <h4><a href="admin/book/request">희망 도서</a></h4>
                   <AdminBookRequestTable searchResult={searchResult} excludedColumns={['count']} />
                 </div>
               </div>
               <div className="admin-right-box2">
                 <div className='admin-box2-table'>
                   <h4><a href="admin/book/list">신간 도서</a></h4>
-                  <AdminBookListTable books={searchBook} />
+                  <AdminBookListTable books={searchBook} excludedColumns={['total_count','img']} />
                 </div>
                 <div className='admin-box2-table'>
                   <h4><a href="admin/user/search">대출 목록</a></h4>

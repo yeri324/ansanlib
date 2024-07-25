@@ -1,6 +1,7 @@
 package com.ansanlib.admin.service;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -18,14 +19,10 @@ import com.ansanlib.book.repository.BookRepository;
 import com.ansanlib.book.service.FileService;
 import com.ansanlib.entity.Book;
 import com.ansanlib.entity.BookImg;
-import com.ansanlib.entity.Library;
 import com.ansanlib.entity.LoanStatus;
 import com.ansanlib.entity.RecBoard;
 import com.ansanlib.entity.RequestBook;
 import com.ansanlib.requestBook.repository.RequestBookRepository;
-
-import jakarta.persistence.EntityNotFoundException;
-
 @Service
 public class AdminBookService {
 
@@ -125,29 +122,38 @@ private LoanStatusRepository loanStatusRepository;
 	    }
 
 	//도서권수 수정
-	 public void editLib(Long bookId, BookDto bookDto) throws Exception {
-	        Optional<Book> optionalBook = bookRepository.findById(bookId);
-	        if (optionalBook.isPresent()) {
-	            Book book = optionalBook.get();
-	            book.setLibName(bookDto.getLibName());
-	            book.setCount(bookDto.getCount());
-	            bookRepository.save(book);
-	        } else {
-	            throw new Exception("Book not found");
-	        }
+	 @Transactional
+	    public void updateBookCountByLibNameAndTitle(String libName, String title, int count) {
+		 System.out.println(libName);
+		 System.out.println(count);
+	        bookRepository.updateBookCountByLibNameAndTitle(libName, title, count);
 	    }
+	 
+	 
 		
 		
 		
 		
 //		//삭제
 	 @Transactional
-	 public void deleteBookById(Long bookId) {
-	     // 먼저 자식 데이터 삭제
-	     recBoardRepository.deleteByBookNum(bookId);
-	     // 이후 부모 데이터 삭제
-	     bookRepository.deleteById(bookId);
-	 }
+	    public void deleteBookByLibNameAndTitle(String libName, String title) throws Exception {
+	        Optional<Book> bookOptional = bookRepository.findByLibNameAndTitle(libName, title);
+	        if (bookOptional.isPresent()) {
+	            Book book = bookOptional.get();
+
+	            // 책 이미지 삭제 로직 추가
+	            if (book.getBookImg() != null && book.getBookImg().getImgName() != null) {
+	                String imgPath = Paths.get("src/main/resources/static/images/book_images",
+	                        String.valueOf(book.getId()), book.getBookImg().getImgName()).toString();
+	                fileService.deleteFile(imgPath);
+	            }
+
+	            // 책 삭제
+	            bookRepository.deleteByLibNameAndTitle(libName, title);
+	        } else {
+	            throw new IllegalArgumentException("Book not found with libName: " + libName + " and title: " + title);
+	        }
+	    }
 
 	 
 	 // 메인 추천도서

@@ -22,6 +22,11 @@ public class Visit {
 	private LocalDateTime timeStamp;
 	
 	private String page;
+
+	private int count;
+	
+
+
 	
 	
 }

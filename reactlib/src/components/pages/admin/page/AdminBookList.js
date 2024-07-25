@@ -38,7 +38,7 @@ const AdminBookList = () => {
 
   const getBookList = async () => {
     try {
-      const response = await axios.get('http://localhost:8090/api/admin/book/list');
+      const response = await axios.get('/api/admin/book/list');
       if (Array.isArray(response.data)) {
         groupBooks(response.data);
       } else {

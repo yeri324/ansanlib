@@ -1,8 +1,15 @@
 package com.ansanlib.admin.controller;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,19 +26,20 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ansanlib.admin.service.AdminBookService;
 import com.ansanlib.book.dto.BookDto;
+import com.ansanlib.book.service.FileService;
 import com.ansanlib.entity.Book;
 import com.ansanlib.entity.LoanStatus;
 import com.ansanlib.entity.RecBoard;
 import com.ansanlib.entity.RequestBook;
 import com.ansanlib.response.CommonListResponse;
-
 @RestController
 @RequestMapping("/api/admin/book")
 public class AdminBookController {
 
 	@Autowired
 	private AdminBookService adminBookService;
-
+	 @Autowired
+	    private FileService fileService; // fileService 주입
 	
 //도서-도서관 중복확인
 	   @GetMapping("/exists")
@@ -61,7 +69,6 @@ public class AdminBookController {
 	    }
 		
 	
-
 	
 
 	
@@ -92,32 +99,33 @@ public class AdminBookController {
 	    }
 
 	//책 권수 수정
-	 @PutMapping("/{bookId}/updateLibrary")
-	    public ResponseEntity<?> editLibrary(@PathVariable Long bookId, @RequestBody BookDto bookDto) {
+	 @PutMapping("/update")
+	    public ResponseEntity<String> updateLibrary(
+	            @RequestParam String libName, 
+	            @RequestParam String title, 
+	            @RequestParam int count) {
 	        try {
-	            adminBookService.editLib(bookId, bookDto);
-	            return ResponseEntity.ok().build();
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error editing library entry: " + e.getMessage());
+	            adminBookService.updateBookCountByLibNameAndTitle(libName, title, count);
+	            return new ResponseEntity<>("Library updated successfully", HttpStatus.OK);
+	        } catch (IllegalArgumentException e) {
+	            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 	        }
 	    }
 		
 		
 			
 //		//삭제
-	 @DeleteMapping("/{bookId}")
-	 public ResponseEntity<String> deleteBook(@PathVariable Long bookId) {
-	     try {
-	         System.out.println("Attempting to delete book with id: " + bookId);
-	         adminBookService.deleteBookById(bookId);
-	         System.out.println("Successfully deleted book with id: " + bookId);
-	         return ResponseEntity.ok("Book deleted successfully");
-	     } catch (Exception e) {
-	         e.printStackTrace();
-	         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete book: " + e.getMessage());
-	     }
-	 }
+	 @DeleteMapping("/delete")
+	 public ResponseEntity<String> deleteBook(@RequestParam String libName, @RequestParam String title) {
+	        try {
+	            adminBookService.deleteBookByLibNameAndTitle(libName, title);
+	            return new ResponseEntity<>("Book deleted successfully", HttpStatus.OK);
+	        } catch (IllegalArgumentException e) {
+	            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+	        } catch (Exception e) {
+	            return new ResponseEntity<>("Error deleting book", HttpStatus.INTERNAL_SERVER_ERROR);
+	        }
+	    }
 	 
 
 
