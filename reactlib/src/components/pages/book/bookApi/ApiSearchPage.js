@@ -104,19 +104,19 @@ const ApiBookSearch = () => {
                         <div className="container">
                             {books.items.map((book, index) => (
                                 <div key={index} className="row" style={{ width: '100%' }}>
-                                        <div className="bookapiimage">
-                                            <img src={book.image} className="img-fluid rounded-start" alt="책 이미지" />
-                                        </div>
-                                        <div className="card-body">
-                                            <h5 className="card-title" style={{fontWeight:'bold'}}>{book.title}</h5>
-                                            <p className="card-title">{`ISBN : ${book.isbn}`}</p>
-                                            <p className="card-title">{`저자 : ${book.author}`}</p>
-                                            <p className="card-title">{`출판사 : ${book.publisher}`}</p>
-                                            <p className="card-title">{`출판일 : ${book.pubdate}`}</p>
-                                            <p className="card-title">{`가격 : ${book.discount}`}</p>
-                                            <a target="_blank" rel="noopener noreferrer" href={book.link}>자세히 보기</a>
-                                        </div>
+                                    <div className="bookapiimage">
+                                        <img src={book.image} className="img-fluid rounded-start" alt="책 이미지" />
                                     </div>
+                                    <div className="card-body">
+                                        <h5 className="card-title" style={{ fontWeight: 'bold' }}>{book.title}</h5>
+                                        <p className="card-title">{`ISBN : ${book.isbn}`}</p>
+                                        <p className="card-title">{`저자 : ${book.author}`}</p>
+                                        <p className="card-title">{`출판사 : ${book.publisher}`}</p>
+                                        <p className="card-title">{`출판일 : ${book.pubdate}`}</p>
+                                        <p className="card-title">{`가격 : ${book.discount}`}</p>
+                                        <a target="_blank" rel="noopener noreferrer" href={book.link}>자세히 보기</a>
+                                    </div>
+                                </div>
 
                             ))}
                         </div>

@@ -4,14 +4,13 @@ import Highlight from './Highlight'; // 하이라이트 컴포넌트를 임포�
 import AutoComplete from './AutoComplete'; // AutoComplete 컴포넌트를 임포트합니다.
 import Header from '../../../fragments/header/header';
 import Footer from '../../../fragments/footer/footer';
-import RedirectLogin from '../../../helpers/RedirectLogin';
-import Auth from '../../../helpers/Auth';
+import { useNavigate } from 'react-router-dom';
 import './SearchPage.css';
 import axios from 'axios';
 
 const SearchPage = () => {
   const { userId, } = useAuth(); // useAuth 훅에서 userId와 axios를 가져옴
-
+  const navigate = useNavigate()
   const [formValues, setFormValues] = useState({
     title: '',
     isbn: '',
@@ -43,7 +42,7 @@ const SearchPage = () => {
   const handleSearch = useCallback(async (e, page = 0) => {
     if (e) e.preventDefault();
     try {
-      const cleanFormValues = { 
+      const cleanFormValues = {
         ...formValues,
         page: page // page 매개변수를 추가하여 현재 페이지 정보 전달
       };
@@ -94,61 +93,56 @@ const SearchPage = () => {
     }
   };
 
+  const onDetail = (e) => {
+    navigate(`/book/detail/${e}`);
+}
+
   return (
     <>
- <Header />
-            <div className='search-header'>
-                <h2 className='search-header-name'>상세검색</h2>
-            </div>
+      <Header />
+      <div className='search-header'>
+        <h2 className='search-header-name'>상세검색</h2>
+      </div>
       <main className="bookSearch">
-        <section className="sample-page">
-          <div className="content centered-content">
-            <div className="accordion" id="accordionExample">
-              <div className="accordion-item">
-                <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                  <div className="accordion-body sc">
-                    <form onSubmit={handleSearch} className='Search'>
-                      {[
-                        { name: 'isbn', label: '책 제목', autocomplete: true },
-                        { name: 'title', label: 'ISBN' },
-                        { name: 'author', label: '저자' },
-                        { name: 'publisher', label: '출판사' },
-                        { name: 'pub_date', label: '출판날짜' },
-                        { name: 'category_code', label: '분류코드' }
-                      ].map((field, index) => (
-                        <div className="input-group" key={index}>
-                          <div className="input-group-text" id="btnGroupAddon2">{field.label}</div>
-                          {field.autocomplete ? (
-                            <AutoComplete
-                              name={field.name}
-                              value={formValues[field.name]}
-                              onChange={handleInputChange}
-                              label={field.label}
-                            />
-                          ) : (
-                            <input
-                              name={field.name}
-                              type="text"
-                              className="searchForm"
-                              aria-label="Input group example"
-                              aria-describedby="btnGroupAddon2"
-                              value={formValues[field.name] || ''}
-                              onChange={(e) => handleInputChange(e, { newValue: e.target.value, name: field.name })}
-                            />
-                          )}
-                        </div>
-                      ))}
-                      <br />
-                      <button className="btn btn-primary">검색</button>
-                    </form>
-                  </div>
+        <section className="search-page">
+          <div className="search-content">
+
+            <form onSubmit={handleSearch} className='search-form'>
+              {[
+                { name: 'isbn', label: '책 제목', autocomplete: true },
+                { name: 'title', label: 'ISBN' },
+                { name: 'author', label: '저자' },
+                { name: 'publisher', label: '출판사' },
+                { name: 'pub_date', label: '출판날짜' },
+                { name: 'category_code', label: '분류코드' }
+              ].map((field, index) => (
+                <div className="input-group" key={index}>
+                  <div className="input-text" >{field.label}</div>
+                  {field.autocomplete ? (
+                    <AutoComplete
+                      name={field.name}
+                      value={formValues[field.name]}
+                      onChange={handleInputChange}
+                      label={field.label}
+                    />
+                  ) : (
+                    <input
+                      name={field.name}
+                      type="text"
+                      className="searchForm"
+                      value={formValues[field.name] || ''}
+                      onChange={(e) => handleInputChange(e, { newValue: e.target.value, name: field.name })}
+                    />
+                  )}
                 </div>
-              </div>
-            </div>
-            <br />
+              ))}
+              <br />
+              <button className="search-btn">검 색</button>
+            </form>
+
             {errorMessage && <p className="fieldError">{errorMessage}</p>}
-            <br />
-            <div className="justify-content-center">
+
+            <div className="search-sort-select">
               <label htmlFor="sort">정렬 기준:</label>
               <select id="sort" value={sortCriteria} onChange={handleSortChange}>
                 <option value="accuracy">정확도</option>
@@ -163,74 +157,69 @@ const SearchPage = () => {
                 <option value="desc">내림차순</option>
               </select>
             </div>
-            <br />
-            {searchClicked && (
-              <>
-                <div className="pagination justify-content-center bt">
-                  <button
-                    onClick={() => handleSearch(null, pagination.previous)}
-                    className={`btn btn-lg bi bi-caret-left-square-fill ${!pagination.hasPrev && 'disabled'}`}
-                  >
-                    이전
-                  </button>
-                  <button
-                    onClick={() => handleSearch(null, pagination.next)}
-                    className={`btn btn-lg bi bi-caret-right-square-fill ${!pagination.hasNext && 'disabled'}`}
-                  >
-                    다음
-                  </button>
-                </div>
-                <br />
-                {sortedBookList.length > 0 ? sortedBookList.map((book, index) => (
-                  <div className="card mb-3 full-width book-detail-container" key={index}>
-                    <div className="img-container">
-                      {book.bookImg ? (
-                        <img src={`http://localhost:8090/images/book/${book.bookImg.imgName}`} alt="책 이미지" className="img-fluid cover-img" />
-                      ) : (
-                        <div className="no-image">No Image</div>
-                      )}
-                    </div>
-                    <div className="text-container">
-                      <a href={`/book/detail/${book.id}`}>
-                        <h5 className="card-title"><Highlight text={`제목 : 『${book.title}』`} highlight={formValues.title} /></h5>
-                      </a>
-                      <p><Highlight text={`저자 : 『${book.author}』   ||   ISBN : 『${book.isbn}』`} highlight={formValues.author} /></p>
-                      <p><Highlight text={`출판사 : 『${book.publisher}』   ||   출판 날짜 : 『${book.pub_date}』   ||   분류 코드 : 『${book.category_code}』`} highlight={formValues.publisher} /></p>
-                      <p>위치 : 『{book.libName}』</p>
-                    </div>
-                    <div className="row">
-                      <p>{book.status}</p>
-                      <div className="buttons-container">
-                        <div className="row-bt">
-                          <button disabled={book.status !== 'AVAILABLE'} onClick={() => window.location.href = `/reservation/new?id=${encodeURIComponent(book.id)}&title=${encodeURIComponent(book.title)}`}>
-                            도서예약
-                          </button>
-                        </div>
-                        <div className="row-bt">
-                          <button onClick={() => handleAddToInterest(book.id)}>
-                            관심도서담기
-                          </button>
-                        </div>
+            <div className='search-list'>
+              {searchClicked && (
+                <>
+                  <div className="search-pagination">
+                    <button
+                      onClick={() => handleSearch(null, pagination.previous)}
+                      className={`btn ${!pagination.hasPrev && 'disabled'}`}
+                    >
+                      이전
+                    </button>
+                    <button
+                      onClick={() => handleSearch(null, pagination.next)}
+                      className={`btn ${!pagination.hasNext && 'disabled'}`}
+                    >
+                      다음
+                    </button>
+                  </div>
+                  {sortedBookList.length > 0 ? sortedBookList.map((book, index) => (
+                    <div className="result-card" key={index}>
+                      <div className="img-container" onClick={()=>onDetail(book.id)}>
+                        {book.bookImg ? (
+                          <img src={`http://localhost:8090/images/book/${book.bookImg.imgName}`} alt="책 이미지" className="img-fluid cover-img" />
+                        ) : (
+                          <div className="no-image">No Image</div>
+                        )}
+                      </div>
+                      <div className="text-container" onClick={()=>onDetail(book.id)}>
+                        <a href={`/book/detail/${book.id}`}>
+                          <h5><Highlight text={`${book.title}`} highlight={formValues.title} /></h5>
+                        </a>
+                        <p>ISBN : {book.isbn}</p>
+                        <p><Highlight text={`${book.author} `} highlight={formValues.author} /></p>
+                        <p><Highlight text={`${book.publisher}　|　${book.pub_date}`} highlight={formValues.publisher} /></p>
+                        <p>소장 : {book.libName}</p>
+                      </div>
+                      <div className="card-row">
+                        {book.status==='AVAILABLE'? <p>대출 가능</p>:<p>대출 중</p>}
+                        <button disabled={book.status !== 'AVAILABLE'} onClick={() => window.location.href = `/reservation/new?id=${encodeURIComponent(book.id)}&title=${encodeURIComponent(book.title)}`}>
+                          도서예약
+                        </button>
+                        <button onClick={() => handleAddToInterest(book.id)}>
+                          관심도서담기
+                        </button>
                       </div>
                     </div>
+                  )) : <p>검색 결과가 없습니다.</p>}
+                  <div className="search-pagination">
+                    <button
+                      onClick={() => handleSearch(null, pagination.previous)}
+                      className={`btn ${!pagination.hasPrev && 'disabled'}`}
+                    >
+                      이전
+                    </button>
+                    <button
+                      onClick={() => handleSearch(null, pagination.next)}
+                      className={`btn ${!pagination.hasNext && 'disabled'}`}
+                    >
+                      다음
+                    </button>
                   </div>
-                )) : <p>검색 결과가 없습니다.</p>}
-                <div className="pagination justify-content-center">
-                  <button
-                    onClick={() => handleSearch(null, pagination.previous)}
-                    className={`btn btn-lg bi bi-caret-left-square-fill ${!pagination.hasPrev && 'disabled'}`}
-                  >
-                    이전
-                  </button>
-                  <button
-                    onClick={() => handleSearch(null, pagination.next)}
-                    className={`btn btn-lg bi bi-caret-right-square-fill ${!pagination.hasNext && 'disabled'}`}
-                  >
-                    다음
-                  </button>
-                </div>
-              </>
-            )}
+                </>
+              )}
+            </div>
           </div>
         </section>
       </main>

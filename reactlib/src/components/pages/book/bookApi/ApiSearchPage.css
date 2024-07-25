@@ -10,7 +10,7 @@
 .ApiSearch{
     width: 80%;
     margin: 0 auto;
-    border: 1px solid #ddd;
+    border: 1px solid #ccc;
     padding: 30px;
     border-radius: 10px;
 }
@@ -24,6 +24,7 @@
     height: 40px;
     margin-top: 10px;
     padding-left: 15px;
+    border: 1px solid #ccc;
 }
 
 .ApiSearch .search-form .search-button{
@@ -56,7 +57,7 @@
 .ApiSearch .ApiBookSearchDetail  > select{
     margin: 0;
     flex: 0 1 200px;
-    border: 1px solid #ddd;
+    border: 1px solid #ccc;
 }
 
 .ApiSearch > h4{
@@ -66,7 +67,7 @@
 
 .ApiSearch .search-list{
     width: 100%;
-    border: 1px solid #ddd;
+    border: 1px solid #ccc;
     padding: 30px 20px;
     border-radius: 3px;
 }
@@ -74,7 +75,7 @@
 .search-list > .container .row{
     display: flex;
     height: 250px;
-    border: 1px solid #ddd;
+    border: 1px solid #ccc;
     border-radius: 10px;
     margin: 10px 0;
 }
@@ -107,11 +108,10 @@
 
 .search-list .pagination .active  {
     background-color: #099b10;
- 
-
 }
 
 .search-list .pagination .active .page-link  {
 color: #ffffff;
 border: 1px solid #099b10;
+background-color: #099b10;
 }
