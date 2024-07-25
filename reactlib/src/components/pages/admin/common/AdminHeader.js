@@ -1,21 +1,23 @@
 import React from 'react';
-import center_logo from '../../../images/logo/center_logo.png';
+import white_logo from "../../../images/logo/white_logo.png";
 //     <img src={center_logo} alt="Center Logo" />  
 import { Link } from 'react-router-dom';
 import './AdminHeader.css'; // 스타일을 위한 CSS 파일을 임포트합니다.
 import { useContext } from "react";
 import { LoginContext } from '../../../pages/security/contexts/LoginContextProvider';
 import useAuth, { LOGIN_STATUS, ROLES } from "../../../../components/hooks/useAuth";
+import { useNavigate } from 'react-router-dom';
 
 const AdminHeader = () => {
     const { logout } = useContext(LoginContext);
     const { loginStatus, loginId, roles } = useAuth();
-
+    const navigate = useNavigate();
     return (
         <header className="admin-header">
         
 
-            <div className="admin-header-section-logo" >
+            <div className="admin-header-section-logo"  >
+                <img src={white_logo}  onClick={() => navigate('/')} /> &nbsp;
             <a href="/" >안산시 도서관  </a>
      
             </div>

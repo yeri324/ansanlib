@@ -25,12 +25,12 @@
 margin-bottom:20px;
 
 }
-/* 
+
 .admin-header-section-logo  img {
-  background-color: rgb(255, 255, 255);
   padding: 0 10px;
   border-radius: 30px;
-} */
+  cursor: pointer;
+}
 
 .admin-header-section-logo  > a{
   padding-top: 20px;
