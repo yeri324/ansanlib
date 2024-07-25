@@ -39,7 +39,7 @@ const Side = () => {
           <Link to="/loanstatus">대출</Link>
         </li>
         <li onClick={toggleRequestBookSubmenu} className="has-submenu">
-          희망도서 신청
+          희망도서
           <span className="arrow">{showRequestBookSubmenu ? " ▲" : " ▼"}</span>
           {showRequestBookSubmenu && (
             <ul className="submenu">
@@ -51,6 +51,9 @@ const Side = () => {
               </li>
             </ul>
           )}
+        </li>
+        <li>
+          <Link to="/book/interest/list">관심도서</Link>
         </li>
       </ul>
     </div>

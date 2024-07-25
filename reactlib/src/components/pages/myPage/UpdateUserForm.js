@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import useAuth, { LOGIN_STATUS } from '../../hooks/useAuth';
 import RedirectLogin from '../../helpers/RedirectLogin';
 import Auth from '../../helpers/Auth';
@@ -10,16 +10,87 @@ import Footer from '../../fragments/footer/footer';
 import Side from './Side';
 import './UpdateUserForm.css';
 
-const emailCommonDomains = [
+const predefinedDomains = [
   "naver.com",
   "gmail.com",
   "daum.net",
   "hanmail.net",
-  "name.com",
+  "nate.com",
 ];
 
+const EmailInput = ({
+  addressPart,
+  domainPart,
+  onChangeAddressPart = () => { },
+  onChangeDomainPart = () => { },
+  candidates = [],
+  onCheckEmail = () => {} // 이메일 체크 함수
+}) => {
+  const [isCustomDomain, setCustomDomain] = useState(
+    candidates.includes(domainPart),
+  );
+
+  useEffect(() => {
+    setCustomDomain(!candidates.includes(domainPart));
+  }, [domainPart]);
+
+  const onSelectionChanged = (value) => {
+    if (value === "__customDomain") {
+      setCustomDomain(true);
+      onChangeDomainPart("");
+    } else {
+      setCustomDomain(false);
+      onChangeDomainPart(value);
+    }
+  };
+
+  return (
+    <div className="email-input">
+      <input
+        className="address-part"
+        type="text"
+        value={addressPart}
+        onChange={(e) => onChangeAddressPart(e.target.value)}
+      />
+      <span className="at-symbol">@</span>
+      <input
+        className="custom-domain-input"
+        type="text"
+        value={domainPart}
+        onChange={(e) => onChangeDomainPart(e.target.value)}
+        disabled={!isCustomDomain}
+      />
+      <select
+        className="domain-select"
+        value={isCustomDomain ? "__customDomain" : domainPart}
+        onChange={(e) => onSelectionChanged(e.target.value)}
+      >
+        {candidates.map((domain) => (
+          <option className="domain-option" key={domain} value={domain}>
+            {domain}
+          </option>
+        ))}
+        <option
+          className="custom-domain-option"
+          key="__customDomain"
+          value="__customDomain"
+        >
+          직접 입력
+        </option>
+      </select>
+      <button
+        type="button"
+        className='check-button'
+        onClick={onCheckEmail}
+      >
+        이메일 체크
+      </button>
+    </div>
+  );
+};
+
 const UpdateUserForm = () => {
-  const { axios } = useAuth();
+  const { axios, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [userInfo, setUserInfo] = useState({
     name: '',
@@ -74,27 +145,34 @@ const UpdateUserForm = () => {
   };
 
   //이메일 변경 체크
-  const isEmailUpdated = () => userInfo.email !== initialEmail;
+  // const isEmailUpdated = () => userInfo.email !== initialEmail;
 
-  
+
   // 이메일 중복 체크
   const onCheckEmail = async () => {
     if (userInfo.email1 === null || userInfo.email2 === "") {
       alert("이메일을 입력해주세요.");
       return;
     }
-    const email = userInfo.email1 + '@' + userInfo.email2;
+    //const email = userInfo.email1 + '@' + userInfo.email2;
+    const email = userInfo.email; //useEffect에서 계산된 값을 가져다가 쓰면 됨.
     const data = { email };
+
+    if (email === initialEmail) {
+      alert("현재 사용 중인 이메일입니다.");
+      return;
+    }
+
     try {
       const response = await getData(data);
       if (response.status === 200) {
         console.log('사용 가능한 이메일!');
         alert("사용 가능한 이메일입니다.");
-        setInputDisable({ ...inputDisable, isEmail: true });
+        //setInputDisable({ ...inputDisable, isEmail: true });
       }
     } catch (error) {
       if (error.response.status === 409) {
-        console.log('사용중인 이메일!');
+        console.log('사용중인 이메일!', error);
         alert("사용 할 수 없는 이메일입니다.");
       } else {
         console.log('오류!');
@@ -123,6 +201,25 @@ const UpdateUserForm = () => {
     console.log(isOpen);
     console.log('toggleHandler 실행됨');
     setIsOpen(!isOpen); // isOpen 상태를 토글
+  };
+
+  //회원 탈퇴
+  const handleDeleteAccount = async () => {
+    if (window.confirm('정말로 회원 탈퇴를 하시겠습니까?')) {
+      try {
+        const response = await axios.delete('/users/delete');
+        if (response.status === 200) {
+          alert('회원 탈퇴가 성공적으로 처리 되었습니다.');
+          // sessionStorage.removeItem("member"); // 클라이언트 사이드에서의 추가 처리
+          logout(false); // 로그아웃 처리. 사용자에게 묻지 않음.
+        } else {
+          alert('회원 탈퇴 중 오류가 발생했습니다.');
+        }
+      } catch (error) {
+        alert('회원 탈퇴 중 오류가 발생했습니다.');
+        console.error(error);
+      }
+    }
   };
 
   return (
@@ -162,32 +259,16 @@ const UpdateUserForm = () => {
 
           <div class="form_field">
             <label htmlFor="email">* 이메일</label>
-            <div class="email_input">
-              <input
-                id="email1"
-                type="text"
-                placeholder="이메일"
-                name="email1"
-                value={userInfo.email1}
-                onChange={handleChange}
-                disabled={inputDisable.isEmail}
+            <div class="email-input-outer">
+              <EmailInput
+                addressPart={userInfo.email1}
+                domainPart={userInfo.email2}
+                onChangeAddressPart={(s) => setUserInfo({ ...userInfo, email1: s })}
+                onChangeDomainPart={(s) => setUserInfo({ ...userInfo, email2: s })}
+                candidates={predefinedDomains}
+                onCheckEmail={onCheckEmail}
               />
-              <span>@</span>
-              <select
-                value={userInfo.email2}
-                name="email2"
-                disabled={inputDisable.isEmail}
-                onChange={handleChange}
-              >
-                <option value="naver.com">naver.com</option>
-                <option value="gmail.com">gmail.com</option>
-                <option value="daum.net">daum.net</option>
-                <option value="hanmail.net">hanmail.net</option>
-                <option value="nate.com">nate.com</option>
-              </select>
-              <button type="button" onClick={onCheckEmail} disabled={!isEmailUpdated()}>이메일 체크</button>
             </div>
-            {/* <EmailInput candidates={emailCommonDomains} email={userInfo.email} onEmailChanged={(email) => setUserInfo({ ...userInfo, email })} /> */}
           </div>
 
           <div class="form_field">
@@ -278,6 +359,7 @@ const UpdateUserForm = () => {
           </div>
           <div className='button_align'>
             <button className="button" type="submit">정보 수정하기</button>
+            <button className="button" onClick={handleDeleteAccount}>회원 탈퇴하기</button>
           </div>
         </div>
       </form>

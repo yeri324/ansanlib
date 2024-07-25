@@ -3,9 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import './BookDetailPage.css'; // 스타일 파일을 임포트합니다.
 import Header from '../../../fragments/header/header';
 import Footer from '../../../fragments/footer/footer';
-import RedirectLogin from '../../../helpers/RedirectLogin';
-import Auth from '../../../helpers/Auth';
 import useAuth, { LOGIN_STATUS } from '../../../hooks/useAuth';
+import axios from 'axios';
 
 const BookDetailPage = () => {
   const { id } = useParams();
@@ -13,7 +12,7 @@ const BookDetailPage = () => {
   const [book, setBook] = useState({});
   const [bookList, setBookList] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
-  const { userId, axios } = useAuth();
+  const { userId } = useAuth();
 
   useEffect(() => {
     const fetchBookDetails = async () => {
@@ -68,90 +67,71 @@ const BookDetailPage = () => {
 
   return (
     <>
-      <RedirectLogin />
       <Header />
+      <div className='search-header'>
+        <h2 className='search-header-name'>도서</h2>
+      </div>
       <main className="bookDetail">
-        <div className="breadcrumbs">
-          <div className="page-header d-flex align-items-center">
-            <div className="container position-relative">
-              <div className="row d-flex justify-content-center">
-                <div className="col-lg-6 text-center">
-                  <h2>도서 상세정보</h2>
-                </div>
-              </div>
-            </div>
+        {errorMessage && <p className="fieldError">{errorMessage}</p>}
+        <div className="book-detail-container">
+          <div className="book-img-container">
+            {book.bookImg ? (
+              <img
+                src={`http://localhost:8090/images/book/${book.bookImg.imgName}`}
+                alt={book.title}
+                className="img-fluid cover-img"
+              />
+            ) : (
+              <div className="no-image">No Image</div>
+            )}
+          </div>
+          <div className="book-detail">
+            <h5>{book.title}</h5>
+            <p>{book.author}&nbsp;&nbsp;|&nbsp;&nbsp;{book.pub_date}</p>
+            <p>{book.publisher}</p>
+            <p>분류 코드 : {book.category_code}</p>
+            <p>ISBN : {book.isbn}</p>
+            <p>소장 : {book.libName}</p>
           </div>
         </div>
 
-        <section className="sample-page">
-          <div className="content centered-content">
-            {errorMessage && <p className="fieldError">{errorMessage}</p>}
+        <div className="lib-list">
+          <table className="lib-table">
+            <thead >
+              <tr>
+                <th style={{width:'25%'}}>위치</th>
+                <th style={{width:'25%'}}>대출상태</th>
+                <th style={{width:'25%'}}>반납예정일</th>
+                <th style={{width:'25%'}}>서비스신청</th>
+              </tr>
+            </thead>
+            <tbody>
+              {bookList.map((relatedBook) => (
+                <tr key={relatedBook.id}>
+                  <td >{relatedBook.libName}</td>
+                  <td >{relatedBook.status==='AVAILABLE'?'대출 가능' :'대출 중'}</td>
+                  <td >{relatedBook.returnDay}</td>
+                  <td >
+                    <div className="button-row">
+                      <button disabled={relatedBook.status !== 'AVAILABLE'} onClick={() => window.location.href = `/reservation/new?id=${encodeURIComponent(book.id)}&title=${encodeURIComponent(book.title)}`}>
+                        도서예약
+                      </button>
 
-            <div className="row g-0 book-detail-container">
-              <div className="col-md-4 img-container">
-                {book.bookImg ? (
-                  <img 
-                    src={`http://localhost:8090/images/book/${book.bookImg.imgName}`} 
-                    alt={book.title} 
-                    className="img-fluid cover-img" 
-                  />
-                ) : (
-                  <div className="no-image">No Image</div>
-                )}
-              </div>
-              <div className="col-md-8 text-container">
-                <div className="book-detail left-align">
-                  <h5 className="card-title">제목 : 『{book.title}』</h5>
-                  <p>저자 : 『{book.author}』</p>
-                  <p>ISBN : 『{book.isbn}』</p>
-                  <p>출판사 : 『{book.publisher}』 || 출판 날짜 : 『{book.pub_date}』 || 분류 코드 : 『{book.category_code}』</p>
-                  <p>위치 : 『{book.libName}』</p>
-                </div>
-              </div>
-            </div><br />
+                      <button onClick={(LOGIN_STATUS === "LOGGED_IN") ? () => handleInterest(relatedBook.id) : alertLogin}>
+                        관심도서담기
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div><br />
 
-            <div className="row g-1 overflow-x-auto">
-              <table>
-                <thead className="table-dark">
-                  <tr>
-                    <th>위치</th>
-                    <th>대출상태</th>
-                    <th>반납예정일</th>
-                    <th>서비스신청</th>
-                  </tr>
-                </thead>
-                <tbody className="table-detail">
-                  {bookList.map((relatedBook) => (
-                    <tr key={relatedBook.id}>
-                      <td style={{border: "1px solid black"}}>{relatedBook.libName}</td>
-                      <td style={{border: "1px solid black"}}>{relatedBook.status ?? '정보 없음'}</td>
-                      <td style={{border: "1px solid black"}}>{relatedBook.returnDay}</td>
-                      <td style={{border: "1px solid black"}}>
-                        <div className="card-body">
-                          <div className="row">
-                            <button disabled={relatedBook.status !== 'AVAILABLE'} onClick={() => window.location.href = `/reservation/new?id=${encodeURIComponent(book.id)}&title=${encodeURIComponent(book.title)}`}>
-                              도서예약
-                            </button>
-                          </div> 
-                          <div className="row">
-                            <button onClick={(() => handleInterest(relatedBook.id))}>
-                              관심도서담기
-                            </button>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div><br />
-
-            <div className="row bookD">
-              <div><h3>책소개</h3></div>
-              <div className="left-align">{formatText(book.bookDetail)}</div>
-            </div>
-          </div>
-        </section>
+        <div className="bookD">
+          <h3><span>책소개</span></h3>
+          <div className="left-align">{formatText(book.bookDetail)}</div>
+        </div>
       </main>
       <Footer />
     </>
@@ -161,10 +141,8 @@ const BookDetailPage = () => {
 const BookDetailPageWrapper = () => {
   return (
     <>
-      <RedirectLogin />
-      <Auth loginStatus={LOGIN_STATUS.LOGGED_IN}>
-        <BookDetailPage />
-      </Auth>
+
+      <BookDetailPage />
     </>
   );
 };
