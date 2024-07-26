@@ -26,13 +26,13 @@ public class UserServiceTest {
     @Test
     public void testSaveUser() {
         LibUser user = new LibUser();
-        user.setLoginid("test123");
+        user.setLoginid("admin");
         user.setPassword(passwordEncoder.encode("1234"));
-        user.setName("테스트");
-        user.setAddress("123 Main St");
-        user.setAddress2("Apt 4B");
+        user.setName("관리자");
+        user.setAddress("대전 서구 둔산서로 17");
+        user.setAddress2("6층 중앙능력개발원");
         user.setEmail("test@example.com");
-        user.setPhone("555-555-5555");
+        user.setPhone("000-0000-0000");
         user.setGender(Gender.MALE);
         user.setRole(Role.ROLE_ADMIN);
         user.setJoinDate(LocalDateTime.now());

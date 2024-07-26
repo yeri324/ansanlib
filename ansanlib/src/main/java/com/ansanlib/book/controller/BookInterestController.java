@@ -30,7 +30,7 @@ public class BookInterestController {
 
     private final BookInterestService bookInterestService;
 
-    @GetMapping("/interests/{userId}")
+    @GetMapping("/interests/{userId}") // 도서 리스트
     public ResponseEntity<Map<String, Object>> getBookInterestList(@PathVariable Long userId,
                                                                    @RequestParam(defaultValue = "0") int page,
                                                                    @RequestParam(defaultValue = "10") int size) {
@@ -55,13 +55,13 @@ public class BookInterestController {
     }
 
 
-    @PostMapping("/{userId}/{bookId}")
+    @PostMapping("/{userId}/{bookId}") // 도서 추가
     public ResponseEntity<Void> insertBookInterest(@PathVariable Long userId, @PathVariable Long bookId) {
         bookInterestService.insertBookInterest(userId, bookId);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}") // 도서 삭제
     public ResponseEntity<Void> deleteBookInterest(@PathVariable Long id) {
         bookInterestService.deleteBookInterest(id);
         return ResponseEntity.ok().build();

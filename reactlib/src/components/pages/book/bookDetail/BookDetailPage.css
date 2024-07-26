@@ -1,102 +1,98 @@
-.bookDetail .centered-content {
-  text-align: center;
-  padding-left: 100px;
-  padding-right: 100px;
+.bookDetail {
+  margin: 20px;
 }
 
-.bookDetail .bordered {
-  border: 1px solid black;
-}
 
-.bookDetail .full-width {
-  width: 100%;
-}
-
-.bookDetail .left-align {
-  text-align: left;
-}
-
-.bookDetail .cover-img {
-  object-fit: cover;
-  margin: 0 auto; /* 이미지 중앙 정렬 */
-}
-
-.bookDetail .no-image {
-  width: 100%;
-  height: 100%;
-  background-color: #eaeaea;
+.bookDetail .book-detail-container{
+  margin: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
   display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.bookDetail .book-detail-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto; /* 전체 컨테이너 중앙 정렬 */
-  border: 1px solid black;
+.bookDetail .book-detail-container .book-img-container{
+  margin: 20px;
+  flex: 0 1 250px;
 }
 
-.bookDetail .img-container {
+.bookDetail .book-detail-container .book-detail{
   flex: 1;
-  width: 150px;
-  border-right: 1px solid black;
+  margin: 20px ;
 }
 
-.bookDetail .text-container {
-  flex: 2;
-  padding-left: 20px; /* 이미지와 텍스트 사이에 여백 추가 */
-  font-size: 15px;
+.bookDetail .book-detail-container .book-detail > h5{
+    font-size: 28px;
+  padding-top: 10px;
+  margin: 10px 0 ;
 }
 
-.bookDetail .bookD{
-  border-top: 1px solid black;
-  padding-bottom: 50px;
-}
-
-.bookDetail .bookD{
-  padding-top: 20px;
-}
-
-.bookDetail .card-title{
-  font-size: 20px;
-}
-
-.bookDetail .book-detail{
-  font-size: 15px;
+.bookDetail .book-detail-container .book-detail > p{
+  margin-left: 10px;
+  margin-top: 10px;
+  padding-top: 15px;
 }
 
 
-.bookDetail .card-body{
-  margin: 0 auto;
-  width: 150px;
+.bookDetail .lib-list{
+  margin: 10px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
 }
 
-.bookDetail .table-dark{
-  background: black;
-}
-
-.bookDetail .table-dark th{
-  border: 1px solid black;
-  background: black;
-}
-
-.bookDetail .table-detail{
-  border: 1px solid black;
-}
-
-.bookDetail .table-deatil .td2{
-  border: 1px solid black;
-}
-.key_wordcloud {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.bookDetail .lib-list .lib-table{
   width: 100%;
-  max-width: 300px;
-  height: auto;
-  margin: 0 auto;
-  padding: 20px 0;
+}
+
+.bookDetail .lib-list .lib-table thead{
+  border-bottom: 2px solid #3a8acc;
+  height: 42px;
+}
+.bookDetail .lib-list .lib-table th{
   text-align: center;
+}
+
+.bookDetail .lib-list .lib-table tr{
+  border-top: 1px solid #aaa;
+}
+.bookDetail .lib-list .lib-table tr:nth-child(1){
+  border:none
+}
+
+
+.bookDetail .lib-list .lib-table .button-row{
+  display: flex;
+  flex-direction: column;
+}
+.bookDetail .lib-list .lib-table .button-row > button{
+  flex: 0 0 42px;
+  margin: 5px;
+  background-color: #3a8acc;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.bookDetail .lib-list .lib-table .button-row > button:hover{
+  background-color: #1d68a5;;
+}
+.bookDetail .lib-list .lib-table .button-row > button:disabled{
+  background-color: #939ea7;
+}
+
+.bookDetail .bookD{
+  margin: 10px;
+}
+.bookDetail .bookD > h3 {
+  margin-bottom: 30px;
+}
+
+.bookDetail .bookD > h3 > span{
+  width: auto;
+  border-top: 1px solid #333;
+  border-bottom: 1px solid #333;
+  padding: 10px 30px;
+}
+.bookDetail .bookD > div{
+  margin-bottom: 50px;
 }
