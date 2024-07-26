@@ -140,7 +140,6 @@ const ApiBookSearch = () => {
                         </div>
                     </div>
                     <div className="key_word_cloud_gender">
-                        <h1>Keyword Clouds for Genders</h1>
                         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
                             <KeywordCloud_gender gender="MALE" />
                             <KeywordCloud_gender gender="FEMALE" />
