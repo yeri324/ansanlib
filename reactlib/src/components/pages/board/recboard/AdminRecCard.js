@@ -34,18 +34,12 @@ function AdminRecCard({ card }) {
     }, [])
 
     return (
-        <div class='card'>
-            <Card>
-                <div onClick={onDetail}>
-                <div class='card-img'>
-                    <Card.Img variant="top" src={viewImg} />
-                </div>
-                <Card.Body class='card-body'>
-                    <Card.Title class='title'>{card.title}</Card.Title>
-                    <Card.Text class='content'>{card.content}</Card.Text>
-                </Card.Body>
-                </div>
-            </Card>
+        <div class="cur_cont" onClick={onDetail}>
+            <img src={viewImg} class="card-img-top" />
+            <div class="card-body">
+                <h5 class="card-title">{card.title}</h5>
+                <p class="card-text">{card.content}</p>
+            </div>
         </div>
     )
 }

@@ -40,8 +40,8 @@ function UserRecList() {
             <Header />
             <div class='all-reclist'>
                 <div class='boardrec-list'>
-                <h2>추천도서</h2>
-                <div className='pg-msg'>총 {totalRecCount}건 / {totalPages} 페이지</div>
+                    <h2>추천도서</h2>
+                    <div className='pg-msg'>총 {totalRecCount}건 / {totalPages} 페이지</div>
                 </div>
                 <div>
                     <div class='rec-list'>

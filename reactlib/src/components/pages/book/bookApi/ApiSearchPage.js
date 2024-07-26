@@ -54,9 +54,11 @@ const ApiBookSearch = () => {
     return (
         <>
             <Header />
+
             <main>
                 <div className="search-header">
                     <h2 className='search-header-name'>네이버 API BOOK 검색</h2>
+
                 </div>
                 <section className="ApiSearch">
                     <form className="search-form" onSubmit={handleSearch} >

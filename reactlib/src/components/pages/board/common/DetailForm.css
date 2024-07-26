@@ -60,15 +60,8 @@
 }
 
 /* 제목 내용 등 정렬 */
-.b-inputtable {
+.b-inputtable, .userb-inputtable {
     width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-
-}
-
-.bdetail-top .userb-inputtable {
-    width: 70%;
     border-collapse: collapse;
     margin-bottom: 20px;
 
