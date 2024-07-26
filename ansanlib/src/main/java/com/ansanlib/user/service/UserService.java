@@ -229,6 +229,10 @@ public class UserService {
 			list.add(characters.charAt(random.nextInt(characters.length())));
 		}
 	}
-
+	
+	// 키워드 클라우드 회원 찾기
+	public LibUser findByLoginidAndPassword(String loginid, String password) {
+        return userRepository.findByLoginidAndPassword(loginid, password);
+    }
 
 }

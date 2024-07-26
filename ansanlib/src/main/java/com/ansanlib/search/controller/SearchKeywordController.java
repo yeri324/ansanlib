@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ansanlib.search.dto.KeywordRequest;
 import com.ansanlib.search.repository.SearchKeywordService;
 
+import jakarta.servlet.http.HttpSession;
+
 @RestController
 @RequestMapping("/api/search")
 public class SearchKeywordController {
@@ -22,9 +24,16 @@ public class SearchKeywordController {
     private SearchKeywordService searchKeywordService;
 
     @PostMapping("/save_keyword")
-    public ResponseEntity<?> saveKeyword(@RequestBody KeywordRequest request) {
-        searchKeywordService.saveSearchKeyword(request.getUserId(), request.getGender(), request.getKeyword());
-        return ResponseEntity.ok().body("Keyword saved successfully");
+    public ResponseEntity<?> saveKeyword(@RequestBody KeywordRequest request, HttpSession session) {
+        Long userId = (Long) session.getAttribute("user_id");
+        String gender = (String) session.getAttribute("gender");
+
+        if (userId != null && gender != null) {
+            searchKeywordService.saveSearchKeyword(userId, gender, request.getKeyword());
+            return ResponseEntity.ok().body("Keyword saved successfully");
+        } else {
+            return ResponseEntity.status(400).body("User not logged in");
+        }
     }
 
     @GetMapping("/wordcloud/{gender}")
@@ -32,4 +41,5 @@ public class SearchKeywordController {
         List<String> keywords = searchKeywordService.getSearchKeywordsByGender(gender);
         return ResponseEntity.ok().body(keywords);
     }
+    
 }
