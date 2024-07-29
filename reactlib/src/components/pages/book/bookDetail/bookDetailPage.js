@@ -27,7 +27,7 @@ const BookDetailPage = () => {
         setBook(response.data);
         const updatedBookList = response.data.relatedBooks.map(book => ({
           ...book,
-          returnDay: endDate, // 쿼리 파라미터에서 받은 endDate를 returnDay로 설정
+          returnDay: endDate ? endDate.split('T')[0] : null, // 쿼리 파라미터에서 받은 endDate를 변환하여 returnDay로 설정
           status: endDate ? 'LOAN' : book.status // returnDay가 있으면 상태를 LOAN으로 설정
         }));
         setBookList(updatedBookList);
