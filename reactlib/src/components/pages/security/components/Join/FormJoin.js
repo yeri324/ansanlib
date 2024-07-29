@@ -26,6 +26,7 @@ const FormJoin = ({ join, }) => {
     const [passwordValid, setPasswordValid] = useState(true);
     const [passwordMatch, setPasswordMatch] = useState(true);
     const [isOpen, setIsOpen] = useState(false);
+    const [validateCk,setValidateCk]=useState(false);
 
     // setFormData
     const handleChange = (e) => {
@@ -48,7 +49,9 @@ const FormJoin = ({ join, }) => {
     const onJoin = (e) => {
         e.preventDefault();
         onValidate();
+        if(validateCk===true){
         join(formData);
+    }
     };
 
     // 아이디 중복 체크
@@ -211,6 +214,7 @@ const FormJoin = ({ join, }) => {
             alert('이메일 중복 체크를 완료해주세요.');
             return
         }
+        setValidateCk(true)
 
     }
 
