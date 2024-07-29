@@ -3,6 +3,8 @@
 # 전체 install
 pip install Flask mariadb wordcloud matplotlib flask-cors konlpy pandas nltk JPype1-py3
 
+
+충돌 문제발생시-------------------------------------------------------------------------------
 #react-wordcloud 의존성 호환문제 버전 최신버전 다운로드
 npm install react-wordcloud@latest d3@latest
 # transition 함수 d3 최신버전 필요
@@ -22,7 +24,6 @@ npm install react-wordcloud
 
 # 혹은 yarn 설치
 npm install -g yarn
-
 
 # 전체 설치 이후 호환문제 최신버전 설치 -> d3 최신버전 설치 -> 의존성 충돌패치 
 # -> 안되면 버전 다운그레이드
