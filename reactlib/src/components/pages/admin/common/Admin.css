@@ -3,27 +3,30 @@
   width: 100%;
   font-family: 'Noto Sans KR', sans-serif;
   padding-bottom: 30px;
-  overflow: hidden;
+  overflow: hidden; /* Ensure no scrollbars appear unnecessarily */
 }
 
 .admin-main-main {
   margin-top: 100px;
   margin-left: 250px;
   padding-bottom: 30px;
-  width: 85%;
+  width: calc(100% - 250px); /* Adjust width to account for margin-left */
   align-items: center;
-  height: 800px;
-  overflow: hidden;
-  overflow-y: auto;
+  height: calc(100vh - 130px); /* Ensure this fits your layout */
+  margin-bottom: 30px;
   background-color: hsla(45, 6%, 87%, 0.459);
+  overflow-y: auto; /* Add vertical scroll if needed */
+  overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 .admin-main-main>.admin-main-body {
   border-radius: 15px;
-  min-height: 800px;
+  min-height: 80vh; /* Use viewport height for dynamic resizing */
   align-items: center;
   background-color: white;
   margin: 0 auto;
+  padding: 20px; /* Added padding for more white space */
+  overflow: hidden; /* Prevent scrollbars inside the body */
 }
 
 .admin-main-body>.admin-main-dash-top {
@@ -35,27 +38,54 @@
   width: 100%;
   display: flex;
   flex-direction: row;
-  min-height: 850px;
+  min-height: 80vh; /* Use viewport height for dynamic resizing */
 }
 
 .admin-main-left,
 .admin-main-right {
   width: 100%;
-  padding: 0px 30px;
+  padding: 0px 20px;
+  padding-bottom: 30px;
+  overflow: hidden; /* Prevent scrollbars inside these sections */
 }
 
+/* 왼쪽 영역 */
 .admin-main-left {
   border-right: 1px solid #eee;
 }
 
+/* 방문자수 */
+.admin-left-box4 {
+  height: 90px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+/* 방문자수 각각 통계 */
+.admin-left-graph {
+  padding: 20px;
+  width: 90%;
+  height: 90px;
+  margin: 5px;
+  color: #000000;
+  border-radius: 20px;
+  font-size: 15px;
+}
+
+.admin-left-graph > div > h1 {
+  font-weight: bold;
+  font-size: 15px;
+  color: #0c0000;
+}
+
+/* 오늘 날짜 */
 .admin-left-box1 {
   height: 80px;
   text-align: center;
   font-family: 'Noto Sans KR', sans-serif;
   padding: 20px;
 }
-
-
 
 .admin-left-box1>h5 {
   box-shadow: 5px 5px 5px rgb(248, 238, 238);
@@ -66,15 +96,16 @@
   padding: 10px;
 }
 
+/* 달력 */
 .admin-left-box2 {
   height: 350px;
 }
 
-.calendar-container {
+.admin-left-box2 > .calendar-container {
   width: 100%;
 }
 
-.react-calendar__navigation button {
+.admin-left-box2 > .react-calendar__navigation button {
   font-family: 'Noto Sans KR', sans-serif;
   color: #03050f;
   font-size: 16px;
@@ -83,12 +114,12 @@
 
 .admin-left-box2 .react-calendar__tile--now {
   background: #ffc09b !important;
-
   box-shadow: 1px 1px 5px #faf2e2;
   color: #000000 !important;
   border-radius: 10px;
 }
 
+/* 휴관일 */
 .admin-left-box3 {
   font-size: 13px;
   margin-top: 10px;
@@ -96,95 +127,63 @@
   width: 100%;
 }
 
-
+/* 휴관일, 오른쪽 테이블 th, tr */
 .admin-left-box3>.admin-table th,
 .admin-left-box3>.admin-table tr,
-.admin-right-box3>.admin-table th,
-.admin-right-box3>.admin-table tr,
-.admin-right-box2>.admin-table th,
-.admin-right-box2>.admin-table tr {
+.admin-right-box1>.admin-table th,
+.admin-right-box1>.admin-table tr {
   background-color: hsla(42, 17%, 88%, 0.171);
   font-size: 14px;
   padding: 10px;
-  border-bottom:  1px solid #e0d8d8;
-
+  border-bottom: 1px solid #e0d8d8;
 }
 
 .admin-left-box3>.admin-table th,
-.admin-right-box2>.admin-box2-table th {
+.admin-right-box1>.admin-box1-table th {
   border-bottom: 2px solid #818181a6;
   background-color: #B0C4DE;
   color: rgb(36, 33, 33);
-
 }
 
-
-
+/* 오른쪽 테이블영역 */
 .admin-right-box1 {
-  height: 180px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  padding: 20px;
   width: 100%;
-  margin-bottom: 20px;
+  margin: 0;
 }
 
-.admin-right-graph {
-
-  padding: 20px;
+.admin-right-box1 > .admin-box1-table {
   width: 100%;
-  margin: 20px;
-  background: linear-gradient(#fdc8a9, #fcb389);
-  box-shadow: 5px 5px 20px rgb(241, 236, 236);
-  color: #000000;
-  border-radius: 20px;
-  font-size: 16px;
+  padding-bottom: 30px;
+  font-size: 14px;
 }
 
-.admin-right-graph>div>h1 {
-  font-weight: bold;
-  font-size: 17px;
-  color: #0c0000;
-}
-
-.admin-right-box2 {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  flex: 1;
-  height: 300px;
-}
-
-.admin-box2-table > h4 > a, .admin-left-box3  > h4 >a {
-  margin-left: 30px;
+/* 테이블 영역 제목 */
+.admin-box1-table > h4 > a, .admin-left-box3 > h4 > a {
+  margin-left: 40px;
   color: rgba(41, 40, 40, 0.801);
   font-size: 20px;
-  
-
 }
 
-.admin-box2-table {
-  width: 100%;
-
-}
-
-
-.admin-main-right >.admin-right-box3 {
-  height: 400px;
-  width: 100%;
-
-}
-
-.admin-right-graph {
+.admin-left-graph {
   background-color: white;
 }
-.admin-right-graph  .chart-container {
+
+.admin-left-graph .chart-container {
   background-color: white;
   padding: 30px;
   border-radius: 10px;
   width: 100%;
   height: 400px;
   border: 2px solid white; /* 테두리를 흰색으로 설정 */
+}
+
+.admin-right-box2 {
+  height: 200px;
+  padding: 10px;
+}
+
+/* Add scrollable table container */
+.scrollable-table-container {
+  max-height: 400px; /* Adjust the height as needed */
+  overflow-y: auto;
 }

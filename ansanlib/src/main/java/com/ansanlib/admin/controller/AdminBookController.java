@@ -72,7 +72,7 @@ public class AdminBookController {
 	
 
 	
-	//불러와 목록
+	//bookList조회
 	@GetMapping("/list")
 	public List<Book> getBooks() {
 		return adminBookService.getAllBooks();
@@ -149,6 +149,7 @@ public class AdminBookController {
 	 
 	 
 	 
+
 	 
 
 }

@@ -6,7 +6,7 @@ import "./AdminModal.css";
 const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
   const [editMode, setEditMode] = useState(null);
   const [editedCounts, setEditedCounts] = useState({});
-  const [newLibrary, setNewLibrary] = useState({ libName: '', count: '', reg_time: new Date() });
+  const [newLibrary, setNewLibrary] = useState({ libName: '', count: '' });
   const [groupedLibraries, setGroupedLibraries] = useState([]);
 
   useEffect(() => {
@@ -108,7 +108,7 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
       const response = await axios.post(`/api/admin/book/${book.id}/addLibrary`, {
         libName: newLibrary.libName,
         count: newLibrary.count,
-        reg_time: newLibrary.reg_time,
+    
         title: book.title,
         isbn: book.isbn,
         author: book.author,
@@ -119,7 +119,7 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
       console.log("Add Library response:", response.data);
       alert("도서관이 추가되었습니다.");
       refreshBookList();
-      setNewLibrary({ libName: '', count: '', reg_time: new Date() });
+      setNewLibrary({ libName: '', count: ''});
     } catch (error) {
       console.error("Add Library error:", error);
       alert("도서관을 추가할 수 없습니다. 다시 확인해주세요");
@@ -148,7 +148,7 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
                     <th>번호</th>
                     <th>도서관</th>
                     <th>소장 권수</th>
-                    <th>등록일</th>
+                   
                     <th>수정</th>
                     <th>삭제</th>
                   </tr>
@@ -170,7 +170,7 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
                           `${lib.count}권`
                         )}
                       </td>
-                      <td>{moment(lib.reg_time).format('YYYY-MM-DD')}</td>
+                     
                       <td>
                         {editMode === lib.libName ? (
                           <button
@@ -227,7 +227,7 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
                         style={{ width: "100px" }}
                       />
                     </td>
-                    <td>{moment(newLibrary.reg_time).format('YYYY-MM-DD')}</td>
+                  
                     <td colSpan="2">
                       <button
                         type="button"

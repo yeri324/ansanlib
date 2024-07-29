@@ -66,7 +66,7 @@ min-height: 800px;
 
 
 /*테이블 열 */
-.admin-th-tr th{
+.admin-th-tr > th{
   height: 40px;
   text-align: center;
   background-color: #B0C4DE;
@@ -74,9 +74,10 @@ min-height: 800px;
 }
 
 
-.admin-table .admin-th-tr {
+.admin-table > .admin-th-tr {
   width: 15%;
   white-space: nowrap; /* 모든 셀에 nowrap 적용 */
+
 }
 
 
@@ -117,9 +118,13 @@ padding: 10px;
   padding: 10px;
 }
 
-.admin-book-cover {
-  width: 110px;
-  height: 145px;
+.admin-td-tr > .nowrap {
+  width: 50px;
+  height: 40px;
 }
 
+.admin-book-cover {
+  width: 90px;
+  height: 120px;
 
+}

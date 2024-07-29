@@ -23,6 +23,7 @@ import com.ansanlib.entity.LoanStatus;
 import com.ansanlib.entity.RecBoard;
 import com.ansanlib.entity.RequestBook;
 import com.ansanlib.requestBook.repository.RequestBookRepository;
+
 @Service
 public class AdminBookService {
 
@@ -37,21 +38,18 @@ public class AdminBookService {
 
 	@Autowired
 	private BookImgRepository bookImgRepository;
-	
-@Autowired
-private RecBoardRepository recBoardRepository;
 
+	@Autowired
+	private RecBoardRepository recBoardRepository;
 
-@Autowired
-private LoanStatusRepository loanStatusRepository;
+	@Autowired
+	private LoanStatusRepository loanStatusRepository;
 
+	// 도서-도서관 중복확인
+	public boolean checkBookExists(String isbn, String libName) {
+		return bookRepository.existsByIsbnAndLibName(isbn, libName); // lib_name 사용
+	}
 
-	//도서-도서관 중복확인
-	 public boolean checkBookExists(String isbn, String libName) {
-	        return bookRepository.existsByIsbnAndLibName(isbn, libName); // lib_name 사용
-	    }
-	
-	
 	public BookDto saveBook(BookDto bookDto, MultipartFile file) throws IOException {
 		// 도서 등록
 		Book book = new Book();
@@ -64,13 +62,13 @@ private LoanStatusRepository loanStatusRepository;
 		book.setBookDetail(bookDto.getBookDetail());
 		book.setCount(bookDto.getCount());
 		book.setLibName(bookDto.getLibName());
-		
+
 		Book savedBook = bookRepository.save(book);
 		bookDto.setId(savedBook.getId());
 
 		if (file != null && !file.isEmpty()) {
 			try {
-				Map<String, String> fileData = fileService.fileHandler(file, "book",null);
+				Map<String, String> fileData = fileService.fileHandler(file, "book", null);
 				if (fileData != null) {
 					BookImg bookImg = new BookImg();
 					bookImg.setImgName(fileData.get("imgName"));
@@ -87,8 +85,6 @@ private LoanStatusRepository loanStatusRepository;
 
 		return bookDto;
 	}
-	
-	
 
 	// 도서조회
 	public List<Book> getAllBooks() {
@@ -100,73 +96,63 @@ private LoanStatusRepository loanStatusRepository;
 		return requestBookRepository.findAll();
 	}
 
-	
-	 @Transactional
-	    public void addLib(Long bookId, BookDto bookDto) throws Exception {
-	        Optional<Book> optionalBook = bookRepository.findById(bookId);
-	        if (optionalBook.isPresent()) {
-	            Book book = optionalBook.get();
-	            Book newBook = new Book();
-	            newBook.setTitle(book.getTitle());
-	            newBook.setAuthor(book.getAuthor());
-	            newBook.setPublisher(book.getPublisher());
-	            newBook.setPub_date(book.getPub_date());
-	            newBook.setLibName(bookDto.getLibName());
-	            newBook.setCount(bookDto.getCount());
+	@Transactional
+	public void addLib(Long bookId, BookDto bookDto) throws Exception {
+		Optional<Book> optionalBook = bookRepository.findById(bookId);
+		if (optionalBook.isPresent()) {
+			Book book = optionalBook.get();
+			Book newBook = new Book();
+			newBook.setTitle(book.getTitle());
+			newBook.setAuthor(book.getAuthor());
+			newBook.setPublisher(book.getPublisher());
+			newBook.setPub_date(book.getPub_date());
+			newBook.setLibName(bookDto.getLibName());
+			newBook.setCount(bookDto.getCount());
 
-	            newBook.setIsbn(book.getIsbn());
-	            bookRepository.save(newBook);
-	        } else {
-	            throw new Exception("Book not found");
-	        }
-	    }
+			newBook.setIsbn(book.getIsbn());
+			bookRepository.save(newBook);
+		} else {
+			throw new Exception("Book not found");
+		}
+	}
 
-	//도서권수 수정
-	 @Transactional
-	    public void updateBookCountByLibNameAndTitle(String libName, String title, int count) {
-		 System.out.println(libName);
-		 System.out.println(count);
-	        bookRepository.updateBookCountByLibNameAndTitle(libName, title, count);
-	    }
-	 
-	 
-		
-		
-		
-		
+	// 도서권수 수정
+	@Transactional
+	public void updateBookCountByLibNameAndTitle(String libName, String title, int count) {
+		System.out.println(libName);
+		System.out.println(count);
+		bookRepository.updateBookCountByLibNameAndTitle(libName, title, count);
+	}
+
 //		//삭제
-	 @Transactional
-	    public void deleteBookByLibNameAndTitle(String libName, String title) throws Exception {
-	        Optional<Book> bookOptional = bookRepository.findByLibNameAndTitle(libName, title);
-	        if (bookOptional.isPresent()) {
-	            Book book = bookOptional.get();
+	@Transactional
+	public void deleteBookByLibNameAndTitle(String libName, String title) throws Exception {
+		Optional<Book> bookOptional = bookRepository.findByLibNameAndTitle(libName, title);
+		if (bookOptional.isPresent()) {
+			Book book = bookOptional.get();
 
-	            // 책 이미지 삭제 로직 추가
-	            if (book.getBookImg() != null && book.getBookImg().getImgName() != null) {
-	                String imgPath = Paths.get("src/main/resources/static/images/book_images",
-	                        String.valueOf(book.getId()), book.getBookImg().getImgName()).toString();
-	                fileService.deleteFile(imgPath);
-	            }
+			// 책 이미지 삭제 로직 추가
+			if (book.getBookImg() != null && book.getBookImg().getImgName() != null) {
+				String imgPath = Paths.get("src/main/resources/static/images/book_images", String.valueOf(book.getId()),
+						book.getBookImg().getImgName()).toString();
+				fileService.deleteFile(imgPath);
+			}
 
-	            // 책 삭제
-	            bookRepository.deleteByLibNameAndTitle(libName, title);
-	        } else {
-	            throw new IllegalArgumentException("Book not found with libName: " + libName + " and title: " + title);
-	        }
-	    }
+			// 책 삭제
+			bookRepository.deleteByLibNameAndTitle(libName, title);
+		} else {
+			throw new IllegalArgumentException("Book not found with libName: " + libName + " and title: " + title);
+		}
+	}
 
-	 
-	 // 메인 추천도서
-	    public List<RecBoard> getRecBoards() {
-	        return recBoardRepository.findAll();
-	    }
+	// 메인 추천도서
+	public List<RecBoard> getRecBoards() {
+		return recBoardRepository.findAll();
+	}
 
-	    
-	    //메인대출도서
-	    public List<LoanStatus> getAllLoanStatuses() {
-	        return loanStatusRepository.findAll();
-	    }
-	
+	// 메인대출도서
+	public List<LoanStatus> getAllLoanStatuses() {
+		return loanStatusRepository.findAll();
+	}
+
 }
-	
-	

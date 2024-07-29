@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import '../page/AdminPage.css';
+import BookImg from '../../book/searchBookList/bookImg';
 
 const AdminBookListTable = ({ 
   books, 
@@ -14,6 +15,7 @@ const AdminBookListTable = ({
   const [sortedBooks, setSortedBooks] = useState([]);
 
   useEffect(() => {
+    // Sort books by createdDate in descending order (newest first)
     const sortedData = [...books].sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
     setSortedBooks(sortedData);
   }, [books]);
@@ -34,15 +36,26 @@ const AdminBookListTable = ({
 
   const filteredColumns = columns.filter(column => !excludedColumns.includes(column.key));
 
+  const columnStyles = {
+    img: { width: '10%' },
+    isbn: { width: '10%' },
+    title: { width: '20%' },
+    author: { width: '20%' },
+    publisher: { width: '15%' },
+    pub_date: { width: '10%' },
+    total_count: { width: '10%' }
+  };
+
   return (
     <table className="admin-table">
       <thead>
         <tr className="admin-th-tr">
-          <th>No</th>
+          <th style={{ width: '5%' }}>No</th>
           {filteredColumns.map(column => (
             <th
               key={column.key}
               className={column.key !== 'img' ? 'sortable' : ''}
+              style={columnStyles[column.key]}
               onClick={() => column.key !== 'img' && handleSort(column.key)}
             >
               {column.label}
@@ -56,11 +69,11 @@ const AdminBookListTable = ({
             <tr className='admin-td-tr' key={index} onClick={() => onOpenModal(book)}>
               <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
               {filteredColumns.map(column => (
-                <td key={column.key} className="nowrap">
+                <td key={column.key} className="nowrap" style={columnStyles[column.key]}>
                   {column.key === 'img' ? (
                     book.bookImg && book.bookImg.imgName ? (
-                      <img src={`http://localhost:8090/images/book/${book.bookImg.imgName}`} alt="책 이미지" className="admin-book-cover" />
-
+                      <BookImg book={book} />
+                      // <img src={`http://localhost:8090/images/book/${book.bookImg.imgName}`} alt="책 이미지" className="admin-book-cover" />
                     ) : (
                       <div className="no-image">No Image</div>
                     )
