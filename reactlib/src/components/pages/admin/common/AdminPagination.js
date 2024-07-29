@@ -3,32 +3,41 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./AdminPagination.css";
 
 const AdminPagination = ({ currentPage, totalPages, paginate }) => {
+  const maxPagesToShow = 10;
+  const startPage = Math.floor((currentPage - 1) / maxPagesToShow) * maxPagesToShow + 1;
+  const endPage = Math.min(startPage + maxPagesToShow - 1, totalPages);
+
+  const pages = [];
+  for (let i = startPage; i <= endPage; i++) {
+    pages.push(i);
+  }
+
   return (
     <div className="admin-pagination">
       <nav aria-label="Page navigation example">
         <ul className="pagination justify-content-center" id="admin-page-center">
           <li id="admin-page-item" className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
             <button className="btn btn-outline-dark" id="admin-pre"
-              onClick={() => paginate(currentPage - 1)}
+              onClick={() => paginate(startPage - maxPagesToShow > 0 ? startPage - maxPagesToShow : 1)}
               aria-label="Previous"
             >
               <span aria-hidden="true">&laquo;</span>
             </button>
           </li>
-          {Array.from({ length: totalPages }, (_, index) => (
-            <li key={index + 1} className={`page-item ${index + 1 === currentPage ? 'active' : ''}`}>
+          {pages.map((page) => (
+            <li key={page} className={`page-item ${page === currentPage ? 'active' : ''}`}>
               <button
                 id="admin-next"
-                className={`btn ${index + 1 === currentPage ? 'btn-dark' : 'btn-outline-dark'} page-link`}
-                onClick={() => paginate(index + 1)}
+                className={`btn ${page === currentPage ? 'btn-dark' : 'btn-outline-dark'} page-link`}
+                onClick={() => paginate(page)}
               >
-                {index + 1}
+                {page}
               </button>
             </li>
           ))}
           <li id="admin-page-item" className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
             <button type="button" className="btn btn-outline-dark"
-              onClick={() => paginate(currentPage + 1)}
+              onClick={() => paginate(endPage + 1 <= totalPages ? endPage + 1 : totalPages)}
               aria-label="Next"
             >
               <span aria-hidden="true">&raquo;</span>

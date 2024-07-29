@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import '../page/AdminPage.css';
 
-const AdminBookListTable = ({ books, onOpenModal, onSort, sortConfig, excludedColumns = [] }) => {
+const AdminBookListTable = ({ 
+  books, 
+  onOpenModal, 
+  onSort, 
+  sortConfig, 
+  excludedColumns = [], 
+  currentPage, 
+  itemsPerPage 
+}) => {
+  const [sortedBooks, setSortedBooks] = useState([]);
+
+  useEffect(() => {
+    const sortedData = [...books].sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
+    setSortedBooks(sortedData);
+  }, [books]);
 
   const handleSort = (key) => {
     onSort(key);
@@ -37,19 +51,16 @@ const AdminBookListTable = ({ books, onOpenModal, onSort, sortConfig, excludedCo
         </tr>
       </thead>
       <tbody>
-        {books.length > 0 ? (
-          books.map((book, index) => (
+        {sortedBooks && sortedBooks.length > 0 ? (
+          sortedBooks.map((book, index) => (
             <tr className='admin-td-tr' key={index} onClick={() => onOpenModal(book)}>
-              <td>{index + 1}</td>
+              <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
               {filteredColumns.map(column => (
-                <td key={column.key}>
+                <td key={column.key} className="nowrap">
                   {column.key === 'img' ? (
-                    book.bookImg ? (
-                      <img 
-                        src={`http://localhost:8090/images/book/${book.bookImg.imgName}`} 
-                        alt="책 이미지" 
-                        className="admin-book-cover" 
-                      />
+                    book.bookImg && book.bookImg.imgName ? (
+                      <img src={`http://localhost:8090/images/book/${book.bookImg.imgName}`} alt="책 이미지" className="admin-book-cover" />
+
                     ) : (
                       <div className="no-image">No Image</div>
                     )
@@ -75,11 +86,9 @@ AdminBookListTable.propTypes = {
   onOpenModal: PropTypes.func.isRequired,
   onSort: PropTypes.func.isRequired,
   sortConfig: PropTypes.object.isRequired,
-  excludedColumns: PropTypes.array
-};
-
-AdminBookListTable.defaultProps = {
-  excludedColumns: []
+  excludedColumns: PropTypes.array,
+  currentPage: PropTypes.number.isRequired,
+  itemsPerPage: PropTypes.number.isRequired
 };
 
 export default AdminBookListTable;
