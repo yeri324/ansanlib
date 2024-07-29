@@ -15,6 +15,7 @@ import com.ansanlib.book.repository.BookImgRepository;
 import com.ansanlib.book.repository.BookRepository;
 import com.ansanlib.book.repository.BookRepositoryCustom;
 import com.ansanlib.entity.Book;
+import com.ansanlib.reservation.service.ReservationService;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,8 @@ public class BookService {
 	private final BookImgRepository bookImgRepository;
 	private final BookRepositoryCustom bookRepositoryCustom;
 	private final ModelMapper modelMapper;
-		
+    private final ReservationService reservationService;
+
     // 검색
     @Transactional(readOnly = true)
     public Page<Book> searchBookPageSimple(BookSearchCondition condition, Pageable pageable) {
@@ -54,14 +56,14 @@ public class BookService {
 
     // 도서 isbn 기반 조회
     @Transactional(readOnly = true)
-    public List<Book> findBookbyISBN(String isbn){
+    public List<Book> findBookbyISBN(String isbn) {
         return bookRepository.findByIsbn(isbn);
     }
-    
+
     public List<Book> findBooksByTitle(String title) {
         return bookRepository.findByTitleContainingIgnoreCase(title);
     }
-    
+
     @Transactional
     public void updateImgUrl(Long id, String imgUrl) {
         bookImgRepository.updateImgUrl(id, imgUrl);

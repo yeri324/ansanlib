@@ -22,6 +22,7 @@ const BookDetailPage = () => {
     const fetchBookDetails = async () => {
       try {
         const response = await axios.get(`http://localhost:8090/api/book/detail/${id}`);
+        console.log('Book detail response data:', response.data);
         setBook(response.data);
         const updatedBookList = response.data.relatedBooks.map(book => ({
           ...book,
@@ -30,6 +31,7 @@ const BookDetailPage = () => {
         }));
         setBookList(updatedBookList);
       } catch (error) {
+        console.error('Error fetching book details:', error);
         setErrorMessage('도서 상세 정보를 가져오는 중 오류가 발생했습니다: ' + error.message);
       }
     };
@@ -98,7 +100,7 @@ const BookDetailPage = () => {
               <tr>
                 <th style={{width:'25%'}}>위치</th>
                 <th style={{width:'25%'}}>대출상태</th>
-                <th style={{width:'25%'}}>반납예정일</th>
+                <th style={{width:'25%'}}>예약종료일</th>
                 <th style={{width:'25%'}}>서비스신청</th>
               </tr>
             </thead>
@@ -107,7 +109,7 @@ const BookDetailPage = () => {
                 <tr key={relatedBook.id}>
                   <td>{relatedBook.libName}</td>
                   <td>{relatedBook.status === 'AVAILABLE' ? '대출 가능' : '대출 중'}</td>
-                  <td>{relatedBook.returnDay}</td>
+                  <td>{relatedBook.returnDay || '정보 없음'}</td>
                   <td>
                     <div className="button-row">
                       <button disabled={relatedBook.status !== 'AVAILABLE'} onClick={() => window.location.href = `/reservation/new?id=${encodeURIComponent(book.id)}&title=${encodeURIComponent(book.title)}`}>
