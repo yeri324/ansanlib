@@ -3,17 +3,25 @@ import moment from 'moment';
 import { getLibraryNum } from '../../../../utils/libraryUtils';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./AdminModal.css";
+import useAuth from '../../../hooks/useAuth';
+import Auth from '../../../helpers/Auth';
+import { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
 
-const HolidayNew = ({ showModal, handleCloseModal, selectedDate, setSelectedDate, districts }) => {
+const HolidayNewComponent = ({ showModal, handleCloseModal, selectedDate, setSelectedDate, districts }) => {
+  const { axios } = useAuth();
   const [district, setDistrict] = useState('');
   const [library, setLibrary] = useState('');
   const [libNum, setLibNum] = useState('');
 
   const checkDuplicate = async (date, library) => {
     try {
-      const response = await fetch(`http://localhost:8090/api/admin/holiday/check?date=${date}&library=${library}`);
-      const data = await response.json();
-      return data;
+      const response = await axios.get(`http://localhost:8090/api/admin/holiday/check`, {
+        params: {
+          date: date,
+          library: library
+        }
+      });
+      return response.data;
     } catch (error) {
       console.error('Error checking duplicate:', error);
       return false;
@@ -31,24 +39,17 @@ const HolidayNew = ({ showModal, handleCloseModal, selectedDate, setSelectedDate
       }
 
       try {
-        const response = await fetch('http://localhost:8090/api/admin/holiday/new', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            holiday: formattedDate,
-            lib_name: library,
-            lib_num: libNum,
-          }),
+        const response = await axios.post('http://localhost:8090/api/admin/holiday/new', {
+          holiday: formattedDate,
+          lib_name: library,
+          lib_num: libNum
         });
 
-        if (response.ok) {
+        if (response.status === 200) {
           alert('저장이 완료되었습니다!');
           handleCloseModal();
         } else {
-          const errorData = await response.json();
-          console.error('Error:', errorData);
+          console.error('Error:', response.data);
           alert('저장에 실패했습니다. 서버 로그를 확인하세요.');
         }
       } catch (error) {
@@ -89,10 +90,6 @@ const HolidayNew = ({ showModal, handleCloseModal, selectedDate, setSelectedDate
                 <input type="date" className="form-control" value={selectedDate ? selectedDate.format('YYYY-MM-DD') : ''} onChange={(e) => setSelectedDate(moment(e.target.value))} />
               </div>
 
-
-
-
-
               <div className="form-group" id="admin-form-group">
                 <label>지역 선택</label>
                 <select value={district} className="form-control" onChange={(e) => setDistrict(e.target.value)}>
@@ -114,8 +111,8 @@ const HolidayNew = ({ showModal, handleCloseModal, selectedDate, setSelectedDate
                 </div>
               )}
               <div className="modal-footer" id="admin-modal-footer">
-                <button type="button" id="admin-modal-btn" class="btn btn-outline-dark" onClick={handleCloseModal}>취소</button>
-                <button type="submit" id="admin-modal-btn" class="btn btn-outline-dark">저장</button>
+                <button type="button" id="admin-modal-btn" className="btn btn-outline-dark" onClick={handleCloseModal}>취소</button>
+                <button type="submit" id="admin-modal-btn" className="btn btn-outline-dark">저장</button>
               </div>
             </form>
           </div>
@@ -124,5 +121,11 @@ const HolidayNew = ({ showModal, handleCloseModal, selectedDate, setSelectedDate
     </div>
   );
 };
+
+const HolidayNew = (props) => (
+  <Auth loginStatus={LOGIN_STATUS.LOGGED_IN} roles={ROLES.ADMIN}>
+    <HolidayNewComponent {...props} />
+  </Auth>
+);
 
 export default HolidayNew;

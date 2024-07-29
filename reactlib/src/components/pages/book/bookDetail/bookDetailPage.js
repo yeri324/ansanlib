@@ -1,47 +1,48 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import './BookDetailPage.css'; // 스타일 파일을 임포트합니다.
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import './BookDetailPage.css';
 import Header from '../../../fragments/header/header';
 import Footer from '../../../fragments/footer/footer';
 import useAuth, { LOGIN_STATUS } from '../../../hooks/useAuth';
 import axios from 'axios';
+import KeywordCloud_bookId from '../../../fragments/home/KeywordCloud_bookId';
 
 const BookDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const [book, setBook] = useState({});
   const [bookList, setBookList] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const { userId } = useAuth();
 
+  const query = new URLSearchParams(location.search);
+  const endDate = query.get('endDate');
+
   useEffect(() => {
     const fetchBookDetails = async () => {
       try {
         const response = await axios.get(`http://localhost:8090/api/book/detail/${id}`);
-        console.log('Book Data:', response.data); // API 응답을 콘솔에 출력
+        console.log('Book detail response data:', response.data);
         setBook(response.data);
-        setBookList(response.data.relatedBooks || []);
+        const updatedBookList = response.data.relatedBooks.map(book => ({
+          ...book,
+          returnDay: endDate ? endDate.split('T')[0] : null, // 쿼리 파라미터에서 받은 endDate를 변환하여 returnDay로 설정
+          status: endDate ? 'LOAN' : book.status // returnDay가 있으면 상태를 LOAN으로 설정
+        }));
+        setBookList(updatedBookList);
       } catch (error) {
+        console.error('Error fetching book details:', error);
         setErrorMessage('도서 상세 정보를 가져오는 중 오류가 발생했습니다: ' + error.message);
       }
     };
 
     fetchBookDetails();
-  }, [id, axios]);
+  }, [id, endDate]);
 
   const alertLogin = () => {
     alert('로그인 후 이용가능합니다.');
     navigate('/login');
-  };
-
-  const handleReservation = (bookId) => {
-    axios.post(`http://localhost:8090/reservation/new`)
-      .then(response => {
-        // 예약 성공 처리
-      })
-      .catch(error => {
-        console.error('예약 중 오류 발생:', error);
-      });
   };
 
   const handleInterest = async (bookId) => {
@@ -54,7 +55,6 @@ const BookDetailPage = () => {
     }
   };
 
-  // 줄바꿈 문자를 <br /> 태그로 변환하는 함수
   const formatText = (text) => {
     if (!text) return null;
     return text.split('\n').map((str, index) => (
@@ -97,26 +97,25 @@ const BookDetailPage = () => {
 
         <div className="lib-list">
           <table className="lib-table">
-            <thead >
+            <thead>
               <tr>
                 <th style={{width:'25%'}}>위치</th>
                 <th style={{width:'25%'}}>대출상태</th>
-                <th style={{width:'25%'}}>반납예정일</th>
+                <th style={{width:'25%'}}>예약종료일</th>
                 <th style={{width:'25%'}}>서비스신청</th>
               </tr>
             </thead>
             <tbody>
               {bookList.map((relatedBook) => (
                 <tr key={relatedBook.id}>
-                  <td >{relatedBook.libName}</td>
-                  <td >{relatedBook.status==='AVAILABLE'?'대출 가능' :'대출 중'}</td>
-                  <td >{relatedBook.returnDay}</td>
-                  <td >
+                  <td>{relatedBook.libName}</td>
+                  <td>{relatedBook.status === 'AVAILABLE' ? '대출 가능' : '대출 중'}</td>
+                  <td>{relatedBook.returnDay || '정보 없음'}</td>
+                  <td>
                     <div className="button-row">
                       <button disabled={relatedBook.status !== 'AVAILABLE'} onClick={() => window.location.href = `/reservation/new?id=${encodeURIComponent(book.id)}&title=${encodeURIComponent(book.title)}`}>
                         도서예약
                       </button>
-
                       <button onClick={(LOGIN_STATUS === "LOGGED_IN") ? () => handleInterest(relatedBook.id) : alertLogin}>
                         관심도서담기
                       </button>
@@ -132,6 +131,7 @@ const BookDetailPage = () => {
           <h3><span>책소개</span></h3>
           <div className="left-align">{formatText(book.bookDetail)}</div>
         </div>
+        <KeywordCloud_bookId id={book.id} />
       </main>
       <Footer />
     </>
@@ -141,7 +141,6 @@ const BookDetailPage = () => {
 const BookDetailPageWrapper = () => {
   return (
     <>
-
       <BookDetailPage />
     </>
   );

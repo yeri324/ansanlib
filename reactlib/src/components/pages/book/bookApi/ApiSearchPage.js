@@ -4,6 +4,7 @@ import './ApiSearchPage.css';
 import Header from '../../../fragments/header/header';
 import Footer from '../../../fragments/footer/footer';
 import KeywordCloud_gender from '../../../fragments/home/Keyword_Cloud_gender';
+import useAuth from '../../../hooks/useAuth';
 
 const ApiBookSearch = () => {
     const [keyword, setKeyword] = useState('');
@@ -17,8 +18,8 @@ const ApiBookSearch = () => {
     });
     const [sortOrder, setSortOrder] = useState('asc');
     const [sortBy, setSortBy] = useState('title');
-    const [user, setUser] = useState({ id: 1, gender: 'MALE' }); // 기본 값을 MALE 또는 FEMALE로 설정
-
+    const {userId,gender} = useAuth();
+    const [searchKeyword,setSearchKeyword] = useState("");
     const fetchBooks = useCallback(async (page = 1) => {
         const apiUrl = `/api/bookapi/search?keyword=${keyword}&page=${page}&sortBy=${sortBy}&sortOrder=${sortOrder}`;
         console.log(`Fetching books from: ${apiUrl}`);
@@ -26,30 +27,26 @@ const ApiBookSearch = () => {
         const data = response.data;
         setBooks(data.books);
         setPageMaker(data.pageMaker);
-
-        if (user.id && user.gender) {
+        if (userId && gender) {
             try {
                 await axios.post('http://127.0.0.1:5001/api/save_keyword', {
-                    user_id: user.id,
-                    gender: user.gender,
+                    user_id: userId,
+                    gender: gender,
                     keyword
                 });
             } catch (error) {
                 console.error('Error saving keyword:', error);
             }
         }
-    }, [keyword, sortBy, sortOrder, user]);
+    }, [keyword, sortBy, sortOrder]);
 
     const handleSearch = (e) => {
+        setSearchKeyword(keyword)
         e.preventDefault();
         fetchBooks();
     };
 
-    useEffect(() => {
-        if (keyword) {
-            fetchBooks(pageMaker.cri.page);
-        }
-    }, [fetchBooks, keyword, pageMaker.cri.page]);
+
 
     return (
         <>
@@ -84,7 +81,7 @@ const ApiBookSearch = () => {
                             <option value="desc">내림차순</option>
                         </select>
                     </div>
-                    <h4>{`'${keyword}' 검색 결과 ${books.total}건 검색`}</h4>
+                    <h4>{`'${searchKeyword}' 검색 결과 ${books.total}건 검색`}</h4>
                     <div className='search-list'>
                         <nav aria-label="Page navigation example" >
                             <ul className="pagination justify-content-center">
@@ -142,7 +139,6 @@ const ApiBookSearch = () => {
                         </div>
                     </div>
                     <div className="key_word_cloud_gender">
-                        <h1>Keyword Clouds for Genders</h1>
                         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
                             <KeywordCloud_gender gender="MALE" />
                             <KeywordCloud_gender gender="FEMALE" />

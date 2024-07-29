@@ -62,7 +62,7 @@ function App() {
                                 <Route path="/" element={<HomePage />} />
                                 <Route path="/fragments/header" element={<Header />} />
                                 <Route path="/fragments/footer" element={<Footer />} />
-                                <Route path="/fragments/home" element={<keywordCloud_bookId />} />
+                                {/* <Route path="/fragments/home" element={<keywordCloud_bookId />} /> */}
                                 <Route path="/intro/history" element={<History />} />
                                 <Route path="/intro/organization" element={<Organ />} />
                                 <Route path="/intro/library" element={<LibInfo />} />

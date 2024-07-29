@@ -8,6 +8,7 @@ function KeywordCloud_gender({ gender }) {
     useEffect(() => {
         const fetchWordCloud = async () => {
             try {
+                console.log(`Fetching word cloud for gender: ${gender}`);  // gender 값 출력
                 const response = await axios.get(`http://127.0.0.1:5001/api/wordcloud/${gender}`, {
                     responseType: 'blob',
                 });
@@ -22,11 +23,25 @@ function KeywordCloud_gender({ gender }) {
         fetchWordCloud();
     }, [gender]);
 
+    const displayGender = gender === 'MALE' ? '남성' : gender === 'FEMALE' ? '여성' : 'Unknown';
+
     return (
         <div>
-            <h1>Keyword Cloud for {gender}</h1>
+            <h2>{displayGender}별 키워드 검색어</h2>
             {error && <p>Error loading image: {error.message}</p>}
-            {imageSrc && <img src={imageSrc} alt={`Keyword Cloud for ${gender}`} />}
+            {imageSrc && (
+                <img
+                    src={imageSrc}
+                    alt={`Keyword Cloud for ${displayGender}`}
+                    style={{
+                        maxWidth: '100%',
+                        maxHeight: '400px',
+                        objectFit: 'contain',
+                        border: '1px solid #ccc',
+                        borderRadius: '8px',
+                    }}
+                />
+            )}
         </div>
     );
 }

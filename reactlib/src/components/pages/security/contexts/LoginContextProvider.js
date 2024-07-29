@@ -16,6 +16,7 @@ const LoginContextProvider = ({ children }) => {
     const [isLogin, setLogin] = useState(false); // 로그인 여부
     const [isLoginInProgress, setLoginInProgress] = useState(true) //로그인 진행중 여부. 처음 페이지가 로드됬을때는 로그인 진행중이라고 가정함.
     const [isUserId,setIsUserId] = useState(null) // 유저 아이디 정보
+    const [isGender,setIsGender] = useState(null) // 유저 아이디 정보
     const [isLoginId,setIsLoginId] = useState(null) // 유저 로그인 아이디 정보
     const [roles, setRoles] = useState({isUser : false, isAdmin : false}) // 권한 정보
 
@@ -135,7 +136,7 @@ const LoginContextProvider = ({ children }) => {
     // 로그인 세팅
     const loginSetting = (userData, accessToken) => {
 
-        const { userId, loginid, role } = userData
+        const { userId, loginid, role,gender } = userData
         console.log(`no : ${userId}`);
         console.log(`userId : ${loginid}`);
         console.log(`authList : ${role}`);
@@ -151,6 +152,9 @@ const LoginContextProvider = ({ children }) => {
 
         // 유저 로그인 아이디 세팅
         setIsLoginId(loginid)
+
+        // 로그인 유저 성별 세팅
+        setIsGender(gender)
 
         // 권한정보 세팅
         const updatedRoles = { isUser : false, isAdmin : false }
@@ -177,6 +181,9 @@ const LoginContextProvider = ({ children }) => {
         // 유저 로그인정보 초기화
         setIsLoginId(null)
 
+        // 유저 성별 정보 초기화
+        setIsGender(null)
+
         // 권한 정보 초기화
         setRoles({isUser : false, isAdmin : false})
     }
@@ -191,7 +198,7 @@ const LoginContextProvider = ({ children }) => {
 
 
     return ( 
-        <LoginContext.Provider value={ {isLogin, isLoginInProgress, isUserId,isLoginId, roles, loginCheck, login,logout} }>
+        <LoginContext.Provider value={ {isLogin, isLoginInProgress, isUserId,isLoginId,isGender, roles, loginCheck, login,logout} }>
             {children}
         </LoginContext.Provider>
     )

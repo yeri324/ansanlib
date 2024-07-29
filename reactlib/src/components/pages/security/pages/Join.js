@@ -17,23 +17,20 @@ const Join = () => {
     try {
       response = await auth.join(form)
     } catch (error) {
-      console.error(`${error}`)
       console.error(`회원가입 요청 중 에러가 발생하였습니다.`);
       return
     }
 
     data = response.data
     const status = response.status
-    console.log(`data : ${data}`);
-    console.log(`status : ${status}`);
+
 
     if (status == 201) {
-      console.log(`회원가입 성공!`);
-      alert("회원가입 성공", "메인 화면으로 이동합니다.", "success", () => { navigate("/login") })
+      alert("가입이 완료되었습니다.");
+      window.location.reload(navigate("/login", { replace: true }));
     }
     else {
-      console.log(`회원가입 실패!`);
-      alert("회원가입 실패", "회원가입에 실패하였습니다.", "error")
+      alert("회원가입에 실패하였습니다.")
     }
   }
 
@@ -43,18 +40,15 @@ const Join = () => {
     try {
       await auth.getData(form).then((response) => {
         if (response.status == 200) {
-          console.log(`사용 가능한 아이디!`);
           alert("사용 가능한 아이디입니다.");
         }
       })
 
     } catch (error) {
       if (error.response.status == 409) {
-        console.log(`사용중인 아이디!`);
         alert("사용 할 수 없는 아이디입니다.")
       }
       else {
-        console.log(`오류!`);
         alert("조회 중 오류가 발생하였습니다.")
       }
     }
@@ -66,18 +60,15 @@ const Join = () => {
     try {
       await auth.getData(form).then((response) => {
         if (response.status == 200) {
-          console.log(`사용 가능한 이메일!`);
           alert("사용 가능한 이메일입니다.");
         }
       })
 
     } catch (error) {
       if (error.response.status == 409) {
-        console.log(`사용중인 이메일!`);
         alert("사용 할 수 없는 이메일입니다.")
       }
       else {
-        console.log(`오류!`);
         alert("조회 중 오류가 발생하였습니다.")
       }
     }

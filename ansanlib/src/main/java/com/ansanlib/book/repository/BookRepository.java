@@ -69,9 +69,3 @@ public interface BookRepository extends JpaRepository<Book, Long>, BookRepositor
 		// 신규도서 게시판 사용 쿼리
 		Page<Book> findByRegTimeBetween(LocalDateTime startDate, LocalDateTime endDate, Pageable pageable);
 	}
-	  
-	    
-
-	    
-	    
-	   

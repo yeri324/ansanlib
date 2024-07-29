@@ -30,8 +30,8 @@ const AdminRecBoardTable = ({ limit }) => {
       <thead>
         <tr className="admin-th-tr">
           <th>No</th>
-          <th>제목</th>
-          <th>저자</th>
+          <th>도서</th>
+          <th>작가</th>
           <th>내용</th>
           <th>작성일</th>
         </tr>
@@ -39,11 +39,11 @@ const AdminRecBoardTable = ({ limit }) => {
       <tbody>
         {recBoardData.slice(0, limit).map((item, index) => (
           <tr className="list admin-td-tr" key={index}>
-            <td>{index + 1}</td>
+            <td style={{width:"10%"}}>{index + 1}</td>
             <td>{item.book.title}</td>
-            <td>{item.book.author}</td>
+            <td style={{width:"10%"}}>{item.book.author}</td>
             <td>{item.content}</td>
-            <td>{moment(item.pub_date).format('YYYY')}</td> {/* Format the date */}
+            <td style={{width:"10%"}}>{moment(item.pub_date).format('YYYY')}</td> {/* Format the date */}
           </tr>
         ))}
       </tbody>
