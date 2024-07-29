@@ -38,10 +38,10 @@ const AdminBookListTable = ({
 
   const columnStyles = {
     img: { width: '10%' },
-    isbn: { width: '10%' },
-    title: { width: '20%' },
-    author: { width: '20%' },
-    publisher: { width: '15%' },
+    isbn: { width: '15%' },
+    title: {},
+    author: { width: '15%' },
+    publisher: { width: '10%' },
     pub_date: { width: '10%' },
     total_count: { width: '10%' }
   };

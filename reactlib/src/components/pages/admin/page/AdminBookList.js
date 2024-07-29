@@ -15,7 +15,7 @@ import AdminBookListTable from '../item/AdminBookListTable';
 const AdminBookList = () => {
   const { axios } = useAuth();
   const [bookList, setBookList] = useState([]);
-  const [searchCriteria, setSearchCriteria] = useState('library');
+  const [searchCriteria, setSearchCriteria] = useState('title');
   const [searchTerm, setSearchTerm] = useState('');
   const [searchYear, setSearchYear] = useState(null);
   const [filteredBookList, setFilteredBookList] = useState([]);
@@ -71,11 +71,7 @@ const AdminBookList = () => {
 
   const handleSearch = () => {
     let filteredList = bookList;
-    if (searchCriteria === 'library') {
-      filteredList = bookList.filter(book =>
-        book.libraries.some(lib => lib.libName.toLowerCase().includes(searchTerm.toLowerCase()))
-      );
-    } else if (searchCriteria === 'title') {
+    if (searchCriteria === 'title') {
       filteredList = bookList.filter(book =>
         book.title && book.title.toLowerCase().includes(searchTerm.toLowerCase())
       );
@@ -177,11 +173,12 @@ const AdminBookList = () => {
                   <input
                     type="text"
                     placeholder={`${searchCriteria === 'title'
-                      ? '도서 제목'
+                      ? '도서 제목을 입력하세요'
                       : searchCriteria === 'author'
-                        ? '작가'
-                        : '출판사'
-                      }을 입력하세요`}
+                      ? '작가를 입력하세요'
+                      : searchCriteria === 'publisher'
+                      ? '출판사를 입력하세요'
+                      : ''}`}
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     onKeyDown={handleKeyDown}
@@ -205,7 +202,6 @@ const AdminBookList = () => {
 
               <div className="admin-page-button" style={{ width: "25%" }}>
                 <button type="button" className="btn btn-outline-dark" onClick={() => navigate('/admin/book/new')}>등록하기</button>
-                {/* <button type="button" className="btn btn-outline-dark" onClick={handleDelete}>삭제하기</button> */}
               </div>
             </div>
 
@@ -216,7 +212,6 @@ const AdminBookList = () => {
               sortConfig={sortConfig}
               currentPage={currentPage}
               itemsPerPage={itemsPerPage}
-              
             />
 
             <div className="admin-pagination">

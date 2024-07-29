@@ -1,15 +1,16 @@
 import React from 'react';
 import "../../admin/page/AdminPage.css";
-import moment from 'moment'; // Ensure moment is imported
+import moment from 'moment';
 
 const AdminBookRequestTable = ({
-  searchResult = [], // 기본값을 빈 배열로 설정
+  searchResult = [], // Default to an empty array if no search results are provided
   handleSort,
   handleOpenModal,
-  className = "", // 추가: 외부에서 전달받은 클래스명을 적용
-  excludedColumns = [] // 새로운 prop 추가
+  className = "", // Class name for custom styling
+  excludedColumns = [] // Columns to exclude from the table
 }) => {
 
+  // Define columns and their labels
   const columns = [
     { key: 'isbn', label: 'ISBN' },
     { key: 'title', label: '도서' },
@@ -19,6 +20,18 @@ const AdminBookRequestTable = ({
     { key: 'count', label: '신청 권수' }
   ];
 
+  // Define column styles for better table layout
+  const columnStyles = {
+    no: { width: '5%' },
+    isbn: { width: '20%' },
+    title: { width: '25%' },
+    author: { width: '20%' },
+    publisher: { width: '15%' },
+    pub_year: { width: '10%' },
+    count: { width: '10%' }
+  };
+
+  // Filter columns based on excluded columns
   const filteredColumns = columns.filter(column => !excludedColumns.includes(column.key));
 
   return (
@@ -31,6 +44,7 @@ const AdminBookRequestTable = ({
               <th
                 key={column.key}
                 className='sortable'
+                style={columnStyles[column.key]}
                 onClick={() => handleSort && handleSort(column.key)}
               >
                 {column.label}
@@ -44,7 +58,7 @@ const AdminBookRequestTable = ({
               <tr key={index} onClick={() => handleOpenModal && handleOpenModal(request)} className='admin-td-tr'>
                 <td>{index + 1}</td>
                 {filteredColumns.map(column => (
-                  <td key={column.key}>
+                  <td key={column.key} style={columnStyles[column.key]}>
                     {column.key === 'pub_year' ? (
                       moment(request.pub_date).format('YYYY')
                     ) : (

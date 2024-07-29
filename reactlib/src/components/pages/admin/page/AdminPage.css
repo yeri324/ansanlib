@@ -56,7 +56,7 @@ min-height: 800px;
 /*테이블*/
 .admin-table {
   margin: 0 auto;
-  width: 90%;
+  width: 100%;
   margin-top:20px;
 
   
@@ -124,7 +124,7 @@ padding: 10px;
 }
 
 .admin-book-cover {
-  width: 90px;
-  height: 120px;
+  width: 80px;
+  height: 110px;
 
 }
