@@ -14,7 +14,7 @@ import LibraryPage from '../../visit/LibraryPage';
 import AdminBookListTable from '../item/AdminBookListTable';
 import AdminRecBoardTable from '../item/AdminRecBoardTable';
 import AdminLoanTable from '../item/AdminLoanTable';
-import AdminBookDetail from '../modal/AdminBookDetail';
+
 
 const Admin = () => {
   const { axios } = useAuth();
@@ -206,6 +206,7 @@ const Admin = () => {
                 </div>
                 
                 <div className="admin-right-box2">
+               
                 </div>
               </div>
             </div>

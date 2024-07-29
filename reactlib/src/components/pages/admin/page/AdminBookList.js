@@ -71,7 +71,11 @@ const AdminBookList = () => {
 
   const handleSearch = () => {
     let filteredList = bookList;
-    if (searchCriteria === 'title') {
+    if (searchCriteria === 'library') {
+      filteredList = bookList.filter(book =>
+        book.libraries.some(lib => lib.libName.toLowerCase().includes(searchTerm.toLowerCase()))
+      );
+    } else if (searchCriteria === 'title') {
       filteredList = bookList.filter(book =>
         book.title && book.title.toLowerCase().includes(searchTerm.toLowerCase())
       );
@@ -112,6 +116,18 @@ const AdminBookList = () => {
     }
     setSortConfig({ key, direction });
     sortData(key, direction);
+  };
+
+  const handleLatestSort = () => {
+    const sortedData = [...bookList].sort((a, b) => {
+      if (a.reg_time && b.reg_time) {
+        return new Date(b.reg_time) - new Date(a.reg_time);
+      } else {
+        return a.isbn.localeCompare(b.isbn);
+      }
+    });
+    setBookList(sortedData);
+    setFilteredBookList(sortedData.slice(0, itemsPerPage));
   };
 
   const sortData = (key, direction) => {
@@ -173,12 +189,13 @@ const AdminBookList = () => {
                   <input
                     type="text"
                     placeholder={`${searchCriteria === 'title'
-                      ? '도서 제목을 입력하세요'
+                      ? '도서 제목'
                       : searchCriteria === 'author'
-                      ? '작가를 입력하세요'
-                      : searchCriteria === 'publisher'
-                      ? '출판사를 입력하세요'
-                      : ''}`}
+                        ? '작가'
+                        : searchCriteria === 'publisher'
+                          ? '출판사'
+                          : ''
+                      }을 입력하세요`}
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     onKeyDown={handleKeyDown}
@@ -202,6 +219,7 @@ const AdminBookList = () => {
 
               <div className="admin-page-button" style={{ width: "25%" }}>
                 <button type="button" className="btn btn-outline-dark" onClick={() => navigate('/admin/book/new')}>등록하기</button>
+                <button type="button" className="btn btn-outline-dark" onClick={handleLatestSort}>최신순</button>
               </div>
             </div>
 
