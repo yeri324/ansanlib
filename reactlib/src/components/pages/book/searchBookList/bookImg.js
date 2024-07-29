@@ -13,7 +13,7 @@ const BookImg =({book})=>{
 
       useEffect(()=>{
         handleGetImg(book);
-      },[])
+      },[book])
     return (
         <>
         <img src={bookUrl} alt="책 이미지" className="img-fluid cover-img" />

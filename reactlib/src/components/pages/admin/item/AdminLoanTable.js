@@ -19,12 +19,12 @@ const AdminLoanTable = ({ loan }) => {
         {Array.isArray(loan) && loan.length > 0 ? (
           loan.map((item, index) => (
             <tr key={index} className="admin-td-tr">
-              <td>{index + 1}</td>
-              <td>{item.book.title}</td>
-              <td>{item.libuser.name}</td>
-              <td>{moment(item.loanDate).format('YYYY-MM-DD')}</td>
-              <td>{moment(item.returnDate).format('YYYY-MM-DD')}</td>
-              <td>{item.libuser.status}</td>
+              <td style={{width:"10%"}}>{index + 1}</td>
+              <td >{item.book.title}</td>
+              <td style={{width:"10%"}}>{item.libuser.name}</td>
+              <td style={{width:"10%"}}>{moment(item.loanDate).format('YYYY-MM-DD')}</td>
+              <td style={{width:"10%"}}>{moment(item.returnDate).format('YYYY-MM-DD')}</td>
+              <td style={{width:"10%"}}>{item.libuser.status}</td>
             </tr>
           ))
         ) : (

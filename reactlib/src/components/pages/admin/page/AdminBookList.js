@@ -15,7 +15,7 @@ import AdminBookListTable from '../item/AdminBookListTable';
 const AdminBookList = () => {
   const { axios } = useAuth();
   const [bookList, setBookList] = useState([]);
-  const [searchCriteria, setSearchCriteria] = useState('library');
+  const [searchCriteria, setSearchCriteria] = useState('title');
   const [searchTerm, setSearchTerm] = useState('');
   const [searchYear, setSearchYear] = useState(null);
   const [filteredBookList, setFilteredBookList] = useState([]);
@@ -118,6 +118,18 @@ const AdminBookList = () => {
     sortData(key, direction);
   };
 
+  const handleLatestSort = () => {
+    const sortedData = [...bookList].sort((a, b) => {
+      if (a.reg_time && b.reg_time) {
+        return new Date(b.reg_time) - new Date(a.reg_time);
+      } else {
+        return a.isbn.localeCompare(b.isbn);
+      }
+    });
+    setBookList(sortedData);
+    setFilteredBookList(sortedData.slice(0, itemsPerPage));
+  };
+
   const sortData = (key, direction) => {
     const sortedData = [...filteredBookList].sort((a, b) => {
       if (a[key] < b[key]) {
@@ -180,7 +192,9 @@ const AdminBookList = () => {
                       ? '도서 제목'
                       : searchCriteria === 'author'
                         ? '작가'
-                        : '출판사'
+                        : searchCriteria === 'publisher'
+                          ? '출판사'
+                          : ''
                       }을 입력하세요`}
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -205,7 +219,7 @@ const AdminBookList = () => {
 
               <div className="admin-page-button" style={{ width: "25%" }}>
                 <button type="button" className="btn btn-outline-dark" onClick={() => navigate('/admin/book/new')}>등록하기</button>
-                {/* <button type="button" className="btn btn-outline-dark" onClick={handleDelete}>삭제하기</button> */}
+                <button type="button" className="btn btn-outline-dark" onClick={handleLatestSort}>최신순</button>
               </div>
             </div>
 
@@ -216,7 +230,6 @@ const AdminBookList = () => {
               sortConfig={sortConfig}
               currentPage={currentPage}
               itemsPerPage={itemsPerPage}
-              
             />
 
             <div className="admin-pagination">

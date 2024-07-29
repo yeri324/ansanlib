@@ -14,8 +14,7 @@ import LibraryPage from '../../visit/LibraryPage';
 import AdminBookListTable from '../item/AdminBookListTable';
 import AdminRecBoardTable from '../item/AdminRecBoardTable';
 import AdminLoanTable from '../item/AdminLoanTable';
-import ansanMap from '../../../images/libInfo/map.png';
-import locMark from '../../../images/libInfo/location.png';
+
 
 const Admin = () => {
   const { axios } = useAuth();
@@ -116,7 +115,7 @@ const Admin = () => {
   const fetchLoans = () => {
     axios.get('/api/admin/book/loanlist')
       .then(response => {
-        setSearchLoan(response.data.slice(0,3));
+        setSearchLoan(response.data.slice(0, 3));
       })
       .catch(error => {
         console.error('Error fetching loan data:', error);
@@ -145,9 +144,19 @@ const Admin = () => {
       </div>
       <main className="admin-main-main">
         <div className="admin-main-body">
-          <div className="admin-main-dash-top"></div>
+          <div className="admin-main-dash-top">
+          </div>
           <div className="admin-main-dash-body">
             <div className="admin-main-left" style={{ width: "25%" }}>
+              <div className='admin-left-box4'>
+                <div className='admin-left-graph'>
+                  <LibraryPage />
+                </div>
+                <div className='admin-left-graph'>
+                  <strong>오늘의 방문자 수</strong>
+                  <br /> {todayVisits} 명 
+                </div>
+              </div>
               <div className='admin-left-box1'>
                 <h5>오늘은 &nbsp;<strong>{date.toISOString().split('T')[0]}</strong> &nbsp;입니다.</h5>
               </div>
@@ -168,41 +177,36 @@ const Admin = () => {
                 <HolidayListTable holidays={holidays.slice(0, 3)} excludedColumns={['delete']} />
               </div>
             </div>
+
             <div className="admin-main-right" style={{ width: "75%" }}>
               <div className="admin-right-box1">
-                <div className='admin-right-graph'>
-                  <LibraryPage />
+                <div className='admin-box1-table'>
+                  <h4><a href="admin/book/list">신간 도서</a></h4>
+                  <AdminBookListTable
+                    books={searchBook}
+                    excludedColumns={['total_count', 'img']}
+                    currentPage={currentPage}
+                    itemsPerPage={itemsPerPage}
+                  />
                 </div>
-                <div className='admin-right-graph'>
-                  <strong>오늘의 방문자 수는</strong>
-                  <br/> {todayVisits} 명 입니다.
+
+                <div className='admin-box1-table'>
+                  <h4><a href="admin/user/search">대출 목록</a></h4>
+                  <AdminLoanTable loan={searchLoan} />
                 </div>
-                <div className='admin-right-graph'>준비중입니다.</div>
-                <div className='admin-right-graph'>준비중입니다.</div>
-              </div>
-              <div className="admin-right-box2">
-                <div className='admin-box2-table'>
+
+                <div className='admin-box1-table'>
                   <h4><a href="admin/recboard/list">추천 도서</a></h4>
                   <AdminRecBoardTable limit={3} />
                 </div>
-                <div className='admin-box2-table'>
+
+                <div className='admin-box1-table'>
                   <h4><a href="admin/book/request">희망 도서</a></h4>
                   <AdminBookRequestTable searchResult={searchResult} excludedColumns={['count']} />
                 </div>
-              </div>
-              <div className="admin-right-box2">
-                <div className='admin-box2-table'>
-                  <h4><a href="admin/book/list">신간 도서</a></h4>
-                  <AdminBookListTable 
-                    books={searchBook} 
-                    excludedColumns={['total_count','img']} 
-                    currentPage={currentPage} 
-                    itemsPerPage={itemsPerPage} 
-                  />
-                </div>
-                <div className='admin-box2-table'>
-                  <h4><a href="admin/user/search">대출 목록</a></h4>
-                  <AdminLoanTable loan={searchLoan} />
+                
+                <div className="admin-right-box2">
+               
                 </div>
               </div>
             </div>
