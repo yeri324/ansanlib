@@ -19,6 +19,7 @@ const ApiBookSearch = () => {
     const [sortOrder, setSortOrder] = useState('asc');
     const [sortBy, setSortBy] = useState('title');
     const {userId,gender} = useAuth();
+    const [searchKeyword,setSearchKeyword] = useState("");
     const fetchBooks = useCallback(async (page = 1) => {
         const apiUrl = `/api/bookapi/search?keyword=${keyword}&page=${page}&sortBy=${sortBy}&sortOrder=${sortOrder}`;
         console.log(`Fetching books from: ${apiUrl}`);
@@ -26,9 +27,6 @@ const ApiBookSearch = () => {
         const data = response.data;
         setBooks(data.books);
         setPageMaker(data.pageMaker);
-        console.log(userId)
-        console.log(gender)
-
         if (userId && gender) {
             try {
                 await axios.post('http://127.0.0.1:5001/api/save_keyword', {
@@ -43,15 +41,12 @@ const ApiBookSearch = () => {
     }, [keyword, sortBy, sortOrder]);
 
     const handleSearch = (e) => {
+        setSearchKeyword(keyword)
         e.preventDefault();
         fetchBooks();
     };
 
-    useEffect(() => {
-        if (keyword) {
-            fetchBooks(pageMaker.cri.page);
-        }
-    }, [fetchBooks, keyword, pageMaker.cri.page]);
+
 
     return (
         <>
@@ -86,7 +81,7 @@ const ApiBookSearch = () => {
                             <option value="desc">내림차순</option>
                         </select>
                     </div>
-                    <h4>{`'${keyword}' 검색 결과 ${books.total}건 검색`}</h4>
+                    <h4>{`'${searchKeyword}' 검색 결과 ${books.total}건 검색`}</h4>
                     <div className='search-list'>
                         <nav aria-label="Page navigation example" >
                             <ul className="pagination justify-content-center">
