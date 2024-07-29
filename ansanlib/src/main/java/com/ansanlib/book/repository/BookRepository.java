@@ -1,8 +1,11 @@
 package com.ansanlib.book.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -61,6 +64,10 @@ public interface BookRepository extends JpaRepository<Book, Long>, BookRepositor
 	    void updateBookCountByLibNameAndTitle(@Param("libName") String libName, @Param("title") String title, @Param("count") int count);
 
 		Optional<Book> findByLibNameAndTitle(String libName, String title);
+		
+		
+		// 신규도서 게시판 사용 쿼리
+		Page<Book> findByRegTimeBetween(LocalDateTime startDate, LocalDateTime endDate, Pageable pageable);
 	}
 	  
 	    

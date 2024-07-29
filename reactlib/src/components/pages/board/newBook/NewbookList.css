@@ -1,0 +1,20 @@
+.all-newbooklist .newbook-list{
+    display: flex;
+    height: 800px;
+    text-align: center;
+}
+.all-newbooklist .newBookItem{
+    flex: 1 0 500px;
+    height: 300px;
+    border: 1px solid #333;
+    display: flex;
+    margin: 10px;
+}
+
+.all-newbooklist .newBookItem > img{
+    flex: 0 1 200px;
+}
+
+.all-newbooklist .newBookItem .newbook-cont{
+    flex: 1;
+}
