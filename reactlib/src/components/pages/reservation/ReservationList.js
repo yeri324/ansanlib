@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useRealName from '../../hooks/useRealName';
 import useAuth, { LOGIN_STATUS } from '../../hooks/useAuth';
 import RedirectLogin from '../../helpers/RedirectLogin';
@@ -11,6 +12,7 @@ import Side from '../myPage/Side';
 
 const ReservationList = () => {
     const name = useRealName();
+    const navigate = useNavigate();
 
     const [reservations, setReservations] = useState([]);
     const [selectedReservations, setSelectedReservations] = useState([]);
@@ -58,6 +60,10 @@ const ReservationList = () => {
 
     const selectAll = () => setSelectedReservations(reservations.map(({ id }) => id));
 
+    const handleNavigateToBookDetail = (bookId, endDate) => {
+        navigate(`/book/detail/${bookId}?endDate=${endDate}`);
+    };
+
     return (
         <div className="mypage-container">
             <div className='mypage-header'>
@@ -72,6 +78,7 @@ const ReservationList = () => {
                             <th>시작 날짜</th>
                             <th>종료 날짜</th>
                             <th style={{width:'60px'}}>선택</th>
+                            <th>상세 보기</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -87,6 +94,11 @@ const ReservationList = () => {
                                         checked={selectedReservations.includes(reservation.id)}
                                         onChange={() => handleSelectReservation(reservation.id)}
                                     />
+                                </td>
+                                <td>
+                                    <button onClick={() => handleNavigateToBookDetail(reservation.book.id, reservation.endDate.split('T')[0])}>
+                                        상세 보기
+                                    </button>
                                 </td>
                             </tr>
                         ))}

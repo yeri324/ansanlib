@@ -8,19 +8,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.ansanlib.book.dto.BookDto;
-import com.ansanlib.book.dto.BookFormDto;
 import com.ansanlib.book.dto.BookSearchCondition;
 import com.ansanlib.book.repository.BookImgRepository;
 import com.ansanlib.book.repository.BookRepository;
 import com.ansanlib.book.repository.BookRepositoryCustom;
-import com.ansanlib.book.repository.LibUserRepository;
-import com.ansanlib.constant.BookStatus;
 import com.ansanlib.entity.Book;
-import com.ansanlib.entity.BookImg;
-import com.ansanlib.entity.LibUser;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
