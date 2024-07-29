@@ -4,6 +4,7 @@ import './ApiSearchPage.css';
 import Header from '../../../fragments/header/header';
 import Footer from '../../../fragments/footer/footer';
 import KeywordCloud_gender from '../../../fragments/home/Keyword_Cloud_gender';
+import useAuth from '../../../hooks/useAuth';
 
 const ApiBookSearch = () => {
     const [keyword, setKeyword] = useState('');
@@ -17,8 +18,7 @@ const ApiBookSearch = () => {
     });
     const [sortOrder, setSortOrder] = useState('asc');
     const [sortBy, setSortBy] = useState('title');
-    const [user, setUser] = useState({ id: 1, gender: 'MALE' }); // 기본 값을 MALE 또는 FEMALE로 설정
-
+    const {userId,gender} = useAuth();
     const fetchBooks = useCallback(async (page = 1) => {
         const apiUrl = `/api/bookapi/search?keyword=${keyword}&page=${page}&sortBy=${sortBy}&sortOrder=${sortOrder}`;
         console.log(`Fetching books from: ${apiUrl}`);
@@ -26,19 +26,21 @@ const ApiBookSearch = () => {
         const data = response.data;
         setBooks(data.books);
         setPageMaker(data.pageMaker);
+        console.log(userId)
+        console.log(gender)
 
-        if (user.id && user.gender) {
+        if (userId && gender) {
             try {
                 await axios.post('http://127.0.0.1:5001/api/save_keyword', {
-                    user_id: user.id,
-                    gender: user.gender,
+                    user_id: userId,
+                    gender: gender,
                     keyword
                 });
             } catch (error) {
                 console.error('Error saving keyword:', error);
             }
         }
-    }, [keyword, sortBy, sortOrder, user]);
+    }, [keyword, sortBy, sortOrder]);
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -142,7 +144,6 @@ const ApiBookSearch = () => {
                         </div>
                     </div>
                     <div className="key_word_cloud_gender">
-                        <h1>Keyword Clouds for Genders</h1>
                         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
                             <KeywordCloud_gender gender="MALE" />
                             <KeywordCloud_gender gender="FEMALE" />

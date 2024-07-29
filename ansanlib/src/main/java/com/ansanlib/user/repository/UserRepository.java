@@ -24,4 +24,7 @@ public interface UserRepository extends JpaRepository<LibUser, Long> {
 
    //회원 정보 수정
    Optional<LibUser> findByUserId(long userId);
+   
+   //키워드회원찾기
+   LibUser findByLoginidAndPassword(String loginid, String password);
 }

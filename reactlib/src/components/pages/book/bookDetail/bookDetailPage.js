@@ -5,6 +5,7 @@ import Header from '../../../fragments/header/header';
 import Footer from '../../../fragments/footer/footer';
 import useAuth, { LOGIN_STATUS } from '../../../hooks/useAuth';
 import axios from 'axios';
+import KeywordCloud_bookId from '../../../fragments/home/KeywordCloud_bookId';
 
 const BookDetailPage = () => {
   const { id } = useParams();
@@ -132,6 +133,7 @@ const BookDetailPage = () => {
           <h3><span>책소개</span></h3>
           <div className="left-align">{formatText(book.bookDetail)}</div>
         </div>
+        <KeywordCloud_bookId id={book.id} />
       </main>
       <Footer />
     </>
