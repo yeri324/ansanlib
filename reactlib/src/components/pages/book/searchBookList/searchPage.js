@@ -88,7 +88,8 @@ const SearchPage = () => {
       alert('관심도서에 추가되었습니다.');
     } catch (error) {
       console.error('Error adding book to interest:', error);
-      alert('관심도서 추가 중 오류가 발생했습니다.');
+      alert('로그인 후 이용 가능 합니다.');
+      navigate(`/login`);
     }
   };
 

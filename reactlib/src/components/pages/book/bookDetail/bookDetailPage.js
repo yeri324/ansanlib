@@ -51,7 +51,8 @@ const BookDetailPage = () => {
       alert('관심도서에 추가되었습니다.');
     } catch (error) {
       console.error('Error adding book to interest:', error);
-      alert('관심도서 추가 중 오류가 발생했습니다.');
+      alert('로그인 후 이용 가능 합니다.');
+      navigate(`/login`);
     }
   };
 
@@ -116,7 +117,7 @@ const BookDetailPage = () => {
                       <button disabled={relatedBook.status !== 'AVAILABLE'} onClick={() => window.location.href = `/reservation/new?id=${encodeURIComponent(book.id)}&title=${encodeURIComponent(book.title)}`}>
                         도서예약
                       </button>
-                      <button onClick={(LOGIN_STATUS === "LOGGED_IN") ? () => handleInterest(relatedBook.id) : alertLogin}>
+                      <button onClick={() => handleInterest(relatedBook.id)}  >
                         관심도서담기
                       </button>
                     </div>
