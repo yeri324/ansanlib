@@ -62,9 +62,3 @@ public interface BookRepository extends JpaRepository<Book, Long>, BookRepositor
 
 		Optional<Book> findByLibNameAndTitle(String libName, String title);
 	}
-	  
-	    
-
-	    
-	    
-	   
