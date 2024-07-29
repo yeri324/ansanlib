@@ -1,19 +1,17 @@
 import React, { useState, useEffect, } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './notice.css';
 import axios from 'axios';
 
 const Notice = () => {
   const navigate = useNavigate();
   const [searchFaq, setSearchFaq] = useState([]);
   const [searchNotice, setSearchNotice] = useState([]);
-  const [searchRec, setSearchRec] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const boardPerPage = 5;
 
   const [activeCategory, setActiveCategory] = useState('공지사항');
-  const categories = ['공지사항', 'FAQ', '추천도서'];
-  const cate2 = ['notice', 'faq', 'recboard'];
+  const categories = ['공지사항', 'FAQ',];
+  const cate2 = ['notice', 'faq'];
 
   //리스트 읽기
   useEffect(() => {
@@ -35,10 +33,8 @@ const Notice = () => {
         }).then((response) => {
           if (item === 'notice') {
             setSearchNotice(response.data.content);
-          } else if (item === 'faq') {
-            setSearchFaq(response.data.content);
           } else {
-            setSearchRec(response.data.content);
+            setSearchFaq(response.data.content);
           }
         });
     })
@@ -49,18 +45,9 @@ const Notice = () => {
     setActiveCategory(category);
   };
 
-  // 게시판 바로이동(+)
-  const handlePlusButtonClick = () => {
-    const pageMapping = {
-      공지사항: '/user/notice/list',
-      FAQ: '/user/faq/list',
-      추천도서: '/user/recboard/list'
-    };
-    window.location.href = pageMapping[activeCategory];
-  };
+ 
 
   return (
-    <div className="notice_full">
       <div className="notice_board">
         <div className="notice_tabs_wrapper">
           <ul className="notice_tabs">
@@ -72,22 +59,18 @@ const Notice = () => {
                 {category}
               </li>
             ))}
-            <button className="plus_button" onClick={handlePlusButtonClick}>+</button>
           </ul>
         </div>
         <div className="notice_content">
           <ul>
             {activeCategory === '공지사항'? searchNotice.map((item) => (
               <li key={item.id} onClick={() => navigate(`/user/notice/detail/${item.id}`)}>{item.title}</li>
-            )): activeCategory === 'FAQ'? searchFaq.map((item) => (
+            )):searchFaq.map((item) => (
               <li key={item.id} onClick={() => navigate(`/user/faq/detail/${item.id}`)}>{item.title}</li>
-            )): searchRec.map((item) => (
-              <li key={item.id} onClick={() => navigate(`/book/detail/${item.book.id}`)}>{item.title}</li>
             ))}
           </ul>
         </div>
       </div>
-    </div>
   );
 };
 
