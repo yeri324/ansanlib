@@ -30,6 +30,8 @@ const Admin = () => {
   const [searchLoan, setSearchLoan] = useState([]);
   const [bookList, setBookList] = useState([]);
   const [todayVisits, setTodayVisits] = useState(0); // 오늘의 방문자 수 상태 추가
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 3;
 
   useEffect(() => {
     fetchHolidays(date);
@@ -191,7 +193,12 @@ const Admin = () => {
               <div className="admin-right-box2">
                 <div className='admin-box2-table'>
                   <h4><a href="admin/book/list">신간 도서</a></h4>
-                  <AdminBookListTable books={searchBook} excludedColumns={['total_count','img']} />
+                  <AdminBookListTable 
+                    books={searchBook} 
+                    excludedColumns={['total_count','img']} 
+                    currentPage={currentPage} 
+                    itemsPerPage={itemsPerPage} 
+                  />
                 </div>
                 <div className='admin-box2-table'>
                   <h4><a href="admin/user/search">대출 목록</a></h4>

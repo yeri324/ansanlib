@@ -31,10 +31,7 @@ public class FileService {
 
 		File userImg = new File(path);
 
-		if (!userImg.exists()) {
-			// 폴더없으면 생성
-			userImg.mkdirs();
-		}
+		
 
 		if (!file.isEmpty()) {
 			// 파일이 비어있지 않으면

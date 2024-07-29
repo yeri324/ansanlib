@@ -41,7 +41,7 @@ const AdminBookList = () => {
       const response = await axios.get('/api/admin/book/list');
       if (Array.isArray(response.data)) {
         groupBooks(response.data);
-        console.log(response.data)
+        console.log(response.data);
       } else {
         console.error('Fetched data is not an array:', response.data);
         setBookList([]);
@@ -214,6 +214,9 @@ const AdminBookList = () => {
               onOpenModal={handleOpenModal}
               onSort={handleSort}
               sortConfig={sortConfig}
+              currentPage={currentPage}
+              itemsPerPage={itemsPerPage}
+              
             />
 
             <div className="admin-pagination">
