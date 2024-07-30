@@ -17,7 +17,7 @@ const RequestBookForm = () => {
   const [author, setAuthor] = useState('');
   const [publisher, setPublisher] = useState('');
   const [pubDate, setPubDate] = useState('');
-  const [libName, setLibName] = useState('');
+  const [libName, setLibName] = useState('감골도서관');
   const libList = ['감골도서관','반월도서관','부곡도서관','본오도서관','상록수도서관', '상록어린이도서관', '성포도서관', '수암도서관', '관산도서관' ,'단원어린이도서관', '미디어도서관', '선부도서관', '원고잔도서관']
 
   const handleSubmit = async (event) => {
@@ -101,7 +101,7 @@ const RequestBookForm = () => {
         <label> 신청 할 도서관 :</label>
         <select  onChange={(e) => setLibName(e.target.value)}>
           {libList.map((item)=>(
-            <option value={item} >{item}</option>
+            <option key={item} value={item} >{item}</option>
           ))}
         </select>
       </div>
