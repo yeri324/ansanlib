@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './header.css';
 import center_logo from '../../images/logo/center_logo.png';
 import useAuth, { LOGIN_STATUS, ROLES } from "../../hooks/useAuth";
-import { useContext, } from "react";
+import { useContext,useState } from "react";
 import { LoginContext } from '../../pages/security/contexts/LoginContextProvider';
 
 
@@ -46,6 +46,15 @@ const Header = () => {
       ]
     }
   ];
+  const [hoveredMenu, setHoveredMenu] = useState(null);
+
+  const handleMenuMouseEnter = () => {
+    setHoveredMenu(true);
+  };
+
+  const handleMenuMouseLeave = () => {
+    setHoveredMenu(false);
+  };
 
   return (
     <header>
@@ -78,20 +87,25 @@ const Header = () => {
             </Link>
           </div>
           <div id="top_menu" className="header_links">
-            {menus.map((menuItem) => (
-              <ul class='top_menu1'>
-                <li class='top-deplist'>
+          <ul className='top_menu1'>
+            {menus.map((menuItem, index) => (
+                <li  key={index} className='top-deplist'
+                  onMouseEnter={() => handleMenuMouseEnter(index)}
+                  onMouseLeave={handleMenuMouseLeave}>
                   {menuItem.menu.title}
-                  <ul class='sub_menu1'>
-                    {menuItem.subs.map((sub) => (
-                      <li class='sub-deplist'>
-                        <Link to={sub.link}>{sub.title}</Link>
-                      </li>
-                    ))}
-                  </ul>
+                  {hoveredMenu  && (
+                    <ul className='sub_menu1'>
+                      {menuItem.subs.map((sub, subIndex) => (
+                        <li className='sub-deplist' key={subIndex}>
+                          <Link to={sub.link}>{sub.title}</Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
-              </ul>
+       
             ))}
+                   </ul>
           </div>
         </div>
       </div>
