@@ -16,22 +16,7 @@ const LibInfo = () => {
     const [secondOption, setSecondOption] = useState(Object.keys(data[category][firstOption])[0]);
     const [selectedItem, setSelectedItem] = useState(data[category][firstOption][secondOption]);
 
-    const onSelectCategory = (e) => {
-        setCategory(e);
-        setFirstOption(Object.keys(data[e])[0]);
-        setSecondOption(Object.keys(data[e][Object.keys(data[e])[0]])[0]);
-        setSelectedItem(data[e][Object.keys(data[e])[0]][Object.keys(data[e][Object.keys(data[e])[0]])[0]]);
-
-    }
-    const onFirstOptionChange = (e) => {
-        setFirstOption(e);
-        setSecondOption(Object.keys(data[category][e])[0]);
-        setSelectedItem(data[category][e][Object.keys(data[category][e])[0]]);
-    }
-    const onSecondOptionChange = (e) => {
-        setSecondOption(e);
-        setSelectedItem(data[category][firstOption][e]);
-    }
+   
 
 
     return (
@@ -46,9 +31,10 @@ const LibInfo = () => {
                         category={category}
                         firstOption={firstOption}
                         secondOption={secondOption}
-                        onSelectCategory={onSelectCategory}
-                        onFirstOptionChange={onFirstOptionChange}
-                        onSecondOptionChange={onSecondOptionChange}
+                        setCategory={setCategory}
+                        setFirstOption={setFirstOption}
+                        setSecondOption={setSecondOption}
+                        setSelectedItem={setSelectedItem}
                     />
                 </div>
             <div className='libMapImg'>
