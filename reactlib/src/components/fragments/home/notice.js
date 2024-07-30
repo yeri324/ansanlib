@@ -64,9 +64,9 @@ const Notice = () => {
         <div className="notice_content">
           <ul>
             {activeCategory === '공지사항'? searchNotice.map((item) => (
-              <li key={item.id} onClick={() => navigate(`/user/notice/detail/${item.id}`)}>{item.title}</li>
+              <li key={item.id}><p onClick={() => navigate(`/user/notice/detail/${item.id}`)}>{item.title}</p></li>
             )):searchFaq.map((item) => (
-              <li key={item.id} onClick={() => navigate(`/user/faq/detail/${item.id}`)}>{item.title}</li>
+              <li key={item.id}><p onClick={() => navigate(`/user/faq/detail/${item.id}`)}>{item.title}</p></li>
             ))}
           </ul>
         </div>

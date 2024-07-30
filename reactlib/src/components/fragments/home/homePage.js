@@ -20,9 +20,14 @@ import axios from 'axios';
 const HomePage = () => {
 
   const [popList, setPopList] = useState([])
+  const [recList , setRecList] = useState([])
+  const [newBookList , setNewBookList] = useState([])
+
 
   useEffect(() => {
     getPopList()
+    getnewbookList()
+    getRecList()
   }, [])
 
   const getPopList = () => {
@@ -34,6 +39,43 @@ const HomePage = () => {
     ).then((res) => {
       setPopList(res.data);
     })
+  }
+
+  const getRecList =() => {
+    axios(
+        {
+            url: '/recboard/search',
+            method: 'post',
+            data: {
+                page: 0,
+                size: 8,
+            },
+            baseURL: 'http://localhost:8090',
+        }
+    ).then((response) => {
+
+      const resList = response.data.content.map(item=>item.book)
+      console.log(resList)
+      setRecList(resList)
+      });
+}
+
+  const getnewbookList = () => {
+    axios(
+      {
+          url: '/newBook',
+          method: 'post',
+          data: {
+              page: 0,
+              size: 8,
+          },
+          baseURL: 'http://localhost:8090',
+      }
+  ).then((response) => {
+      console.log(response.data)
+      setNewBookList(response.data)
+  });
+
   }
 
   return (
@@ -49,33 +91,47 @@ const HomePage = () => {
               <input className='search-input'/><button className='search-btn'>검색</button>
              </div>
               </div>
+              <div className='quick-menu'>
+              <div className='quick-content'>
+                <h5>도서관소개</h5>
+                </div>
+              <div className='quick-content'>
+                <h5>신규도서</h5>
+                </div>
+              <div className='quick-content'>
+                <h5>추천도서</h5>
+                </div>
+              <div className='quick-content'>
+                <h5>희망도서신청</h5>
+                </div>
+            </div>
               <div className="bottom-column">
                 <div className="notice-board">
                   <Notice />
                 </div>
                 <div className="monthly-plan">
+                  <div className='calendar-title'><h4>도서관 휴관일</h4></div>
                   <TodoCalendar 
                   />
                 </div>
-
             </div>
-          <div className="sub-content">
-            <div className="sub-content1">
-              <div className="trend-h2"><h2>인기도서</h2></div>
-              <div className="div-border"><hr /></div>
+
+          <div className="book-content-group">
+            <div className="book-content">
+              <h2>추천도서</h2>
+             <hr />
               <div className="trend-list">
-                <Trends />
+              <Trends book={recList}/>
               </div>
             </div>
-
-            <div className="sub-content1">
-              <div className="trend-h2"><h2>신규도서</h2></div>
-              <div className="div-border"><hr /></div>
+            <div className="book-content">
+              <h2>신규도서</h2>
+              <hr />
               <div className="trend-list">
-                <h1>NewBook 자뤼</h1>
+              <Trends book={recList}/>
               </div>
             </div>
-
+            </div>
 
 
             <div className="sub-content2">
@@ -85,7 +141,7 @@ const HomePage = () => {
                 <Kakao />
               </div>
             </div>
-            </div>
+
   </div>
         
       <footer><Footer /></footer>
