@@ -51,7 +51,6 @@ import Find from './components/pages/security/pages/Find';
 import Join from './components/pages/security/pages/Join';
 import User from './components/pages/security/pages/User';
 import { UseAuthBasic, UseAuthCheckAdmin, UseAuthCheckLogin } from './components/hooks/examples/useAuthExamples';
-import LibMap from './components/fragments/home/LibMap';
 
 function App() {
         
@@ -114,8 +113,6 @@ function App() {
                                 <Route path="/find/:id" element={<Find />} />
                                 <Route path="/join" element={<Join />} />
                                 <Route path="/user" element={<User />} />
-
-                                <Route path='/map' element={<LibMap />} />
 
                                 {/* useAuth 훅 테스트 페이지 */}
                                 <Route path="/examples/useauth/basic" element={<UseAuthBasic />} />

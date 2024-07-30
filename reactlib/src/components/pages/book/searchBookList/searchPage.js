@@ -4,16 +4,18 @@ import Highlight from './Highlight';
 import AutoComplete from './AutoComplete';
 import Header from '../../../fragments/header/header';
 import Footer from '../../../fragments/footer/footer';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './SearchPage.css';
 import axios from 'axios';
 
 const SearchPage = () => {
+ const location = useLocation();
+ const homequery = location.state.query || "";
   const { userId } = useAuth();
   const navigate = useNavigate();
   const [formValues, setFormValues] = useState({
     title: '',
-    isbn: '',
+    isbn: homequery,
     author: '',
     publisher: '',
     pub_date: '',
