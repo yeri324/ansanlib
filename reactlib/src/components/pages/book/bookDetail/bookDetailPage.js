@@ -52,7 +52,8 @@ const BookDetailPage = () => {
       alert('관심도서에 추가되었습니다.');
     } catch (error) {
       console.error('Error adding book to interest:', error);
-      alert('관심도서 추가 중 오류가 발생했습니다.');
+      alert('로그인 후 이용 가능 합니다.');
+      navigate(`/login`);
     }
   };
 
@@ -97,7 +98,7 @@ const BookDetailPage = () => {
             <thead>
               <tr>
                 <th style={{width:'25%'}}>위치</th>
-                <th style={{width:'25%'}}>대출상태</th>
+                <th style={{width:'25%'}}>예약 상태</th>
                 <th style={{width:'25%'}}>예약종료일</th>
                 <th style={{width:'25%'}}>서비스신청</th>
               </tr>
@@ -106,14 +107,14 @@ const BookDetailPage = () => {
               {bookList.map((relatedBook) => (
                 <tr key={relatedBook.id}>
                   <td>{relatedBook.libName}</td>
-                  <td>{relatedBook.status === 'AVAILABLE' ? '대출 가능' : '대출 중'}</td>
+                  <td>{relatedBook.status === 'AVAILABLE' ? '예약 가능' : '예약 중'}</td>
                   <td>{relatedBook.returnDay || '정보 없음'}</td>
                   <td>
                     <div className="button-row">
                       <button disabled={relatedBook.status !== 'AVAILABLE'} onClick={() => window.location.href = `/reservation/new?id=${encodeURIComponent(book.id)}&title=${encodeURIComponent(book.title)}`}>
                         도서예약
                       </button>
-                      <button onClick={(LOGIN_STATUS === "LOGGED_IN") ? () => handleInterest(relatedBook.id) : alertLogin}>
+                      <button onClick={() => handleInterest(relatedBook.id)}  >
                         관심도서담기
                       </button>
                     </div>
