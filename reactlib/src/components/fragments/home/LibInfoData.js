@@ -11,6 +11,8 @@ const LibInfoData = () => {
           map: "https://kko.to/ZsHw3hcrpS",
           xloc: 373,
           yloc: 248,
+          Latitude: 37.30440754959626,
+          longitude: 126.8211816548163,
         },
         "단원어린이도서관": {
           name: "단원어린이도서관",
@@ -21,6 +23,8 @@ const LibInfoData = () => {
           map: "https://kko.to/mWyVHzZonC",
           xloc: 372,
           yloc: 167,
+          Latitude: 37.33117852041736,
+          longitude: 126.81614215925072,
         },
         "관산도서관": {
           name: "관산도서관",
@@ -31,6 +35,8 @@ const LibInfoData = () => {
           map: "https://kko.to/T8ELlFkD7D",
           xloc: 337,
           yloc: 167,
+          Latitude: 37.33215627540793,
+          longitude: 126.79958089243804,
         },
         "원고잔도서관": {
           name: "원고잔도서관",
@@ -41,6 +47,8 @@ const LibInfoData = () => {
           map: "https://kko.to/H-yNgOyjyX",
           xloc: 410,
           yloc: 168,
+          Latitude: 37.324686140994295,
+          longitude: 126.82475251555024,
         },
         "대부도서관": {
           name: "대부도서관",
@@ -51,6 +59,8 @@ const LibInfoData = () => {
           map: "https://kko.to/oR0HTz91fc",
           xloc: 92,
           yloc: 282,
+          Latitude: 37.324686140994295,
+          longitude: 126.82475251555024,
         },
         "선부도서관": {
           name: "선부도서관",
@@ -61,6 +71,8 @@ const LibInfoData = () => {
           map: "https://kko.to/NlUuspMoa9",
           xloc: 352,
           yloc: 132,
+          Latitude: 37.34113221229439,
+longitude: 126.8059951797314,
         },
         "미디어도서관": {
           name: "미디어도서관",

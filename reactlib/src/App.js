@@ -20,6 +20,7 @@ import BoardForm from './components/pages/board/page/BoardForm';
 import UserRecList from './components/pages/board/recboard/UserRecList';
 import AdminRecList from './components/pages/board/recboard/AdminRecList';
 import AdminRecForm from './components/pages/board/recboard/AdminRecForm';
+import NewbookList from './components/pages/board/newBook/NewbookList';
 //관리자
 import Admin from './components/pages/admin/common/Admin';
 import AdminBookList from './components/pages/admin/page/AdminBookList';
@@ -50,6 +51,7 @@ import Find from './components/pages/security/pages/Find';
 import Join from './components/pages/security/pages/Join';
 import User from './components/pages/security/pages/User';
 import { UseAuthBasic, UseAuthCheckAdmin, UseAuthCheckLogin } from './components/hooks/examples/useAuthExamples';
+import LibMap from './components/fragments/home/LibMap';
 
 function App() {
         
@@ -73,6 +75,7 @@ function App() {
                                 <Route path="/admin/recboard/list" element={<AdminRecList />} />
                                 <Route path="/admin/recboard/form" element={<AdminRecForm />} />
                                 <Route path="/user/recboard/list" element={<UserRecList />} />
+                                <Route path="/newBook" element={<NewbookList />} />
 
                                 {/* 관리자 */}
                                 <Route path="/admin" element={<Admin />} />
@@ -111,6 +114,8 @@ function App() {
                                 <Route path="/find/:id" element={<Find />} />
                                 <Route path="/join" element={<Join />} />
                                 <Route path="/user" element={<User />} />
+
+                                <Route path='/map' element={<LibMap />} />
 
                                 {/* useAuth 훅 테스트 페이지 */}
                                 <Route path="/examples/useauth/basic" element={<UseAuthBasic />} />

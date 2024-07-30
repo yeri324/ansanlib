@@ -52,7 +52,8 @@ const TodoCalendar = () => {
   return (
     <div id="todo-calendar-container" className="calendar-container">
       <Calendar
-        locale="ko"
+       locale="en-US"
+
         onClickDay={handleDateClick}
         value={today}
       />
