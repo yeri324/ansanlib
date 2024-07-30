@@ -101,7 +101,7 @@ const BookDetailPage = () => {
             <thead>
               <tr>
                 <th style={{width:'25%'}}>위치</th>
-                <th style={{width:'25%'}}>대출상태</th>
+                <th style={{width:'25%'}}>예약 상태</th>
                 <th style={{width:'25%'}}>예약종료일</th>
                 <th style={{width:'25%'}}>서비스신청</th>
               </tr>
@@ -110,7 +110,7 @@ const BookDetailPage = () => {
               {bookList.map((relatedBook) => (
                 <tr key={relatedBook.id}>
                   <td>{relatedBook.libName}</td>
-                  <td>{relatedBook.status === 'AVAILABLE' ? '대출 가능' : '대출 중'}</td>
+                  <td>{relatedBook.status === 'AVAILABLE' ? '예약 가능' : '예약 중'}</td>
                   <td>{relatedBook.returnDay || '정보 없음'}</td>
                   <td>
                     <div className="button-row">

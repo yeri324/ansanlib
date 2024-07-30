@@ -192,7 +192,7 @@ const SearchPage = () => {
                         <p>소장 : {book.libName}</p>
                       </div>
                       <div className="card-row">
-                        {book.status === 'AVAILABLE' ? <p>대출 가능</p> : <p>대출 중</p>}
+                        {book.status === 'AVAILABLE' ? <p>예약 가능</p> : <p>예약 중</p>}
                         <button disabled={book.status !== 'AVAILABLE'} onClick={() => window.location.href = `/reservation/new?id=${encodeURIComponent(book.id)}&title=${encodeURIComponent(book.title)}`}>
                           도서예약
                         </button>
