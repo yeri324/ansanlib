@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import moment from 'moment';
 import "./AdminModal.css";
+import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
+import Auth from '../../../helpers/Auth';
 
 const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
+  const { axios: authAxios } = useAuth();
   const [editMode, setEditMode] = useState(null);
   const [editedCounts, setEditedCounts] = useState({});
   const [newLibrary, setNewLibrary] = useState({ libName: '', count: '' });
@@ -20,18 +22,14 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
   const handleDelete = async (libName, title) => {
     if (window.confirm("이 책과 관련된 모든 데이터를 삭제합니다. 삭제하시겠습니까?")) {
       try {
-        console.log(libName, title);
-        const response = await axios.delete(`/api/admin/book/delete`, {
-          params: {
-            libName: libName,
-            title: title
-          }
+        console.log(`Deleting book: libName=${libName}, title=${title}`);
+        const response = await authAxios.delete('/api/admin/book/delete', {
+          params: { libName, title }
         });
- 
         console.log("Delete response:", response.data);
         alert(` ${title} - ${libName} -  삭제가 완료되었습니다.`);
-        refreshBookList(); // 도서 목록 새로고침
-        onClose(); // 모달 닫기
+        refreshBookList();
+        onClose();
       } catch (error) {
         console.error("Delete error:", error.response ? error.response.data : error.message);
         alert("삭제 할 수 없습니다. 다시 확인해주세요");
@@ -58,14 +56,10 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
     try {
       console.log('libName:', libName);
       console.log('title:', title);
-      console.log('count:', editedCounts[libName]); // 디버깅을 위해 추가
+      console.log('count:', editedCounts[libName]);
 
-      const response = await axios.put('/api/admin/book/update', null, {
-        params: {
-          libName: libName,
-          title: title,
-          count: editedCounts[libName]
-        }
+      const response = await authAxios.put('/api/admin/book/update', null, {
+        params: { libName, title, count: editedCounts[libName] }
       });
 
       console.log('Edit response:', response.data);
@@ -76,18 +70,6 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
       console.error('Edit error:', error);
       alert('수정할 수 없습니다. 다시 확인해주세요');
     }
-  };
-
-  const groupLibraries = (libraries) => {
-    const grouped = libraries.reduce((acc, lib) => {
-      if (!acc[lib.libName]) {
-        acc[lib.libName] = { ...lib, count: 0 };
-      }
-      acc[lib.libName].count += lib.count;
-      return acc;
-    }, {});
-
-    return Object.values(grouped);
   };
 
   const handleNewLibraryChange = (e) => {
@@ -105,10 +87,9 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
     }
 
     try {
-      const response = await axios.post(`/api/admin/book/${book.id}/addLibrary`, {
+      const response = await authAxios.post(`/api/admin/book/${book.id}/addLibrary`, {
         libName: newLibrary.libName,
         count: newLibrary.count,
-    
         title: book.title,
         isbn: book.isbn,
         author: book.author,
@@ -119,7 +100,7 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
       console.log("Add Library response:", response.data);
       alert("도서관이 추가되었습니다.");
       refreshBookList();
-      setNewLibrary({ libName: '', count: ''});
+      setNewLibrary({ libName: '', count: '' });
     } catch (error) {
       console.error("Add Library error:", error);
       alert("도서관을 추가할 수 없습니다. 다시 확인해주세요");
@@ -148,7 +129,6 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
                     <th>번호</th>
                     <th>도서관</th>
                     <th>소장 권수</th>
-                   
                     <th>수정</th>
                     <th>삭제</th>
                   </tr>
@@ -170,7 +150,6 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
                           `${lib.count}권`
                         )}
                       </td>
-                     
                       <td>
                         {editMode === lib.libName ? (
                           <button
@@ -192,13 +171,12 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
                           </button>
                         )}
                       </td>
-
                       <td>
                         <button
                           type="button"
                           id="admin-modal-button"
                           className="btn btn-outline-dark"
-                          onClick={() => handleDelete(lib.libName, book.title)} // lib.libName과 book.title 전달
+                          onClick={() => handleDelete(lib.libName, book.title)}
                         >
                           삭제
                         </button>
@@ -214,7 +192,7 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
                         value={newLibrary.libName}
                         onChange={handleNewLibraryChange}
                         placeholder="도서관 이름"
-                        style={{ width: "100px" }} // Adjust the width as needed
+                        style={{ width: "100px" }}
                       />
                     </td>
                     <td>
@@ -227,7 +205,6 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
                         style={{ width: "100px" }}
                       />
                     </td>
-                  
                     <td colSpan="2">
                       <button
                         type="button"
@@ -257,4 +234,10 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
   );
 };
 
-export default AdminBookDetail;
+export default function (props) {
+  return (
+    <Auth loginStatus={LOGIN_STATUS.LOGGED_IN} roles={ROLES.ADMIN}>
+      <AdminBookDetail {...props} />
+    </Auth>
+  );
+}
