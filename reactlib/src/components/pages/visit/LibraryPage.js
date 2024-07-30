@@ -32,9 +32,9 @@ const LibraryPage = () => {
   }
 
   return (
-    <div>
-      <h1>도서관 방문자 수</h1>
-      <p>TOTAL: {visitCount}</p>
+    <div class="admin-left-graph">
+      <h4>Total Visit</h4>
+      <p>{visitCount}</p>
       {/* Your library content */}
     </div>
   );

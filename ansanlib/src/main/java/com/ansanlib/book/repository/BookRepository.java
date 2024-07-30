@@ -61,4 +61,11 @@ public interface BookRepository extends JpaRepository<Book, Long>, BookRepositor
 	    void updateBookCountByLibNameAndTitle(@Param("libName") String libName, @Param("title") String title, @Param("count") int count);
 
 		Optional<Book> findByLibNameAndTitle(String libName, String title);
+		
+		
+		
+		
+		  @Query("SELECT b FROM Book b ORDER BY b.id DESC")
+		    List<Book> findAllOrderByIdDesc();
+		
 	}
