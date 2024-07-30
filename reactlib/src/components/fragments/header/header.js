@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './header.css';
 import center_logo from '../../images/logo/center_logo.png';
 import useAuth, { LOGIN_STATUS, ROLES } from "../../hooks/useAuth";
@@ -10,6 +10,7 @@ import { LoginContext } from '../../pages/security/contexts/LoginContextProvider
 const Header = () => {
   const { logout } = useContext(LoginContext);
   const { loginStatus, loginId, roles, } = useAuth();
+  const navigate = useNavigate();
   const menus = [
     {
       menu: { title: "소개" },
@@ -56,6 +57,10 @@ const Header = () => {
     setHoveredMenu(false);
   };
 
+  const onPage=(link)=>{
+    navigate(`${link}`);
+  }
+
   return (
     <header>
       <div id="full_header">
@@ -96,8 +101,8 @@ const Header = () => {
                   {hoveredMenu  && (
                     <ul className='sub_menu1'>
                       {menuItem.subs.map((sub, subIndex) => (
-                        <li className='sub-deplist' key={subIndex}>
-                          <Link to={sub.link}>{sub.title}</Link>
+                        <li className='sub-deplist' onClick={()=>onPage(sub.link)} key={subIndex}>
+                          {sub.title}
                         </li>
                       ))}
                     </ul>

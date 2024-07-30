@@ -10,8 +10,8 @@ import LibMap from './LibMap';
 import Popup from './popup';
 import LibInfoSelect from './LibInfoSelect';
 import LibInfoData from './LibInfoData';
-
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
     const data = LibInfoData();
@@ -22,6 +22,7 @@ const HomePage = () => {
   const [popList, setPopList] = useState([])
   const [recList, setRecList] = useState([])
   const [newBookList, setNewBookList] = useState([])
+  const navigate = useNavigate()
 
 
   useEffect(() => {
@@ -93,16 +94,16 @@ const HomePage = () => {
           </div>
         </div>
         <div className='quick-menu'>
-          <div className='quick-content'>
+        <div className='quick-content' onClick={()=> window.location.reload(navigate('/intro/history'))}>
             <h5>도서관소개</h5>
           </div>
-          <div className='quick-content'>
+          <div className='quick-content' onClick={()=> window.location.reload(navigate('/newBook'))}>
             <h5>신규도서</h5>
           </div>
-          <div className='quick-content'>
+          <div className='quick-content' onClick={()=> window.location.reload(navigate('/user/recboard/list'))}>
             <h5>추천도서</h5>
           </div>
-          <div className='quick-content'>
+          <div className='quick-content' onClick={()=> window.location.reload(navigate('/requestbook/new'))}>
             <h5>희망도서신청</h5>
           </div>
         </div>

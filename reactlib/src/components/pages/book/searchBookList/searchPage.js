@@ -31,9 +31,6 @@ const SearchPage = () => {
   const [sortOrder, setSortOrder] = useState('asc');
   const [searchClicked, setSearchClicked] = useState(false);
 
-  useEffect(() => {
-    console.log("userId: ", userId);
-  }, [userId]);
 
   const handleInputChange = (e, { newValue, name }) => {
     setFormValues({ ...formValues, [name]: newValue });
