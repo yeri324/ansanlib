@@ -65,7 +65,10 @@ public interface BookRepository extends JpaRepository<Book, Long>, BookRepositor
 
 		Optional<Book> findByLibNameAndTitle(String libName, String title);
 		
+        // 신규도서 게시판 사용 쿼리
+        Page<Book> findByRegTimeBetween(LocalDateTime startDate, LocalDateTime endDate, Pageable pageable);
 		
-		// 신규도서 게시판 사용 쿼리
-		Page<Book> findByRegTimeBetween(LocalDateTime startDate, LocalDateTime endDate, Pageable pageable);
+		  @Query("SELECT b FROM Book b ORDER BY b.id DESC")
+		    List<Book> findAllOrderByIdDesc();
+		
 	}

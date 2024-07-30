@@ -49,7 +49,7 @@ const NewbookList = () => {
                 <Header />
                 <div class='all-newbooklist'>
                     <div class='boardnewbook-list'>
-                        <h2>신간도서</h2>
+                        <h2>신규도서</h2>
                         <div className='pg-msg'>총 {totalBookCount}건 / {totalPages} 페이지</div>
                     </div>
                     <div>

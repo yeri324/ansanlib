@@ -12,5 +12,7 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
 	 List<Visit> findByTimeStampBetween(LocalDateTime startDate, LocalDateTime endDate); // timeStamp로 수정
 	    long countByTimeStampBetween(LocalDateTime startDate, LocalDateTime endDate); // timeStamp로 수정
 
+	    
+	   
 
 }
