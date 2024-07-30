@@ -147,8 +147,8 @@
 
 /* 오른쪽 테이블영역 */
 .admin-right-box1 {
-  width: 100%;
-  margin: 0;
+  width: 90%;
+  margin: 0 auto;
 }
 
 .admin-right-box1 > .admin-box1-table {

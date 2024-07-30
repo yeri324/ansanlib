@@ -119,13 +119,7 @@ const AdminBookList = () => {
   };
 
   const handleLatestSort = () => {
-    const sortedData = [...bookList].sort((a, b) => {
-      if (a.reg_time && b.reg_time) {
-        return new Date(b.reg_time) - new Date(a.reg_time);
-      } else {
-        return a.isbn.localeCompare(b.isbn);
-      }
-    });
+    const sortedData = [...bookList].sort((a, b) => b.id - a.id); // ID 기준으로 내림차순 정렬
     setBookList(sortedData);
     setFilteredBookList(sortedData.slice(0, itemsPerPage));
   };
