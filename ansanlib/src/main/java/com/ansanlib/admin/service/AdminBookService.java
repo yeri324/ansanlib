@@ -64,6 +64,7 @@ private LoanStatusRepository loanStatusRepository;
 		book.setBookDetail(bookDto.getBookDetail());
 		book.setCount(bookDto.getCount());
 		book.setLibName(bookDto.getLibName());
+		book.setStatus(bookDto.getStatus());
 		
 		Book savedBook = bookRepository.save(book);
 		bookDto.setId(savedBook.getId());
@@ -143,7 +144,7 @@ private LoanStatusRepository loanStatusRepository;
 
 	            // 책 이미지 삭제 로직 추가
 	            if (book.getBookImg() != null && book.getBookImg().getImgName() != null) {
-	                String imgPath = Paths.get("src/main/resources/static/images/book_images",
+	                String imgPath = Paths.get("src/main/resources/static/images/book",
 	                        String.valueOf(book.getId()), book.getBookImg().getImgName()).toString();
 	                fileService.deleteFile(imgPath);
 	            }
