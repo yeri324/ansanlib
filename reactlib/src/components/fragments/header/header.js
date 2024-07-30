@@ -24,15 +24,7 @@ const Header = () => {
       subs: [
         { title: "네이버API검색", link: "/bookapi/search" },
         { title: "상세검색", link: "/book/search" },
-        { title: "추천도서", link: "/user/recBoard/list" },
-        { title: "신간도서", link: "/search/new" }
-      ]
-    },
-    {
-      menu: { title: "책읽는 안산" },
-      subs: [
-        { title: "이달의 도서", link: "/user/recBoard/list" },
-        { title: "인기도서", link: "/user/recBoard/list" },
+        { title: "신간도서", link: "/newBook" }
       ]
     },
     {
@@ -40,7 +32,7 @@ const Header = () => {
       subs: [
         { title: "공지사항", link: "/user/notice/list" },
         { title: "FAQ", link: "/user/faq/list" },
-        { title: "추천게시판", link: "/user/recBoard/list" }
+        { title: "추천도서", link: "/user/recBoard/list" }
 
       ]
     },

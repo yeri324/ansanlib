@@ -20,6 +20,7 @@ import BoardForm from './components/pages/board/page/BoardForm';
 import UserRecList from './components/pages/board/recboard/UserRecList';
 import AdminRecList from './components/pages/board/recboard/AdminRecList';
 import AdminRecForm from './components/pages/board/recboard/AdminRecForm';
+import NewbookList from './components/pages/board/newBook/NewbookList';
 //관리자
 import Admin from './components/pages/admin/common/Admin';
 import AdminBookList from './components/pages/admin/page/AdminBookList';
@@ -73,6 +74,7 @@ function App() {
                                 <Route path="/admin/recboard/list" element={<AdminRecList />} />
                                 <Route path="/admin/recboard/form" element={<AdminRecForm />} />
                                 <Route path="/user/recboard/list" element={<UserRecList />} />
+                                <Route path="/newBook" element={<NewbookList />} />
 
                                 {/* 관리자 */}
                                 <Route path="/admin" element={<Admin />} />
