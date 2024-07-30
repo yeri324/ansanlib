@@ -2,18 +2,12 @@ import React, { useEffect, useState } from 'react';
 import './homePage.css';
 import Header from '../header/header';
 import Footer from '../footer/footer';
-import Trends from './Trends';
+import BookSlider from './BookSlider';
 import Notice from './notice';
 import TodoCalendar from './calendar';
 import "react-calendar/dist/Calendar.css";
-import Kakao from '../../map/mapForm';
+import LibMap from './LibMap';
 import Popup from './popup';
-
-// import KeywordCloud from './KeywordCloud';
-// import KeywordCloud_bookId from './KeywordCloud_bookId';
-// import BookCloud from './bookCloud';
-// import StatisticsPage from '../../pages/visit/StatisticsPage';
-// import Calendar from 'react-calendar'
 
 import axios from 'axios';
 
@@ -72,8 +66,9 @@ const HomePage = () => {
           baseURL: 'http://localhost:8090',
       }
   ).then((response) => {
-      console.log(response.data)
-      setNewBookList(response.data)
+      console.log( response.data.content)
+      setNewBookList( response.data.content)
+      
   });
 
   }
@@ -121,24 +116,24 @@ const HomePage = () => {
               <h2>추천도서</h2>
              <hr />
               <div className="trend-list">
-              <Trends book={recList}/>
+              <BookSlider bookList={recList}/>
               </div>
             </div>
             <div className="book-content">
               <h2>신규도서</h2>
               <hr />
               <div className="trend-list">
-              <Trends book={recList}/>
+              <BookSlider bookList={newBookList}/>
               </div>
             </div>
             </div>
-
-
-            <div className="sub-content2">
-              <div className="lib-h2"><h2>오시는 길</h2></div>
-              <div className="div-border"><hr /></div>
+            <div className="lib-info-container">
+            <div className="lib-info">
+             <h2>오시는 길</h2>
+           <hr />
               <div className="lib-guide">
-                <Kakao />
+                <LibMap />
+              </div>
               </div>
             </div>
 

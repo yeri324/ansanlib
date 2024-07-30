@@ -1,4 +1,4 @@
-#trends {
+#bookSlider {
   display: flex;
   flex-wrap: wrap;
   position: relative;
@@ -8,14 +8,14 @@
   justify-content: center;
 }
 
-#trends .book-item {
+#bookSlider .book-item {
   display: flex;
   flex: 0 0 auto;
   flex-direction: column;
   align-items: center;
 }
 
-#trends .book-cover {
+#bookSlider .book-item > img {
   width: 170px;
   height: 220px;
   object-fit: cover;
@@ -24,13 +24,17 @@
   border-radius: 10px;
 }
 
-#trends .book-title {
+#bookSlider .book-title {
+  width: 170px;
   text-align: center;
   font-size: 15px;
   color: #333;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space:nowrap;
 }
 
-#trends .pagination {
+#bookSlider .pagination {
   position: absolute;
   width: 100%;
   top: 40%;
@@ -38,7 +42,7 @@
   justify-content: space-between;
 }
 
-#trends .btn_prev, #trends .btn_next {
+#bookSlider .btn_prev, #bookSlider .btn_next {
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.3);
   color: white;
@@ -47,6 +51,6 @@
   border-radius: 20px;
 }
 
-#trends .btn_prev:hover, #trends .btn_next:hover {
+#bookSlider .btn_prev:hover, #bookSlider .btn_next:hover {
   background-color: rgba(0, 0, 0, 0.6);
 }

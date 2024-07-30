@@ -26,7 +26,7 @@ public class NewBookService {
 	// 조회
 	public Page<Book> listNewbook(RecBoardDto recBoardDto){
 		Pageable pageable = PageRequest.of(recBoardDto.getPage(), recBoardDto.getSize(), Sort.by(Order.desc("regTime")));
-		
+		System.out.println(recBoardDto.getPage()+"***"+recBoardDto.getSize());
 		LocalDateTime now = LocalDateTime.now();
         LocalDateTime oneMonthAgo = now.minusMonths(1);
     
