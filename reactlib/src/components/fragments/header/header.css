@@ -118,12 +118,17 @@ header {
 
 #top_menu {
   display: flex;
+  position: relative;
   justify-content: space-around;
   align-items: center;
   width: 100%;
 }
 
-#top_menu > div {
+#top_menu > ul, #top_menu > ul > li > ul > li {
+  list-style: none;
+}
+
+#top_menu > div  {
   position: relative;
   padding: 10px 20px;
   cursor: pointer;
@@ -131,6 +136,7 @@ header {
   font-weight: 600;
   color: var(--text-color);
   transition: background-color 0.3s ease;
+  list-style: none;
 }
 
 #top_menu > div:hover {

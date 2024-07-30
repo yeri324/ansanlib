@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 import './header.css';
 import center_logo from '../../images/logo/center_logo.png';
 import useAuth, { LOGIN_STATUS, ROLES } from "../../hooks/useAuth";
-import { useContext,useEffect } from "react";
+import { useContext, } from "react";
 import { LoginContext } from '../../pages/security/contexts/LoginContextProvider';
 
 
 const Header = () => {
   const { logout } = useContext(LoginContext);
-  const { loginStatus, userId, loginId, roles, } = useAuth();
+  const { loginStatus, loginId, roles, } = useAuth();
   const menus = [
     {
       menu: { title: "소개" },
@@ -24,7 +24,7 @@ const Header = () => {
       subs: [
         { title: "네이버API검색", link: "/bookapi/search" },
         { title: "상세검색", link: "/book/search" },
-        { title: "신간도서", link: "/newBook" }
+        { title: "신규도서", link: "/newBook" }
       ]
     },
     {
@@ -54,8 +54,8 @@ const Header = () => {
           loginStatus === LOGIN_STATUS.LOGGED_IN ? (
             <>
               <div id="top_login">
-                <p className='userid'>{ loginId}님</p> <span> | </span>
-                <button type='button' className="logout" onClick={()=>logout()}>로그아웃</button><span> | </span>
+                <p className='userid'>{loginId}님</p> <span> | </span>
+                <button type='button' className="logout" onClick={() => logout()}>로그아웃</button><span> | </span>
                 {roles === ROLES.ADMIN ? (
                   <a className="join" href="/admin">관리페이지</a>
                 ) : (
@@ -78,17 +78,19 @@ const Header = () => {
             </Link>
           </div>
           <div id="top_menu" className="header_links">
-            {menus.map((menuItem, index) => (
-              <div key={index}>
-                <div>{menuItem.menu.title}</div>
-                <div className="sub_menu">
-                  {menuItem.subs.map((sub, subIndex) => (
-                    <div key={subIndex}>
-                      <Link to={sub.link}>{sub.title}</Link>
-                    </div>
-                  ))}
-                </div>
-              </div>
+            {menus.map((menuItem) => (
+              <ul class='top_menu1'>
+                <li class='top-deplist'>
+                  {menuItem.menu.title}
+                  <ul class='sub_menu1'>
+                    {menuItem.subs.map((sub) => (
+                      <li class='sub-deplist'>
+                        <Link to={sub.link}>{sub.title}</Link>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              </ul>
             ))}
           </div>
         </div>
