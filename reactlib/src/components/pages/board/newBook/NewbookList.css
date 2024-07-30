@@ -1,20 +1,69 @@
-.all-newbooklist .newbook-list{
+.all-newbooklist .newbook-list {
+    margin: 0 auto;
     display: flex;
-    height: 800px;
+    flex-wrap: wrap;
+    width: 80%;
     text-align: center;
 }
-.all-newbooklist .newBookItem{
-    flex: 1 0 500px;
-    height: 300px;
-    border: 1px solid #333;
-    display: flex;
+
+/* 메세지 설정(이름 및 페이징) */
+.all-newbooklist .boardnewbook-list > h2 {
+    text-align: center;
+}
+
+.all-newbooklist .boardnewbook-list .pg-msg {
+    text-align: right;
+    width: 84%;
+}
+
+/* 박스설정 */
+.all-newbooklist .newBookItem {
+    flex: 1 0 calc(50% - 50px);
+    max-width: calc(50% - 50px);
+    height: 200px;
+    background-color: #f8f9fa;
     margin: 10px;
+    display: flex;
+    box-sizing: border-box;
 }
 
-.all-newbooklist .newBookItem > img{
-    flex: 0 1 200px;
+.all-newbooklist .newBookItem > img {
+    flex: 0 1 calc(40%);
+    cursor: pointer;
 }
 
-.all-newbooklist .newBookItem .newbook-cont{
+.all-newbooklist .newBookItem .newbook-cont {
     flex: 1;
+    padding-top: 20px;
+    padding-left: 30px;
+    text-align: left;
+}
+
+.all-newbooklist .newBookItem .newbook-cont > ul{
+    list-style: none;
+    padding: 0;
+}
+
+.all-newbooklist .newBookItem .newbook-cont > ul > li {
+    padding-bottom: 5px;
+}
+
+.all-newbooklist .newBookItem .newbook-cont .newbook-title {
+    cursor: pointer;
+}
+
+.all-newbooklist .newBookItem .newbook-cont > ul > li > button {
+    display: inline-block;
+    padding: 5px 5px;
+    margin-top: 10px;
+    background-color: #e2e3e5;
+    border: 1px solid #ccc;
+    border-radius: 4px; 
+    text-align: center;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.all-newbooklist .newBookItem .newbook-cont > ul > li > button:hover {
+    background-color: #c6c7ca;
 }

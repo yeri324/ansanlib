@@ -26,7 +26,6 @@ const NewbookList = () => {
 
     // 리스트 조회
     const onSearch = (page) => {
-        console.log(page)
         axios(
             {
                 url: '/newBook',
@@ -55,13 +54,18 @@ const NewbookList = () => {
                     </div>
                     <div>
                         <div class='newbook-list'>
-                            {searchResult.map((carditem) => ( 
-                                <div class='newBookItem' onClick={()=>onDetail(carditem.id)}>
-                                    <BookImg book={carditem} />
+                            {searchResult.map((carditem) => (
+                                <div class='newBookItem'>
+                                    <BookImg book={carditem} onClick={() => onDetail(carditem.id)}/>
                                     <div class="newbook-cont" >
-                                            <h5 class="card-title">{carditem.title}</h5>
-                                            <p>{carditem.author}</p>
-                                        </div>
+                                        <ul>
+                                        <li class="newbook-title" onClick={() => onDetail(carditem.id)}><h5>{carditem.title}</h5></li>
+                                        <li>{carditem.author}</li>
+                                        <li>{carditem.publisher} | {carditem.pub_date}</li>
+                                        <li>소장 : {carditem.libName}</li>
+                                        <li><button type="button" onClick={() => onDetail(carditem.id)}>자세히 보기</button> </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             ))}
                         </div>

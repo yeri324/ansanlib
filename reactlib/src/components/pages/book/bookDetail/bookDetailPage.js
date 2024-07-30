@@ -6,6 +6,7 @@ import Footer from '../../../fragments/footer/footer';
 import useAuth, { LOGIN_STATUS } from '../../../hooks/useAuth';
 import axios from 'axios';
 import KeywordCloud_bookId from '../../../fragments/home/KeywordCloud_bookId';
+import BookImg from '../searchBookList/bookImg';
 
 const BookDetailPage = () => {
   const { id } = useParams();
@@ -76,11 +77,7 @@ const BookDetailPage = () => {
         <div className="book-detail-container">
           <div className="book-img-container">
             {book.bookImg ? (
-              <img
-                src={`http://localhost:8090/images/book/${book.bookImg.imgName}`}
-                alt={book.title}
-                className="img-fluid cover-img"
-              />
+              <BookImg book={book} />
             ) : (
               <div className="no-image">No Image</div>
             )}
