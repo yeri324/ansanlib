@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './homePage.css';
 import Header from '../header/header';
 import Footer from '../footer/footer';
@@ -9,14 +8,21 @@ import TodoCalendar from './calendar';
 import "react-calendar/dist/Calendar.css";
 import LibMap from './LibMap';
 import Popup from './popup';
+import LibInfoSelect from './LibInfoSelect';
+import LibInfoData from './LibInfoData';
 
 import axios from 'axios';
 
 const HomePage = () => {
-  const navigate = useNavigate();
+    const data = LibInfoData();
+    const [category, setCategory] = useState(Object.keys(data)[0]);
+    const [firstOption, setFirstOption] = useState(Object.keys(data[category])[0]);
+    const [secondOption, setSecondOption] = useState(Object.keys(data[category][firstOption])[0]);
+    const [selectedItem, setSelectedItem] = useState(data[category][firstOption][secondOption]);
   const [popList, setPopList] = useState([])
   const [recList, setRecList] = useState([])
   const [newBookList, setNewBookList] = useState([])
+
 
   useEffect(() => {
     getPopList()
@@ -24,7 +30,6 @@ const HomePage = () => {
     getRecList()
   }, [])
 
-  //팝업리스트
   const getPopList = () => {
     axios({
       url: `/api/popup/home`,
@@ -36,7 +41,6 @@ const HomePage = () => {
     })
   }
 
-  // 추천도서 리스트 조회
   const getRecList = () => {
     axios(
       {
@@ -56,7 +60,6 @@ const HomePage = () => {
     });
   }
 
-  // 신규도서 리스트 조회
   const getnewbookList = () => {
     axios(
       {
@@ -73,6 +76,7 @@ const HomePage = () => {
       setNewBookList(response.data.content)
 
     });
+
   }
 
   return (
@@ -89,16 +93,16 @@ const HomePage = () => {
           </div>
         </div>
         <div className='quick-menu'>
-          <div className='quick-content' onClick={()=> window.location.reload(navigate('/intro/history'))}>
+          <div className='quick-content'>
             <h5>도서관소개</h5>
           </div>
-          <div className='quick-content' onClick={()=> window.location.reload(navigate('/newBook'))}>
+          <div className='quick-content'>
             <h5>신규도서</h5>
           </div>
-          <div className='quick-content' onClick={()=> window.location.reload(navigate('/user/recboard/list'))}>
+          <div className='quick-content'>
             <h5>추천도서</h5>
           </div>
-          <div className='quick-content' onClick={()=> window.location.reload(navigate('/requestbook/new'))}>
+          <div className='quick-content'>
             <h5>희망도서신청</h5>
           </div>
         </div>
@@ -117,14 +121,14 @@ const HomePage = () => {
           <div className="book-content">
             <h2>추천도서</h2>
             <hr />
-            <div className="trend-list">
+            <div className="bookslider-list">
               <BookSlider bookList={recList} />
             </div>
           </div>
           <div className="book-content">
             <h2>신규도서</h2>
             <hr />
-            <div className="trend-list">
+            <div className="bookslider-list">
               <BookSlider bookList={newBookList} />
             </div>
           </div>
@@ -133,8 +137,29 @@ const HomePage = () => {
           <div className="lib-info">
             <h2>오시는 길</h2>
             <hr />
-            <div className="lib-guide">
-              <LibMap />
+            <div className="lib-map">
+              <div className='libmap-img'>
+              <LibMap latitude={selectedItem.latitude} longitude={selectedItem.longitude} />
+              </div>
+              <div className='libmap-info'>
+                <div className='libmap-select'>
+                <LibInfoSelect
+                        category={category}
+                        firstOption={firstOption}
+                        secondOption={secondOption}
+                        setCategory={setCategory}
+                        setFirstOption={setFirstOption}
+                        setSecondOption={setSecondOption}
+                        setSelectedItem={setSelectedItem}
+                    />
+                  <div className='libmap-data'>
+                    <h3>{selectedItem.name}</h3> <a href={selectedItem.homepage} target="_blank" >도서관이동 ▷</a>
+                    <p><span>휴무일</span>  {selectedItem.holyday}</p>
+                    <p><span>주소</span> {selectedItem.address}</p>
+                    <p><span>전화</span> {selectedItem.phone}</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
