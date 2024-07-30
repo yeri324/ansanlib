@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import "./AdminModal.css";
-import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
+import useAuth from '../../../hooks/useAuth';
 import Auth from '../../../helpers/Auth';
-
+import { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
 const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
-  const { axios: authAxios } = useAuth();
+  const { axios } = useAuth();
   const [editMode, setEditMode] = useState(null);
   const [editedCounts, setEditedCounts] = useState({});
   const [newLibrary, setNewLibrary] = useState({ libName: '', count: '' });
@@ -22,47 +21,35 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
   const handleDelete = async (libName, title) => {
     if (window.confirm("이 책과 관련된 모든 데이터를 삭제합니다. 삭제하시겠습니까?")) {
       try {
-        console.log(`Deleting book: libName=${libName}, title=${title}`);
-        const response = await authAxios.delete('/api/admin/book/delete', {
+        const response = await axios.delete(`/api/admin/book/delete`, {
           params: { libName, title }
         });
-        console.log("Delete response:", response.data);
-        alert(` ${title} - ${libName} -  삭제가 완료되었습니다.`);
+
+        alert(`${title} - ${libName} - 삭제가 완료되었습니다.`);
         refreshBookList();
         onClose();
       } catch (error) {
         console.error("Delete error:", error.response ? error.response.data : error.message);
-        alert("삭제 할 수 없습니다. 다시 확인해주세요");
+        alert("삭제할 수 없습니다. 다시 확인해주세요");
       }
     }
   };
 
   const handleEdit = (lib) => {
     setEditMode(lib.libName);
-    setEditedCounts((prevCounts) => ({
-      ...prevCounts,
-      [lib.libName]: lib.count,
-    }));
+    setEditedCounts((prevCounts) => ({ ...prevCounts, [lib.libName]: lib.count }));
   };
 
   const handleEditChange = (libName, value) => {
-    setEditedCounts((prevCounts) => ({
-      ...prevCounts,
-      [libName]: value,
-    }));
+    setEditedCounts((prevCounts) => ({ ...prevCounts, [libName]: value }));
   };
 
   const handleEditSave = async (libName, title) => {
     try {
-      console.log('libName:', libName);
-      console.log('title:', title);
-      console.log('count:', editedCounts[libName]);
-
-      const response = await authAxios.put('/api/admin/book/update', null, {
+      const response = await axios.put('/api/admin/book/update', null, {
         params: { libName, title, count: editedCounts[libName] }
       });
 
-      console.log('Edit response:', response.data);
       alert(`${title} - ${libName} - 수정이 완료되었습니다.`);
       setEditMode(null);
       refreshBookList();
@@ -74,10 +61,7 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
 
   const handleNewLibraryChange = (e) => {
     const { name, value } = e.target;
-    setNewLibrary((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setNewLibrary((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleAddLibrary = async () => {
@@ -87,7 +71,7 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
     }
 
     try {
-      const response = await authAxios.post(`/api/admin/book/${book.id}/addLibrary`, {
+      const response = await axios.post(`/api/admin/book/${book.id}/addLibrary`, {
         libName: newLibrary.libName,
         count: newLibrary.count,
         title: book.title,
@@ -97,7 +81,7 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
         pub_date: book.pub_date,
         coverImage: book.coverImage,
       });
-      console.log("Add Library response:", response.data);
+
       alert("도서관이 추가되었습니다.");
       refreshBookList();
       setNewLibrary({ libName: '', count: '' });
@@ -240,4 +224,4 @@ export default function (props) {
       <AdminBookDetail {...props} />
     </Auth>
   );
-}
+};

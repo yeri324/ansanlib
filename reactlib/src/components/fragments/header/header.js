@@ -1,15 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './header.css';
 import center_logo from '../../images/logo/center_logo.png';
 import useAuth, { LOGIN_STATUS, ROLES } from "../../hooks/useAuth";
-import { useContext,useEffect } from "react";
+import { useContext,useState } from "react";
 import { LoginContext } from '../../pages/security/contexts/LoginContextProvider';
 
 
 const Header = () => {
   const { logout } = useContext(LoginContext);
-  const { loginStatus, userId, loginId, roles, } = useAuth();
+  const { loginStatus, loginId, roles, } = useAuth();
+  const navigate = useNavigate();
   const menus = [
     {
       menu: { title: "소개" },
@@ -24,15 +25,7 @@ const Header = () => {
       subs: [
         { title: "네이버API검색", link: "/bookapi/search" },
         { title: "상세검색", link: "/book/search" },
-        { title: "추천도서", link: "/user/recBoard/list" },
-        { title: "신간도서", link: "/search/new" }
-      ]
-    },
-    {
-      menu: { title: "책읽는 안산" },
-      subs: [
-        { title: "이달의 도서", link: "/user/recBoard/list" },
-        { title: "인기도서", link: "/user/recBoard/list" },
+        { title: "신규도서", link: "/newBook" }
       ]
     },
     {
@@ -40,7 +33,7 @@ const Header = () => {
       subs: [
         { title: "공지사항", link: "/user/notice/list" },
         { title: "FAQ", link: "/user/faq/list" },
-        { title: "추천게시판", link: "/user/recBoard/list" }
+        { title: "추천도서", link: "/user/recBoard/list" }
 
       ]
     },
@@ -54,6 +47,19 @@ const Header = () => {
       ]
     }
   ];
+  const [hoveredMenu, setHoveredMenu] = useState(null);
+
+  const handleMenuMouseEnter = () => {
+    setHoveredMenu(true);
+  };
+
+  const handleMenuMouseLeave = () => {
+    setHoveredMenu(false);
+  };
+
+  const onPage=(link)=>{
+    navigate(`${link}`);
+  }
 
   return (
     <header>
@@ -62,8 +68,8 @@ const Header = () => {
           loginStatus === LOGIN_STATUS.LOGGED_IN ? (
             <>
               <div id="top_login">
-                <p className='userid'>{ loginId}님</p> <span> | </span>
-                <button type='button' className="logout" onClick={()=>logout()}>로그아웃</button><span> | </span>
+                <p className='userid'>{loginId}님</p> <span> | </span>
+                <button type='button' className="logout" onClick={() => logout()}>로그아웃</button><span> | </span>
                 {roles === ROLES.ADMIN ? (
                   <a className="join" href="/admin">관리페이지</a>
                 ) : (
@@ -86,18 +92,25 @@ const Header = () => {
             </Link>
           </div>
           <div id="top_menu" className="header_links">
+          <ul className='top_menu1'>
             {menus.map((menuItem, index) => (
-              <div key={index}>
-                <div>{menuItem.menu.title}</div>
-                <div className="sub_menu">
-                  {menuItem.subs.map((sub, subIndex) => (
-                    <div key={subIndex}>
-                      <Link to={sub.link}>{sub.title}</Link>
-                    </div>
-                  ))}
-                </div>
-              </div>
+                <li  key={index} className='top-deplist'
+                  onMouseEnter={() => handleMenuMouseEnter(index)}
+                  onMouseLeave={handleMenuMouseLeave}>
+                  {menuItem.menu.title}
+                  {hoveredMenu  && (
+                    <ul className='sub_menu1'>
+                      {menuItem.subs.map((sub, subIndex) => (
+                        <li className='sub-deplist' onClick={()=>onPage(sub.link)} key={subIndex}>
+                          {sub.title}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+       
             ))}
+                   </ul>
           </div>
         </div>
       </div>

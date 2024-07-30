@@ -23,9 +23,9 @@ public interface RecBoardRepository extends JpaRepository<RecBoard, Long> {
 	 
 	  
 	  //으드민 삭제하려고 넣어논거야!!
-	  @Modifying
-	    @Query("DELETE FROM RecBoard rb WHERE rb.book.id = :bookId")
-	    void deleteByBookNum(@Param("bookId") Long bookId);
+//	  @Modifying
+//	    @Query("DELETE FROM RecBoard rb WHERE rb.book.id = :bookId")
+//	    void deleteByBookNum(@Param("bookId") Long bookId);
 	}
 	  
 	  

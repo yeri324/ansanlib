@@ -4,16 +4,18 @@ import Highlight from './Highlight';
 import AutoComplete from './AutoComplete';
 import Header from '../../../fragments/header/header';
 import Footer from '../../../fragments/footer/footer';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './SearchPage.css';
 import axios from 'axios';
 
 const SearchPage = () => {
+ const location = useLocation();
+ const homequery = location.state.query || "";
   const { userId } = useAuth();
   const navigate = useNavigate();
   const [formValues, setFormValues] = useState({
     title: '',
-    isbn: '',
+    isbn: homequery,
     author: '',
     publisher: '',
     pub_date: '',
@@ -31,9 +33,6 @@ const SearchPage = () => {
   const [sortOrder, setSortOrder] = useState('asc');
   const [searchClicked, setSearchClicked] = useState(false);
 
-  useEffect(() => {
-    console.log("userId: ", userId);
-  }, [userId]);
 
   const handleInputChange = (e, { newValue, name }) => {
     setFormValues({ ...formValues, [name]: newValue });
@@ -88,7 +87,8 @@ const SearchPage = () => {
       alert('관심도서에 추가되었습니다.');
     } catch (error) {
       console.error('Error adding book to interest:', error);
-      alert('관심도서 추가 중 오류가 발생했습니다.');
+      alert('로그인 후 이용 가능 합니다.');
+      navigate(`/login`);
     }
   };
 
@@ -191,7 +191,7 @@ const SearchPage = () => {
                         <p>소장 : {book.libName}</p>
                       </div>
                       <div className="card-row">
-                        {book.status === 'AVAILABLE' ? <p>대출 가능</p> : <p>대출 중</p>}
+                        {book.status === 'AVAILABLE' ? <p>예약 가능</p> : <p>예약 중</p>}
                         <button disabled={book.status !== 'AVAILABLE'} onClick={() => window.location.href = `/reservation/new?id=${encodeURIComponent(book.id)}&title=${encodeURIComponent(book.title)}`}>
                           도서예약
                         </button>
