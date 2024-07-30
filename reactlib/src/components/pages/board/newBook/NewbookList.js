@@ -56,14 +56,16 @@ const NewbookList = () => {
                         <div class='newbook-list'>
                             {searchResult.map((carditem) => (
                                 <div class='newBookItem'>
-                                    <BookImg book={carditem} onClick={() => onDetail(carditem.id)}/>
+                                    <div className="newbook-img">
+                                        <BookImg book={carditem} onClick={() => onDetail(carditem.id)} />
+                                    </div>
                                     <div class="newbook-cont" >
                                         <ul>
-                                        <li class="newbook-title" onClick={() => onDetail(carditem.id)}><h5>{carditem.title}</h5></li>
-                                        <li>{carditem.author}</li>
-                                        <li>{carditem.publisher} | {carditem.pub_date}</li>
-                                        <li>소장 : {carditem.libName}</li>
-                                        <li><button type="button" onClick={() => onDetail(carditem.id)}>자세히 보기</button> </li>
+                                            <li class="newbook-title" onClick={() => onDetail(carditem.id)}><h5>{carditem.title}</h5></li>
+                                            <li>{carditem.author}</li>
+                                            <li>{carditem.publisher} | {carditem.pub_date}</li>
+                                            <li>소장 : {carditem.libName}</li>
+                                            <li><button type="button" onClick={() => onDetail(carditem.id)}>자세히 보기</button> </li>
                                         </ul>
                                     </div>
                                 </div>
