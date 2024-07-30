@@ -15,6 +15,7 @@ import AdminBookListTable from '../item/AdminBookListTable';
 import AdminRecBoardTable from '../item/AdminRecBoardTable';
 import AdminLoanTable from '../item/AdminLoanTable';
 import WeeklyVisitsChart from '../item/WeeklyVisitsChars';
+import WeeklyLoansChart from '../item/WeeklyLoansChart';
 
 
 
@@ -188,7 +189,7 @@ const Admin = () => {
 
                 </div>
                 <div class="right-graph-div">
-                  <h2> graph</h2>
+                  <WeeklyLoansChart />
                 </div>
 
                 <div className="admin-right-box3">

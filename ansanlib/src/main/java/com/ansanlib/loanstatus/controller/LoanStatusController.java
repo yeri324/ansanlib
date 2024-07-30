@@ -1,22 +1,21 @@
 package com.ansanlib.loanstatus.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ansanlib.entity.LibUser;
 import com.ansanlib.entity.LoanStatus;
-import com.ansanlib.entity.RequestBook;
 import com.ansanlib.loanstatus.dto.LoanStatusDto;
+import com.ansanlib.loanstatus.service.LoanService;
 import com.ansanlib.loanstatus.service.LoanStatusService;
-import com.ansanlib.requestBook.dto.RequestBookDto;
 import com.ansanlib.security.user.CustomUser;
 import com.ansanlib.user.service.UserService;
 
@@ -29,6 +28,10 @@ public class LoanStatusController {
 	
 	@Autowired
 	private LoanStatusService loanStatusService;
+	
+    @Autowired
+    private LoanService loanService;
+	
 	
 	@Autowired
 	private UserService userService;
@@ -62,4 +65,12 @@ public class LoanStatusController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
+	
+	//그래프
+
+	  @GetMapping("/weekly")
+	    public ResponseEntity<List<Map<String, Object>>> getWeeklyLoanCounts() {
+	        List<Map<String, Object>> loanCounts = loanService.getWeeklyLoanCounts();
+	        return ResponseEntity.ok(loanCounts);
+	    }
 }

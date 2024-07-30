@@ -128,6 +128,7 @@
 .admin-left-box2>.calendar-container {
   width: 100%;
  padding-bottom: 10px;
+ border: 1px solid #e6e9e8;
 
 }
 
@@ -203,15 +204,22 @@
 
 /* 오른쪽 테이블영역 */
 .admin-right-box1 {
-  width: 85%;
+
+  width: 95%;
   margin: 0 auto;
   margin-top: 20px;
+
 }
 
 .admin-right-box1>.admin-box1-table {
   width: 100%;
   padding-bottom: 30px;
   font-size: 14px;
+  border: 1px solid #e6e9e8;
+  box-shadow: 1px 1px 5px #eee;
+  padding: 15px 25px;
+  border-radius: 15px;
+  margin-bottom: 20px;
 }
 
 .admin-box1-table>.admin-table {
@@ -236,23 +244,30 @@
 
 
 
-
-
-
-
-
-
-
-/*그래프영역  */
+/* 그래프 영역 */
 .admin-right-graph {
-  height: 300px;
-margin-bottom: 20px;
-  width: 100%;
-  margin: 0px;
+  border: 1px solid #e6e9e8;
+  box-shadow: 1px 1px 5px #eee;
+  border-radius: 15px;
+  width: 95%;
+  margin: 0 auto;
+  padding: 20px 15px 13px 15px;
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-around; /* 그래프가 가운데에 오도록 조정 */
+  align-items: center; /* 세로 축 중앙 정렬 */
+  height: 320px; /* 부모 요소의 높이 설정 */
 }
+
+.chart-container {
+  flex: 1;
+  position: relative;
+  width: 100%;
+  align-items: center; /* 세로 축 중앙 정렬 */
+  height: 100%; /* 부모 요소에 맞게 높이 조정 */
+}
+
+
+
 
 
 

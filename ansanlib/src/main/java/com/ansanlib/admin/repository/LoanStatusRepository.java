@@ -1,5 +1,6 @@
 package com.ansanlib.admin.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -28,4 +29,8 @@ public interface LoanStatusRepository extends JpaRepository<LoanStatus, Long> {
 	 List<LoanStatus> findAll();
 	 
 	 
+	 
+	 //그래프
+	   @Query("SELECT DATE(l.regTime) as date, COUNT(l) as count FROM LoanStatus l WHERE l.regTime BETWEEN :startDate AND :endDate GROUP BY DATE(l.regTime)")
+	    List<Object[]> findLoanCountByDateRange(LocalDateTime startDate, LocalDateTime endDate);
 }
