@@ -75,7 +75,7 @@ const Admin = () => {
     const nextDate = adjustDate(date, 1);
 
     axios({
-      url: '/api/admin/holiday/list',
+      url: '/api/holiday/list',
       method: 'get',
       params: {
         date: nextDate.toISOString().split('T')[0]
