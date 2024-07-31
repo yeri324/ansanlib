@@ -99,16 +99,12 @@ function UserFaqDetailForm({ id }) {
                             </table>
                         </div>
                         <div class='img-container1'>
-                            <div class='img-pre'>
+                            <div class='uimg-pre'>
                                 {images.map(putImage => (
                                     <ImgPreview key={putImage.id} putImage={putImage} board="faq" />
                                 ))}
                             </div>
-                            <div class='file-uplo'>
-                                {images.map(putImage => (
-                                    <BoardFileLabel putImage={putImage} />
-                                ))}
-                            </div>
+                          
                         </div>
                     </div>
                     <button type="button" onClick={() => onGoBack()}>돌아가기</button>
