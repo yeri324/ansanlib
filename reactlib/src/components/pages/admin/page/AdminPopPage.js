@@ -14,7 +14,7 @@ const AdminPopPage = () => {
     const itemsPerPage = 10; // Items per page
 
     const getPopupList = async () => {
-        const response = await axios.get('/admin/popup')
+        const response = await axios.get('/popup/admin')
         console.log(response.data);
         setPopupList(response.data);
     }

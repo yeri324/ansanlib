@@ -31,7 +31,7 @@ const PopupNewForm = ({ setIsAddOpen }) => {
         formData.append("yLoc", popupData.yLoc);
         formData.append("popupImg", image);
 
-        axios.post('/admin/popup', formData,
+        axios.post('/popup/admin', formData,
             {
                 headers: {
                     'Content-Type': 'multipart/form-data'

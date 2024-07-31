@@ -9,7 +9,7 @@ const PopupItem = ({ popup }) => {
 
 
     const onDeletePop = async () => {
-        await axios.delete(`/admin/popup/${popup.id}`);
+        await axios.delete(`/popup/admin/${popup.id}`);
         window.location.reload(navigate("/admin/popup", { repalce: true },));
     }
 

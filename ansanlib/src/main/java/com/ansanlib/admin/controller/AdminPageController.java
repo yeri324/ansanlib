@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/admin/popup")
+@RequestMapping(value = "/popup/admin")
 public class AdminPageController {
 	private final AdminPageService adminPageService;
 	

@@ -10,7 +10,7 @@ import axios from 'axios';
 
 const SearchPage = () => {
  const location = useLocation();
- const homequery = location.state.query || "";
+ const homequery = location.state?location.state.query: "";
   const { userId } = useAuth();
   const navigate = useNavigate();
   const [formValues, setFormValues] = useState({

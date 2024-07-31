@@ -36,7 +36,7 @@ const AdminPagination = ({ currentPage, totalPages, paginate }) => {
             <li key={page} className={`page-item ${page === currentPage ? 'active' : ''}`}>
               <button
                 id="admin-next"
-                className={`btn ${page === currentPage ? 'btn-dark' : 'btn-outline-dark'} page-link`}
+                className={`btn ${page === currentPage ? 'btn-dark' : 'btn-outline-dark'} page-alink`}
                 onClick={() => paginate(page)}
               >
                 {page}

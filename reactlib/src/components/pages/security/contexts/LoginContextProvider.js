@@ -2,8 +2,7 @@ import React, { createContext, useEffect, useState } from 'react';
 import api from '../apis/api';
 import Cookies from 'js-cookie';
 import * as auth from '../apis/auth';
-import { useNavigate, useResolvedPath } from 'react-router-dom';
-// import * as Swal from '../apis/alert';
+import { useNavigate } from 'react-router-dom';
 
 
 export const LoginContext = createContext();
@@ -15,10 +14,10 @@ const LoginContextProvider = ({ children }) => {
     const navigate = useNavigate() // 페이지 이동
     const [isLogin, setLogin] = useState(false); // 로그인 여부
     const [isLoginInProgress, setLoginInProgress] = useState(true) //로그인 진행중 여부. 처음 페이지가 로드됬을때는 로그인 진행중이라고 가정함.
-    const [isUserId,setIsUserId] = useState(null) // 유저 아이디 정보
-    const [isGender,setIsGender] = useState(null) // 유저 아이디 정보
-    const [isLoginId,setIsLoginId] = useState(null) // 유저 로그인 아이디 정보
-    const [roles, setRoles] = useState({isUser : false, isAdmin : false}) // 권한 정보
+    const [isUserId, setIsUserId] = useState(null) // 유저 아이디 정보
+    const [isGender, setIsGender] = useState(null) // 유저 성별 정보
+    const [isLoginId, setIsLoginId] = useState(null) // 유저 로그인 아이디 정보
+    const [roles, setRoles] = useState({ isUser: false, isAdmin: false }) // 권한 정보
 
     //  로그인 체크
     const loginCheck = async () => {
@@ -29,13 +28,13 @@ const LoginContextProvider = ({ children }) => {
 
 
         // Token이 없음
-        if( !accessToken ) {
+        if (!accessToken) {
             console.log(`쿠키에 accessToken(jwt) 이 없음`);
             // 로그아웃 세팅
             logoutSetting()
             return
         }
-        
+
         // Token이 있음
         // header에 jwt 담기
         api.defaults.headers.common.Authorization = `Bearer ${accessToken}`
@@ -56,7 +55,7 @@ const LoginContextProvider = ({ children }) => {
         console.log(`data : ${data}`);
 
         // 인증 실패
-        if( data == 'UNAUTHRIZED' || response.status == 401 ) {
+        if (data == 'UNAUTHRIZED' || response.status == 401) {
             console.error(`accessToken (jwt) 이 만료되었거나 인증에 실패하였습니다.`);
             return
         }
@@ -67,7 +66,6 @@ const LoginContextProvider = ({ children }) => {
         // 로그인 세팅
         loginSetting(data, accessToken)
     }
-
 
     // 로그인 
     const login = async (loginid, password) => {
@@ -81,7 +79,7 @@ const LoginContextProvider = ({ children }) => {
             const status = response.status
             const headers = response.headers
             const authroization = headers.authorization
-            const accessToken = authroization.replace("Bearer ", "")  // 💍 JWT
+            const accessToken = authroization.replace("Bearer ", "")  // JWT
 
             console.log(`data : ${data}`);
             console.log(`status : ${status}`);
@@ -89,40 +87,39 @@ const LoginContextProvider = ({ children }) => {
             console.log(`jwt : ${accessToken}`);
 
             // 로그인 성공
-            if( status === 200 ) {
+            if (status === 200) {
                 // 쿠키에 accessToken저장
                 Cookies.set("accessToken", accessToken)
 
                 // 로그인 체크
                 loginCheck()
-                
-                alert("로그인 성공 메인 화면으로 갑니다.", () => { navigate("/")})
+
+                alert("로그인 성공 메인 화면으로 갑니다.", () => { navigate("/") })
 
                 // 메인 페이지로 이동
                 navigate("/")
             }
         } catch (error) {
             // 로그인 실패
-            alert("로그인 실패 아이디 또는 비밀번호가 일치하지 않습니다." )
+            alert("로그인 실패 아이디 또는 비밀번호가 일치하지 않습니다.")
         }
-
     }
 
     // 로그아웃
-    const logout = (force=false) => {
+    const logout = (force = false) => {
 
-        if( force ) {
+        if (force) {
             // 로그아웃 세팅
             logoutSetting()
-        
+
             // 페이지 이동 ➡ "/" (메인)
             navigate("/")
             return
-        }        
+        }
 
         const check = window.confirm(`로그아웃하시겠습니까?`)
 
-        if( check ) {
+        if (check) {
             // 로그아웃 세팅
             logoutSetting()
 
@@ -132,11 +129,10 @@ const LoginContextProvider = ({ children }) => {
 
     }
 
-
     // 로그인 세팅
     const loginSetting = (userData, accessToken) => {
 
-        const { userId, loginid, role,gender } = userData
+        const { userId, loginid, role, gender } = userData
         console.log(`no : ${userId}`);
         console.log(`userId : ${loginid}`);
         console.log(`authList : ${role}`);
@@ -146,7 +142,7 @@ const LoginContextProvider = ({ children }) => {
 
         // 로그인 여부 : true
         setLogin(true)
-        
+
         // 유저아이디 세팅
         setIsUserId(userId)
 
@@ -157,10 +153,10 @@ const LoginContextProvider = ({ children }) => {
         setIsGender(gender)
 
         // 권한정보 세팅
-        const updatedRoles = { isUser : false, isAdmin : false }
+        const updatedRoles = { isUser: false, isAdmin: false }
 
-        if( role == 'ROLE_USER' ) updatedRoles.isUser = true
-        if( role == 'ROLE_ADMIN' ) updatedRoles.isAdmin = true
+        if (role == 'ROLE_USER') updatedRoles.isUser = true
+        if (role == 'ROLE_ADMIN') updatedRoles.isAdmin = true
         setRoles(updatedRoles)
     }
 
@@ -185,11 +181,10 @@ const LoginContextProvider = ({ children }) => {
         setIsGender(null)
 
         // 권한 정보 초기화
-        setRoles({isUser : false, isAdmin : false})
+        setRoles({ isUser: false, isAdmin: false })
     }
 
-    
-    useEffect( () => {
+    useEffect(() => {
         // 로그인 체크
         setLoginInProgress(true); //로그인 진행중 설정
         loginCheck().then(() => setLoginInProgress(false), () => setLoginInProgress(false)); //로그인 체크가 성공하거나 실패시 로그인 진행중 false로 변경
@@ -197,8 +192,9 @@ const LoginContextProvider = ({ children }) => {
 
 
 
-    return ( 
-        <LoginContext.Provider value={ {isLogin, isLoginInProgress, isUserId,isLoginId,isGender, roles, loginCheck, login,logout} }>
+    return (
+        <LoginContext.Provider
+            value={{ isLogin, isLoginInProgress, isUserId, isLoginId, isGender, roles, loginCheck, login, logout }}>
             {children}
         </LoginContext.Provider>
     )
