@@ -55,9 +55,7 @@ const HomePage = () => {
         baseURL: 'http://localhost:8090',
       }
     ).then((response) => {
-
       const resList = response.data.content.map(item => item.book)
-      console.log(resList)
       setRecList(resList)
     });
   }
@@ -74,7 +72,6 @@ const HomePage = () => {
         baseURL: 'http://localhost:8090',
       }
     ).then((response) => {
-      console.log(response.data.content)
       setNewBookList(response.data.content)
 
     });
@@ -82,7 +79,6 @@ const HomePage = () => {
   }
 
   const onSearch = (inputSearch) => {
-    console.log(inputSearch)
     navigate(`/book/search`, {
       state: {
           query : inputSearch,

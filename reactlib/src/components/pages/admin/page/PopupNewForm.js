@@ -79,7 +79,6 @@ const PopupNewForm = ({ setIsAddOpen }) => {
             setPopupData({ ...popupData, xLoc: e.clientX, yLoc: e.clientY });
             setShowWhiteScreen(false);
         }
-        console.log(popupData);
     };
 
 

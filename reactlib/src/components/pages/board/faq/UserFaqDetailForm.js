@@ -31,7 +31,6 @@ function UserFaqDetailForm({ id }) {
                 baseURL: 'http://localhost:8090',
             }
         ).then((res) => {
-            console.log(res.data);
             setTitle(res.data.title);
             setContent(res.data.content);
             setCreatedBy(res.data.modifiedBy);

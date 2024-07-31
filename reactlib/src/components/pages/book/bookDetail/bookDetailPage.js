@@ -24,7 +24,6 @@ const BookDetailPage = () => {
     const fetchBookDetails = async () => {
       try {
         const response = await axios.get(`http://localhost:8090/api/book/detail/${id}`);
-        console.log('Book detail response data:', response.data);
         setBook(response.data);
         const updatedBookList = response.data.relatedBooks.map(book => ({
           ...book,
@@ -41,10 +40,6 @@ const BookDetailPage = () => {
     fetchBookDetails();
   }, [id, endDate]);
 
-  const alertLogin = () => {
-    alert('로그인 후 이용가능합니다.');
-    navigate('/login');
-  };
 
   const handleInterest = async (bookId) => {
     try {

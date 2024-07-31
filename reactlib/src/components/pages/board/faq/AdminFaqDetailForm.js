@@ -57,7 +57,6 @@ function AdminFaqDetailForm({ id, }) {
     const handleAddImg = () => {
         if (images.length < 5) {
             setImages([...images, { id: 'a' + count, file: null }]);
-            console.log('a' + count);
             setCount(count + 1)
         }
     };

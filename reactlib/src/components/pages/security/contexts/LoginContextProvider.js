@@ -24,12 +24,9 @@ const LoginContextProvider = ({ children }) => {
 
         // 쿠키에서 jwt 토큰 가져오기
         const accessToken = Cookies.get("accessToken")
-        console.log(`accessToekn : ${accessToken}`);
-
 
         // Token이 없음
         if (!accessToken) {
-            console.log(`쿠키에 accessToken(jwt) 이 없음`);
             // 로그아웃 세팅
             logoutSetting()
             return
@@ -52,26 +49,19 @@ const LoginContextProvider = ({ children }) => {
         }
 
         data = response.data
-        console.log(`data : ${data}`);
 
         // 인증 실패
         if (data == 'UNAUTHRIZED' || response.status == 401) {
-            console.error(`accessToken (jwt) 이 만료되었거나 인증에 실패하였습니다.`);
             return
         }
 
         // 인증 성공
-        console.log(`accessToek (jwt) 로큰으로 사용자 인증정보 요청 성공!`);
-
         // 로그인 세팅
         loginSetting(data, accessToken)
     }
 
     // 로그인 
     const login = async (loginid, password) => {
-
-        console.log(`loginid : ${loginid}`);
-        console.log(`password : ${password}`);
 
         try {
             const response = await auth.login(loginid, password)
@@ -81,10 +71,6 @@ const LoginContextProvider = ({ children }) => {
             const authroization = headers.authorization
             const accessToken = authroization.replace("Bearer ", "")  // JWT
 
-            console.log(`data : ${data}`);
-            console.log(`status : ${status}`);
-            console.log(`headers : ${headers}`);
-            console.log(`jwt : ${accessToken}`);
 
             // 로그인 성공
             if (status === 200) {
@@ -133,9 +119,6 @@ const LoginContextProvider = ({ children }) => {
     const loginSetting = (userData, accessToken) => {
 
         const { userId, loginid, role, gender } = userData
-        console.log(`no : ${userId}`);
-        console.log(`userId : ${loginid}`);
-        console.log(`authList : ${role}`);
 
         // axios 객체의 header(Authorization : `Bearer ${accessToken}`)
         api.defaults.headers.common.Authorization = `Bearer ${accessToken}`;

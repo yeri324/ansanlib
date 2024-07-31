@@ -30,7 +30,6 @@ const FindId = () => {
             }
             ).then((response) => {
                 setFoundLoginid(response.data);
-                console.log(response.data);
                 setIsFind(true);
                 setShowPopup(true);
             })

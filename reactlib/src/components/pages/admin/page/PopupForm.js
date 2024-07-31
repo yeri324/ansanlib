@@ -3,7 +3,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const PopupForm = ({ popup, setIsOpen }) => {
-    console.log(popup);
     const [popItem, setPopItem] = useState(popup);
     const [viewImg, setViewImg] = useState('');
     const [image, setImage] = useState("");
@@ -50,7 +49,6 @@ const PopupForm = ({ popup, setIsOpen }) => {
 
     //이미지 미리보기 설정
     const getPopImage = () => {
-        console.log(image)
         if (image) {
             const reader = new FileReader();
             reader.onloadend = () => {

@@ -25,7 +25,6 @@ const FindPw = () => {
                 baseURL: 'http://localhost:8090',
             }
             ).then((response) => {
-                console.log(response.data);
                 setIsFind(true);
                 setShowPopup(true);
                 setErrorMessage('이메일이 정상적으로 발송되었습니다.');

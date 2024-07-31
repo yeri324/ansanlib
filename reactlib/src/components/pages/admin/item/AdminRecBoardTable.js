@@ -13,7 +13,6 @@ const AdminRecBoardTable = ({ limit }) => {
   const fetchRecBoardData = async () => {
     try {
       const response = await axios.get('/api/admin/book/rec');
-      console.log('Fetched rec_board data:', response.data); // Log the fetched data
       setRecBoardData(response.data); // Ensure response.data contains the array of items
     } catch (error) {
       console.error('Error fetching rec_board data:', error);

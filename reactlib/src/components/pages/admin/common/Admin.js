@@ -50,7 +50,6 @@ const Admin = () => {
   };
 
   const fetchHolidays = (date) => {
-    console.log("Fetching holidays for date:", date);
 
     axios({
       url: '/api/admin/holiday/list',
@@ -59,7 +58,6 @@ const Admin = () => {
         date: date.toISOString().split('T')[0]
       }
     }).then((response) => {
-      console.log("Fetched holidays for current date:", response.data);
       setHolidays(response.data.result);
     }).catch((error) => {
       console.error("Error fetching holidays for current date:", error);
@@ -75,8 +73,6 @@ const Admin = () => {
     };
 
     const nextDate = adjustDate(date, 1);
-
-    console.log("Fetching holidays for selected date:", nextDate);
 
     axios({
       url: '/api/admin/holiday/list',

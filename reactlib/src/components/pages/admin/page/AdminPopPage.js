@@ -15,7 +15,6 @@ const AdminPopPage = () => {
 
     const getPopupList = async () => {
         const response = await axios.get('/popup/admin')
-        console.log(response.data);
         setPopupList(response.data);
     }
 

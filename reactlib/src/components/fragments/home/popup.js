@@ -25,7 +25,6 @@ const Popup = ({ popup }) => {
       const blob = new Blob([response.data], { type: 'image/jpeg' });
       const imageUrl = URL.createObjectURL(blob);
       setViewImg(imageUrl)
-      console.log(imageUrl);
     });
   }
 

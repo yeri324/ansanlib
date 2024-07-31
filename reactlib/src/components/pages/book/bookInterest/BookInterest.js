@@ -33,7 +33,6 @@ const BookInterest = ({ userId }) => {
       setBookInterestList(response.data.bookInterests);
       setCurrentPage(response.data.currentPage);
       setTotalPages(response.data.totalPages);
-      console.log(response.data)
     } catch (error) {
       console.error('Error fetching book interest list:', error);
       setErrorMessage('관심도서 목록을 불러오는 중 오류가 발생했습니다.');

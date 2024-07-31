@@ -27,12 +27,10 @@ const RequestBookForm = () => {
       isbn, title, author, publisher,
       pubDate, lib_name: libName
     };
-    console.log("Sending request with data:", requestBook);
 
     try{
       const response = await axios.post('/api/requestbook/create', requestBook);
       alert("신청되었습니다.");
-      console.log('RequestBook created:', response.data);
     } catch (error){
       if(typeof error.response.data === "string"){
         alert(`에러 : ${error.response.data}`);

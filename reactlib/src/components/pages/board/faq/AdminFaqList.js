@@ -48,8 +48,7 @@ function AdminFaqList() {
 
     // 검색 및 전체 리스트
     const onSearch = (page) => {
-        console.log(searchOption.searchBy, searchOption.searchQuery);
-        console.log(currentPage, faqPerPage);
+
         axios(
             {
                 url: '/faq/search',
@@ -63,7 +62,6 @@ function AdminFaqList() {
                 baseURL: 'http://localhost:8090',
             }
         ).then((response) => {
-            console.log(response.data);
             setSearchResult(response.data.content);
             setTotalPages(response.data.totalPages);
             setTotalFaqCount(response.data.totalElements);

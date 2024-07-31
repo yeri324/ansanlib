@@ -25,7 +25,6 @@ function SearchModal({ setIsOpen, setSelectBook }) {
     };
 
     const onSelect = (e) => {
-        console.log(e);
         setSelectBook(e);
         setIsOpen(false);
     };

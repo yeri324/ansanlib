@@ -27,7 +27,6 @@ const UserResItem = ({ res, onClickToCancelRes }) => {
     };
 
     const handleDateChange = date => {
-        console.log(date)
         setSelectedDate(date);
     };
 
@@ -68,7 +67,6 @@ const UserResItem = ({ res, onClickToCancelRes }) => {
               baseURL: 'http://localhost:8090',
             })
         .then(response => {
-            console.log('예약 연장 성공:');
             closeModal(); 
             window.location.reload();
         }).catch(error => {

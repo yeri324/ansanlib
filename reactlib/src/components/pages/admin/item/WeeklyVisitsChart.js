@@ -16,7 +16,6 @@ const WeeklyVisitsChart = () => {
       try {
         const response = await axios.get('/api/visits/weekly');
         const visits = response.data;
-        console.log(visits); // 데이터를 확인하는 로그 추가
 
         if (visits && Array.isArray(visits)) {
           const dates = visits.map(visit => format(new Date(visit.date), 'MM-dd'));

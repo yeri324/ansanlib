@@ -79,7 +79,6 @@ const HolidayList = () => {
   const handleDelete = async (id) => {
     try {
       const response = await axios.delete(`/api/admin/holiday/${id}`);
-      console.log("Delete response:", response.data);
       alert("삭제가 완료되었습니다.");
       fetchHolidays();
     } catch (error) {

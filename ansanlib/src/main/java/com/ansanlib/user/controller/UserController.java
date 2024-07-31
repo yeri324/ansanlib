@@ -32,7 +32,6 @@ public class UserController {
 	 @GetMapping("/info")
 	    public ResponseEntity<?> userInfo(@AuthenticationPrincipal CustomUser customUser) {
 	        try {
-	            System.out.println("***");
 	            //토큰에서 가져온 사용자 정보(일부만 사용가능)
 	            LibUser tokenUser = customUser.getUser();
 	            

@@ -45,10 +45,8 @@ const SearchPage = () => {
         ...formValues,
         page: page
       };
-      console.log('Sending search request with params:', cleanFormValues);
       const response = await axios.get('/api/book/search', { params: cleanFormValues });
       const data = response.data;
-      console.log('Search response data:', data);
       setBookList(data.bookList);
       setPagination({
         hasPrev: data.hasPrev,
