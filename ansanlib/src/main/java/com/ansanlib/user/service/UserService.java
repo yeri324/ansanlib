@@ -1,13 +1,12 @@
 package com.ansanlib.user.service;
 
 import java.security.SecureRandom;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Pattern;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,18 +14,17 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ansanlib.book.repository.BookRepository;
-import com.ansanlib.entity.Faq;
+import com.ansanlib.constant.Gender;
+import com.ansanlib.constant.Role;
 import com.ansanlib.entity.LibUser;
-import com.ansanlib.security.user.CustomUser;
+import com.ansanlib.entity.Library;
+import com.ansanlib.library.LibraryRepository;
 import com.ansanlib.user.dto.UserDto;
 import com.ansanlib.user.repository.UserRepository;
 
@@ -43,6 +41,7 @@ public class UserService {
 	private final PasswordEncoder passwordEncoder;
 	private final AuthenticationManager authenticationManager;
 	private final MailService mailService;
+	private final LibraryRepository libraryRepository;
 
 	// 비밀번호에 포함될 문자열 세트들을 상수로 정의합니다.
 	private static final String LOWERCASE_CHARS = "abcdefghijklmnopqrstuvwxyz"; // 소문자
@@ -56,6 +55,7 @@ public class UserService {
 
 	// 회원가입
 	public ResponseEntity<String> join(UserDto userDto) throws Exception {
+		
 		if (!(userDto.getPassword().equals(userDto.getPassword2()))) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("비밀번호가 일치하지 않습니다.");
 		}
@@ -230,9 +230,37 @@ public class UserService {
 		}
 	}
 	
-	// 키워드 클라우드 회원 찾기
-	public LibUser findByLoginidAndPassword(String loginid, String password) {
-        return userRepository.findByLoginidAndPassword(loginid, password);
-    }
+	public void initdata() {
+		LibUser user = new LibUser();
+        user.setLoginid("admin");
+        user.setPassword(passwordEncoder.encode("1234"));
+        user.setName("관리자");
+        user.setAddress("대전 서구 둔산서로 17");
+        user.setAddress2("6층 중앙능력개발원");
+        user.setEmail("test@example.com");
+        user.setPhone("000-0000-0000");
+        user.setGender(Gender.MALE);
+        user.setRole(Role.ROLE_ADMIN);
+        user.setJoinDate(LocalDateTime.now());
+        user.setLoginDate(LocalDateTime.now());
+        user.setSms("yes");
+        
+
+        userRepository.save(user);
+
+		libraryRepository.save(new Library(null, "7004", "감골도서관", null, null, null));
+		libraryRepository.save(new Library(null, "7008", "반월도서관", null, null, null));
+		libraryRepository.save(new Library(null, "7011", "부곡도서관", null, null, null));
+		libraryRepository.save(new Library(null, "7026", "본오도서관", null, null, null));
+		libraryRepository.save(new Library(null, "7006", "상록수도서관", null, null, null));
+		libraryRepository.save(new Library(null, "7007", "상록어린이도서관", null, null, null));
+		libraryRepository.save(new Library(null, "7003", "성포도서관", null, null, null));
+		libraryRepository.save(new Library(null, "7023", "수암도서관", null, null, null));
+		libraryRepository.save(new Library(null, "7002", "관산도서관", null, null, null));
+		libraryRepository.save(new Library(null, "7005", "단원도서관", null, null, null));
+		libraryRepository.save(new Library(null, "7014", "미디어도서관", null, null, null));
+		libraryRepository.save(new Library(null, "7028", "선부도서관", null, null, null));
+		libraryRepository.save(new Library(null, "7018", "원고잔도서관", null, null, null));
+	}
 
 }

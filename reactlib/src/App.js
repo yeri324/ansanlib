@@ -51,6 +51,7 @@ import Find from './components/pages/security/pages/Find';
 import Join from './components/pages/security/pages/Join';
 import User from './components/pages/security/pages/User';
 import { UseAuthBasic, UseAuthCheckAdmin, UseAuthCheckLogin } from './components/hooks/examples/useAuthExamples';
+import Initdata from './components/helpers/Initdata';
 
 function App() {
         
@@ -113,6 +114,9 @@ function App() {
                                 <Route path="/find/:id" element={<Find />} />
                                 <Route path="/join" element={<Join />} />
                                 <Route path="/user" element={<User />} />
+
+                                {/* 데이터 초기화용 페이지 */}
+                                <Route path='/initdata' element={<Initdata />}/>
 
                                 {/* useAuth 훅 테스트 페이지 */}
                                 <Route path="/examples/useauth/basic" element={<UseAuthBasic />} />
