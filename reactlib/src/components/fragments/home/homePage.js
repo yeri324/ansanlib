@@ -121,6 +121,7 @@ const HomePage = () => {
           <div className="monthly-plan">
             <div className='calendar-title'><h4>도서관 휴관일</h4></div>
             <TodoCalendar
+            locale="en-US"
             />
           </div>
         </div>

@@ -38,7 +38,7 @@ const HolidayList = () => {
 
   const fetchHolidays = async () => {
     try {
-      const response = await axios.get('/api/admin/holiday/list');
+      const response = await axios.get('/api/holiday/list');
       if (Array.isArray(response.data.result)) {
         setHolidays(response.data.result);
         setOriginalResult(response.data.result); // 원본 데이터 저장

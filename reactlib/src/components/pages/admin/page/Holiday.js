@@ -40,7 +40,7 @@ const Holiday = () => {
 
   const fetchHolidays = () => {
     axios({
-      url: '/api/admin/holiday/list',
+      url: '/api/holiday/list',
       method: 'get',
     }).then((res) => {
       if (Array.isArray(res.data.result)) {
