@@ -5,9 +5,11 @@ import Header from '../../../fragments/header/header';
 import Footer from '../../../fragments/footer/footer';
 import KeywordCloud_gender from '../../../fragments/home/Keyword_Cloud_gender';
 import useAuth from '../../../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 const ApiBookSearch = () => {
     const [keyword, setKeyword] = useState('');
+    const navigate = useNavigate();
     const [books, setBooks] = useState({ items: [], total: 0 });
     const [pageMaker, setPageMaker] = useState({
         startPage: 1,
@@ -45,6 +47,13 @@ const ApiBookSearch = () => {
         fetchBooks();
     };
 
+    const addRequest=(book)=>{
+        navigate(`/requestbook/new`, {
+            state: {
+                book : book,
+            }
+          })
+    }
 
 
     return (
@@ -113,6 +122,7 @@ const ApiBookSearch = () => {
                                         <p className="card-title">{`출판일 : ${book.pubdate}`}</p>
                                         <p className="card-title">{`가격 : ${book.discount}`}</p>
                                         <a target="_blank" rel="noopener noreferrer" href={book.link}>자세히 보기</a>
+                                        <button className='request-btn' onClick={()=>addRequest(book)}>희망도서신청</button>
                                     </div>
                                 </div>
 

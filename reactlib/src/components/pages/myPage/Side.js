@@ -4,15 +4,12 @@ import { Link } from "react-router-dom";
 
 const Side = () => {
   const [showReservationSubmenu, setShowReservationSubmenu] = useState(false);
-  const [showRequestBookSubmenu, setShowRequestBookSubmenu] = useState(false);
 
   const toggleReservationSubmenu = () => {
     setShowReservationSubmenu(!showReservationSubmenu);
   };
 
-  const toggleRequestBookSubmenu = () => {
-    setShowRequestBookSubmenu(!showRequestBookSubmenu);
-  };
+
 
   return (
     <div className="my-sidebar">
@@ -38,20 +35,10 @@ const Side = () => {
         <li>
           <Link to="/loanstatus">대출</Link>
         </li>
-        <li onClick={toggleRequestBookSubmenu} className="has-submenu">
-          희망도서
-          <span className="arrow">{showRequestBookSubmenu ? " ▲" : " ▼"}</span>
-          {showRequestBookSubmenu && (
-            <ul className="submenu">
-              <li>
-                <Link to="/requestbook/new">희망도서 신청</Link>
-              </li>
-              <li>
-                <Link to="/requestbook/list">희망도서 목록</Link>
-              </li>
-            </ul>
-          )}
+        <li>
+        <Link to="/requestbook/list">희망도서 목록</Link>
         </li>
+       
         <li>
           <Link to="/book/interest/list">관심도서</Link>
         </li>

@@ -7,16 +7,19 @@ import Header from '../../fragments/header/header';
 import Footer from '../../fragments/footer/footer';
 import Side from '../myPage/Side';
 import './RequestBookForm.css';
+import { useLocation } from 'react-router-dom';
+
 const RequestBookForm = () => {
   const name = useRealName();
-
+  const location = useLocation();
+ const reqbook = location.state?location.state.book: "";
   const { axios } = useAuth();
 
-  const [isbn, setIsbn] = useState('');
-  const [title, setTitle] = useState('');
-  const [author, setAuthor] = useState('');
-  const [publisher, setPublisher] = useState('');
-  const [pubDate, setPubDate] = useState('');
+  const [isbn, setIsbn] = useState(reqbook.isbn);
+  const [title, setTitle] = useState(reqbook.title);
+  const [author, setAuthor] = useState(reqbook.author);
+  const [publisher, setPublisher] = useState(reqbook.publisher);
+  const [pubDate, setPubDate] = useState(reqbook.pubdate);
   const [libName, setLibName] = useState('감골도서관');
   const libList = ['감골도서관','반월도서관','부곡도서관','본오도서관','상록수도서관', '상록어린이도서관', '성포도서관', '수암도서관', '관산도서관' ,'단원어린이도서관', '미디어도서관', '선부도서관', '원고잔도서관']
 
@@ -56,7 +59,7 @@ const RequestBookForm = () => {
           type="text" 
           value={isbn} 
           onChange={(e) => setIsbn(e.target.value)} 
-          required 
+          readOnly 
         />
       </div>
       <div>
@@ -65,7 +68,7 @@ const RequestBookForm = () => {
           type="text" 
           value={title} 
           onChange={(e) => setTitle(e.target.value)} 
-          required 
+          readOnly 
         />
       </div>
       <div>
@@ -74,7 +77,7 @@ const RequestBookForm = () => {
           type="text" 
           value={author} 
           onChange={(e) => setAuthor(e.target.value)} 
-          required 
+          readOnly
         />
       </div>
       <div>
@@ -83,16 +86,16 @@ const RequestBookForm = () => {
           type="text" 
           value={publisher} 
           onChange={(e) => setPublisher(e.target.value)} 
-          required 
+          readOnly
         />
       </div>
       <div>
         <label>출판일:</label>
         <input 
-          type="date" 
+          type="text" 
           value={pubDate} 
           onChange={(e) => setPubDate(e.target.value)} 
-          required 
+          readOnly
         />
       </div>
       <div>
