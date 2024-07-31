@@ -25,7 +25,6 @@ const HomePage = () => {
   const navigate = useNavigate()
   const inputSearch = useRef("");
 
-
   useEffect(() => {
     getPopList()
     getnewbookList()
