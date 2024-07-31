@@ -45,8 +45,6 @@ function AdminNoticeList() {
 
     // 검색 및 전체 리스트
     const onSearch = (page) => {
-        console.log(searchOption.searchBy, searchOption.searchQuery);
-        console.log(currentPage, noticePerPage);
         axios(
             {
                 url: '/notice/search',
@@ -60,7 +58,6 @@ function AdminNoticeList() {
                 baseURL: 'http://localhost:8090',
             }
         ).then((response) => {
-            console.log(response.data);
             setSearchResult(response.data.content);
             setTotalPages(response.data.totalPages);
             setTotalNoticeCount(response.data.totalElements);
@@ -71,7 +68,6 @@ function AdminNoticeList() {
     //기준검색
     const handleOnChange = (e) => {
         const { name, value } = e.target;
-        console.log(name, value);
         setSearchOption((prevState) => {
             return {
                 ...prevState,

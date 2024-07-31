@@ -41,7 +41,6 @@ function AdminNoticeDetailForm({ id }) {
                 baseURL: 'http://localhost:8090',
             }
         ).then((res) => {
-            console.log(res.data);
             setTitle(res.data.title);
             setContent(res.data.content);
             setCreatedBy(res.data.modifiedBy);
@@ -61,7 +60,6 @@ function AdminNoticeDetailForm({ id }) {
     const handleAddImg = () => {
         if (images.length < 5) {
             setImages([...images, { id: 'a' + count, file: null }]);
-            console.log('a' + count);
             setCount(count + 1)
         }
     };

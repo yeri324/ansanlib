@@ -8,7 +8,6 @@ function KeywordCloud_gender({ gender }) {
     useEffect(() => {
         const fetchWordCloud = async () => {
             try {
-                console.log(`Fetching word cloud for gender: ${gender}`);  // gender 값 출력
                 const response = await axios.get(`http://127.0.0.1:5001/api/wordcloud/${gender}`, {
                     responseType: 'blob',
                 });

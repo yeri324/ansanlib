@@ -4,16 +4,18 @@ import Highlight from './Highlight';
 import AutoComplete from './AutoComplete';
 import Header from '../../../fragments/header/header';
 import Footer from '../../../fragments/footer/footer';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './SearchPage.css';
 import axios from 'axios';
 
 const SearchPage = () => {
+ const location = useLocation();
+ const homequery = location.state?location.state.query: "";
   const { userId } = useAuth();
   const navigate = useNavigate();
   const [formValues, setFormValues] = useState({
     title: '',
-    isbn: '',
+    isbn: homequery,
     author: '',
     publisher: '',
     pub_date: '',
@@ -31,9 +33,6 @@ const SearchPage = () => {
   const [sortOrder, setSortOrder] = useState('asc');
   const [searchClicked, setSearchClicked] = useState(false);
 
-  useEffect(() => {
-    console.log("userId: ", userId);
-  }, [userId]);
 
   const handleInputChange = (e, { newValue, name }) => {
     setFormValues({ ...formValues, [name]: newValue });
@@ -46,10 +45,8 @@ const SearchPage = () => {
         ...formValues,
         page: page
       };
-      console.log('Sending search request with params:', cleanFormValues);
       const response = await axios.get('/api/book/search', { params: cleanFormValues });
       const data = response.data;
-      console.log('Search response data:', data);
       setBookList(data.bookList);
       setPagination({
         hasPrev: data.hasPrev,

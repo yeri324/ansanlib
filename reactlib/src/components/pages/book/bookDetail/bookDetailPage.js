@@ -6,6 +6,7 @@ import Footer from '../../../fragments/footer/footer';
 import useAuth, { LOGIN_STATUS } from '../../../hooks/useAuth';
 import axios from 'axios';
 import KeywordCloud_bookId from '../../../fragments/home/KeywordCloud_bookId';
+import BookImg from '../searchBookList/bookImg';
 
 const BookDetailPage = () => {
   const { id } = useParams();
@@ -23,7 +24,6 @@ const BookDetailPage = () => {
     const fetchBookDetails = async () => {
       try {
         const response = await axios.get(`http://localhost:8090/api/book/detail/${id}`);
-        console.log('Book detail response data:', response.data);
         setBook(response.data);
         const updatedBookList = response.data.relatedBooks.map(book => ({
           ...book,
@@ -40,10 +40,6 @@ const BookDetailPage = () => {
     fetchBookDetails();
   }, [id, endDate]);
 
-  const alertLogin = () => {
-    alert('로그인 후 이용가능합니다.');
-    navigate('/login');
-  };
 
   const handleInterest = async (bookId) => {
     try {
@@ -77,11 +73,7 @@ const BookDetailPage = () => {
         <div className="book-detail-container">
           <div className="book-img-container">
             {book.bookImg ? (
-              <img
-                src={`http://localhost:8090/images/book/${book.bookImg.imgName}`}
-                alt={book.title}
-                className="img-fluid cover-img"
-              />
+              <BookImg book={book} />
             ) : (
               <div className="no-image">No Image</div>
             )}

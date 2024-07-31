@@ -14,15 +14,11 @@ const User = () => {
     const getUserInfo = async () => {
         const response = await auth.info()
         const data = response.data
-        console.log(`getUserInfo :: `);
-        console.log(data);
-
         setUserInfo(data)
     }
 
     // 회원 정보 수정
     const updateUser = async (form) => {
-        console.log(form);
 
         let response
         let data
@@ -36,22 +32,17 @@ const User = () => {
 
         data = response.data
         const status = response.status
-        console.log(`data : ${data}`);
-        console.log(`status : ${status}`);
 
         if (status == 200) {
-            console.log(`회원수정 성공!`);
-            alert("회원수정 성공", "로그아웃 후, 다시 로그인해주세요.", "success", () => { logout(true) })
+            alert("회원수정 성공 로그아웃 후, 다시 로그인해주세요.")
         }
         else {
-            console.log(`회원수정 실패!`);
-            alert("회원수정 실패", "회원수정에 실패하였습니다.", "error")
+            alert("회원수정에 실패하였습니다.")
         }
     }
 
     // 회원 탈퇴
     const deleteUser = async (userId) => {
-        console.log(userId);
 
         let response
         let data
@@ -65,16 +56,12 @@ const User = () => {
 
         data = response.data
         const status = response.status
-        console.log(`data : ${data}`);
-        console.log(`status : ${status}`);
 
         if (status == 200) {
-            console.log(`회원탈퇴 성공!`);
-            alert("회원탈퇴 성공", "그동안 감사했습니다:)", "success", () => { logout(true) })
+            alert("회원탈퇴 성공")
         }
         else {
-            console.log(`회원탈퇴 실패!`);
-            alert("회원탈퇴 실패", "회원탈퇴에 실패하였습니다.", "error")
+            alert("회원탈퇴에 실패하였습니다.")
         }
     }
 

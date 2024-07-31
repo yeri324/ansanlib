@@ -15,8 +15,6 @@ const FormUser = ({ userInfo, updateUser, deleteUser }) => {
     const name = e.target.name.value;
     const email = e.target.email.value;
 
-    console.log(userId, userPw, name, email);
-
     updateUser( { userId, userPw, name, email } );
   };
 

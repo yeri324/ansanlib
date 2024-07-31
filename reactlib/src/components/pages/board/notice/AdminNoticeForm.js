@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../board/common/Form.css'
 import useAuth, { LOGIN_STATUS, ROLES } from '../../../hooks/useAuth';
@@ -18,10 +18,6 @@ function AdminNoticeForm() {
     title: '',
     content: ''
   });
-
-  useEffect(() => {
-    console.log(images)
-  }, [images]);
 
   // 파일 업로드
   const handleImgChange = (id, file) => {

@@ -39,7 +39,6 @@ function AdminRecForm() {
       baseURL: 'http://localhost:8090',
     })
       .then((res) => {
-        console.log(res.data);
         alert('등록되었습니다.');
         navigate("/admin/recboard/list", { replace: true });
       })

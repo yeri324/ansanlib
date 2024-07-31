@@ -26,6 +26,7 @@ const FormJoin = ({ join, }) => {
     const [passwordValid, setPasswordValid] = useState(true);
     const [passwordMatch, setPasswordMatch] = useState(true);
     const [isOpen, setIsOpen] = useState(false);
+    const [validateCk,setValidateCk]=useState(false);
 
     // setFormData
     const handleChange = (e) => {
@@ -48,7 +49,9 @@ const FormJoin = ({ join, }) => {
     const onJoin = (e) => {
         e.preventDefault();
         onValidate();
+        if(validateCk===true){
         join(formData);
+    }
     };
 
     // 아이디 중복 체크
@@ -61,7 +64,6 @@ const FormJoin = ({ join, }) => {
         try {
             await getData(data).then((response) => {
                 if (response.status == 200) {
-                    console.log(`사용 가능한 아이디!`);
                     alert("사용 가능한 아이디입니다.");
                     setInputDisable({ ...inputDisable, isloginid: true })
                 }
@@ -69,11 +71,9 @@ const FormJoin = ({ join, }) => {
 
         } catch (error) {
             if (error.response.status == 409) {
-                console.log(`사용중인 아이디!`);
                 alert("사용 할 수 없는 아이디입니다.")
             }
             else {
-                console.log(`오류!`);
                 alert("조회 중 오류가 발생하였습니다.")
             }
         }
@@ -89,7 +89,6 @@ const FormJoin = ({ join, }) => {
         try {
             await getData(data).then((response) => {
                 if (response.status == 200) {
-                    console.log(`사용 가능한 이메일!`);
                     alert("사용 가능한 이메일입니다.");
                     setInputDisable({ ...inputDisable, isEmail: true })
                 }
@@ -97,11 +96,9 @@ const FormJoin = ({ join, }) => {
 
         } catch (error) {
             if (error.response.status == 409) {
-                console.log(`사용중인 이메일!`);
                 alert("사용 할 수 없는 이메일입니다.")
             }
             else {
-                console.log(`오류!`);
                 alert("조회 중 오류가 발생하였습니다.")
             }
         }
@@ -168,8 +165,6 @@ const FormJoin = ({ join, }) => {
 
     // 주소창 열기
     const toggleHandler = () => {
-        console.log(isOpen);
-        console.log('toggleHandler 실행됨');
         setIsOpen(!isOpen); // isOpen 상태를 토글
     };
 
@@ -211,6 +206,7 @@ const FormJoin = ({ join, }) => {
             alert('이메일 중복 체크를 완료해주세요.');
             return
         }
+        setValidateCk(true)
 
     }
 

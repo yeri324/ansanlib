@@ -16,16 +16,16 @@
   cursor: not-allowed;
 }
 
-#admin-page-center .page-item.active .page-link {
+#admin-page-center .page-item.active .page-alink {
   background-color: #3a424b;
   border-color: #343a40;
 color: white;}
 
-#admin-page-center .page-link {
+#admin-page-center .page-alink {
   color: #343a40;
 }
 
-#admin-page-center .page-link:hover {
+#admin-page-center .page-alink:hover {
   color: #fff;
   background-color: #343a40;
   border-color: #343a40;

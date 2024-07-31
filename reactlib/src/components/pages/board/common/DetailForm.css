@@ -38,9 +38,8 @@
 }
 
 .board-detail-form form textarea{
-    border: 1px solid #999;
-    border-radius: 4px;
     padding: 10px;
+    height: 150px;
 }
 
 
@@ -48,10 +47,6 @@
     width: calc(70% - 22px);
     margin: 0 auto;
     margin-bottom: 2px;
-}
-
-.board-detail-form .input-container textarea {
-    height: 500px;
 }
 
 .board-detail-form form input[type='text']::placeholder {
@@ -172,6 +167,7 @@
 
 }
 
+
 .board-detail-form .img-preview {
     text-align: center;
     transition: transform 0.3s ease;
@@ -189,4 +185,19 @@
     transform: scale(3);
     /* (x)배 확대 */
     z-index: 3;
+}
+
+.board-detail-form .img-container1 .uimg-pre{
+    width: 100%;
+
+}
+
+.board-detail-form .img-container1 .uimg-pre .img-preview{
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.board-detail-form .img-container1 .uimg-pre .img-preview:hover{
+    transform: none;
 }

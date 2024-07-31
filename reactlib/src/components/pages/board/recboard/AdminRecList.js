@@ -33,7 +33,6 @@ function AdminRecList() {
       },
       baseURL: 'http://localhost:8090',
     }).then((response) => {
-      console.log(response.data);
       setSearchResult(response.data.content);
       setTotalPages(response.data.totalPages);
       setTotalRecCount(response.data.totalElements);

@@ -31,7 +31,7 @@ const PopupNewForm = ({ setIsAddOpen }) => {
         formData.append("yLoc", popupData.yLoc);
         formData.append("popupImg", image);
 
-        axios.post('/admin/popup', formData,
+        axios.post('/popup/admin', formData,
             {
                 headers: {
                     'Content-Type': 'multipart/form-data'
@@ -79,7 +79,6 @@ const PopupNewForm = ({ setIsAddOpen }) => {
             setPopupData({ ...popupData, xLoc: e.clientX, yLoc: e.clientY });
             setShowWhiteScreen(false);
         }
-        console.log(popupData);
     };
 
 

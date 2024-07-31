@@ -3,7 +3,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const PopupForm = ({ popup, setIsOpen }) => {
-    console.log(popup);
     const [popItem, setPopItem] = useState(popup);
     const [viewImg, setViewImg] = useState('');
     const [image, setImage] = useState("");
@@ -28,7 +27,7 @@ const PopupForm = ({ popup, setIsOpen }) => {
         formData.append("yLoc", popItem.yloc);
         formData.append("popupImg", image);
 
-        axios.put('http://localhost:8090/admin/popup', formData,
+        axios.put('http://localhost:8090/popup/admin', formData,
             {
                 headers: {
                     'Content-Type': 'multipart/form-data'
@@ -50,7 +49,6 @@ const PopupForm = ({ popup, setIsOpen }) => {
 
     //이미지 미리보기 설정
     const getPopImage = () => {
-        console.log(image)
         if (image) {
             const reader = new FileReader();
             reader.onloadend = () => {

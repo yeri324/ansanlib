@@ -1,6 +1,7 @@
 package com.ansanlib.visit.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ansanlib.entity.Visit;
 import com.ansanlib.visit.dto.VisitDto;
@@ -11,4 +12,7 @@ public interface VisitService {
     List<Visit> getAllVisits();
     long getVisitCountToday(); // 오늘의 방문자 수를 계산하는 메서드
     long getVisitCount();
+
+
+    List<Map<String, Object>> getWeeklyVisits();
 }

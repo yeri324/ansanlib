@@ -1,0 +1,73 @@
+.all-newbooklist .newbook-list {
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    width: 80%;
+    text-align: center;
+}
+
+/* 메세지 설정(이름 및 페이징) */
+.all-newbooklist .boardnewbook-list > h2 {
+    text-align: center;
+}
+
+.all-newbooklist .boardnewbook-list .pg-msg {
+    text-align: right;
+    width: 84%;
+}
+
+/* 박스설정 */
+.all-newbooklist .newBookItem {
+    flex: 1 0 calc(50% - 50px);
+    max-width: calc(50% - 50px);
+    height: 250px;
+    background-color: #f8f9fa;
+    margin: 10px;
+    display: flex;
+    box-sizing: border-box;
+}
+
+.all-newbooklist .newBookItem .newbook-img {
+    flex: 0 1 calc(38%);
+    cursor: pointer;
+}
+.all-newbooklist .newBookItem .newbook-img >img{
+    width: 100%;
+    height: 100%;
+}
+
+.all-newbooklist .newBookItem .newbook-cont {
+    flex: 1;
+    padding-top: 20px;
+    padding-left: 30px;
+    text-align: left;
+}
+
+.all-newbooklist .newBookItem .newbook-cont > ul{
+    list-style: none;
+    padding: 0;
+}
+
+.all-newbooklist .newBookItem .newbook-cont > ul > li {
+    padding-bottom: 12px;
+}
+
+.all-newbooklist .newBookItem .newbook-cont .newbook-title {
+    cursor: pointer;
+}
+
+.all-newbooklist .newBookItem .newbook-cont > ul > li > button {
+    display: inline-block;
+    padding: 5px 5px;
+    margin-top: 10px;
+    background-color: #e2e3e5;
+    border: 1px solid #ccc;
+    border-radius: 4px; 
+    text-align: center;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.all-newbooklist .newBookItem .newbook-cont > ul > li > button:hover {
+    background-color: #c6c7ca;
+}

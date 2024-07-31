@@ -14,6 +14,9 @@ import LibraryPage from '../../visit/LibraryPage';
 import AdminBookListTable from '../item/AdminBookListTable';
 import AdminRecBoardTable from '../item/AdminRecBoardTable';
 import AdminLoanTable from '../item/AdminLoanTable';
+import WeeklyVisitsChart from '../item/WeeklyVisitsChars';
+import WeeklyLoansChart from '../item/WeeklyLoansChart';
+
 
 
 const Admin = () => {
@@ -47,16 +50,14 @@ const Admin = () => {
   };
 
   const fetchHolidays = (date) => {
-    console.log("Fetching holidays for date:", date);
 
     axios({
-      url: '/api/admin/holiday/list',
+      url: '/api/holiday/list',
       method: 'get',
       params: {
         date: date.toISOString().split('T')[0]
       }
     }).then((response) => {
-      console.log("Fetched holidays for current date:", response.data);
       setHolidays(response.data.result);
     }).catch((error) => {
       console.error("Error fetching holidays for current date:", error);
@@ -73,10 +74,8 @@ const Admin = () => {
 
     const nextDate = adjustDate(date, 1);
 
-    console.log("Fetching holidays for selected date:", nextDate);
-
     axios({
-      url: '/api/admin/holiday/list',
+      url: '/api/holiday/list',
       method: 'get',
       params: {
         date: nextDate.toISOString().split('T')[0]
@@ -104,8 +103,9 @@ const Admin = () => {
   const fetchNewBooks = () => {
     axios.get('/api/admin/book/list')
       .then(response => {
-        setBookList(response.data);
-        setSearchBook(response.data.slice(0, 3));
+        const sortedBooks = response.data.sort((a, b) => b.id - a.id); // ID 기준으로 내림차순 정렬
+        setBookList(sortedBooks);
+        setSearchBook(sortedBooks.slice(0, 3));
       })
       .catch(error => {
         console.error('Error fetching books:', error);
@@ -144,8 +144,7 @@ const Admin = () => {
       </div>
       <main className="admin-main-main">
         <div className="admin-main-body">
-          <div className="admin-main-dash-top">
-          </div>
+          
           <div className="admin-main-dash-body">
             <div className="admin-main-left" style={{ width: "25%" }}>
               <div className='admin-left-box4'>
@@ -153,8 +152,8 @@ const Admin = () => {
                   <LibraryPage />
                 </div>
                 <div className='admin-left-graph'>
-                  <strong>오늘의 방문자 수</strong>
-                  <br /> {todayVisits} 명 
+                  <h4>Today Visit</h4>
+                   <p>{todayVisits}</p>
                 </div>
               </div>
               <div className='admin-left-box1'>
@@ -173,15 +172,31 @@ const Admin = () => {
                 />
               </div>
               <div className="admin-left-box3">
-                <h4><a href="admin/holiday/list">휴관 도서관</a></h4>
+                <h4 class="admin-h4"><a href="admin/holiday/list">휴관 도서관</a></h4>
                 <HolidayListTable holidays={holidays.slice(0, 3)} excludedColumns={['delete']} />
               </div>
             </div>
 
             <div className="admin-main-right" style={{ width: "75%" }}>
+
+              <div className="admin-right-graph">
+                <div class="right-graph-div">
+                  <WeeklyVisitsChart />
+
+                </div>
+                <div class="right-graph-div">
+                  <WeeklyLoansChart />
+                </div>
+
+                <div className="admin-right-box3">
+                </div>
+              </div>
+
+
+
               <div className="admin-right-box1">
                 <div className='admin-box1-table'>
-                  <h4><a href="admin/book/list">신간 도서</a></h4>
+                  <h4 class="admin-h4"><a href="admin/book/list">신간 도서</a></h4>
                   <AdminBookListTable
                     books={searchBook}
                     excludedColumns={['total_count', 'img']}
@@ -191,23 +206,21 @@ const Admin = () => {
                 </div>
 
                 <div className='admin-box1-table'>
-                  <h4><a href="admin/user/search">대출 목록</a></h4>
+                  <h4 class="admin-h4"><a href="admin/user/search">대출 목록</a></h4>
                   <AdminLoanTable loan={searchLoan} />
                 </div>
 
                 <div className='admin-box1-table'>
-                  <h4><a href="admin/recboard/list">추천 도서</a></h4>
+                  <h4 class="admin-h4"><a href="admin/recboard/list">추천 도서</a></h4>
                   <AdminRecBoardTable limit={3} />
                 </div>
 
                 <div className='admin-box1-table'>
-                  <h4><a href="admin/book/request">희망 도서</a></h4>
+                  <h4 class="admin-h4" ><a href="admin/book/request">희망 도서</a></h4>
                   <AdminBookRequestTable searchResult={searchResult} excludedColumns={['count']} />
                 </div>
-                
-                <div className="admin-right-box2">
-               
-                </div>
+
+
               </div>
             </div>
           </div>

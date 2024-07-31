@@ -22,7 +22,6 @@ const ApiBookSearch = () => {
     const [searchKeyword,setSearchKeyword] = useState("");
     const fetchBooks = useCallback(async (page = 1) => {
         const apiUrl = `/api/bookapi/search?keyword=${keyword}&page=${page}&sortBy=${sortBy}&sortOrder=${sortOrder}`;
-        console.log(`Fetching books from: ${apiUrl}`);
         const response = await axios.get(apiUrl);
         const data = response.data;
         setBooks(data.books);

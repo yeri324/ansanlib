@@ -21,14 +21,14 @@ import com.ansanlib.entity.Holiday;
 import com.ansanlib.response.CommonListResponse;
 
 @RestController
-@RequestMapping("/api/admin/holiday")
+@RequestMapping("/api")
 public class HolidayController {
 
     @Autowired
     private HolidayService holidayService;
 
     // 날짜 도서관 중복 체크
-    @GetMapping("/check")
+    @GetMapping("/admin/holiday/check")
     public ResponseEntity<Boolean> checkHoliday(@RequestParam("date") String date, @RequestParam("library") String library) {
         LocalDate localDate = LocalDate.parse(date);
         boolean exists = holidayService.checkHolidayExists(localDate, library);
@@ -36,7 +36,7 @@ public class HolidayController {
     }
 
     // 데이터 저장
-    @PostMapping("/new")
+    @PostMapping("/admin/holiday/new")
     public ResponseEntity<String> createHoliday(@RequestBody HolidayDto holidayDto) {
         try {
             holidayService.saveHoliday(holidayDto);
@@ -47,7 +47,7 @@ public class HolidayController {
     }
 
     // 데이터 조회
-    @GetMapping("/list")
+    @GetMapping("/holiday/list")
     public ResponseEntity<CommonListResponse<List<Holiday>>> getAllHolidays(@RequestParam(value = "date", required = false) String date) {
         List<Holiday> holidays;
 
@@ -69,7 +69,7 @@ public class HolidayController {
     }
 
     // 데이터 삭제
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/admin/holiday/{id}")
     public ResponseEntity<String> deleteHoliday(@PathVariable Long id) {
         try {
             holidayService.deleteHolidayById(id);

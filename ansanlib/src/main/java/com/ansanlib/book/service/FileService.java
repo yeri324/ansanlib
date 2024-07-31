@@ -85,7 +85,6 @@ public class FileService {
 	public byte[] getImgByte(String imgPath) throws IOException {
 
 		Path imagePath = Paths.get(imgPath);
-		System.out.println("imagePath: " + imagePath);
 
 		if (Files.exists(imagePath)) {
 			// 파일이 존재하는 경우에만 읽어옴

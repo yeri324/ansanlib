@@ -41,7 +41,6 @@ const ReservationForm = () => {
     try {
       const response = await axios.post('/api/reservations/create', reservation);
       alert("예약 성공");
-      console.log('Reservation created:', response.data);
     } catch (error) {
       if (typeof error.response.data === "string") {
         alert(`예약 실패: ${error.response.data}`);

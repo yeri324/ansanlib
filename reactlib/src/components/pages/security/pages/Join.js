@@ -10,7 +10,6 @@ const Join = () => {
 
   // 회원가입 요청
   const join = async (form) => {
-    console.log(form);
 
     let response
     let data
