@@ -7,8 +7,12 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
   const { axios } = useAuth();
   const [editMode, setEditMode] = useState(null);
   const [editedCounts, setEditedCounts] = useState({});
-  const [newLibrary, setNewLibrary] = useState({ libName: '', count: '' });
   const [groupedLibraries, setGroupedLibraries] = useState([]);
+  const [newbook,setNewbook] = useState({
+    ...book,
+    libName : "",
+    count : ""
+  })
 
   useEffect(() => {
     if (book && book.libraries) {
@@ -61,30 +65,21 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
 
   const handleNewLibraryChange = (e) => {
     const { name, value } = e.target;
-    setNewLibrary((prevData) => ({ ...prevData, [name]: value }));
+    setNewbook((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleAddLibrary = async () => {
-    if (!newLibrary.libName || !newLibrary.count) {
+    if (!newbook.libName || !newbook.count) {
       alert('도서관 이름과 수량을 입력해주세요.');
       return;
     }
 
     try {
-      const response = await axios.post(`/api/admin/book/${book.id}/addLibrary`, {
-        libName: newLibrary.libName,
-        count: newLibrary.count,
-        title: book.title,
-        isbn: book.isbn,
-        author: book.author,
-        publisher: book.publisher,
-        pub_date: book.pub_date,
-        coverImage: book.coverImage,
-      });
+      const response = await axios.post(`/api/admin/book/${book.id}/addLibrary`, newbook);
 
       alert("도서관이 추가되었습니다.");
       refreshBookList();
-      setNewLibrary({ libName: '', count: '' });
+      setNewbook((prevData) => ({ ...prevData, libName: '', count: ''}));
     } catch (error) {
       console.error("Add Library error:", error);
       alert("도서관을 추가할 수 없습니다. 다시 확인해주세요");
@@ -95,11 +90,7 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
     <div className="admin-modal" id="admin-modal">
       <div className="modal-dialog" id="admin-modal-dialog">
         <div className="modal-content" id="admin-modal-content">
-          {book && book.coverImage && (
-            <div className="modal-image">
-              <img src={book.coverImage} alt={book.title} className="img-fluid" />
-            </div>
-          )}
+        
           <div className="modal-header">
             <h5 className="modal-title" id="admin-modal-title"><strong>{book.title}</strong> - 도서관 소장 내역</h5>
             <button type="button" className="close" onClick={onClose}>&times;</button>
@@ -173,7 +164,7 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
                       <input
                         type="text"
                         name="libName"
-                        value={newLibrary.libName}
+                        value={newbook.libName}
                         onChange={handleNewLibraryChange}
                         placeholder="도서관 이름"
                         style={{ width: "100px" }}
@@ -183,7 +174,7 @@ const AdminBookDetail = ({ isOpen, onClose, book, refreshBookList }) => {
                       <input
                         type="number"
                         name="count"
-                        value={newLibrary.count}
+                        value={newbook.count}
                         onChange={handleNewLibraryChange}
                         placeholder="권수"
                         style={{ width: "100px" }}

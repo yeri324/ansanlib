@@ -73,7 +73,6 @@ const AdminBookListTable = ({
                   {column.key === 'img' ? (
                     book.bookImg && book.bookImg.imgName ? (
                       <BookImg book={book} />
-                      // <img src={`http://localhost:8090/images/book/${book.bookImg.imgName}`} alt="책 이미지" className="admin-book-cover" />
                     ) : (
                       <div className="no-image">No Image</div>
                     )

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +38,9 @@ public class AdminBookService {
 
 	@Autowired
 	private BookImgRepository bookImgRepository;
+	
+    @Autowired
+    private ModelMapper modelMapper;
 	
 @Autowired
 private RecBoardRepository recBoardRepository;
@@ -106,17 +110,14 @@ private LoanStatusRepository loanStatusRepository;
 	    public void addLib(Long bookId, BookDto bookDto) throws Exception {
 	        Optional<Book> optionalBook = bookRepository.findById(bookId);
 	        if (optionalBook.isPresent()) {
-	            Book book = optionalBook.get();
-	            Book newBook = new Book();
-	            newBook.setTitle(book.getTitle());
-	            newBook.setAuthor(book.getAuthor());
-	            newBook.setPublisher(book.getPublisher());
-	            newBook.setPub_date(book.getPub_date());
-	            newBook.setLibName(bookDto.getLibName());
-	            newBook.setCount(bookDto.getCount());
-
-	            newBook.setIsbn(book.getIsbn());
-	            bookRepository.save(newBook);
+	        	Book book = modelMapper.map(bookDto, Book.class);
+	        	book.setId(null);
+	        	book.setBookImg(null);
+	            Book newbook = bookRepository.save(book);
+	        	BookImg bookImg = modelMapper.map(bookDto.getBookImg(), BookImg.class);
+	        	bookImg.setBook(newbook);
+	        	bookImg.setId(null);
+	        	bookImgRepository.save(bookImg);
 	        } else {
 	            throw new Exception("Book not found");
 	        }
@@ -131,9 +132,7 @@ private LoanStatusRepository loanStatusRepository;
 	    }
 	 
 	 
-		
-		
-		
+
 		
 //		//삭제
 	 @Transactional
