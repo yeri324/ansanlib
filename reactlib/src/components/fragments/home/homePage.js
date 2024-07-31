@@ -11,9 +11,6 @@ import Calendar from 'react-calendar';
 import "react-calendar/dist/Calendar.css";
 import Kakao from '../../map/mapForm';
 import Popup from './popup';
-import useAuth, { LOGIN_STATUS, ROLES } from '../../hooks/useAuth';
-import Auth from '../../helpers/Auth';
-import RedirectLogin from '../../helpers/RedirectLogin';
 // import KeywordCloud from './KeywordCloud';
 // import KeywordCloud_bookId from './KeywordCloud_bookId';
 // import BookCloud from './bookCloud';
@@ -24,7 +21,6 @@ import axios from 'axios';
 
 const HomePage = () => {
 
-  const { axios } = useAuth();
   const [popList, setPopList] = useState([])
   const [date, setDate] = useState(new Date());
   const [showDetail, setShowDetail] = useState(false);
@@ -147,13 +143,4 @@ const HomePage = () => {
   );
 }
 
-export default function () {
-  return (
-    <>
-      <RedirectLogin />
-      <Auth loginStatus={LOGIN_STATUS.LOGGED_IN} roles={ROLES.ADMIN}>
-        <HomePage />
-      </Auth>
-    </>
-  );
-}
+export default HomePage;
