@@ -9,6 +9,14 @@ import Side from '../myPage/Side';
 import './RequestBookForm.css';
 import { useLocation } from 'react-router-dom';
 
+const formatDate = (dateString) => {
+  if (dateString.length !== 8) return dateString; // 잘못된 형식일 경우 그대로 반환
+  const year = dateString.substring(0, 4);
+  const month = dateString.substring(4, 6);
+  const day = dateString.substring(6, 8);
+  return `${year}-${month}-${day}`;
+};
+
 const RequestBookForm = () => {
   const name = useRealName();
   const location = useLocation();
@@ -19,9 +27,11 @@ const RequestBookForm = () => {
   const [title, setTitle] = useState(reqbook.title);
   const [author, setAuthor] = useState(reqbook.author);
   const [publisher, setPublisher] = useState(reqbook.publisher);
-  const [pubDate, setPubDate] = useState(reqbook.pubdate);
+  const [pubDate, setPubDate] = useState(formatDate(reqbook.pubdate));
   const [libName, setLibName] = useState('감골도서관');
   const libList = ['감골도서관','반월도서관','부곡도서관','본오도서관','상록수도서관', '상록어린이도서관', '성포도서관', '수암도서관', '관산도서관' ,'단원어린이도서관', '미디어도서관', '선부도서관', '원고잔도서관']
+
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -58,7 +68,6 @@ const RequestBookForm = () => {
         <input 
           type="text" 
           value={isbn} 
-          onChange={(e) => setIsbn(e.target.value)} 
           readOnly 
         />
       </div>
@@ -67,7 +76,6 @@ const RequestBookForm = () => {
         <input 
           type="text" 
           value={title} 
-          onChange={(e) => setTitle(e.target.value)} 
           readOnly 
         />
       </div>
@@ -76,7 +84,6 @@ const RequestBookForm = () => {
         <input 
           type="text" 
           value={author} 
-          onChange={(e) => setAuthor(e.target.value)} 
           readOnly
         />
       </div>
@@ -85,7 +92,6 @@ const RequestBookForm = () => {
         <input 
           type="text" 
           value={publisher} 
-          onChange={(e) => setPublisher(e.target.value)} 
           readOnly
         />
       </div>
@@ -94,7 +100,6 @@ const RequestBookForm = () => {
         <input 
           type="text" 
           value={pubDate} 
-          onChange={(e) => setPubDate(e.target.value)} 
           readOnly
         />
       </div>
