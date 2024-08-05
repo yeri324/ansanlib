@@ -47,7 +47,7 @@ public class UserService {
 	private static final String LOWERCASE_CHARS = "abcdefghijklmnopqrstuvwxyz"; // 소문자
 	private static final String UPPERCASE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // 대문자
 	private static final String DIGITS = "0123456789"; // 숫자
-	private static final String SPECIAL_CHARS = "!@#$%^&"; // 특수문자
+	private static final String SPECIAL_CHARS = "!@~"; // 특수문자
 
 	// 비밀번호의 최소 길이와 최대 길이를 상수로 정의합니다.
 	private static final int MIN_LENGTH = 8;
