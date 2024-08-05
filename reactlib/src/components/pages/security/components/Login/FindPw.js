@@ -8,7 +8,6 @@ const FindPw = () => {
     const [loginid, setLoginid] = useState('');
     const [email, setEmail] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    const [showPopup, setShowPopup] = useState(false);
     const [isFind, setIsFind] = useState(false);
 
     // 임시 비밀번호 발급
@@ -26,12 +25,11 @@ const FindPw = () => {
             }
             ).then((response) => {
                 setIsFind(true);
-                setShowPopup(true);
                 setErrorMessage('이메일이 정상적으로 발송되었습니다.');
             })
         } catch (error) {
             setErrorMessage('일치하는 사용자가 없습니다.');
-            setShowPopup(true);  // 예외 처리 로직 추가
+            setIsFind(true);
         }
     };
 
@@ -65,7 +63,7 @@ const FindPw = () => {
         );
     } else {
         return (
-            <div class="popup">
+            <div class='findpw'>
                 {errorMessage && <p>{errorMessage}</p>}
                 <NavLink to="/login" >돌아가기</NavLink>
             </div>);

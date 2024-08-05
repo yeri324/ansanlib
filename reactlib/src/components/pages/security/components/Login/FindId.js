@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, } from 'react';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import './FindId.css'
@@ -10,7 +10,6 @@ const FindId = () => {
     const [email, setEmail] = useState('');
     const [foundLoginid, setFoundLoginid] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    const [showPopup, setShowPopup] = useState(false);
     const [isFind, setIsFind] = useState(false);
 
 
@@ -31,11 +30,10 @@ const FindId = () => {
             ).then((response) => {
                 setFoundLoginid(response.data);
                 setIsFind(true);
-                setShowPopup(true);
             })
         } catch (error) {
             setErrorMessage('일치하는 사용자가 없습니다.');
-            setShowPopup(true);  // 예외 처리 로직 추가
+            setIsFind(true);
         }
     };
 
@@ -66,8 +64,9 @@ if(!isFind){
         }
         else{
             return(
-                <div class="popup">
-                    {foundLoginid && <p>찾은 아이디: {foundLoginid}</p>}
+                <div class='findid'>
+          
+                    {foundLoginid && <p>사용자 아이디: {foundLoginid}</p>}
                     {errorMessage && <p>{errorMessage}</p>}
                     <NavLink to="/login" >돌아가기</NavLink>
                 </div>

@@ -18,22 +18,13 @@ const Side = () => {
         <li>
           <Link to="/update">회원정보수정</Link>
         </li>
-        <li onClick={toggleReservationSubmenu} className="has-submenu">
-          예약
-          <span className="arrow">{showReservationSubmenu ? " ▲" : " ▼"}</span>
-          {showReservationSubmenu && (
-            <ul className="submenu">
-              <li>
-                <Link to="/reservation/new">예약하기</Link>
-              </li>
-              <li>
-                <Link to="/reservation/list">예약 현황</Link>
-              </li>
-            </ul>
-          )}
-        </li>
+
         <li>
-          <Link to="/loanstatus">대출</Link>
+          <Link to="/reservation/list">예약 현황</Link>
+        </li>
+       
+        <li>
+          <Link to="/loanstatus">대출 현황</Link>
         </li>
         <li>
         <Link to="/requestbook/list">희망도서 목록</Link>
