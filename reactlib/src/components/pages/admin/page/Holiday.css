@@ -106,16 +106,15 @@
   
 /*해당 월이 아닌 날짜 */
 .not-current {
-  background-color: #c6cbd452;
+  background-color: #dfe0e252;
   color:#0611258e;
 }
 
 /*오늘!*/
 .today {
-  background-color: #93bcf136;
+  background-color: #066cf336;
   font-weight: bold;
   color: #1d6df7;
-
   position: relative;
 }
 
@@ -132,8 +131,10 @@
 .holiday {
 
     font-size: 0.8em;
-  background-color: #708090;
+  background-color: #4489d8;
+  
   color: white;
+  padding: 1px;
   
 }
 

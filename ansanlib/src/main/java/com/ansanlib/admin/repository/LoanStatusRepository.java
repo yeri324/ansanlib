@@ -30,7 +30,7 @@ public interface LoanStatusRepository extends JpaRepository<LoanStatus, Long> {
 	 
 	 
 	 
-	 //그래프
-	   @Query("SELECT DATE(l.regTime) as date, COUNT(l) as count FROM LoanStatus l WHERE l.regTime BETWEEN :startDate AND :endDate GROUP BY DATE(l.regTime)")
-	    List<Object[]> findLoanCountByDateRange(LocalDateTime startDate, LocalDateTime endDate);
+	// 그래프
+	 @Query("SELECT DATE(l.loanStart) as date, COUNT(l) as count FROM LoanStatus l WHERE l.loanStart BETWEEN :startDate AND :endDate GROUP BY DATE(l.loanStart)")
+	 List<Object[]> findLoanCountByDateRange(LocalDateTime startDate, LocalDateTime endDate);
 }
