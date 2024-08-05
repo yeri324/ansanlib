@@ -42,7 +42,6 @@ const AdminSide = () => {
           
           </ul>
         </li>
-        <li><a href="#" className="no-underline">통계관리</a></li>
       </ul>
     </div>
   );
