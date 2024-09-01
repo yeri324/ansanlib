@@ -48,6 +48,10 @@
   margin: 0 5px;
 }
 
+.update-form .email_input .at-symbol{
+  line-height: 44px;
+}
+
 .update-form .form_field input,
 .update-form .form_field select {
   width:100%;

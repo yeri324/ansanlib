@@ -69,7 +69,7 @@ const Header = () => {
             <>
               <div id="top_login">
                 <p className='userid'>{loginId}님</p> <span> | </span>
-                <button type='button' className="logout" onClick={() => logout()}>로그아웃</button><span> | </span>
+                <button type='button' style={{margin:0}} className="logout" onClick={() => logout()}>로그아웃</button><span> | </span>
                 {roles === ROLES.ADMIN ? (
                   <a className="join" href="/admin">관리페이지</a>
                 ) : (

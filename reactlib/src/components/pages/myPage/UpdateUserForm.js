@@ -45,23 +45,22 @@ const EmailInput = ({
   };
 
   return (
-    <div className="email-input">
+    <div className="email_input">
       <input
-        className="address-part"
+        
         type="text"
         value={addressPart}
         onChange={(e) => onChangeAddressPart(e.target.value)}
       />
       <span className="at-symbol">@</span>
       <input
-        className="custom-domain-input"
+       
         type="text"
         value={domainPart}
         onChange={(e) => onChangeDomainPart(e.target.value)}
         disabled={!isCustomDomain}
       />
       <select
-        className="domain-select"
         value={isCustomDomain ? "__customDomain" : domainPart}
         onChange={(e) => onSelectionChanged(e.target.value)}
       >
@@ -80,7 +79,6 @@ const EmailInput = ({
       </select>
       <button
         type="button"
-        className='check-button'
         onClick={onCheckEmail}
       >
         이메일 체크

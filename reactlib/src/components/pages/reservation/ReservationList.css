@@ -45,7 +45,7 @@
     gap: 10px; /* 버튼들 사이의 간격 설정 */
 }
 
-.reservation_list .actions button {
+.reservation_list  button {
     padding: 10px 20px;
     border: none;
     border-radius: 4px;
@@ -54,7 +54,7 @@
     cursor: pointer;
 }
 
-.reservation_list .actions button:hover {
+.reservation_list  button:hover {
     background-color: #464797;
 }
 
