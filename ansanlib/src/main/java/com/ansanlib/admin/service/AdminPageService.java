@@ -3,6 +3,7 @@ package com.ansanlib.admin.service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -86,6 +87,9 @@ public class AdminPageService {
 	// 삭제
 	public ResponseEntity<String> deletePopup(Long popId) {
 		try {
+			Optional<Popup> popup = popupRepository.findById(popId);
+			String filepath = popup.get().getImgUrl();
+			fileService.deleteFile(filepath);
 			popupRepository.deleteById(popId);
 			return ResponseEntity.status(HttpStatus.OK).body("팝업이 제거되었습니다.");
 		} catch (Exception e) {

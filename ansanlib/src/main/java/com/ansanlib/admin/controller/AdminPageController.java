@@ -49,7 +49,6 @@ public class AdminPageController {
 	//삭제
 	@DeleteMapping("/{popId}")
 	public ResponseEntity<String> deletePopup(@PathVariable("popId") Long popId){
-		System.out.println(popId);
 		return adminPageService.deletePopup(popId);
 	}
 	
